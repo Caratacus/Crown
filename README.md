@@ -1,8 +1,14 @@
-# Crown
-
-#### 项目介绍
-Crown基于SpringBoot2为基础，打造一个快速开发的Web应用脚手架。
-
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Caratacus/Crown/master/Crown.png" width="300">
+    <p align="center">
+        Based on SpringBoot2, Crown builds a rapidly developed web application scaffolding.
+        <br>        
+        <br>
+		<a href="https://api.github.com/licenses/mit">
+		 <img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat" >
+		</a>
+    </p>    
+</p>
 
 #### 软件架构
 软件架构说明
