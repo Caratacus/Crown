@@ -1,0 +1,5 @@
+language: java
+jdk:
+- oraclejdk8
+- openjdk8
+script: gradle clean build -x test
