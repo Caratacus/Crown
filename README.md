@@ -5,8 +5,13 @@
         <br>        
         <br>
 		<a href="https://api.github.com/licenses/mit">
-		 <img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat" >
+            <img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat" >
 		</a>
+		<br>        
+        <br>
+		<a href="https://travis-ci.org/Caratacus/Crown">s
+            <img src="https://www.travis-ci.org/Caratacus/Crown.svg?branch=master">
+        </a>
     </p>    
 </p>
 
