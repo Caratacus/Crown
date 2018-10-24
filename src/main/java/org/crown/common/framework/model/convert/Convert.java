@@ -1,4 +1,4 @@
-package org.crown.common.framework.model;
+package org.crown.common.framework.model.convert;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import org.crown.common.kit.BeanConverter;
  *
  * @author Caratacus
  */
-public class BaseConvert implements Serializable {
+public class Convert implements Serializable {
 
     /**
      * 获取自动转换后的JavaBean对象

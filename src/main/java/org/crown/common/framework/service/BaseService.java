@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.crown.common.framework.model.convert.Convert;
+
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
 
@@ -18,7 +22,7 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
  * @author Caratacus
  * @since 2018-04-06
  */
-public interface BaseService<T>{
+public interface BaseService<T extends Convert>{
     /**
      * <p>
      * 插入一条记录（选择字段，策略插入）
@@ -29,7 +33,7 @@ public interface BaseService<T>{
     boolean save(T entity);
 
     /**
-     * <p>
+     * <p>p
      * 插入（批量）
      * </p>
      *
@@ -84,7 +88,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体包装类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    boolean remove(Wrapper<T> queryWrapper);
+    boolean remove(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -103,7 +107,7 @@ public interface BaseService<T>{
      * @param entity        实体对象
      * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
      */
-    boolean update(T entity, Wrapper<T> updateWrapper);
+    boolean update(T entity, UpdateWrapper<T> updateWrapper);
 
     /**
      * <p>
@@ -151,7 +155,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    T getOne(Wrapper<T> queryWrapper);
+    T getOne(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -160,7 +164,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    default Object getObj(Wrapper<T> queryWrapper){
+    default Object getObj(QueryWrapper<T> queryWrapper){
             return SqlHelper.getObject(listObjs(queryWrapper));
     }
 
@@ -171,7 +175,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    int count(Wrapper<T> queryWrapper);
+    int count(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -180,7 +184,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    List<T> list(Wrapper<T> queryWrapper);
+    List<T> list(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -190,7 +194,7 @@ public interface BaseService<T>{
      * @param page         翻页对象
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper);
+    IPage<T> page(IPage<T> page, QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -199,7 +203,7 @@ public interface BaseService<T>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    List<Object> listObjs(Wrapper<T> queryWrapper);
+    List<Object> listObjs(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -211,7 +215,7 @@ public interface BaseService<T>{
      * @param cls
      * @return
      */
-    <E> IPage<E> selectEntityPage(IPage page, Wrapper wrapper, Class<E> cls);
+    <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Class<E> cls);
 
     /**
      * <p>
@@ -222,7 +226,7 @@ public interface BaseService<T>{
      * @param cls
      * @return
      */
-    <E extends BaseConvert> E selectEntity(Wrapper wrapper, Class<E> cls);
+    <E extends Convert> E entity(QueryWrapper wrapper, Class<E> cls);
 
     /**
      * <p>
@@ -233,7 +237,7 @@ public interface BaseService<T>{
      * @param cls
      * @return
      */
-    <E> List<E> selectEntitys(Wrapper wrapper, Class<E> cls);
+    <E extends Convert> List<E> entitys(QueryWrapper wrapper, Class<E> cls);
 
     /**
      * 以list中对象的某个属性做键值,转换成map
@@ -253,6 +257,6 @@ public interface BaseService<T>{
      * @param property list中对象的属性,作为键值
      * @return 转换后的map
      */
-    Map<Integer, T> list2Map(Wrapper wrapper, String property);
+    Map<Integer, T> list2Map(QueryWrapper<T> wrapper, String property);
 
 }
