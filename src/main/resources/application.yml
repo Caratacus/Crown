@@ -1,17 +1,11 @@
 logging:
   config: classpath:logback-spring.xml
 mybatis-plus:
-  configuration:
-    cache-enabled: false
-    map-underscore-to-camel-case: true
   global-config:
-    db-column-underline: true
-    field-strategy: 1
-    id-type: 1
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-  mapper-locations: classpath:mapper/**/*Mapper.xml
-  typeAliasesPackage: org.crown,model
+    db-config:
+      field-strategy: not_empty
+      id-type: auto
+  mapper-locations: classpath:mapper/*Mapper.xml
+  typeAliasesPackage: org.crown.model
 server:
   port: 8088
