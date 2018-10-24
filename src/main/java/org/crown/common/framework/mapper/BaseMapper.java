@@ -12,9 +12,9 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 
 /**
  * BaseMapper 基于 MP 删减
- * @see com.baomidou.mybatisplus.core.mapper.BaseMapper
  *
  * @author Caratacus
+ * @see com.baomidou.mybatisplus.core.mapper.BaseMapper
  */
 public interface BaseMapper<T> {
 

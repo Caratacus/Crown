@@ -42,13 +42,13 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
  * </p>
  *
  * @author Caratacus
- * @since 2018-04-06
  */
 @Transactional(readOnly = true)
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> implements BaseService<T> {
 
     @Autowired
     protected M baseMapper;
+
     /**
      * <p>
      * 判断数据库操作是否成功

@@ -104,8 +104,9 @@ public class MysqlGenerator {
                         // 自定义实体，公共字段
                         .setSuperEntityColumns("id")
                         .setTableFillList(tableFillList)
-                // 自定义 mapper 父类
-                .setSuperMapperClass("org.crown.common.framework.mapper.BaseMapper")
+                        // 自定义 mapper 父类
+                        .setSuperMapperClass("org.crown.common.framework.mapper.BaseMapper")
+                //TODO 待完成
                 // 自定义 service 父类
                 // .setSuperServiceClass("com.baomidou.demo.TestService")
                 // 自定义 service 实现类父类

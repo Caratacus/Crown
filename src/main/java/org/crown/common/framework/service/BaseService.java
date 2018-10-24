@@ -20,9 +20,9 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
  * </p>
  *
  * @author Caratacus
- * @since 2018-04-06
  */
-public interface BaseService<T extends Convert>{
+public interface BaseService<T extends Convert> {
+
     /**
      * <p>
      * 插入一条记录（选择字段，策略插入）
@@ -164,8 +164,8 @@ public interface BaseService<T extends Convert>{
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    default Object getObj(QueryWrapper<T> queryWrapper){
-            return SqlHelper.getObject(listObjs(queryWrapper));
+    default Object getObj(QueryWrapper<T> queryWrapper) {
+        return SqlHelper.getObject(listObjs(queryWrapper));
     }
 
     /**
