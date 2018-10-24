@@ -26,10 +26,10 @@ tasks.withType(JavaCompile) {
     //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 repositories {
-    mavenLocal()
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     maven { url "http://repo.maven.apache.org/maven2" }
     maven { url "https://jitpack.io" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     jcenter()
 }
 
@@ -46,8 +46,8 @@ dependencies {
     api("org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE")
     api("eu.bitwalker:UserAgentUtils:1.21")
     api("com.github.whvcse:EasyCaptcha:1.1.0")
-    api("com.baomidou:mybatis-plus-boot-starter:2.3.1")
-    api("com.baomidou:mybatis-plus:2.3.1")
+    api("com.baomidou:mybatis-plus-boot-starter:3.0.6-SNAPSHOT")
+    api("com.baomidou:mybatis-plus:3.0.6-SNAPSHOT")
     api("mysql:mysql-connector-java:8.0.12")
     api("org.apache.commons:commons-lang3:3.8")
     api("net.sf.ehcache:ehcache:2.10.5")
