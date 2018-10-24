@@ -12,8 +12,7 @@
 </p>
 
 
-## Lombok FAQ
-* ###[Lombok官网](http://projectlombok.org/)
+## [Lombok](http://projectlombok.org/) FAQ 
 * ### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
 #### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
 * ### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
