@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2018-10-25
  */
 @Controller
-@RequestMapping("/resource")
+@RequestMapping("/sys")
 public class ResourceController extends SuperController {
 
 }

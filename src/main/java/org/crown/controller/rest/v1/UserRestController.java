@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Caratacus
  * @since 2018-10-25
  */
-@RestController
+@RestController("/api")
 public class UserRestController extends SuperController {
 
 }
