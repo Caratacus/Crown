@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.crown.common.framework.model.convert.Convert;
+import org.crown.common.mybatisplus.Wrappers;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -185,6 +186,15 @@ public interface BaseService<T extends Convert> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     List<T> list(QueryWrapper<T> queryWrapper);
+
+    /**
+     * <p>
+     * 查询列表
+     * </p>
+     */
+    default List<T> list() {
+        return list(Wrappers.emptyQueryWrapper());
+    }
 
     /**
      * <p>
