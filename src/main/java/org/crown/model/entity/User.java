@@ -29,7 +29,7 @@ public class User extends BaseModel {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "uid", type = IdType.AUTO)
-    private Integer uid;
+    private Integer id;
 
     /**
      * 用户名
@@ -90,4 +90,11 @@ public class User extends BaseModel {
 
     public static final String UPDATE_TIME = "update_time";
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

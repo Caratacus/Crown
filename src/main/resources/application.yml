@@ -6,6 +6,7 @@ mybatis-plus:
       field-strategy: not_empty
       id-type: auto
     banner: false
+    super-mapper-class: org.crown.common.framework.mapper.BaseMapper
   mapper-locations: classpath:mapper/*Mapper.xml
   typeAliasesPackage: org.crown.model
 server:
