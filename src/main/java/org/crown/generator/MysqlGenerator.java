@@ -34,10 +34,10 @@ public class MysqlGenerator {
 
     /**
      * <p>
-     * MySQL 生成演示
+     * MySQL generator
      * </p>
      */
-    public static void main(String[] args) {
+    public static void generator() {
 
         // 自定义需要填充的字段
         List<TableFill> tableFillList = new ArrayList<>();
@@ -49,7 +49,7 @@ public class MysqlGenerator {
                 // 全局配置
                 new GlobalConfig()
                         .setOutputDir("/develop/code/")//输出目录
-                        .setFileOverride(false)// 是否覆盖文件
+                        .setFileOverride(true)// 是否覆盖文件
                         .setActiveRecord(false)// 开启 activeRecord 模式
                         .setEnableCache(false)// XML 二级缓存
                         .setBaseResultMap(false)// XML ResultMap
@@ -106,38 +106,37 @@ public class MysqlGenerator {
                         .setTableFillList(tableFillList)
                         // 自定义 mapper 父类
                         .setSuperMapperClass("org.crown.common.framework.mapper.BaseMapper")
-                //TODO 待完成
-                // 自定义 service 父类
-                // .setSuperServiceClass("com.baomidou.demo.TestService")
-                // 自定义 service 实现类父类
-                // .setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl")
-                // 自定义 controller 父类
-                // .setSuperControllerClass("com.baomidou.demo.TestController")
-                // 【实体】是否生成字段常量（默认 false）
-                // public static final String ID = "test_id";
-                // .setEntityColumnConstant(true)
-                // 【实体】是否为构建者模型（默认 false）
-                // public User setName(String name) {this.name = name; return this;}
-                // .setEntityBuilderModel(true)
-                // 【实体】是否为lombok模型（默认 false）<a href="https://projectlombok.org/">document</a>
-                // .setEntityLombokModel(true)
-                // Boolean类型字段是否移除is前缀处理
-                // .setEntityBooleanColumnRemoveIsPrefix(true)
-                // .setRestControllerStyle(true)
+                        // 自定义 controller 父类
+                        .setSuperControllerClass("org.crown.common.framework.controller.SuperController")
+                        // 自定义 service 实现类父类
+                        .setSuperServiceImplClass("org.crown.common.framework.service.impl.BaseServiceImpl")
+                        // 自定义 service 接口父类
+                        .setSuperServiceClass("org.crown.common.framework.service.BaseService")
+                        // 【实体】是否生成字段常量（默认 false）
+                        .setEntityColumnConstant(true)
+                        // 【实体】是否为构建者模型（默认 false）
+                        .setEntityBuilderModel(false)
+                        // 【实体】是否为lombok模型（默认 false）<a href="https://projectlombok.org/">document</a>
+                        .setEntityLombokModel(true)
+                        // Boolean类型字段是否移除is前缀处理
+                        .setEntityBooleanColumnRemoveIsPrefix(true)
+                        .setRestControllerStyle(false)
                 // .setControllerMappingHyphenStyle(true)
         ).setPackageInfo(
                 // 包配置
                 new PackageConfig()
-                        .setModuleName("test")
-                        .setParent("com.baomidou")// 自定义包路径
-                        .setController("controller")// 这里是控制器包名，默认 web
+                        .setParent("org.crown")
+                        .setController("controller")
+                        .setEntity("model.entity")
+                        .setMapper("mapper")
+                        .setService("service")
+                        .setServiceImpl("service.impl")
         ).setCfg(
                 // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
                 new InjectionConfig() {
                     @Override
                     public void initMap() {
                         Map<String, Object> map = new HashMap<>();
-                        map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
                         this.setMap(map);
                     }
                 }.setFileOutConfigList(Collections.<FileOutConfig>singletonList(new FileOutConfig(
@@ -161,8 +160,6 @@ public class MysqlGenerator {
                 // .setServiceImpl("...");
         );
         mpg.execute();
-        // 打印注入设置，这里演示模板里面怎么获取注入内容【可无】
-        System.err.println(mpg.getCfg().getMap().get("abc"));
     }
 
 }
