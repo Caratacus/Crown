@@ -5,6 +5,7 @@ mybatis-plus:
     db-config:
       field-strategy: not_empty
       id-type: auto
+    banner: false
   mapper-locations: classpath:mapper/*Mapper.xml
   typeAliasesPackage: org.crown.model
 server:
