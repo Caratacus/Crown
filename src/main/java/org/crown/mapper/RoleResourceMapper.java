@@ -1,7 +1,7 @@
 package org.crown.mapper;
 
-import org.crown.model.entity.RoleResource;
 import org.crown.common.framework.mapper.BaseMapper;
+import org.crown.model.entity.RoleResource;
 
 /**
  * <p>

@@ -1,9 +1,9 @@
 package org.crown.service.impl;
 
-import org.crown.model.entity.MenuResource;
-import org.crown.mapper.MenuResourceMapper;
-import org.crown.service.IMenuResourceService;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
+import org.crown.mapper.MenuResourceMapper;
+import org.crown.model.entity.MenuResource;
+import org.crown.service.IMenuResourceService;
 import org.springframework.stereotype.Service;
 
 /**

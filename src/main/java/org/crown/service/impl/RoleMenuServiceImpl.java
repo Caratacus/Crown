@@ -1,9 +1,9 @@
 package org.crown.service.impl;
 
-import org.crown.model.entity.RoleMenu;
-import org.crown.mapper.RoleMenuMapper;
-import org.crown.service.IRoleMenuService;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
+import org.crown.mapper.RoleMenuMapper;
+import org.crown.model.entity.RoleMenu;
+import org.crown.service.IRoleMenuService;
 import org.springframework.stereotype.Service;
 
 /**

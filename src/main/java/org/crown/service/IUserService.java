@@ -1,7 +1,7 @@
 package org.crown.service;
 
-import org.crown.model.entity.User;
 import org.crown.common.framework.service.BaseService;
+import org.crown.model.entity.User;
 
 /**
  * <p>

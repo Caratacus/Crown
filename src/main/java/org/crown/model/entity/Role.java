@@ -1,10 +1,10 @@
 package org.crown.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-
 import java.time.LocalDate;
 
 import org.crown.common.framework.model.BaseModel;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

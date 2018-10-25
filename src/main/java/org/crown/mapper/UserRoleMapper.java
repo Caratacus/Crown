@@ -1,7 +1,7 @@
 package org.crown.mapper;
 
-import org.crown.model.entity.UserRole;
 import org.crown.common.framework.mapper.BaseMapper;
+import org.crown.model.entity.UserRole;
 
 /**
  * <p>
