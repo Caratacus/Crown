@@ -72,6 +72,10 @@ dependencies {
     testAnnotationProcessor("org.projectlombok:lombok:1.16.18")
 }
 
+tasks.matching { it instanceof Test }.all {
+    testLogging.events = ["failed", "passed", "skipped"]
+}
+
 bootJar {
     baseName = "crown"
     version = ""
