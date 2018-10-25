@@ -61,7 +61,7 @@
     </appender>
     <logger name="org.crown" level="DEBUG"/>
     <!-- 日志输出级别 -->
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="INFO_LOG"/>
         <appender-ref ref="ERROR_LOG"/>

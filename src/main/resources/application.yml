@@ -9,3 +9,23 @@ mybatis-plus:
   typeAliasesPackage: org.crown.model
 server:
   port: 8088
+spring:
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/crown?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 521
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      auto-commit: false
+      connection-timeout: 30000
+      idle-timeout: 25000
+      login-timeout: 5
+      max-lifetime: 30000
+      read-only: false
+      validation-timeout: 3000
+      maximum-pool-size: 15
+      minimum-idle: 10
+

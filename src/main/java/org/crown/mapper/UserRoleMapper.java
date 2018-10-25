@@ -1,5 +1,6 @@
 package org.crown.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.crown.common.framework.mapper.BaseMapper;
 import org.crown.model.entity.UserRole;
 
@@ -11,6 +12,7 @@ import org.crown.model.entity.UserRole;
  * @author Caratacus
  * @since 2018-10-25
  */
+@Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 }
