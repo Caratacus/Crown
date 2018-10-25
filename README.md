@@ -13,6 +13,9 @@
 
 
 ## [Lombok](http://projectlombok.org/) FAQ 
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/81a3765292f04b3cad7b7a548daf5953)](https://app.codacy.com/app/Caratacus/Crown?utm_source=github.com&utm_medium=referral&utm_content=Caratacus/Crown&utm_campaign=Badge_Grade_Dashboard)
+
 * ### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
 #### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
 * ### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
