@@ -1,5 +1,7 @@
 package org.crown.common.mybatisplus;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
@@ -10,7 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
  *
  * @author Caratacus
  */
-public class Wrappers {
+public class Wrappers implements Serializable {
 
     private static final QueryWrapper queryEmptyWrapper = new QueryEmptyWrapper<>();
 
