@@ -7,6 +7,7 @@ import org.crown.common.framework.controller.SuperController;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2018-10-25
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserRestController extends SuperController {
 
     @Autowired
