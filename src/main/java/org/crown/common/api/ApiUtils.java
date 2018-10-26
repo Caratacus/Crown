@@ -9,6 +9,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.crown.common.api.model.ErrorCode;
+import org.crown.common.api.model.responses.ApiResponses;
+import org.crown.common.http.ResponseKit;
+import org.crown.common.http.wrapper.ApiResponseWrapper;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,7 +41,7 @@ public abstract class ApiUtils {
      * @param exception
      * @return
      */
-    private static String exceptionMsg(Exception exception) {
+    public static String exceptionMsg(Exception exception) {
         if (exception instanceof MethodArgumentNotValidException) {
             StringBuilder builder = new StringBuilder("校验失败:");
             List<ObjectError> allErrors = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors();
@@ -75,10 +78,9 @@ public abstract class ApiUtils {
      * @param response
      * @param code
      */
-    public static void sendRestFail(HttpServletRequest request, HttpServletResponse response, ErrorCode code,
-                                    Exception exception) {
-        //TODO
-        //  OutputUtils.printApiJson(request, getResponse(response, code), ApiUtils.failResult(code, exception));
+    public static void writeFailureVal(HttpServletRequest request, HttpServletResponse response, ErrorCode code,
+                                       Exception exception) {
+        ResponseKit.writeValAsJson(request, getResponseWrapper(response, code), ApiResponses.failure(code, exception));
     }
 
 
@@ -89,8 +91,17 @@ public abstract class ApiUtils {
      * @param response
      * @param code
      */
-    public static void sendRestFail(HttpServletRequest request, HttpServletResponse response, ErrorCode code) {
-        sendRestFail(request, response, code, null);
+    public static void writeFailureVal(HttpServletRequest request, HttpServletResponse response, ErrorCode code) {
+        writeFailureVal(request, response, code, null);
+    }
+
+    /**
+     * 获取Response
+     *
+     * @return
+     */
+    public static ApiResponseWrapper getResponseWrapper(HttpServletResponse response, ErrorCode errorCode) {
+        return new ApiResponseWrapper(response, errorCode);
     }
 
 

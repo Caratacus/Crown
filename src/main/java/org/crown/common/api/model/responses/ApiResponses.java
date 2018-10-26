@@ -4,6 +4,7 @@ package org.crown.common.api.model.responses;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.crown.common.api.ApiUtils;
 import org.crown.common.api.model.ErrorCode;
 import org.springframework.http.HttpStatus;
 
@@ -43,7 +44,7 @@ public class ApiResponses<T> implements Serializable {
         return FailureResponses.builder()
                 .error(errorCode.getError())
                 .msg(errorCode.getMsg())
-                .exception(exception.toString())
+                .exception(ApiUtils.exceptionMsg(exception))
                 .show(errorCode.isShow())
                 .time(LocalDateTime.now())
                 .status(errorCode.getHttpCode())

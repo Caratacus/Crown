@@ -3,6 +3,7 @@ package org.crown.common.spring;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.crown.common.api.ApiUtils;
 import org.crown.common.api.model.ErrorCode;
 import org.crown.common.exception.ApiException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler {
+public class GlobalControllerExceptionHandler {
 
 
     /**
@@ -33,8 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ApiException.class)
     public void handleBadRequest(HttpServletRequest request, HttpServletResponse response, ApiException exception) {
         ErrorCode code = exception.getErrorCode();
-        //TDDO
-        //ApiUtils.sendRestFail(request, response, code);
+        ApiUtils.writeFailureVal(request, response, code);
         if (code.getHttpCode() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
             log.info("Info: code: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
         } else {
