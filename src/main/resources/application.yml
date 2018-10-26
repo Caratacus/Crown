@@ -5,10 +5,12 @@ mybatis-plus:
     db-config:
       field-strategy: not_empty
       id-type: auto
+      db-type: mysql
     banner: false
     super-mapper-class: org.crown.common.framework.mapper.BaseMapper
+    refresh: true
   mapper-locations: classpath:mapper/*Mapper.xml
-  typeAliasesPackage: org.crown.model
+  typeAliasesPackage: org.crown.model.entity,org.crown.model.dto
 server:
   port: 8088
 spring:
