@@ -1,8 +1,8 @@
 package org.crown.common.exception;
 
 
-import org.apache.commons.lang3.StringUtils;
-import org.crown.common.api.emuns.ErrorCode;
+import org.crown.common.api.emuns.ErrorCodeEnum;
+import org.crown.common.api.model.ErrorCode;
 
 /**
  * <p>
@@ -20,22 +20,19 @@ public class ApiException extends RuntimeException {
      */
     private ErrorCode errorCode;
 
-    public ApiException(ErrorCode errorCode, String msg) {
-
-        super(StringUtils.isNotBlank(msg) ? msg : errorCode.msg());
-        this.errorCode = errorCode;
+    public ApiException(ErrorCodeEnum errorCodeEnum) {
+        super(errorCodeEnum.msg());
+        this.errorCode = errorCodeEnum.convert();
     }
 
     public ApiException(ErrorCode errorCode) {
-        this(errorCode, null);
+        super(errorCode.getError());
+        this.errorCode = errorCode;
+
     }
 
     public ErrorCode getErrorCode() {
         return errorCode;
-    }
-
-    public void setErrorCode(ErrorCode errorCode) {
-        this.errorCode = errorCode;
     }
 
 }

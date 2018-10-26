@@ -3,6 +3,9 @@ package org.crown.controller.rest.v1;
 
 import java.util.List;
 
+import org.crown.common.api.ApiAssert;
+import org.crown.common.api.emuns.ErrorCodeEnum;
+import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
@@ -28,8 +31,9 @@ public class UserRestController extends SuperController {
     private IUserService userService;
 
     @GetMapping
-    public List<User> users() {
-        return userService.list();
+    public ApiResponses<List<User>> users() {
+        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE, request.getParameter("a"));
+        return success(userService.list());
     }
 }
 

@@ -41,7 +41,7 @@ public class UserRestControllerTest {
 
     @Test
     public void users() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/user").accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user").accept(MediaType.APPLICATION_JSON).param("a", "a")).andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }

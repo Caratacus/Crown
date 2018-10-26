@@ -2,6 +2,7 @@ package org.crown.common.api.emuns;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.crown.common.api.model.ErrorCode;
 import org.crown.common.exception.UnknownEnumException;
 
 
@@ -10,7 +11,7 @@ import org.crown.common.exception.UnknownEnumException;
  *
  * @author Caratacus
  */
-public enum ErrorCode {
+public enum ErrorCodeEnum {
 
     /**
      * 未授权的服务
@@ -21,15 +22,34 @@ public enum ErrorCode {
     private final boolean show;
     private final String msg;
 
-    ErrorCode(int httpCode, boolean show, String msg) {
+    ErrorCodeEnum(int httpCode, boolean show, String msg) {
         this.httpCode = httpCode;
         this.msg = msg;
         this.show = show;
     }
 
-    public static ErrorCode getErrorCode(String errorCode) {
-        ErrorCode[] enums = ErrorCode.values();
-        for (ErrorCode errorCodeEnum : enums) {
+    /**
+     * 转换为ErrorCode(自定义返回消息)
+     *
+     * @param msg
+     * @return
+     */
+    public ErrorCode convert(String msg) {
+        return ErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg).build();
+    }
+
+    /**
+     * 转换为ErrorCode
+     *
+     * @return
+     */
+    public ErrorCode convert() {
+        return ErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg()).build();
+    }
+
+    public static ErrorCodeEnum getErrorCode(String errorCode) {
+        ErrorCodeEnum[] enums = ErrorCodeEnum.values();
+        for (ErrorCodeEnum errorCodeEnum : enums) {
             if (errorCodeEnum.name().equalsIgnoreCase(errorCode)) {
                 return errorCodeEnum;
             }
@@ -45,7 +65,7 @@ public enum ErrorCode {
         return this.msg;
     }
 
-    public boolean isShow() {
+    public boolean show() {
         return this.show;
     }
 }

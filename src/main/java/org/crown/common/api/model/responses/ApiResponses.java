@@ -4,8 +4,7 @@ package org.crown.common.api.model.responses;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import org.apache.commons.lang3.StringUtils;
-import org.crown.common.api.emuns.ErrorCode;
+import org.crown.common.api.model.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 
@@ -15,6 +14,14 @@ import org.springframework.http.HttpStatus;
  * @author Caratacus
  */
 public class ApiResponses<T> implements Serializable {
+
+    /**
+     * 不需要返回结果
+     */
+    public static ApiResponses<Void> empty() {
+        return SuccessResponses.<Void>builder().status(HttpStatus.OK.value()).build();
+
+    }
 
     /**
      * 成功返回
@@ -33,24 +40,13 @@ public class ApiResponses<T> implements Serializable {
      * @param exception
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
-        return failure(errorCode, exception, null);
-    }
-
-    /**
-     * 失败返回
-     *
-     * @param errorCode
-     * @param exception
-     * @param msg
-     */
-    public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception, String msg) {
         return FailureResponses.builder()
-                .error(errorCode.toString())
-                .msg(StringUtils.isNotBlank(msg) ? msg : errorCode.msg())
+                .error(errorCode.getError())
+                .msg(errorCode.getMsg())
                 .exception(exception.toString())
                 .show(errorCode.isShow())
                 .time(LocalDateTime.now())
-                .status(errorCode.httpCode())
+                .status(errorCode.getHttpCode())
                 .build();
     }
 
