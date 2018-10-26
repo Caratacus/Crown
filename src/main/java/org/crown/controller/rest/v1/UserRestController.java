@@ -35,7 +35,7 @@ public class UserRestController extends SuperController {
     public ApiResponses<List<User>> users() {
         User user = new User();
         user.setCreateTime(LocalDate.now());
-        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE, request.getParameter("a"));
+        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE.convert("我就是想测试"), request.getParameter("a"));
         List<User> list = userService.list();
         boolean add = list.add(user);
         return success(list);
