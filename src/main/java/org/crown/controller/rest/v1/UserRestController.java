@@ -4,7 +4,7 @@ package org.crown.controller.rest.v1;
 import java.util.List;
 
 import org.crown.common.api.ApiAssert;
-import org.crown.common.api.emuns.ErrorCodeEnum;
+import org.crown.emuns.ErrorCodeEnum;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.model.entity.User;

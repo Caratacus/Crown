@@ -1,4 +1,4 @@
-package org.crown.common.api.emuns;
+package org.crown.emuns;
 
 import javax.servlet.http.HttpServletResponse;
 

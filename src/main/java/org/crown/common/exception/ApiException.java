@@ -1,7 +1,7 @@
 package org.crown.common.exception;
 
 
-import org.crown.common.api.emuns.ErrorCodeEnum;
+import org.crown.emuns.ErrorCodeEnum;
 import org.crown.common.api.model.ErrorCode;
 
 /**
