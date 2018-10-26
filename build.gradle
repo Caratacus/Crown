@@ -64,6 +64,7 @@ dependencies {
     api("com.zaxxer:HikariCP:3.2.0")
     api("org.liquibase:liquibase-core:3.5.3")
     api("org.modelmapper:modelmapper:2.3.0")
+    api("com.vip.vjtools:vjkit:1.0.6")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile("org.apache.velocity:velocity-engine-core:2.0")
     testCompile("org.projectlombok:lombok:1.16.18")
