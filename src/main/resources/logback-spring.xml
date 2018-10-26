@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="10 seconds">
     <!--通用变量-->
-    <property name="LOG_HOME" value="logs/crown"/>
+    <property name="LOG_HOME" value="logs"/>
     <property name="ERROR_LOG_FILE_NAME" value="error"/>
     <property name="INFO_LOG_FILE_NAME" value="info"/>
     <!--文件日志格式-->
