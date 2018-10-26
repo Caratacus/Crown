@@ -1,12 +1,13 @@
 package org.crown.controller.rest.v1;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.crown.common.api.ApiAssert;
-import org.crown.emuns.ErrorCodeEnum;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
+import org.crown.emuns.ErrorCodeEnum;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,12 @@ public class UserRestController extends SuperController {
 
     @GetMapping
     public ApiResponses<List<User>> users() {
+        User user = new User();
+        user.setCreateTime(LocalDate.now());
         ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE, request.getParameter("a"));
-        return success(userService.list());
+        List<User> list = userService.list();
+        boolean add = list.add(user);
+        return success(list);
     }
 }
 

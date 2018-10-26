@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.crown.common.http.log.Log;
 import org.crown.common.http.log.LogHelper;
 import org.crown.common.http.wrapper.ApiResponseWrapper;
-import org.crown.common.kit.FastJsonUtils;
+import org.crown.common.kit.JacksonUtils;
 import org.crown.common.kit.IpUtils;
 import org.crown.cons.APICons;
 
@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
  * response输出工具类
  *
  * @author Caratacus
- * @since 2017-04-02
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
@@ -41,7 +40,7 @@ public abstract class ResponseKit {
                 IpUtils.getIpAddr(request),
                 obj);
         // 日志打印
-        log.info(FastJsonUtils.toJson(logger));
+        log.info(JacksonUtils.toJson(logger));
         if (ObjectUtils.isNotNull(response, obj)) {
             response.writeValueAsJson(obj);
         }

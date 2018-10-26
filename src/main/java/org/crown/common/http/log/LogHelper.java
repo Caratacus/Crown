@@ -3,7 +3,7 @@ package org.crown.common.http.log;
 import java.util.Map;
 import java.util.Optional;
 
-import org.crown.common.kit.FastJsonUtils;
+import org.crown.common.kit.JacksonUtils;
 import org.crown.common.http.ResponseKit;
 import org.crown.common.spring.ApplicationUtils;
 
@@ -12,7 +12,6 @@ import org.crown.common.spring.ApplicationUtils;
  * 请求日志工具类
  *
  * @author Caratacus
- * @since 2018-7-13
  */
 public abstract class LogHelper {
 
@@ -36,7 +35,7 @@ public abstract class LogHelper {
                 //查询参数
                 .parameterMap(parameterMap)
                 //请求体
-                .requestBody(Optional.ofNullable(FastJsonUtils.parse(requestBody)).orElse(requestBody))
+                .requestBody(Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody))
                 //请求路径
                 .url(url)
                 //请求mapping

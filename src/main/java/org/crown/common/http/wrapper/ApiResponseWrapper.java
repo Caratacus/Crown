@@ -8,7 +8,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import org.crown.common.kit.FastJsonUtils;
+import org.crown.common.kit.JacksonUtils;
 import org.crown.common.api.model.ErrorCode;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.springframework.util.MimeTypeUtils;
@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
  * response包装类
  *
  * @author Caratacus
- * @since 2018-04-06
  */
 @Slf4j
 public class ApiResponseWrapper extends HttpServletResponseWrapper {
@@ -105,7 +104,7 @@ public class ApiResponseWrapper extends HttpServletResponseWrapper {
         super.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         super.setCharacterEncoding(StandardCharsets.UTF_8.name());
         try (PrintWriter writer = super.getWriter()) {
-            writer.print(FastJsonUtils.toJson(obj));
+            writer.print(JacksonUtils.toJson(obj));
             writer.flush();
         } catch (IOException e) {
             log.warn("Error: Response printJson faild, stackTrace: {}", Throwables.getStackTraceAsString(e));
