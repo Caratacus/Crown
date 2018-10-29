@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  *
  * @author Caratacus
  */
-public class SpringHibernateValidatorAdapter implements javax.validation.Validator {
+public class ValidatorCollectionImpl implements javax.validation.Validator {
 
     private final javax.validation.Validator targetValidator = Validation.buildDefaultValidatorFactory().getValidator();
 

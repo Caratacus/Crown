@@ -2,11 +2,9 @@ package org.crown.config;
 
 import java.util.List;
 
-import javax.validation.Validator;
-
 import org.crown.common.http.log.aspect.LogRecordAspect;
 import org.crown.common.kit.JacksonUtils;
-import org.crown.common.spring.validator.SpringHibernateValidatorAdapter;
+import org.crown.common.spring.validator.ValidatorCollectionImpl;
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,11 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 import io.undertow.Undertow;
 
@@ -39,10 +38,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         return new LogRecordAspect();
     }
 
-    @Bean
-    public Validator springHibernateValidatorAdapter() {
-        return new SpringHibernateValidatorAdapter();
+    @Override
+    public Validator getValidator() {
+        return new SpringValidatorAdapter(new ValidatorCollectionImpl());
     }
+
 
     @Bean
     @ConditionalOnClass(Undertow.class)
@@ -68,7 +68,6 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.removeIf(e -> e instanceof MappingJackson2HttpMessageConverter);
         MappingJackson2HttpMessageConverter httpMessageConverter = new MappingJackson2HttpMessageConverter();
         httpMessageConverter.setObjectMapper(JacksonUtils.getObjectMapper());
         converters.add(httpMessageConverter);
@@ -80,7 +79,7 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.removeIf(resolver -> resolver instanceof DefaultHandlerExceptionResolver);
+        //exceptionResolvers.removeIf(resolver -> resolver instanceof DefaultHandlerExceptionResolver);
         //TODO
         // exceptionResolvers.add(new ServerHandlerExceptionResolver());
     }

@@ -2,6 +2,8 @@ package org.crown.model.entity;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 import org.crown.common.framework.model.BaseModel;
 
 import com.baomidou.mybatisplus.annotation.IdType;

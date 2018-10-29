@@ -12,9 +12,14 @@ import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
 
 /**
  * <p>
@@ -26,13 +31,27 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Validated
 public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
 
     @GetMapping
+    @ApiOperation("1")
     public ApiResponses<List<User>> users() {
+        User user = new User();
+        user.setCreateTime(LocalDate.now());
+        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE.convert("我就是想测试"), request.getParameter("a"));
+        List<User> list = userService.list();
+        boolean add = list.add(user);
+        return success(list);
+    }
+
+    @PostMapping
+    @ApiOperation("测试")
+    public ApiResponses<List<User>> users(@RequestBody @Validated List<User> list1) {
+        System.out.println(list1);
         User user = new User();
         user.setCreateTime(LocalDate.now());
         ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE.convert("我就是想测试"), request.getParameter("a"));
