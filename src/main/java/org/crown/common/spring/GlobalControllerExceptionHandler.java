@@ -34,7 +34,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = ApiException.class)
     public void handleBadRequest(HttpServletRequest request, HttpServletResponse response, ApiException exception) {
         ErrorCode code = exception.getErrorCode();
-        ApiUtils.writeFailureVal(request, response, code);
+        ApiUtils.sendRestFail(request, response, code);
         if (code.getHttpCode() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
             log.info("Info: code: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
         } else {

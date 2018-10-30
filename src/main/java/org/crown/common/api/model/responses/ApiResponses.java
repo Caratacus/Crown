@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
  */
 public class ApiResponses<T> implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     /**
      * 不需要返回结果
      */
@@ -41,10 +42,8 @@ public class ApiResponses<T> implements Serializable {
      * @param exception
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
-        return FailureResponses.builder()
+        return ApiUtils.exceptionMsg(FailureResponses.builder(), exception)
                 .error(errorCode.getError())
-                .msg(errorCode.getMsg())
-                .exception(ApiUtils.exceptionMsg(exception))
                 .show(errorCode.isShow())
                 .time(LocalDateTime.now())
                 .status(errorCode.getHttpCode())

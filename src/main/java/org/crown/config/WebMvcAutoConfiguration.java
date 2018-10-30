@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.crown.common.http.log.aspect.LogRecordAspect;
 import org.crown.common.kit.JacksonUtils;
+import org.crown.common.spring.CrownHandlerExceptionResolver;
 import org.crown.common.spring.validator.ValidatorCollectionImpl;
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -50,22 +51,12 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         return new UndertowServerFactoryCustomizer();
     }
 
-    /**
-     * <p>
-     * 请求监听
-     * </p>
-     */
     @Bean
     @ConditionalOnMissingBean(RequestContextListener.class)
     public RequestContextListener requestContextListener() {
         return new RequestContextListener();
     }
 
-    /**
-     * <p>
-     * 消息转换
-     * </p>
-     */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter httpMessageConverter = new MappingJackson2HttpMessageConverter();
@@ -73,20 +64,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         converters.add(httpMessageConverter);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>This implementation is empty.
-     */
     @Override
-    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        //exceptionResolvers.removeIf(resolver -> resolver instanceof DefaultHandlerExceptionResolver);
-        //TODO
-        // exceptionResolvers.add(new ServerHandlerExceptionResolver());
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(new CrownHandlerExceptionResolver());
     }
 
-    /**
-     * 配置拦截器
-     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         /**

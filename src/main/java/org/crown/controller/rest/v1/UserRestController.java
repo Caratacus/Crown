@@ -4,6 +4,8 @@ package org.crown.controller.rest.v1;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.validation.constraints.Min;
+
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
@@ -39,10 +42,10 @@ public class UserRestController extends SuperController {
 
     @GetMapping
     @ApiOperation("1")
-    public ApiResponses<List<User>> users() {
+    public ApiResponses<List<User>> users(@RequestParam @Min(value = 2010) Integer aa) {
         User user = new User();
         user.setCreateTime(LocalDate.now());
-        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE.convert("我就是想测试"), request.getParameter("a"));
+        ApiAssert.notNull(ErrorCodeEnum.FORBIDDEN.convert("我就是想测试"), aa);
         List<User> list = userService.list();
         boolean add = list.add(user);
         return success(list);
@@ -54,7 +57,7 @@ public class UserRestController extends SuperController {
         System.out.println(list1);
         User user = new User();
         user.setCreateTime(LocalDate.now());
-        ApiAssert.isNull(ErrorCodeEnum.FOR_EXAMPLE.convert("我就是想测试"), request.getParameter("a"));
+        ApiAssert.isNull(ErrorCodeEnum.FORBIDDEN.convert("我就是想测试"), request.getParameter("a"));
         List<User> list = userService.list();
         boolean add = list.add(user);
         return success(list);

@@ -22,6 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class FailureResponses extends ApiResponses {
 
+    private static final long serialVersionUID = 1L;
     /**
      * http 状态码
      */
