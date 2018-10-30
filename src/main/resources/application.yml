@@ -15,6 +15,7 @@ server:
   port: 8088
 spring:
   jackson:
+    time-zone: GMT+8
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
       FAIL_ON_EMPTY_BEANS: false
