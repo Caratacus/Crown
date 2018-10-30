@@ -1,8 +1,6 @@
 package org.crown.model.entity;
 
-import java.time.LocalDate;
-
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.BaseModel;
 
@@ -66,12 +64,12 @@ public class User extends BaseModel {
     /**
      * 创建时间
      */
-    private LocalDate createTime;
+    private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    private LocalDate updateTime;
+    private LocalDateTime updateTime;
 
 
     public static final String UID = "uid";

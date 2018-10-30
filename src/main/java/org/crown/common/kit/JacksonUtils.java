@@ -86,7 +86,7 @@ public abstract class JacksonUtils {
         objectMapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
         // 过滤对象的null属性.
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        // 过滤map中的null值
+        //忽略transient
         objectMapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));

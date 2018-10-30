@@ -1,7 +1,7 @@
 package org.crown.controller.rest.v1;
 
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -44,7 +44,7 @@ public class UserRestController extends SuperController {
     @ApiOperation("1")
     public ApiResponses<List<User>> users(@RequestParam @Min(value = 2010) Integer aa) {
         User user = new User();
-        user.setCreateTime(LocalDate.now());
+        user.setCreateTime(LocalDateTime.now());
         ApiAssert.notNull(ErrorCodeEnum.FORBIDDEN.convert("我就是想测试"), aa);
         List<User> list = userService.list();
         boolean add = list.add(user);
@@ -56,7 +56,7 @@ public class UserRestController extends SuperController {
     public ApiResponses<List<User>> users(@RequestBody @Validated List<User> list1) {
         System.out.println(list1);
         User user = new User();
-        user.setCreateTime(LocalDate.now());
+        user.setCreateTime(LocalDateTime.now());
         ApiAssert.isNull(ErrorCodeEnum.FORBIDDEN.convert("我就是想测试"), request.getParameter("a"));
         List<User> list = userService.list();
         boolean add = list.add(user);
