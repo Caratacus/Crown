@@ -1,6 +1,6 @@
 package org.crown.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.BaseModel;
 
@@ -64,12 +64,12 @@ public class Menu extends BaseModel {
     /**
      * 创建时间
      */
-    private LocalDate createTime;
+    private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    private LocalDate updateTime;
+    private LocalDateTime updateTime;
 
 
     public static final String PARENT_ID = "parent_id";
