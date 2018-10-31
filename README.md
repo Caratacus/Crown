@@ -4,7 +4,7 @@
         Based on SpringBoot2, Crown builds a rapidly developed web application scaffolding.
         <br>        
         <br>
-		<a href="https://api.github.com/licenses/mit">
+		<a href="https://mit-license.org">
 		<img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat"></a>
 		<a href="https://travis-ci.org/Caratacus/Crown">
 		<img src="https://www.travis-ci.org/Caratacus/Crown.svg?branch=master"></a>
@@ -22,19 +22,17 @@
 <br>
 ----------------------------------------------------
 
-#### Development Tools :checkered_flag:
+##### Development Tools :checkered_flag:
 
-<sup>
 <sup>1</sup> **JDK**1.8+ <br/>
 <sup>2</sup> **MySQL**5.7+ <br/>
 <sup>3</sup> **Gradle**4.10+ <br/>
-</sup>
 
 <br>
-----------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 ##### Frameworks :microscope:
-<sup>
+
 <sup>1</sup> **核心框架**: SpringBoot <br/>
 <sup>2</sup> **持久层框架**: MyBatisPlus <br/>
 <sup>3</sup> **数据库连接池**: HikariCP <br/>
@@ -46,10 +44,9 @@
 <sup>9</sup> **基础工具类**: ApacheCommons、VjTools <br/>
 <sup>10</sup> **日志**: SLF4J、Logback <br/>
 <sup>N</sup> **以上依赖基本都会升级为最新版本** <br/>
-</sup>
 
 <br>
-----------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 ### [Lombok](http://projectlombok.org/) FAQ 
 * #### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
@@ -61,7 +58,14 @@
 ##### 答：上图所示，IDEA下载Lombok插件并开启注解编译支持
 
 <br>
-----------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+### License
+
+The Corwn is released under of the [Mit License](https://mit-license.org).
+
+<br>
+------------------------------------------------------------------------------------------------------------------------
 
 ### 有事烧钱
 
