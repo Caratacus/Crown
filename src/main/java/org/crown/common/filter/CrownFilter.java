@@ -11,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import org.crown.common.http.RequestKit;
 import org.crown.common.http.wrapper.ApiRequestWrapper;
 import org.springframework.stereotype.Component;
 
@@ -32,11 +31,7 @@ public class CrownFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse res,
                          FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
-        //包含请求才设置RequestWrapper
-        if (RequestKit.isContainBody(req)) {
-            req = new ApiRequestWrapper(req);
-        }
-        chain.doFilter(req, res);
+        chain.doFilter(new ApiRequestWrapper(req), res);
     }
 
     @Override
