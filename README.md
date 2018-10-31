@@ -19,15 +19,50 @@
     </p>    
 </p>
 
-## [Lombok](http://projectlombok.org/) FAQ 
-* ### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
-#### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
-* ### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
+<br>
+----------------------------------------------------
+
+#### Development Tools :checkered_flag:
+
+<sup>
+<sup>1</sup> **JDK**1.8+ <br/>
+<sup>2</sup> **MySQL**5.7+ <br/>
+<sup>3</sup> **Gradle**4.10+ <br/>
+</sup>
+
+<br>
+----------------------------------------------------
+
+##### Frameworks :microscope:
+<sup>
+<sup>1</sup> **核心框架**: SpringBoot <br/>
+<sup>2</sup> **持久层框架**: MyBatisPlus <br/>
+<sup>3</sup> **数据库连接池**: HikariCP <br/>
+<sup>4</sup> **SQL脚本**: Liquibase <br/>
+<sup>5</sup> **数据校验**: HibernateValidator <br/>
+<sup>6</sup> **对象转换**: ModelMapper <br/>
+<sup>7</sup> **JSON转换**: Jackson <br/>
+<sup>8</sup> **接口文档**: Swagger <br/>
+<sup>9</sup> **基础工具类**: ApacheCommons、VjTools <br/>
+<sup>10</sup> **日志**: SLF4J、Logback <br/>
+<sup>N</sup> **以上依赖基本都会升级为最新版本** <br/>
+</sup>
+
+<br>
+----------------------------------------------------
+
+### [Lombok](http://projectlombok.org/) FAQ 
+* #### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
+##### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
+* #### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
 
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/idea-annotation-compile.png)
 
-#### 答：上图所示，IDEA下载Lombok插件并开启注解编译支持
+##### 答：上图所示，IDEA下载Lombok插件并开启注解编译支持
 
-## 有事烧钱
+<br>
+----------------------------------------------------
+
+### 有事烧钱
 
 <img src="https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg" alt="pay.jpg">
