@@ -22,6 +22,22 @@
 <br>
 ------------------------------------------------------------------------------------------------------------------------
 
+##### Feature :rocket:
+
+<sup>1</sup> **标准的Restful风格，完美的标准化API** <br/>
+<sup>2</sup> **防止XSS攻击、SQL注入，妈妈再也不用担心我的安全问题** <br/>
+<sup>3</sup> **深度定制Mybatisplus，各种玩法意想不到** <br/>
+<sup>4</sup> **深入拓展ModelMapper，各种类型一键转换** <br/>
+<sup>5</sup> **运用Liquibase，增量SQL一键导出** <br/>
+<sup>6</sup> **接口日志详情打印，所有访问信息一览无遗** <br/>
+<sup>7</sup> **各项配置调制最优，再也不需要担心默认值性能问题** <br/>
+
+<sup>N</sup> **更多特性持续更新** <br/>
+
+
+<br>
+------------------------------------------------------------------------------------------------------------------------
+
 ##### Development Tools :checkered_flag:
 
 <sup>1</sup> **JDK**1.8+ <br/>
@@ -34,7 +50,7 @@
 ##### Frameworks :microscope:
 
 <sup>1</sup> **核心框架**: SpringBoot <br/>
-<sup>2</sup> **持久层框架**: MyBatisPlus <br/>
+<sup>2</sup> **持久层框架**: MyBatisplus <br/>
 <sup>3</sup> **数据库连接池**: HikariCP <br/>
 <sup>4</sup> **SQL脚本**: Liquibase <br/>
 <sup>5</sup> **数据校验**: HibernateValidator <br/>
@@ -43,6 +59,7 @@
 <sup>8</sup> **接口文档**: Swagger <br/>
 <sup>9</sup> **基础工具类**: ApacheCommons、VjTools <br/>
 <sup>10</sup> **日志**: SLF4J、Logback <br/>
+
 <sup>N</sup> **以上依赖基本都会升级为最新版本** <br/>
 
 <br>
