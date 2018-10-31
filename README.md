@@ -21,7 +21,6 @@
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ##### Feature :rocket:
 <sup>
 <sup>1</sup> 标准的Restful风格，完美的标准化API <br/>
@@ -32,40 +31,37 @@
 <sup>6</sup> 接口日志详情打印，所有访问信息一览无遗 <br/>
 <sup>7</sup> 各项配置调制最优，再也不需要担心默认值性能问题 <br/>
 <sup>8</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
-
 <sup>N</sup> 更多特性持续更新 <br/>
 </sup>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ##### Development Tools :checkered_flag:
-
-<sup>1</sup> **JDK**1.8+ <br/>
-<sup>2</sup> **MySQL**5.7+ <br/>
-<sup>3</sup> **Gradle**4.10+ <br/>
+<sup>
+<sup>1</sup> JDK1.8+ <br/>
+<sup>2</sup> MySQL5.7+ <br/>
+<sup>3</sup> Gradle4.10+ <br/>
+</sup>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ##### Frameworks :microscope:
-
-<sup>1</sup> **核心框架**: SpringBoot <br/>
-<sup>2</sup> **持久层框架**: MyBatisplus <br/>
-<sup>3</sup> **数据库连接池**: HikariCP <br/>
-<sup>4</sup> **SQL脚本**: Liquibase <br/>
-<sup>5</sup> **数据校验**: HibernateValidator <br/>
-<sup>6</sup> **对象转换**: ModelMapper <br/>
-<sup>7</sup> **JSON转换**: Jackson <br/>
-<sup>8</sup> **接口文档**: Swagger <br/>
-<sup>9</sup> **基础工具类**: ApacheCommons、VjTools <br/>
-<sup>10</sup> **日志**: SLF4J、Logback <br/>
-
-<sup>N</sup> **以上依赖基本都会升级为最新版本** <br/>
+<sup>
+<sup>1</sup> 核心框架: SpringBoot <br/>
+<sup>2</sup> 持久层框架: MyBatisplus <br/>
+<sup>3</sup> 数据库连接池: HikariCP <br/>
+<sup>4</sup> SQL脚本: Liquibase <br/>
+<sup>5</sup> 数据校验: HibernateValidator <br/>
+<sup>6</sup> 对象转换: ModelMapper <br/>
+<sup>7</sup> JSON转换: Jackson <br/>
+<sup>8</sup> 接口文档: Swagger <br/>
+<sup>9</sup> 基础工具类: ApacheCommons、VjTools <br/>
+<sup>10</sup> 日志: SLF4J、Logback <br/>
+<sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
+</sup>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ### [Lombok](http://projectlombok.org/) FAQ 
 * #### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
 ##### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
@@ -77,14 +73,10 @@
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ### License
-
 The Corwn is released under of the [Mit License](https://mit-license.org).
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
-
 ### 有事烧钱
-
 <img src="https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg" alt="pay.jpg">
