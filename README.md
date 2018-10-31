@@ -10,8 +10,10 @@
 		<img src="https://www.travis-ci.org/Caratacus/Crown.svg?branch=master"></a>
 		<a href="https://app.codacy.com/app/Caratacus/Crown?utm_source=github.com&utm_medium=referral&utm_content=Caratacus/Crown&utm_campaign=Badge_Grade_Dashboard">
 		<img src="https://api.codacy.com/project/badge/Grade/81a3765292f04b3cad7b7a548daf5953"></a>
-		<a href="https://github.com/Caratacus">
-		<img src="https://img.shields.io/badge/author-Caratacus-ff69b4.svg"></a>
+		<a href="https://github.com/Caratacus/Crown">
+		<img src="https://img.shields.io/badge/JDK-1.8-green.svg" alt="JDK 1.8" title="JDK 1.8"></a>
+        <a href="https://github.com/Caratacus">
+        <img src="https://img.shields.io/badge/author-Caratacus-ff69b4.svg"></a>
         <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=180c0eb468ec425c7208f49f142e4057f3f83a2fdabfe07ccb4606a414cd6413">
         <img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
     </p>    
