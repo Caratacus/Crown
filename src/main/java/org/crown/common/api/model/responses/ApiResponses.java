@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 public class ApiResponses<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     /**
      * 不需要返回结果
      */

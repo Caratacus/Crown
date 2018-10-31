@@ -1,8 +1,8 @@
 package org.crown.common.exception;
 
 
-import org.crown.emuns.ErrorCodeEnum;
 import org.crown.common.api.model.ErrorCode;
+import org.crown.emuns.ErrorCodeEnum;
 
 /**
  * <p>
@@ -18,7 +18,7 @@ public class ApiException extends RuntimeException {
     /**
      * 错误码
      */
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     public ApiException(ErrorCodeEnum errorCodeEnum) {
         super(errorCodeEnum.msg());

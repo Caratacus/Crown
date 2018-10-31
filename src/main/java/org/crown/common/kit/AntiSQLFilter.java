@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class AntiSQLFilter {
 
-    private static String[] keyWords = {";", "\"", "\'", "/*", "*/", "--", "exec",
+    private static final String[] keyWords = {";", "\"", "\'", "/*", "*/", "--", "exec",
             "select", "update", "delete", "insert",
             "alter", "drop", "create", "shutdown"};
 

@@ -10,7 +10,7 @@ import org.modelmapper.Module;
  */
 public class Jsr310Module implements Module {
 
-    private Jsr310ModuleConfig config;
+    private final Jsr310ModuleConfig config;
 
     public Jsr310Module() {
         this(new Jsr310ModuleConfig());

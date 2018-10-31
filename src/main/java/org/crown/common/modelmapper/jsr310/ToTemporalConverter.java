@@ -20,7 +20,7 @@ import org.modelmapper.spi.MappingContext;
  */
 public class ToTemporalConverter implements ConditionalConverter<Object, Temporal> {
 
-    private Jsr310ModuleConfig config;
+    private final Jsr310ModuleConfig config;
     private final LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
     private final LocalDateConverter localDateConverter = new LocalDateConverter();
     private final InstantConverter instantConverter = new InstantConverter();
