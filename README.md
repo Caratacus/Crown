@@ -66,23 +66,31 @@
 <br>
 ------------------------------------------------------------------------------------------------------------------------
 
-### [Lombok](http://projectlombok.org/) FAQ 
-* #### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
-##### 答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
-* #### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
+##### [Lombok](http://projectlombok.org/) FAQ 
+
+* ###### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
+
+<sup>
+    答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
+</sup>
+
+* ###### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
 
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/idea-annotation-compile.png)
 
-##### 答：上图所示，IDEA下载Lombok插件并开启注解编译支持
+<sup>
+    答：上图所示，IDEA下载Lombok插件并开启注解编译支持
+</sup>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
 
-### License
-The Corwn is released under of the [Mit License](https://mit-license.org).
+##### License
+
+   The Corwn is released under of the [Mit License](https://mit-license.org). <br/>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
 
-### 有事烧钱
-<img src="https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg" alt="pay.jpg">
+##### 有事烧钱
+![pay.jpg](https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg)
