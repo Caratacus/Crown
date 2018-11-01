@@ -93,4 +93,5 @@
 ------------------------------------------------------------------------------------------------------------------------
 
 ##### 有事烧钱
-![pay.jpg](https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg)
+
+<img src="https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg" alt="pay.jpg" width="650" hight="150">
