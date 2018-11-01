@@ -8,6 +8,7 @@ import org.crown.cons.APICons;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 
@@ -21,6 +22,10 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // ResourceHttpRequestHandler放行
+        if (handler instanceof ResourceHttpRequestHandler) {
+            return true;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         // 获取约定的请求头
         request.setAttribute(APICons.API_BEGIN_TIME, System.currentTimeMillis());
