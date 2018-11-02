@@ -3,7 +3,9 @@
     <p align="center">
         Based on SpringBoot2, Crown builds a rapidly developed web application scaffolding.
         <br>      
-        <p align="center">Crown官方交流群：223706133</p> 
+        <br>      
+        <span>Crown官方交流群：223706133</span> 
+        <br>      
         <br>
 		<a href="https://mit-license.org">
 		<img src="https://img.shields.io/cocoapods/l/Alamofire.svg?style=flat"></a>
