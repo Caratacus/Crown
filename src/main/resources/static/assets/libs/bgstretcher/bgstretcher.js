@@ -336,7 +336,7 @@
                 cur_bgstretcher = $(this).children('.bgstretcher-area');
                 $(code).prependTo(cur_bgstretcher);
                 cur_bgstretcher.css({position: 'relative'});
-                cur_bgstretcher.children('.bgstretcher-page').css({'position': 'relative', 'z-index': 3});
+                cur_bgstretcher.children('.bgstretcher-page').css({'position': 'relative', 'z-index': 3,'top':0,'width':body_content.width(),'height':body_content.height()});
             });
 
         };
