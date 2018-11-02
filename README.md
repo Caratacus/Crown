@@ -18,9 +18,8 @@
         <img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
     </p>    
 </p>
+<span style="text-align: center;display:block;">Crown官方交流群：223706133</span>
 
-<sup>Crown</sup>官方交流群223706133
- 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
 
