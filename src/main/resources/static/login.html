@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/libs/layui/css/layui.css"/>
     <link rel="stylesheet" href="assets/css/login.css" media="all">
     <link rel="stylesheet" type="text/css" href="assets/libs/bgstretcher/bgstretcher.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/libs/jigsaw/jigsaw.css"/>
     <script type="text/javascript" src="assets/libs/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="assets/libs/bgstretcher/bgstretcher.js"></script>
     <script type="text/javascript">
@@ -51,16 +52,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
-                    <div class="layui-input-block">
-                        <div class="layui-row inline-block">
-                            <div class="layui-col-xs7">
-                                <input name="code" type="text" lay-verify="required" placeholder="验证码"
-                                       class="layui-input">
-                            </div>
-                            <div class="layui-col-xs5" style="padding-left: 10px;">
-                                <img class="login-captcha" src="https://www.oschina.net/action/user/captcha">
-                            </div>
+                    <div class="layui-row inline-block">
+                        <div class="layui-col-xs7">
+                            <div id="captcha"></div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +74,9 @@
     </div>
 </div>
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="assets/libs/jigsaw/jigsaw.js"></script>
 <script>
+
     layui.config({
         base: 'module/'
     }).use(['config', 'form'], function () {
@@ -92,7 +88,6 @@
             location.replace('./');
             return;
         }
-
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
             var field = obj.field;
@@ -130,9 +125,10 @@
             });
         });
 
-        // 图形验证码
-        $('.login-captcha').click(function () {
-            this.src = this.src + '?t=' + (new Date).getTime();
+        jigsaw.init(document.getElementById('captcha'), function () {
+            layer.msg('验证成功', {time: 888});
+        }, function () {
+            layer.msg('请继续验证', {time: 888});
         });
     });
 </script>

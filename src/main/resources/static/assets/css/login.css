@@ -40,11 +40,6 @@ body {
     margin-left: 48px;
 }
 
-.login-body .login-captcha {
-    width: 100%;
-    cursor: pointer;
-}
-
 .login-body .login-other > * {
     display: inline-block;
     vertical-align: middle;
