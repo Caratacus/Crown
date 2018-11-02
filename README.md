@@ -1,4 +1,5 @@
 <p align="center">
+    <p>Crown官方交流群：223706133</p>  
     <img src="https://raw.githubusercontent.com/Caratacus/Crown/master/Crown.png" width="300">
     <p align="center">
         Based on SpringBoot2, Crown builds a rapidly developed web application scaffolding.
@@ -16,9 +17,8 @@
         <img src="https://img.shields.io/badge/author-Caratacus-ff69b4.svg"></a>
         <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=180c0eb468ec425c7208f49f142e4057f3f83a2fdabfe07ccb4606a414cd6413">
         <img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
-    </p>    
+    </p>  
 </p>
-<span style="text-align: center;display:block;">Crown官方交流群：223706133</span>
 
 <br>
 ------------------------------------------------------------------------------------------------------------------------
