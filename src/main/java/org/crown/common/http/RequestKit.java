@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
-import org.crown.emuns.HTTPMethod;
+import org.crown.common.emuns.HTTPMethod;
 import org.springframework.util.StreamUtils;
 
 import lombok.AccessLevel;

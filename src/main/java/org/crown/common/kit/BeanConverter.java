@@ -12,6 +12,7 @@ import org.crown.common.modelmapper.jdk8.Jdk8Module;
 import org.crown.common.modelmapper.jsr310.Jsr310Module;
 import org.crown.common.modelmapper.jsr310.Jsr310ModuleConfig;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.cglib.beans.BeanMap;
 
 import com.baomidou.mybatisplus.core.toolkit.ClassUtils;
@@ -36,6 +37,8 @@ public class BeanConverter {
                 .zoneId(ZoneOffset.UTC) // default is ZoneId.systemDefault()
                 .build();
         modelMapper.registerModule(new Jsr310Module(config)).registerModule(new Jdk8Module());
+        modelMapper.getConfiguration().setFullTypeMatchingRequired(true);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
     /**

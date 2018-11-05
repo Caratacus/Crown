@@ -13,7 +13,7 @@ import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.api.model.responses.FailureResponses;
 import org.crown.common.http.ResponseKit;
 import org.crown.common.http.wrapper.ApiResponseWrapper;
-import org.crown.emuns.ErrorCodeEnum;
+import org.crown.common.emuns.ErrorCodeEnum;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.crown.common.api.ApiUtils;
-import org.crown.emuns.ErrorCodeEnum;
+import org.crown.common.emuns.ErrorCodeEnum;
+import org.crown.common.exception.ApiException;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
@@ -74,7 +75,10 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                               Exception ex) {
         try {
-            if (ex instanceof HttpRequestMethodNotSupportedException) {
+
+            if (ex instanceof ApiException) {
+                handleApi((ApiException) ex, request, response);
+            } else if (ex instanceof HttpRequestMethodNotSupportedException) {
                 handleHttpRequestMethodNotSupported((HttpRequestMethodNotSupportedException) ex, request, response);
             } else if (ex instanceof HttpMediaTypeNotSupportedException) {
                 handleHttpMediaTypeNotSupported((HttpMediaTypeNotSupportedException) ex, request, response);
@@ -122,6 +126,19 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
             log.warn("Warn: doResolveException {}", Throwables.getStackTraceAsString(ex));
         }
         return MODEL_VIEW_INSTANCE;
+    }
+
+    /**
+     * Handle the case where exception
+     *
+     * @param ex       the ApiException to be handled
+     * @param request  current HTTP request
+     * @param response current HTTP response
+     */
+    protected void handleApi(ApiException ex,
+                             HttpServletRequest request, HttpServletResponse response) {
+        ApiUtils.sendRestFail(request, response, ex.getErrorCode());
+
     }
 
     /**

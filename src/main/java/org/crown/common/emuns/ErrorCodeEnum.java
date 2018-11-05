@@ -1,4 +1,4 @@
-package org.crown.emuns;
+package org.crown.common.emuns;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,6 +57,15 @@ public enum ErrorCodeEnum {
      * 503
      */
     SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "请求超时"),
+    //----------------------------------------------------业务异常----------------------------------------------------
+    /**
+     * 用户名密码错误
+     */
+    USERNAME_OR_PASSWORD_IS_WRONG(HttpServletResponse.SC_BAD_REQUEST, true, "用户名密码错误"),
+    /**
+     * 用户被禁用
+     */
+    USER_IS_DISABLED(HttpServletResponse.SC_NOT_ACCEPTABLE, true, "用户被禁用"),
 
     ;
 

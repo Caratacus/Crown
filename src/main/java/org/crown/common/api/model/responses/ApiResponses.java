@@ -43,7 +43,7 @@ public class ApiResponses<T> implements Serializable {
      * @param exception
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
-        return ApiUtils.exceptionMsg(FailureResponses.builder(), exception)
+        return ApiUtils.exceptionMsg(FailureResponses.builder().msg(errorCode.getMsg()), exception)
                 .error(errorCode.getError())
                 .show(errorCode.isShow())
                 .time(LocalDateTime.now())

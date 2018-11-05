@@ -13,4 +13,13 @@ import org.crown.model.entity.User;
  */
 public interface IUserService extends BaseService<User> {
 
+    /**
+     * 用户登陆
+     *
+     * @param loginName
+     * @param password
+     * @param ipAddr
+     * @return
+     */
+    User login(String loginName, String password, String ipAddr);
 }

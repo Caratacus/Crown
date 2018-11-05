@@ -1,4 +1,4 @@
-package org.crown.controller.rest.v1;
+package org.crown.controller.rest;
 
 import org.crown.CrownApplication;
 import org.junit.Before;

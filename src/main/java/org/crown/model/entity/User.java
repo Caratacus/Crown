@@ -3,6 +3,7 @@ package org.crown.model.entity;
 import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.BaseModel;
+import org.crown.emuns.UserStatusEnum;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -32,7 +33,15 @@ public class User extends BaseModel {
     private Integer id;
 
     /**
-     * 用户名
+     * 登陆名
+     */
+    private String loginName;
+    /**
+     * 登陆名
+     */
+    private String password;
+    /**
+     * 昵称
      */
     private String nikeName;
 
@@ -45,11 +54,15 @@ public class User extends BaseModel {
      * 手机
      */
     private String phone;
+    /**
+     * IP地址
+     */
+    private String ip;
 
     /**
      * 状态 0：禁用 1：正常
      */
-    private Integer status;
+    private UserStatusEnum status;
 
     /**
      * 创建者ID
@@ -74,6 +87,10 @@ public class User extends BaseModel {
 
     public static final String UID = "uid";
 
+    public static final String LOGIN_NAME = "login_name";
+
+    public static final String PASSWORD = "password";
+
     public static final String NIKE_NAME = "nike_name";
 
     public static final String EMAIL = "email";
@@ -97,4 +114,5 @@ public class User extends BaseModel {
     public void setId(Integer id) {
         this.id = id;
     }
+
 }

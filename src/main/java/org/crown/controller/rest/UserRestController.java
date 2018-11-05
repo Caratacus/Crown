@@ -1,4 +1,4 @@
-package org.crown.controller.rest.v1;
+package org.crown.controller.rest;
 
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Min;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
-import org.crown.emuns.ErrorCodeEnum;
+import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

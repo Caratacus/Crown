@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.crown.common.api.ApiUtils;
 import org.crown.common.api.model.ErrorCode;
 import org.crown.common.exception.ApiException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author Caratacus
  */
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class GlobalControllerExceptionHandler {
 

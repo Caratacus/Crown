@@ -10,7 +10,8 @@ mybatis-plus:
     super-mapper-class: org.crown.common.framework.mapper.BaseMapper
     refresh: true
   mapper-locations: classpath:mapper/*Mapper.xml
-  typeAliasesPackage: org.crown.model.entity,org.crown.model.dto
+  type-enums-package: org.crown.emuns
+  type-aliases-package: org.crown.model.entity,org.crown.model.dto
 server:
   port: 8088
 spring:

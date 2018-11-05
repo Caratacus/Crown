@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.api.ApiUtils;
-import org.crown.emuns.ErrorCodeEnum;
+import org.crown.common.emuns.ErrorCodeEnum;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
