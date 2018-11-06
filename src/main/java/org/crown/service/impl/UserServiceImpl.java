@@ -10,6 +10,7 @@ import org.crown.mapper.UserMapper;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
 
     @Override
+    @Transactional
     public User login(String loginName, String password, String ipAddr) {
         User user = getOne(Wrappers.<User>query().eq(User.LOGIN_NAME, loginName));
         //用户不存在
