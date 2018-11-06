@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 10/25/2018 12:46:14 PM
+ Date: 11/06/2018 18:27:37 PM
 */
 
 SET NAMES utf8;
@@ -110,8 +110,18 @@ CREATE TABLE `sys_user` (
   `update_uid` int(11) NOT NULL COMMENT '修改者ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
+  `login_name` varchar(16) NOT NULL COMMENT '登陆名',
+  `password` varchar(64) NOT NULL COMMENT '密码',
+  `ip` varchar(32) DEFAULT NULL COMMENT 'IP地址',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+
+-- ----------------------------
+--  Records of `sys_user`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_user` VALUES ('1', '超级管理员', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-05 17:19:08', 'admin', '$apr1$admin$3NsFmc5jCaK5R97pgHRX21', '0:0:0:0:0:0:0:1');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `sys_user_role`
