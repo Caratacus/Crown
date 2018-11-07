@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 11/06/2018 18:27:37 PM
+ Date: 11/07/2018 23:01:45 PM
 */
 
 SET NAMES utf8;
@@ -120,7 +120,7 @@ CREATE TABLE `sys_user` (
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', '超级管理员', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-05 17:19:08', 'admin', '$apr1$admin$3NsFmc5jCaK5R97pgHRX21', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_user` VALUES ('1', '超级管理员', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-05 17:19:08', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1');
 COMMIT;
 
 -- ----------------------------
