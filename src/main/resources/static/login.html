@@ -77,6 +77,7 @@
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="assets/libs/jigsaw/jigsaw.js"></script>
 <script>
+    var codeflag = false;
     layui.config({
         base: 'module/'
     }).use(['config', 'form'], function () {
@@ -102,29 +103,35 @@
         });
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
-            layer.load(2);
-            $.ajax({
-                url: config.serverUrl + '/api/account/token',
-                data: JSON.stringify(obj.field),
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    config.putUid(data.result.uid);
-                    config.putToken(data.result.token);
-                    layer.msg('登录成功', {icon: 1}, function () {
-                        location.replace('./');
-                    });
-                },
-                error: function (xhr) {
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                }
-            });
+            if (codeflag) {
+                layer.load(2);
+                $.ajax({
+                    url: config.serverUrl + '/api/account/token',
+                    data: JSON.stringify(obj.field),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        config.putUid(data.result.uid);
+                        config.putToken(data.result.token);
+                        layer.msg('登录成功', {icon: 1}, function () {
+                            location.replace('./');
+                        });
+                    },
+                    error: function (xhr) {
+                        layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                        layer.closeAll('loading');
+                    }
+                });
+            } else {
+                layer.msg('请滑动验证框', {icon: 5});
+            }
         });
 
         jigsaw.init(document.getElementById('captcha'), function () {
+            codeflag = true;
             layer.msg('验证成功', {time: 888});
         }, function () {
+            codeflag = false;
             layer.msg('请继续验证', {time: 888});
         });
     });
