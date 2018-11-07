@@ -66,6 +66,10 @@ public enum ErrorCodeEnum {
      * 用户被禁用
      */
     USER_IS_DISABLED(HttpServletResponse.SC_NOT_ACCEPTABLE, true, "用户被禁用"),
+    /**
+     * 未找到该用户
+     */
+    USER_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "未找到该用户"),
 
     ;
 

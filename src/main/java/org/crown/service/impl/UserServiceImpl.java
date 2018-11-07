@@ -9,8 +9,11 @@ import org.crown.common.mybatisplus.Wrappers;
 import org.crown.emuns.UserStatusEnum;
 import org.crown.mapper.UserMapper;
 import org.crown.model.dto.TokenDTO;
+import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
+import org.crown.service.IResourceService;
 import org.crown.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
+
+    @Autowired
+    private IResourceService resourceService;
 
     @Override
     @Transactional
@@ -47,6 +53,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         tokenDTO.setUid(id);
         tokenDTO.setToken(JWTTokenUtils.generate(id, user.getEmail()));
         return tokenDTO;
+    }
+
+    @Override
+    public UserDetailsDTO getUserDetails(Integer uid) {
+        User user = getById(uid);
+        ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
+        UserDetailsDTO userDetails = user.convert(UserDetailsDTO.class);
+        userDetails.setPerms(resourceService.getUserPerms(uid));
+        return userDetails;
     }
 
 }

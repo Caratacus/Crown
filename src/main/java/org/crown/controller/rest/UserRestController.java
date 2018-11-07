@@ -8,8 +8,9 @@ import javax.validation.constraints.Min;
 
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
-import org.crown.common.framework.controller.SuperController;
 import org.crown.common.emuns.ErrorCodeEnum;
+import org.crown.common.framework.controller.SuperController;
+import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
+
+    @ApiOperation("获取用户详情")
+    @GetMapping("/details")
+    public ApiResponses<UserDetailsDTO> getUserDetails() {
+        Integer uid = currentUid();
+        UserDetailsDTO userDetails = userService.getUserDetails(uid);
+        return success(userDetails);
+    }
 
     @GetMapping
     @ApiOperation("1")

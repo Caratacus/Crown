@@ -1,6 +1,9 @@
 package org.crown.service;
 
+import java.util.List;
+
 import org.crown.common.framework.service.BaseService;
+import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 
 /**
@@ -13,4 +16,11 @@ import org.crown.model.entity.Resource;
  */
 public interface IResourceService extends BaseService<Resource> {
 
+    /**
+     * 根据用户ID获取用户所有权限
+     *
+     * @param uid
+     * @return
+     */
+    List<ResourcePermDTO> getUserPerms(Integer uid);
 }

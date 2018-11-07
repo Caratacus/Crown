@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -17,8 +17,8 @@ import lombok.experimental.Accessors;
  * @since 2018-10-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_resource")
 public class RoleResource extends BaseModel {
 

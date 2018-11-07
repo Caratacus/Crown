@@ -2,6 +2,7 @@ package org.crown.service;
 
 import org.crown.common.framework.service.BaseService;
 import org.crown.model.dto.TokenDTO;
+import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
 
 /**
@@ -30,4 +31,12 @@ public interface IUserService extends BaseService<User> {
      * @return
      */
     TokenDTO getToken(User user);
+
+    /**
+     * 获取用户详情
+     *
+     * @param uid
+     * @return
+     */
+    UserDetailsDTO getUserDetails(Integer uid);
 }
