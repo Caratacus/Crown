@@ -6,60 +6,60 @@ html {
 
 /** header样式 */
 /** 导航栏下面的线条 */
-.layui-layout-admin .layui-header .layui-nav .layui-this:after, .layui-layout-admin .layui-header .layui-nav-bar {
+.layui-layout-crown .layui-header .layui-nav .layui-this:after, .layui-layout-crown .layui-header .layui-nav-bar {
     height: 2px;
     background-color: #03152A;
     top: 0 !important;
 }
 
-.layui-layout-admin .layui-header .layui-nav .layui-nav-item {
+.layui-layout-crown .layui-header .layui-nav .layui-nav-item {
     line-height: 50px; /** 高度重写 */
 }
 
-.layui-layout-admin .layui-header .layui-nav .layui-nav-item .layui-nav-child {
+.layui-layout-crown .layui-header .layui-nav .layui-nav-item .layui-nav-child {
     top: 55px;
 }
 
-.layui-layout-admin .layui-header .layui-nav-item .layui-icon {
+.layui-layout-crown .layui-header .layui-nav-item .layui-icon {
     font-size: 16px; /** 图标大小 */
 }
 
-.layui-layout-admin .layui-header .layui-layout-left {
+.layui-layout-crown .layui-header .layui-layout-left {
     left: 220px;
     padding: 0 10px;
     transition: all .3s;
 }
 
-.layui-layout-admin .layui-header .layui-layout-right {
+.layui-layout-crown .layui-header .layui-layout-right {
     padding: 0;
 }
 
 /** 重写header的背景色和字体颜色 */
-.layui-layout-admin .layui-header {
+.layui-layout-crown .layui-header {
     background-color: #fff;
     height: 50px;
     box-shadow: 0 1px 4px 0 rgba(0, 21, 41, .08);
 }
 
-.layui-layout-admin .layui-header a {
+.layui-layout-crown .layui-header a {
     color: #333;
     padding: 0 15px;
 }
 
-.layui-layout-admin .layui-header a:hover {
+.layui-layout-crown .layui-header a:hover {
     color: #333;
 }
 
-.layui-layout-admin .layui-header .layui-nav .layui-nav-more {
+.layui-layout-crown .layui-header .layui-nav .layui-nav-more {
     border-color: #666 transparent transparent;
 }
 
-.layui-layout-admin .layui-header .layui-nav .layui-nav-mored {
+.layui-layout-crown .layui-header .layui-nav .layui-nav-mored {
     border-color: transparent transparent #666;
 }
 
 /** logo部分样式 */
-.layui-layout-admin .layui-header .layui-logo {
+.layui-layout-crown .layui-header .layui-logo {
     width: 220px;
     background-color: #002140;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
@@ -72,38 +72,38 @@ html {
     transition: all .3s;
 }
 
-.layui-layout-admin .layui-header .layui-logo img {
+.layui-layout-crown .layui-header .layui-logo img {
     height: 40px;
 }
 
-.layui-layout-admin .layui-header .layui-logo cite {
+.layui-layout-crown .layui-header .layui-logo cite {
     font-style: normal;
 }
 
-.layui-layout-admin .layui-header .layui-nav-img {
+.layui-layout-crown .layui-header .layui-nav-img {
     margin-right: 5px;
 }
 
-.layui-layout-admin .layui-header .layui-nav-img + cite {
+.layui-layout-crown .layui-header .layui-nav-img + cite {
     margin-right: 5px;
 }
 
-.layui-layout-admin .layui-header .layui-nav-child dd {
+.layui-layout-crown .layui-header .layui-nav-child dd {
     text-align: center;
 }
 
-.layui-layout-admin .layui-header a {
+.layui-layout-crown .layui-header a {
     cursor: pointer;
 }
 
 /** //header样式结束 */
 
 /** 侧边栏样式 */
-.layui-layout-admin .layui-side .layui-side-scroll {
+.layui-layout-crown .layui-side .layui-side-scroll {
     width: 240px;
 }
 
-.layui-layout-admin .layui-side {
+.layui-layout-crown .layui-side {
     top: 50px;
     width: 220px;
     background-color: #001529;
@@ -111,29 +111,29 @@ html {
     -webkit-transition: all .3s;
 }
 
-.layui-layout-admin .layui-side .layui-nav {
+.layui-layout-crown .layui-side .layui-nav {
     width: 220px;
     background-color: #001529;
 }
 
-.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a:hover {
+.layui-layout-crown .layui-side .layui-nav .layui-nav-item > a:hover {
     background: transparent;
 }
 
-.layui-layout-admin .layui-side .layui-nav .layui-nav-item > .layui-nav-child {
+.layui-layout-crown .layui-side .layui-nav .layui-nav-item > .layui-nav-child {
     padding: 5px 0;
     background-color: rgba(0, 0, 0, .5) !important;
 }
 
-.layui-layout-admin .layui-side .layui-nav .layui-nav-more {
+.layui-layout-crown .layui-side .layui-nav .layui-nav-more {
     right: 15px;
 }
 
-.layui-layout-admin .layui-side .layui-nav .layui-nav-item .layui-nav-child a {
+.layui-layout-crown .layui-side .layui-nav .layui-nav-item .layui-nav-child a {
     padding-left: 50px; /** 导航字体位置 */
 }
 
-.layui-layout-admin .layui-side .layui-nav .layui-nav-item > a {
+.layui-layout-crown .layui-side .layui-nav .layui-nav-item > a {
     padding-top: 8px;
     padding-bottom: 8px;
 }
@@ -141,7 +141,7 @@ html {
 /** 侧边栏样式结束 */
 
 /** 主体部分样式 */
-.layui-layout-admin .layui-body {
+.layui-layout-crown .layui-body {
     left: 220px;
     top: 50px;
     padding: 15px;
@@ -152,7 +152,7 @@ html {
 /** //主体部分样式结束 */
 
 /** 底部样式 */
-.layui-layout-admin .layui-footer {
+.layui-layout-crown .layui-footer {
     left: 220px;
     background: #fff;
     transition: all .3s;
@@ -161,61 +161,61 @@ html {
 /** 底部样式结束 */
 
 /** 侧导航折叠样式PC */
-.layui-layout-admin.admin-nav-mini .layui-header .layui-logo {
+.layui-layout-crown.crown-nav-mini .layui-header .layui-logo {
     width: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-header .layui-logo cite {
+.layui-layout-crown.crown-nav-mini .layui-header .layui-logo cite {
     display: none;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-header .layui-layout-left {
+.layui-layout-crown.crown-nav-mini .layui-header .layui-layout-left {
     left: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side {
+.layui-layout-crown.crown-nav-mini .layui-side {
     width: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav {
     width: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side-scroll {
+.layui-layout-crown.crown-nav-mini .layui-side-scroll {
     width: 80px;
 }
 
 /** 侧导航隐藏文字 */
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
     display: none;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
     display: none;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a {
     overflow: visible;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
     display: none;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-body {
+.layui-layout-crown.crown-nav-mini .layui-body {
     left: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-footer {
+.layui-layout-crown.crown-nav-mini .layui-footer {
     left: 60px;
 }
 
-.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
+.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
     background: rgba(0, 0, 0, .3);
 }
 
 /** 修改折叠的图标 */
-.layui-layout-admin.admin-nav-mini .layui-header .layui-icon-shrink-right:before {
+.layui-layout-crown.crown-nav-mini .layui-header .layui-icon-shrink-right:before {
     content: "\e66b";
 }
 
@@ -223,91 +223,91 @@ html {
 
 /** 移动设备样式 */
 @media screen and (max-width: 750px) {
-    .layui-layout-admin .layui-side {
+    .layui-layout-crown .layui-side {
         position: fixed;
         left: -260px;
         z-index: 10000;
     }
 
-    .layui-layout-admin .layui-body {
+    .layui-layout-crown .layui-body {
         left: 0;
     }
 
-    .layui-layout-admin .layui-footer {
+    .layui-layout-crown .layui-footer {
         left: 0;
     }
 
-    .layui-layout-admin .layui-header .layui-logo {
+    .layui-layout-crown .layui-header .layui-logo {
         left: -260px;
     }
 
-    .layui-layout-admin .layui-header .layui-layout-left {
+    .layui-layout-crown .layui-header .layui-layout-left {
         left: 0;
     }
 
-    .layui-layout-admin .layui-header .layui-icon-shrink-right:before {
+    .layui-layout-crown .layui-header .layui-icon-shrink-right:before {
         content: "\e66b";
     }
 
     /* 移动设备侧导航折叠样式 */
-    .layui-layout-admin.admin-nav-mini .layui-header .layui-logo {
+    .layui-layout-crown.crown-nav-mini .layui-header .layui-logo {
         width: 220px;
         left: 0;
         z-index: 10001;
         background-color: #001529;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-header {
+    .layui-layout-crown.crown-nav-mini .layui-header {
         z-index: auto;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-header .layui-logo cite {
+    .layui-layout-crown.crown-nav-mini .layui-header .layui-logo cite {
         display: inline-block;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-header .layui-layout-left {
+    .layui-layout-crown.crown-nav-mini .layui-header .layui-layout-left {
         left: 0;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side {
+    .layui-layout-crown.crown-nav-mini .layui-side {
         width: 220px;
         left: 0;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav {
         width: 220px;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side-scroll {
+    .layui-layout-crown.crown-nav-mini .layui-side-scroll {
         width: 240px;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a > cite {
         display: inline-block;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a .layui-nav-more {
         display: inline-block;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item > a {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item > a {
         overflow: hidden;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-itemed .layui-nav-child {
         display: block;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-body {
+    .layui-layout-crown.crown-nav-mini .layui-body {
         left: 0;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-footer {
+    .layui-layout-crown.crown-nav-mini .layui-footer {
         left: 0;
     }
 
     /** 移动设备遮罩层 */
-    .layui-layout-admin.admin-nav-mini .site-mobile-shade {
+    .layui-layout-crown.crown-nav-mini .site-mobile-shade {
         content: '';
         position: fixed;
         top: 0;
@@ -319,11 +319,11 @@ html {
         cursor: pointer;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
+    .layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-itemed > a {
         background: transparent;
     }
 
-    .layui-layout-admin.admin-nav-mini .layui-header .layui-icon-shrink-right:before {
+    .layui-layout-crown.crown-nav-mini .layui-header .layui-icon-shrink-right:before {
         content: "\e668";
     }
 }
@@ -331,7 +331,7 @@ html {
 /** //移动设备样式结束 */
 
 /** 右侧弹窗样式 */
-.layui-layer.layui-layer-adminRight {
+.layui-layer.layui-layer-crownRight {
     top: 50px !important;
     bottom: 0;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, .1);
@@ -511,7 +511,7 @@ html {
 }
 
 /** loading组件样式 */
-.admin-loading {
+.crown-loading {
     position: absolute;
     left: 50%;
     top: 50%;

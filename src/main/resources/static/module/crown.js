@@ -5,40 +5,40 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     var form = layui.form;
     var popupRightIndex, popupCenterIndex, popupCenterParam;
 
-    var admin = {
+    var crown = {
         // 路由加载组件
         loadView: function (path) {
-            admin.showLoading('.layui-layout-admin .layui-body');
-            $('.layui-layout-admin .layui-body').load(path, function () {
+            crown.showLoading('.layui-layout-crown .layui-body');
+            $('.layui-layout-crown .layui-body').load(path, function () {
                 element.render('breadcrumb');
                 form.render('select');
-                admin.removeLoading('.layui-layout-admin .layui-body');
+                crown.removeLoading('.layui-layout-crown .layui-body');
             });
-            admin.activeNav(Q.lash);
+            crown.activeNav(Q.lash);
             // 移动设备切换页面隐藏侧导航
             if (document.body.clientWidth <= 750) {
-                admin.flexible(true);
+                crown.flexible(true);
             }
         },
         // 设置侧栏折叠
         flexible: function (expand) {
-            var isExapnd = $('.layui-layout-admin').hasClass('admin-nav-mini');
+            var isExapnd = $('.layui-layout-crown').hasClass('crown-nav-mini');
             if (isExapnd == !expand) {
                 return;
             }
             if (expand) {
-                $('.layui-layout-admin').removeClass('admin-nav-mini');
+                $('.layui-layout-crown').removeClass('crown-nav-mini');
             } else {
-                $('.layui-layout-admin').addClass('admin-nav-mini');
+                $('.layui-layout-crown').addClass('crown-nav-mini');
             }
-            admin.onResize();
+            crown.onResize();
         },
         // 设置导航栏选中
         activeNav: function (url) {
-            $('.layui-layout-admin .layui-side .layui-nav .layui-nav-item .layui-nav-child dd').removeClass('layui-this');
+            $('.layui-layout-crown .layui-side .layui-nav .layui-nav-item .layui-nav-child dd').removeClass('layui-this');
             if (url && url != '') {
-                $('.layui-layout-admin .layui-side .layui-nav .layui-nav-item').removeClass('layui-nav-itemed');
-                var $a = $('.layui-layout-admin .layui-side .layui-nav>.layui-nav-item>.layui-nav-child>dd>a[href="#!' + url + '"]');
+                $('.layui-layout-crown .layui-side .layui-nav .layui-nav-item').removeClass('layui-nav-itemed');
+                var $a = $('.layui-layout-crown .layui-side .layui-nav>.layui-nav-item>.layui-nav-child>dd>a[href="#!' + url + '"]');
                 $a.parent('dd').addClass('layui-this');
                 $a.parent('dd').parent('.layui-nav-child').parent('.layui-nav-item').addClass('layui-nav-itemed');
             }
@@ -47,7 +47,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         popupRight: function (path) {
             popupRightIndex = layer.open({
                 type: 1,
-                id: 'adminPopupR',
+                id: 'crownPopupR',
                 anim: 2,
                 isOutAnim: false,
                 title: false,
@@ -57,11 +57,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 shadeClose: true,
                 resize: false,
                 area: '336px',
-                skin: 'layui-layer-adminRight',
+                skin: 'layui-layer-crownRight',
                 success: function () {
-                    //admin.showLoading('#adminPopupR');
-                    $('#adminPopupR').load(path, function () {
-                        //admin.removeLoading('#adminPopupR');
+                    //crown.showLoading('#crownPopupR');
+                    $('#crownPopupR').load(path, function () {
+                        //crown.removeLoading('#crownPopupR');
                     });
                 },
                 end: function () {
@@ -78,16 +78,16 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             popupCenterParam = param;
             popupCenterIndex = layer.open({
                 type: 1,
-                id: 'adminPopupC',
+                id: 'crownPopupC',
                 title: param.title ? param.title : false,
                 shade: .2,
                 offset: '120px',
                 area: param.area ? param.area : '450px',
                 resize: false,
-                skin: 'layui-layer-adminCenter',
+                skin: 'layui-layer-crownCenter',
                 success: function () {
-                    $('#adminPopupC').load(param.path, function () {
-                        $('#adminPopupC .close').click(function () {
+                    $('#crownPopupC').load(param.path, function () {
+                        $('#crownPopupC .close').click(function () {
                             layer.close(popupCenterIndex);
                         });
                         param.success ? param.success() : '';
@@ -141,6 +141,116 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
             });
         },
+        // 封装ajax请求
+        get: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'GET',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        post: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        put: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'PUT',
+                contentType: 'application/json',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        delete: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'DELETE',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
+                    }
+                }
+            });
+        },
         // 判断是否有权限
         hasPerm: function (auth) {
             var user = config.getUser();
@@ -158,18 +268,18 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             if (config.autoRender) {
                 if ($('.layui-table-view').length > 0) {
                     setTimeout(function () {
-                        admin.events.refresh();
+                        crown.events.refresh();
                     }, 800);
                 }
             }
         },
         // 显示加载动画
         showLoading: function (element) {
-            $(element).append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop admin-loading"></i>');
+            $(element).append('<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop crown-loading"></i>');
         },
         // 移除加载动画
         removeLoading: function (element) {
-            $(element + '>.admin-loading').remove();
+            $(element + '>.crown-loading').remove();
         },
         // 缓存临时数据
         putTempData: function (key, value) {
@@ -185,11 +295,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         }
     };
 
-    // ewAdmin提供的事件
-    admin.events = {
+    // ewcrown提供的事件
+    crown.events = {
         flexible: function (e) {  // 折叠侧导航
-            var expand = $('.layui-layout-admin').hasClass('admin-nav-mini');
-            admin.flexible(expand);
+            var expand = $('.layui-layout-crown').hasClass('crown-nav-mini');
+            crown.flexible(expand);
         },
         refresh: function () {  // 刷新主体部分
             Q.refresh();
@@ -198,7 +308,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             history.back();
         },
         theme: function () {  // 设置主题
-            admin.popupRight('components/tpl/theme.html');
+            crown.popupRight('components/tpl/theme.html');
         },
         fullScreen: function (e) {  // 全屏
             var ac = 'layui-icon-screen-full', ic = 'layui-icon-screen-restore';
@@ -231,30 +341,30 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     // 所有ew-event
     $('body').on('click', '*[ew-event]', function () {
         var event = $(this).attr('ew-event');
-        var te = admin.events[event];
+        var te = crown.events[event];
         te && te.call(this, $(this));
     });
 
     // 移动设备遮罩层点击事件
     $('.site-mobile-shade').click(function () {
-        admin.flexible(true);
+        crown.flexible(true);
     });
 
     // 侧导航折叠状态下鼠标经过显示提示
-    $('body').on('mouseenter', '.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    $('body').on('mouseenter', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         var tipText = $(this).find('cite').text();
         if (document.body.clientWidth > 750) {
             layer.tips(tipText, this);
         }
-    }).on('mouseleave', '.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    }).on('mouseleave', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         layer.closeAll('tips');
     });
 
     // 侧导航折叠状态下点击展开
-    $('body').on('click', '.layui-layout-admin.admin-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    $('body').on('click', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         if (document.body.clientWidth > 750) {
             layer.closeAll('tips');
-            admin.flexible(true);
+            crown.flexible(true);
         }
     });
 
@@ -267,5 +377,5 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         layer.closeAll('tips');
     });
 
-    exports('admin', admin);
+    exports('crown', crown);
 });
