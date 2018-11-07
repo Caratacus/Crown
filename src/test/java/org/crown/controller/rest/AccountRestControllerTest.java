@@ -45,8 +45,8 @@ public class AccountRestControllerTest {
     @Test
     public void getToken() throws Exception {
         LoginPARM loginPARM = new LoginPARM();
-        loginPARM.setLoginName("admin");
-        loginPARM.setPassword("admin");
+        loginPARM.setLoginName("crown");
+        loginPARM.setPassword("crown");
         String responseString = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/account/token")
                         .contentType(MediaType.APPLICATION_JSON)

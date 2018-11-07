@@ -1,6 +1,8 @@
 package org.crown.controller.rest;
 
 import org.crown.CrownApplication;
+import org.crown.model.dto.TokenDTO;
+import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +33,17 @@ public class UserRestControllerTest {
     @Autowired
     private UserRestController userRestController;
 
+    @Autowired
+    private IUserService userService;
+
     private MockMvc mockMvc;
+    private TokenDTO token;
 
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
+        token = userService.getToken(userService.getById(1));
+
     }
 
     @Test
@@ -43,6 +51,14 @@ public class UserRestControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/user")
                         .param("aa", "2018"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void getUserDetails() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/user/details").header("Authorization", "Basic " + token.getToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
