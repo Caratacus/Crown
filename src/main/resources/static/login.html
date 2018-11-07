@@ -21,10 +21,11 @@
                 images: ['assets/images/bg/bg1.jpg', 'assets/images/bg/bg2.jpeg', 'assets/images/bg/bg3.jpg', 'assets/images/bg/bg4.jpg', 'assets/images/bg/bg5.jpg', 'assets/images/bg/bg6.jpg'],
                 imageWidth: 1920,
                 imageHeight: 1080,
+                nextSlideDelay: 5000,
                 slideDirection: 'N',
-                slideShowSpeed: 1000,
+                slideShowSpeed: 'slow',
                 transitionEffect: 'fade',
-                sequenceMode: 'normal'
+                sequenceMode: 'random'
             });
         });
     </script>
@@ -40,14 +41,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                     <div class="layui-input-block">
-                        <input name="username" type="text" lay-verify="required" placeholder="账号"
+                        <input name="loginName" type="text" lay-verify="loginName" placeholder="账号" value="admin"
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
                     <div class="layui-input-block">
-                        <input name="password" type="password" lay-verify="required" placeholder="密码"
+                        <input name="password" type="password" lay-verify="password" placeholder="密码" value="admin"
                                class="layui-input">
                     </div>
                 </div>
@@ -76,7 +77,6 @@
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="assets/libs/jigsaw/jigsaw.js"></script>
 <script>
-
     layui.config({
         base: 'module/'
     }).use(['config', 'form'], function () {
@@ -88,39 +88,36 @@
             location.replace('./');
             return;
         }
+        form.verify({
+            loginName: function (value) {
+                if (/^\s*$/g.test(value)) {
+                    return '请填写用户名';
+                }
+            },
+            password: function (value) {
+                if (/^\s*$/g.test(value)) {
+                    return '请填写密码';
+                }
+            }
+        });
         // 表单提交
         form.on('submit(login-submit)', function (obj) {
-            var field = obj.field;
-            field.grant_type = 'password';
-            field.scope = 'select';
-            field.client_id = 'client_2';
-            field.client_secret = '123456';
-
             layer.load(2);
             $.ajax({
-                url: config.serverUrl + 'oauth/token',
-                data: field,
+                url: config.serverUrl + '/api/account/token',
+                data: JSON.stringify(obj.field),
                 type: 'POST',
-                dataType: 'JSON',
+                contentType: 'application/json',
                 success: function (data) {
-                    console.log(JSON.stringify(data));
-                    if (data.access_token) {
-                        config.putToken(data);
-                        layer.msg('登录成功', {icon: 1}, function () {
-                            location.replace('./');
-                        });
-                    } else {
-                        layer.closeAll('loading');
-                        layer.msg('登录失败，请重试', {icon: 5});
-                    }
+                    config.putUid(data.result.uid);
+                    config.putToken(data.result.token);
+                    layer.msg('登录成功', {icon: 1}, function () {
+                        location.replace('./');
+                    });
                 },
                 error: function (xhr) {
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
                     layer.closeAll('loading');
-                    if (xhr.status == 400) {
-                        layer.msg('账号或密码错误', {icon: 5});
-                    } else {
-                        layer.msg('Corwn还在编写当中，敬请期待', {icon: 5});
-                    }
                 }
             });
         });

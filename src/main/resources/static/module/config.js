@@ -1,15 +1,12 @@
 layui.define(function (exports) {
 
     var config = {
-        serverUrl: 'http://localhost:8088/', // 服务器地址
+        serverUrl: 'http://localhost:8088', // 服务器地址
         scope: 'crown',  // 作用域
         autoRender: false,  // 窗口大小改变后是否自动重新渲染表格，解决layui数据表格非响应式的问题
         // 获取缓存的token
         getToken: function () {
-            var t = layui.data(config.scope).token;
-            if (t) {
-                return JSON.parse(t);
-            }
+            return layui.data(config.scope).token;
         },
         // 清除user
         removeToken: function () {
@@ -23,6 +20,24 @@ layui.define(function (exports) {
             layui.data(config.scope, {
                 key: 'token',
                 value: JSON.stringify(token)
+            });
+        },
+        // 获取缓存的token
+        getUid: function () {
+            return layui.data(config.scope).uid;
+        },
+        // 清除Uid
+        removeUid: function () {
+            layui.data(config.scope, {
+                key: 'uid',
+                remove: true
+            });
+        },
+        // 缓存Uid
+        putUid: function (uid) {
+            layui.data(config.scope, {
+                key: 'uid',
+                value: JSON.stringify(uid)
             });
         },
         // 导航菜单
