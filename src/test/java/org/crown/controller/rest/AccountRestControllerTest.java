@@ -1,12 +1,15 @@
 package org.crown.controller.rest;
 
 import org.crown.CrownApplication;
+import org.crown.common.kit.JacksonUtils;
+import org.crown.model.parm.LoginPARM;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,33 +20,48 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  * <p>
- * UserRestController 测试类
+ * AccountRestControllerTest
  * </p>
  *
  * @author Caratacus
+ * @date 2018/11/7
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CrownApplication.class)
 @AutoConfigureMockMvc
 @WebAppConfiguration
-public class UserRestControllerTest {
+public class AccountRestControllerTest {
 
     @Autowired
-    private UserRestController userRestController;
+    private AccountRestController accountRestController;
 
     private MockMvc mockMvc;
 
     @Before
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(accountRestController).build();
     }
 
     @Test
-    public void users() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/user")
-                        .param("aa", "2018"))
+    public void getToken() throws Exception {
+        LoginPARM loginPARM = new LoginPARM();
+        loginPARM.setLoginName("admin");
+        loginPARM.setPassword("admin");
+        String responseString = mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/account/token")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JacksonUtils.toJson(loginPARM)))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+        System.out.println(responseString);
     }
+
+    @Test
+    public void removeToken() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/api/account/token"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+    }
+
 }

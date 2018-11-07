@@ -1,17 +1,17 @@
 package org.crown.controller.rest;
 
 
-import java.util.List;
-
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.common.kit.IpUtils;
+import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.User;
 import org.crown.model.parm.LoginPARM;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +37,18 @@ public class AccountRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
-    @ApiOperation("用户登录")
+    @ApiOperation("获取Token")
     @PostMapping("/token")
-    public ApiResponses<List<User>> login(@RequestBody @Validated LoginPARM loginPARM) {
+    public ApiResponses<TokenDTO> getToken(@RequestBody @Validated LoginPARM loginPARM) {
         User user = userService.login(loginPARM.getLoginName(), loginPARM.getPassword(), IpUtils.getIpAddr(request));
-        return success(null);
+        TokenDTO tokenDTO  = userService.getToken(user);
+        return success(tokenDTO);
     }
 
+    @ApiOperation("清理Token")
+    @DeleteMapping("/token")
+    public ApiResponses<Void> removeToken() {
+        return empty();
+    }
 }
 

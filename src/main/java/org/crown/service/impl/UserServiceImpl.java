@@ -4,9 +4,11 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
+import org.crown.common.kit.JWTTokenUtils;
 import org.crown.common.mybatisplus.Wrappers;
 import org.crown.emuns.UserStatusEnum;
 import org.crown.mapper.UserMapper;
+import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.User;
 import org.crown.service.IUserService;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         user.setIp(ipAddr);
         updateById(user);
         return user;
+    }
+
+    @Override
+    public TokenDTO getToken(User user) {
+        Integer id = user.getId();
+        TokenDTO tokenDTO = new TokenDTO();
+        tokenDTO.setUid(id);
+        tokenDTO.setToken(JWTTokenUtils.generate(id, user.getEmail()));
+        return tokenDTO;
     }
 
 }

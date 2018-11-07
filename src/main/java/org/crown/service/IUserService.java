@@ -1,6 +1,7 @@
 package org.crown.service;
 
 import org.crown.common.framework.service.BaseService;
+import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.User;
 
 /**
@@ -22,4 +23,11 @@ public interface IUserService extends BaseService<User> {
      * @return
      */
     User login(String loginName, String password, String ipAddr);
+
+    /**
+     * 通过用户对象获取token
+     * @param user
+     * @return
+     */
+    TokenDTO getToken(User user);
 }
