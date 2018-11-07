@@ -8,11 +8,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     var crown = {
         // 路由加载组件
         loadView: function (path) {
-            crown.showLoading('.layui-layout-crown .layui-body');
-            $('.layui-layout-crown .layui-body').load(path, function () {
+            crown.showLoading('.layui-layout-admin .layui-body');
+            $('.layui-layout-admin .layui-body').load(path, function () {
                 element.render('breadcrumb');
                 form.render('select');
-                crown.removeLoading('.layui-layout-crown .layui-body');
+                crown.removeLoading('.layui-layout-admin .layui-body');
             });
             crown.activeNav(Q.lash);
             // 移动设备切换页面隐藏侧导航
@@ -22,23 +22,23 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         },
         // 设置侧栏折叠
         flexible: function (expand) {
-            var isExapnd = $('.layui-layout-crown').hasClass('crown-nav-mini');
+            var isExapnd = $('.layui-layout-admin').hasClass('crown-nav-mini');
             if (isExapnd == !expand) {
                 return;
             }
             if (expand) {
-                $('.layui-layout-crown').removeClass('crown-nav-mini');
+                $('.layui-layout-admin').removeClass('crown-nav-mini');
             } else {
-                $('.layui-layout-crown').addClass('crown-nav-mini');
+                $('.layui-layout-admin').addClass('crown-nav-mini');
             }
             crown.onResize();
         },
         // 设置导航栏选中
         activeNav: function (url) {
-            $('.layui-layout-crown .layui-side .layui-nav .layui-nav-item .layui-nav-child dd').removeClass('layui-this');
+            $('.layui-layout-admin .layui-side .layui-nav .layui-nav-item .layui-nav-child dd').removeClass('layui-this');
             if (url && url != '') {
-                $('.layui-layout-crown .layui-side .layui-nav .layui-nav-item').removeClass('layui-nav-itemed');
-                var $a = $('.layui-layout-crown .layui-side .layui-nav>.layui-nav-item>.layui-nav-child>dd>a[href="#!' + url + '"]');
+                $('.layui-layout-admin .layui-side .layui-nav .layui-nav-item').removeClass('layui-nav-itemed');
+                var $a = $('.layui-layout-admin .layui-side .layui-nav>.layui-nav-item>.layui-nav-child>dd>a[href="#!' + url + '"]');
                 $a.parent('dd').addClass('layui-this');
                 $a.parent('dd').parent('.layui-nav-child').parent('.layui-nav-item').addClass('layui-nav-itemed');
             }
@@ -141,116 +141,6 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
             });
         },
-        // 封装ajax请求
-        get: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'GET',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeToken();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        post: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeToken();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        put: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'PUT',
-                contentType: 'application/json',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeToken();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        delete: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'DELETE',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeToken();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token);
-                    }
-                }
-            });
-        },
         // 判断是否有权限
         hasPerm: function (auth) {
             var user = config.getUser();
@@ -298,7 +188,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     // ewcrown提供的事件
     crown.events = {
         flexible: function (e) {  // 折叠侧导航
-            var expand = $('.layui-layout-crown').hasClass('crown-nav-mini');
+            var expand = $('.layui-layout-admin').hasClass('crown-nav-mini');
             crown.flexible(expand);
         },
         refresh: function () {  // 刷新主体部分
@@ -351,17 +241,17 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
     });
 
     // 侧导航折叠状态下鼠标经过显示提示
-    $('body').on('mouseenter', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    $('body').on('mouseenter', '.layui-layout-admin.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         var tipText = $(this).find('cite').text();
         if (document.body.clientWidth > 750) {
             layer.tips(tipText, this);
         }
-    }).on('mouseleave', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    }).on('mouseleave', '.layui-layout-admin.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         layer.closeAll('tips');
     });
 
     // 侧导航折叠状态下点击展开
-    $('body').on('click', '.layui-layout-crown.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
+    $('body').on('click', '.layui-layout-admin.crown-nav-mini .layui-side .layui-nav .layui-nav-item>a', function () {
         if (document.body.clientWidth > 750) {
             layer.closeAll('tips');
             crown.flexible(true);
