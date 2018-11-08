@@ -4,6 +4,10 @@ layui.define(function (exports) {
         serverUrl: 'http://localhost:8088', // 服务器地址
         scope: 'crown',  // 作用域
         autoRender: false,  // 窗口大小改变后是否自动重新渲染表格，解决layui数据表格非响应式的问题
+        // 清空本地缓存
+        removeAll: function () {
+            layui.data(config.scope, null);
+        },
         // 获取缓存的token
         getToken: function () {
             var token = layui.data(config.scope).token;

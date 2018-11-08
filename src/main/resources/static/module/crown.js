@@ -125,7 +125,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 error: function (xhr) {
                     console.log(xhr.status + ' - ' + xhr.statusText);
                     if (xhr.status == 401) {
-                        config.removeToken();
+                        config.removeAll();
                         layer.msg('登录过期', {icon: 2}, function () {
                             location.href = '/login.html';
                         });
@@ -152,7 +152,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 },
                 error: function (xhr) {
                     if (xhr.status == 401) {
-                        config.removeToken();
+                        config.removeAll();
                         layer.msg('登录过期', {icon: 2}, function () {
                             location.href = '/login.html';
                         });
@@ -180,7 +180,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 },
                 error: function (xhr) {
                     if (xhr.status == 401) {
-                        config.removeToken();
+                        config.removeAll();
                         layer.msg('登录过期', {icon: 2}, function () {
                             location.href = '/login.html';
                         });
@@ -208,7 +208,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 },
                 error: function (xhr) {
                     if (xhr.status == 401) {
-                        config.removeToken();
+                        config.removeAll();
                         layer.msg('登录过期', {icon: 2}, function () {
                             location.href = '/login.html';
                         });
@@ -235,7 +235,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 },
                 error: function (xhr) {
                     if (xhr.status == 401) {
-                        config.removeToken();
+                        config.removeAll();
                         layer.msg('登录过期', {icon: 2}, function () {
                             location.href = '/login.html';
                         });
