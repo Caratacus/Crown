@@ -32,6 +32,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
 import com.alibaba.fastjson.JSONException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.google.common.base.Throwables;
 
 import lombok.extern.slf4j.Slf4j;
@@ -296,7 +297,11 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpServletRequest request,
                                                 HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        if (ex.getCause() instanceof JsonParseException) {
+            ApiUtils.sendRestFail(request, response, ErrorCodeEnum.JSON_FORMAT_ERROR, ex);
+        } else {
+            ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        }
     }
 
     /**

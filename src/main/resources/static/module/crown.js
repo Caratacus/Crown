@@ -172,7 +172,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         post: function (url, data, success) {
             $.ajax({
                 url: config.serverUrl + url,
-                data: data,
+                data: JSON.stringify(data),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (data) {
@@ -200,7 +200,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         put: function (url, data, success) {
             $.ajax({
                 url: config.serverUrl + url,
-                data: data,
+                data: JSON.stringify(data),
                 type: 'PUT',
                 contentType: 'application/json',
                 success: function (data) {

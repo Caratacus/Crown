@@ -18,6 +18,10 @@ public enum ErrorCodeEnum {
      */
     BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, true, "请求参数错误或不完整"),
     /**
+     * JSON格式错误
+     */
+    JSON_FORMAT_ERROR(HttpServletResponse.SC_BAD_REQUEST, true, "JSON格式错误"),
+    /**
      * 401
      */
     UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, true, "请先进行认证"),

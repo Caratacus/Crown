@@ -48,5 +48,5 @@ public interface IUserService extends BaseService<User> {
      * @param newPassword
      * @return
      */
-    User updatePassword(Integer uid, String oldPassword, String newPassword);
+    void updatePassword(Integer uid, String oldPassword, String newPassword);
 }

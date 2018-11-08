@@ -62,10 +62,9 @@ public class AccountRestController extends SuperController {
             @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String"),
     })
     @PutMapping("/password")
-    public ApiResponses<TokenDTO> updatePassword(@RequestBody @Validated PasswordPARM passwordPARM) {
-        User user = userService.updatePassword(currentUid(), passwordPARM.getOldPassword(), passwordPARM.getNewPassword());
-        TokenDTO tokenDTO = userService.getToken(user);
-        return success(tokenDTO);
+    public ApiResponses<Void> updatePassword(@RequestBody @Validated PasswordPARM passwordPARM) {
+        userService.updatePassword(currentUid(), passwordPARM.getOldPassword(), passwordPARM.getNewPassword());
+        return empty();
     }
 }
 
