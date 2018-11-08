@@ -39,4 +39,14 @@ public interface IUserService extends BaseService<User> {
      * @return
      */
     UserDetailsDTO getUserDetails(Integer uid);
+
+    /**
+     * 用户修改密码
+     *
+     * @param uid
+     * @param oldPassword
+     * @param newPassword
+     * @return
+     */
+    User updatePassword(Integer uid, String oldPassword, String newPassword);
 }

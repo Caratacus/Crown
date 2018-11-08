@@ -1,8 +1,11 @@
 package org.crown.controller.rest;
 
 import org.crown.CrownApplication;
+import org.crown.common.api.model.responses.SuccessResponses;
 import org.crown.common.kit.JacksonUtils;
+import org.crown.model.dto.TokenDTO;
 import org.crown.model.parm.LoginPARM;
+import org.crown.model.parm.PasswordPARM;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +20,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
 /**
  * <p>
@@ -53,7 +59,20 @@ public class AccountRestControllerTest {
                         .content(JacksonUtils.toJson(loginPARM)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        System.out.println(responseString);
+        SuccessResponses<TokenDTO> responses = JSON.parseObject(responseString, new TypeReference<SuccessResponses<TokenDTO>>() {
+        });
+        //updatePassword
+        PasswordPARM passwordPARM = new PasswordPARM();
+        passwordPARM.setOldPassword("crown");
+        passwordPARM.setNewPassword("crown");
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .put("/api/account/password")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Basic " + responses.getResult().getToken())
+                        .content(JacksonUtils.toJson(passwordPARM)))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -63,5 +82,6 @@ public class AccountRestControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
     }
+
 
 }

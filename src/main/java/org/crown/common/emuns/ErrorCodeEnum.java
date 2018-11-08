@@ -70,6 +70,10 @@ public enum ErrorCodeEnum {
      * 未找到该用户
      */
     USER_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "未找到该用户"),
+    /**
+     * 原密码不正确
+     */
+    ORIGINAL_PASSWORD_IS_INCORRECT(HttpServletResponse.SC_BAD_REQUEST, true, "原密码不正确"),
 
     ;
 

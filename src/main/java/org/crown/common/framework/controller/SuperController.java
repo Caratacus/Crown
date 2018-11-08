@@ -27,7 +27,7 @@ public class SuperController {
 
 
     /**
-     * 获取一个新的RestResult
+     * 成功的ApiResponses
      *
      * @return
      */
@@ -36,7 +36,7 @@ public class SuperController {
     }
 
     /**
-     * 获取一个新的RestResult
+     * 空的ApiResponses
      *
      * @return
      */

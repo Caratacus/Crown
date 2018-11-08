@@ -64,4 +64,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         return userDetails;
     }
 
+    @Override
+    @Transactional
+    public User updatePassword(Integer uid, String oldPassword, String newPassword) {
+        User user = getById(uid);
+        ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
+        //用户名密码错误
+        ApiAssert.isTrue(ErrorCodeEnum.ORIGINAL_PASSWORD_IS_INCORRECT, Md5Crypt.apr1Crypt(oldPassword, user.getLoginName()).equals(user.getPassword()));
+        user.setPassword(Md5Crypt.apr1Crypt(newPassword, user.getLoginName()));
+        updateById(user);
+        return user;
+    }
+
 }
