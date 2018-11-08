@@ -102,7 +102,7 @@ CREATE TABLE `sys_role_resource` (
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `nike_name` varchar(50) NOT NULL COMMENT '用户名',
+  `nickname` varchar(50) NOT NULL COMMENT '用户名',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(100) DEFAULT NULL COMMENT '手机',
   `status` smallint(2) DEFAULT NULL COMMENT '状态 0：禁用 1：正常',

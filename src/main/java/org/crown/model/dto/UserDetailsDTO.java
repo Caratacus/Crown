@@ -29,7 +29,7 @@ public class UserDetailsDTO extends Convert {
     private String loginName;
 
     @ApiModelProperty(notes = "昵称")
-    private String nikeName;
+    private String nickname;
 
     @ApiModelProperty(notes = "邮箱")
     private String email;

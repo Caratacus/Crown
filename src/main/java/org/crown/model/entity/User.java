@@ -43,7 +43,7 @@ public class User extends BaseModel {
     /**
      * 昵称
      */
-    private String nikeName;
+    private String nickname;
 
     /**
      * 邮箱
@@ -91,7 +91,7 @@ public class User extends BaseModel {
 
     public static final String PASSWORD = "password";
 
-    public static final String NIKE_NAME = "nike_name";
+    public static final String NICKNAME = "nickname";
 
     public static final String EMAIL = "email";
 
