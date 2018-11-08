@@ -136,7 +136,117 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 beforeSend: function (xhr) {
                     var token = config.getToken();
                     if (token) {
-                        xhr.setRequestHeader('Authorization', 'Basic ' + token.access_token);
+                        xhr.setRequestHeader('Authorization', token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        get: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'GET',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        post: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        put: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'PUT',
+                contentType: 'application/json',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', token);
+                    }
+                }
+            });
+        },
+        // 封装ajax请求
+        delete: function (url, data, success) {
+            $.ajax({
+                url: config.serverUrl + url,
+                data: data,
+                type: 'DELETE',
+                success: function (data) {
+                    success(data);
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        config.removeToken();
+                        layer.msg('登录过期', {icon: 2}, function () {
+                            location.href = '/login.html';
+                        });
+                    }
+                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
+                    layer.closeAll('loading');
+                },
+                beforeSend: function (xhr) {
+                    var token = config.getToken();
+                    if (token) {
+                        xhr.setRequestHeader('Authorization', token);
                     }
                 }
             });

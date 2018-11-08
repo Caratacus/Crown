@@ -6,7 +6,10 @@ layui.define(function (exports) {
         autoRender: false,  // 窗口大小改变后是否自动重新渲染表格，解决layui数据表格非响应式的问题
         // 获取缓存的token
         getToken: function () {
-            return layui.data(config.scope).token;
+            var token = layui.data(config.scope).token;
+            if (token) {
+                return JSON.parse(token);
+            }
         },
         // 清除user
         removeToken: function () {
@@ -19,12 +22,15 @@ layui.define(function (exports) {
         putToken: function (token) {
             layui.data(config.scope, {
                 key: 'token',
-                value: JSON.stringify(token)
+                value: JSON.stringify('Basic ' + token)
             });
         },
         // 获取缓存的token
         getUid: function () {
-            return layui.data(config.scope).uid;
+            var uid = layui.data(config.scope).uid;
+            if (uid) {
+                return JSON.parse(uid);
+            }
         },
         // 清除Uid
         removeUid: function () {
@@ -76,15 +82,15 @@ layui.define(function (exports) {
         }],
         // 当前登录的用户
         getUser: function () {
-            var u = layui.data(config.scope).login_user;
-            if (u) {
-                return JSON.parse(u);
+            var user = layui.data(config.scope).user;
+            if (user) {
+                return JSON.parse(user);
             }
         },
         // 缓存user
         putUser: function (user) {
             layui.data(config.scope, {
-                key: 'login_user',
+                key: 'user',
                 value: JSON.stringify(user)
             });
         }
