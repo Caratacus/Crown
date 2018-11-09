@@ -49,10 +49,6 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
         },
         // 从服务器获取登录用户的信息
         getUser: function (success) {
-            if (config.getUser()) {
-                success(config.getUser());
-                return;
-            }
             crown.get('/api/user/details', {}, function (data) {
                 config.putUser(data.result);
                 success(data.result);
@@ -61,7 +57,7 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
         // 页面元素绑定事件监听
         bindEvent: function () {
             // 退出登录
-            $('#btnLogout').click(function () {
+            $('#logout').click(function () {
                 layer.confirm('确定退出登录？', function (i) {
                     layer.close(i);
                     config.removeAll();
@@ -69,12 +65,12 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
                 });
             });
             // 修改密码
-            $('#setPsw').click(function () {
+            $('#setPassword').click(function () {
                 crown.popupRight('components/tpl/password.html');
             });
             // 个人信息
             $('#setInfo').click(function () {
-
+                crown.popupRight('components/tpl/info.html');
             });
             // 消息
             $('#btnMessage').click(function () {

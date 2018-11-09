@@ -1,0 +1,86 @@
+<div class="layui-card-header">
+    <h2 class="header-title">修改个人信息</h2>
+</div>
+<div class="layui-card-body" style="padding: 30px;">
+    <form class="layui-form" id="userinfo-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-block">
+                <input name="nickname" placeholder="请输入昵称" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input name="email" placeholder="请输入邮箱" type="text" class="layui-input" maxlength="20"
+                       lay-verify="" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-block">
+                <input name="phone" placeholder="请输入手机号" type="text" class="layui-input" maxlength="20"
+                       lay-verify="" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"/></label>
+            <button class="layui-btn" lay-filter="user-form-submit" lay-submit>保存</button>
+            <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+        </div>
+        <!--<div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="submit-psw">确认修改</button>
+        </div>-->
+    </form>
+</div>
+
+<script>
+    layui.use(['form', 'crown', 'config'], function () {
+        var form = layui.form;
+        var crown = layui.crown;
+        var config = layui.config;
+
+
+        // 回显user数据
+        var user = config.getUser();
+        console.log(user);
+        console.log(user.phone);
+        console.log(user.nickname);
+        console.log(user.email);
+        if (user) {
+            form.val('userinfo-form', user);
+            /*  form.val("userinfo-form", {
+                  "phone": "1",
+                  "nickname": "1"
+              });
+  */
+
+            $('#userinfo-form').attr('method', 'PUT');
+        }
+
+        //监听提交
+        form.on('submit(submit-psw)', function (data) {
+            layer.load(2);
+            crown.put('/api/account/password', data.field, function () {
+                layer.closeAll('loading');
+                crown.closePopupRight();
+                layer.msg('密码修改成功，即将跳转至登录页面', {icon: 1}, function () {
+                    config.removeAll();
+                    location.href = '/login.html';
+                });
+            });
+            return false;
+        });
+
+        //添加表单验证方法
+        form.verify({
+            password: [/^[\S]{5,12}$/, '密码必须5到12位，且不能出现空格'],
+            repassword: function (t) {
+                if (t !== $('#form-password input[name=newPassword]').val()) {
+                    return '两次密码输入不一致';
+                }
+            }
+        });
+    });
+</script>
