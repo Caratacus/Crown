@@ -2,7 +2,7 @@
     <h2 class="header-title">修改个人信息</h2>
 </div>
 <div class="layui-card-body" style="padding: 30px;">
-    <form class="layui-form" id="userinfo-form">
+    <form class="layui-form" lay-filter="userinfo-form">
         <div class="layui-form-item">
             <label class="layui-form-label">昵称</label>
             <div class="layui-input-block">
@@ -40,25 +40,12 @@
         var form = layui.form;
         var crown = layui.crown;
         var config = layui.config;
-
-
         // 回显user数据
         var user = config.getUser();
-        console.log(user);
-        console.log(user.phone);
-        console.log(user.nickname);
-        console.log(user.email);
         if (user) {
             form.val('userinfo-form', user);
-            /*  form.val("userinfo-form", {
-                  "phone": "1",
-                  "nickname": "1"
-              });
-  */
-
             $('#userinfo-form').attr('method', 'PUT');
         }
-
         //监听提交
         form.on('submit(submit-psw)', function (data) {
             layer.load(2);

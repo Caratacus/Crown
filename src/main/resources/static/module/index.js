@@ -70,7 +70,7 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
             });
             // 个人信息
             $('#setInfo').click(function () {
-                crown.popupRight('components/tpl/info.html');
+                crown.popupRight('components/tpl/userinfo.html');
             });
             // 消息
             $('#btnMessage').click(function () {
