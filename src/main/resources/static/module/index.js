@@ -15,7 +15,8 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
                     var tempSubMenu = tempMenu.subMenus[j];
                     if (!tempSubMenu.auth) {
                         tempSubMenus.push(tempSubMenu);
-                    } else if (crown.hasPerm(tempSubMenu.auth)) {
+                        //TODO
+                    } else if (!crown.hasPerm(tempSubMenu.auth)) {
                         tempSubMenus.push(tempSubMenu);
                     }
                 }
@@ -54,6 +55,7 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
                 success(data.result);
             });
         },
+
         // 页面元素绑定事件监听
         bindEvent: function () {
             // 退出登录
@@ -63,6 +65,10 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
                     config.removeAll();
                     location.replace('login.html');
                 });
+            });
+            // 主题设置
+            $('#setTheme').click(function () {
+                crown.popupRight('components/tpl/theme.html');
             });
             // 修改密码
             $('#setPassword').click(function () {

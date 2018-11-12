@@ -105,7 +105,7 @@
         form.on('submit(role-form-submit)', function (data) {
             layer.load(2);
             if (data.field.id) {
-                crown.put('/api/role', data.field, function () {
+                crown.put('/api/role/' + data.field.id, data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     table.reload('role-table');
@@ -156,7 +156,7 @@
             layer.confirm('确定要删除吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                crown.delete('/api/role/' + obj.data.roleId, {}, function () {
+                crown.delete('/api/role/' + obj.data.id, {}, function () {
                     layer.closeAll('loading');
                     layer.msg('删除成功', {icon: 1});
                     obj.del();

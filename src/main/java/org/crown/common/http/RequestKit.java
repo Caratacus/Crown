@@ -8,9 +8,14 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.crown.common.api.ApiAssert;
+import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.emuns.HTTPMethod;
+import org.crown.common.kit.JWTTokenUtils;
+import org.crown.common.spring.ApplicationUtils;
 import org.springframework.util.StreamUtils;
 
+import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -150,6 +155,18 @@ public abstract class RequestKit {
      */
     public static boolean isContainBody(HttpServletRequest request) {
         return isPost(request) || isPut(request) || isPatch(request);
+    }
+
+    /**
+     * 获取当前用户id
+     */
+    public static Integer currentUid() {
+        String token = ApplicationUtils.getRequest().getHeader("Authorization");
+        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
+        token = token.replaceFirst("Bearer ", "");
+        Claims claims = JWTTokenUtils.getClaim(token);
+        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
+        return claims.get(JWTTokenUtils._ID, Integer.class);
     }
 
 }

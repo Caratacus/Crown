@@ -3,6 +3,7 @@ package org.crown.common.mybatisplus;
 import java.time.LocalDateTime;
 
 import org.apache.ibatis.reflection.MetaObject;
+import org.crown.common.http.RequestKit;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
@@ -23,6 +24,15 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
      * 修改时间
      */
     private final String updateTime = "updateTime";
+    /**
+     * 创建者ID
+     */
+    private final String createUid = "createUid";
+
+    /**
+     * 修改者ID
+     */
+    private final String updateUid = "updateUid";
 
     @Override
     public void insertFill(MetaObject metaObject) {
@@ -31,7 +41,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        fillOfInsertOrUpdate(metaObject, FieldFill.INSERT_UPDATE);
+        fillOfInsertOrUpdate(metaObject, FieldFill.UPDATE);
     }
 
     /**
@@ -44,10 +54,13 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
         switch (fieldFill) {
             case INSERT:
                 setFieldValByName(createTime, LocalDateTime.now(), metaObject);
+                setFieldValByName(createUid, RequestKit.currentUid(), metaObject);
                 setFieldValByName(updateTime, LocalDateTime.now(), metaObject);
+                setFieldValByName(updateUid, RequestKit.currentUid(), metaObject);
                 break;
             case UPDATE:
                 setFieldValByName(updateTime, LocalDateTime.now(), metaObject);
+                setFieldValByName(updateUid, RequestKit.currentUid(), metaObject);
                 break;
             default:
         }

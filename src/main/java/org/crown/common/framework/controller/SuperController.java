@@ -3,17 +3,13 @@ package org.crown.common.framework.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
-import org.crown.common.emuns.ErrorCodeEnum;
-import org.crown.common.kit.JWTTokenUtils;
+import org.crown.common.http.RequestKit;
 import org.crown.common.kit.TypeUtils;
 import org.crown.cons.PageCons;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import io.jsonwebtoken.Claims;
 
 
 /**
@@ -52,12 +48,7 @@ public class SuperController {
      * 获取当前用户id
      */
     public Integer currentUid() {
-        String token = request.getHeader("Authorization");
-        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
-        token = token.replaceFirst("Bearer ", "");
-        Claims claims = JWTTokenUtils.getClaim(token);
-        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
-        return claims.get(JWTTokenUtils._ID, Integer.class);
+        return RequestKit.currentUid();
     }
 
     /**
