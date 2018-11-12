@@ -50,7 +50,7 @@ public class SuperController {
     public Integer currentUid() {
         String token = request.getHeader("Authorization");
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
-        token = token.replaceFirst("Basic ", "");
+        token = token.replaceFirst("Bearer ", "");
         Claims claims = JWTTokenUtils.getClaim(token);
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
         return claims.get(JWTTokenUtils._ID, Integer.class);

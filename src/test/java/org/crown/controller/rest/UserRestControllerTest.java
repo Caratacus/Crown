@@ -61,7 +61,7 @@ public class UserRestControllerTest {
     @Test
     public void getUserDetails() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/user/details").header("Authorization", "Basic " + token.getToken()))
+                MockMvcRequestBuilders.get("/api/user/details").header("Authorization", "Bearer " + token.getToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -75,7 +75,7 @@ public class UserRestControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/api/user/info")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Basic " + token.getToken())
+                        .header("Authorization", "Bearer " + token.getToken())
                         .content(JacksonUtils.toJson(userInfoPARM))
         )
                 .andDo(MockMvcResultHandlers.print())

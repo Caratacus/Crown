@@ -69,7 +69,7 @@ public class AccountRestControllerTest {
                 MockMvcRequestBuilders
                         .put("/api/account/password")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Basic " + responses.getResult().getToken())
+                        .header("Authorization", "Bearer " + responses.getResult().getToken())
                         .content(JacksonUtils.toJson(passwordPARM)))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
