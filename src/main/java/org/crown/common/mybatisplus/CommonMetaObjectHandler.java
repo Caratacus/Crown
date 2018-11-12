@@ -54,17 +54,30 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
         switch (fieldFill) {
             case INSERT:
                 setFieldValByName(createTime, LocalDateTime.now(), metaObject);
-                setFieldValByName(createUid, RequestKit.currentUid(), metaObject);
+                setFieldValByName(createUid, currentUid(), metaObject);
                 setFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-                setFieldValByName(updateUid, RequestKit.currentUid(), metaObject);
+                setFieldValByName(updateUid, currentUid(), metaObject);
                 break;
             case UPDATE:
                 setFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-                setFieldValByName(updateUid, RequestKit.currentUid(), metaObject);
+                setFieldValByName(updateUid, currentUid(), metaObject);
                 break;
             default:
         }
 
     }
+
+    /**
+     * 获取当前用户ID
+     */
+    private Integer currentUid() {
+        Integer uid = null;
+        try {
+            uid = RequestKit.currentUid();
+        } catch (Exception ignored) {
+        }
+        return uid;
+    }
+
 
 }

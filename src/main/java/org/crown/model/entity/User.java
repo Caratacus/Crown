@@ -74,7 +74,6 @@ public class User extends BaseModel {
     /**
      * 修改者ID
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Integer updateUid;
 
     /**
