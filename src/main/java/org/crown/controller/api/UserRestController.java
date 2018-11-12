@@ -1,4 +1,4 @@
-package org.crown.controller.rest;
+package org.crown.controller.api;
 
 
 import java.time.LocalDateTime;

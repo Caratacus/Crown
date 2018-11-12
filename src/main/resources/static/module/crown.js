@@ -308,7 +308,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             history.back();
         },
         theme: function () {  // 设置主题
-            crown.popupRight('components/tpl/theme.html');
+            crown.popupRight('components/tpl/about.html');
         },
         fullScreen: function (e) {  // 全屏
             var ac = 'layui-icon-screen-full', ic = 'layui-icon-screen-restore';

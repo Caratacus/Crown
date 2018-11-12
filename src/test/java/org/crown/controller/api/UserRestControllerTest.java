@@ -1,4 +1,4 @@
-package org.crown.controller.rest;
+package org.crown.controller.api;
 
 import org.crown.CrownApplication;
 import org.crown.common.kit.JacksonUtils;
