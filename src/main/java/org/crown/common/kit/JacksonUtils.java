@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -123,6 +124,40 @@ public abstract class JacksonUtils {
         } catch (Exception ignored) {
         }
         return object;
+    }
+
+    /**
+     * Json转换为对象 转换失败返回null
+     *
+     * @param json
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T readValue(String json, Class<T> clazz) {
+        T t = null;
+        try {
+            t = getObjectMapper().readValue(json, clazz);
+        } catch (Exception ignored) {
+        }
+        return t;
+    }
+
+    /**
+     * Json转换为对象 转换失败返回null
+     *
+     * @param json
+     * @param valueTypeRef
+     * @param <T>
+     * @return
+     */
+    public static <T> T readValue(String json, TypeReference valueTypeRef) {
+        T t = null;
+        try {
+            t = getObjectMapper().readValue(json, valueTypeRef);
+        } catch (Exception ignored) {
+        }
+        return t;
     }
 
 }

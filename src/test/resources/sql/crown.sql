@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 11/07/2018 23:01:45 PM
+ Date: 11/12/2018 23:13:58 PM
 */
 
 SET NAMES utf8;
@@ -65,14 +65,21 @@ CREATE TABLE `sys_resource` (
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(64) NOT NULL COMMENT '角色名称',
+  `role_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '角色名称',
   `create_uid` int(11) NOT NULL COMMENT '创建者ID',
   `update_uid` int(11) NOT NULL COMMENT '修改者ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  `remark` varchar(128) DEFAULT NULL COMMENT '备注',
+  `remark` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+
+-- ----------------------------
+--  Records of `sys_role`
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role` VALUES ('1', '超级管理员', '1', '1', '2018-11-12 15:59:43', '2018-11-12 15:59:47', '超级管理员'), ('2', '普通管理员', '1', '1', '2018-11-12 16:00:17', '2018-11-12 16:00:19', '普通管理员');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `sys_role_menu`
@@ -120,7 +127,7 @@ CREATE TABLE `sys_user` (
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', '超级管理员', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-05 17:19:08', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-05 17:19:08', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1');
 COMMIT;
 
 -- ----------------------------
