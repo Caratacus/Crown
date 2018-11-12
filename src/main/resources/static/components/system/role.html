@@ -1,0 +1,168 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">角色管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>角色管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            <button id="role-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+        </div>
+        <!-- 数据表格 -->
+        <table class="layui-table" id="role-table" lay-filter="role-table"></table>
+    </div>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="role-model">
+    <form id="role-form" lay-filter="role-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名</label>
+            <div class="layui-input-block">
+                <input name="roleName" placeholder="请输入角色名" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入内容" class="layui-textarea" maxlength="200"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+            <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="role-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'util', 'config', 'crown'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var util = layui.util;
+        var crown = layui.crown;
+
+        //渲染表格
+        table.render({
+            elem: '#role-table',
+            url: config.serverUrl + '/api/role',
+            request: {
+                //页码的参数名称，默认：page
+                pageName: 'cursor',
+                //每页数据量的参数名，默认：limit
+                limitName: 'limit'
+            },
+            parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.result.total, //解析数据长度
+                    "data": res.result.records //解析数据列表
+                };
+            },
+            response: {
+                //规定成功的状态码，默认：0
+                statusCode: 200
+            },
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'id', sort: true, title: 'ID'},
+                {field: 'roleName', sort: true, title: '角色名'},
+                {field: 'remark', sort: true, title: '备注'},
+                {
+                    field: 'createTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.createTime);
+                    }, title: '创建时间'
+                },
+                {
+                    field: 'updateTime', sort: true, templet: function (d) {
+                        return util.toDateString(d.updateTime);
+                    }, title: '修改时间'
+                },
+                {align: 'center', toolbar: '#role-table-bar', title: '操作'}
+            ]]
+        });
+
+        // 添加按钮点击事件
+        $('#role-btn-add').click(function () {
+            showEditModel();
+        });
+
+        // 表单提交事件
+        form.on('submit(role-form-submit)', function (data) {
+            layer.load(2);
+            if (data.field.id) {
+                crown.put('/api/role', data.field, function () {
+                    layer.closeAll('loading');
+                    layer.msg('修改成功', {icon: 1});
+                    table.reload('role-table');
+                    layer.closeAll('page');
+                });
+            } else {
+                crown.post('/api/role', data.field, function () {
+                    layer.closeAll('loading');
+                    layer.msg('添加成功', {icon: 1});
+                    table.reload('role-table');
+                    layer.closeAll('page');
+                });
+            }
+            return false;
+        });
+
+        // 工具条点击事件
+        table.on('tool(role-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            }
+        });
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改角色' : '添加角色',
+                area: '450px',
+                offset: '120px',
+                content: $('#role-model').html(),
+                success: function () {
+                    $('#role-form')[0].reset();
+                    if (data) {
+                        form.val('role-form', data);
+                    }
+                    $('#role-form .close').click(function () {
+                        layer.closeAll('page');
+                    });
+                }
+            });
+        };
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                crown.delete('/api/role/' + obj.data.roleId, {}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('删除成功', {icon: 1});
+                    obj.del();
+                });
+            });
+        };
+    });
+
+</script>

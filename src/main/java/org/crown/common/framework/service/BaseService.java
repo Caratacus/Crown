@@ -208,6 +208,17 @@ public interface BaseService<T extends Convert> {
 
     /**
      * <p>
+     * 翻页查询
+     * </p>
+     *
+     * @param page 翻页对象
+     */
+    default IPage<T> page(IPage<T> page) {
+        return page(page, Wrappers.emptyQueryWrapper());
+    }
+
+    /**
+     * <p>
      * 根据 Wrapper 条件，查询全部记录
      * </p>
      *
