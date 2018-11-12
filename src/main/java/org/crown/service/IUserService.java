@@ -27,6 +27,7 @@ public interface IUserService extends BaseService<User> {
 
     /**
      * 通过用户对象获取token
+     *
      * @param user
      * @return
      */
@@ -49,4 +50,5 @@ public interface IUserService extends BaseService<User> {
      * @return
      */
     void updatePassword(Integer uid, String oldPassword, String newPassword);
+
 }

@@ -26,12 +26,9 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"/></label>
-            <button class="layui-btn" lay-filter="user-form-submit" lay-submit>保存</button>
-            <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+            <button class="layui-btn" lay-filter="userinfo-submit" lay-submit>保存</button>
+            <button id="btnClose" class="layui-btn layui-btn-primary close" type="button">取消</button>
         </div>
-        <!--<div class="layui-form-item">
-            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="submit-psw">确认修改</button>
-        </div>-->
     </form>
 </div>
 
@@ -40,6 +37,7 @@
         var form = layui.form;
         var crown = layui.crown;
         var config = layui.config;
+        var $ = layui.jquery;
         // 回显user数据
         var user = config.getUser();
         if (user) {
@@ -47,27 +45,18 @@
             $('#userinfo-form').attr('method', 'PUT');
         }
         //监听提交
-        form.on('submit(submit-psw)', function (data) {
+        form.on('submit(userinfo-submit)', function (data) {
             layer.load(2);
-            crown.put('/api/account/password', data.field, function () {
+            crown.put('/api/user/info', data.field, function () {
                 layer.closeAll('loading');
                 crown.closePopupRight();
-                layer.msg('密码修改成功，即将跳转至登录页面', {icon: 1}, function () {
-                    config.removeAll();
-                    location.href = '/login.html';
-                });
+                location.href = '/index.html';
             });
             return false;
-        });
-
-        //添加表单验证方法
-        form.verify({
-            password: [/^[\S]{5,12}$/, '密码必须5到12位，且不能出现空格'],
-            repassword: function (t) {
-                if (t !== $('#form-password input[name=newPassword]').val()) {
-                    return '两次密码输入不一致';
-                }
-            }
+        })
+        // 消息
+        $('#btnClose').click(function () {
+            crown.closePopupRight();
         });
     });
 </script>
