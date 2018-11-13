@@ -25,6 +25,11 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 public interface BaseService<T extends Convert> {
 
     /**
+     * 批量大小
+     */
+    int batchSize = 1024;
+
+    /**
      * <p>
      * 插入一条记录（选择字段，策略插入）
      * </p>
@@ -41,7 +46,7 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean saveBatch(Collection<T> entityList) {
-        return saveBatch(entityList, 1000);
+        return saveBatch(entityList, batchSize);
     }
 
     /**
@@ -62,7 +67,7 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean saveOrUpdateBatch(Collection<T> entityList) {
-        return saveOrUpdateBatch(entityList, 30);
+        return saveOrUpdateBatch(entityList, batchSize);
     }
 
     /**
@@ -130,7 +135,7 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean updateBatchById(Collection<T> entityList) {
-        return updateBatchById(entityList, 1000);
+        return updateBatchById(entityList, batchSize);
     }
 
     /**
