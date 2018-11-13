@@ -75,7 +75,7 @@ public class SuperController {
         // 是否查询分页
         Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(PageCons.SEARCH_COUNT), false);
         limit = limit > PageCons.MAX_LIMIT ? PageCons.MAX_LIMIT : limit;
-        Page<T> page = new Page<>(cursor, limit);
+        Page<T> page = new Page<>(cursor, limit, searchCount);
         page.setAsc(request.getParameterValues(PageCons.PAGE_ASCS));
         page.setDesc(request.getParameterValues(PageCons.PAGE_DESCS));
         return page;
