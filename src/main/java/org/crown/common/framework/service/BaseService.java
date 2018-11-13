@@ -67,19 +67,8 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean saveOrUpdateBatch(Collection<T> entityList) {
-        return saveOrUpdateBatch(entityList, batchSize);
+        return saveOrUpdateBatch(entityList);
     }
-
-    /**
-     * <p>
-     * 批量修改插入
-     * </p>
-     *
-     * @param entityList 实体对象集合
-     * @param batchSize  每次的数量
-     */
-    boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize);
-
 
     /**
      * <p>

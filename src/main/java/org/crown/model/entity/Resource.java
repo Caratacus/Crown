@@ -1,7 +1,9 @@
 package org.crown.model.entity;
 
-import org.crown.common.framework.model.BaseModel;
+import org.crown.common.framework.model.convert.Convert;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
@@ -20,10 +22,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_resource")
-public class Resource extends BaseModel {
+public class Resource extends Convert {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 主键
+     */
+    @TableId(type = IdType.INPUT)
+    private String id;
     /**
      * 资源名称
      */
@@ -44,6 +51,8 @@ public class Resource extends BaseModel {
      */
     private Boolean verify;
 
+
+    public static final String ID = "id";
 
     public static final String RESOURCE_NAME = "resource_name";
 

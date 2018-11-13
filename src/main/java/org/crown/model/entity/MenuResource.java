@@ -32,7 +32,7 @@ public class MenuResource extends BaseModel {
     /**
      * 资源ID
      */
-    private Integer resourceId;
+    private String resourceId;
 
 
     public static final String MENU_ID = "menu_id";

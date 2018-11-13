@@ -1,6 +1,7 @@
 package org.crown.controller;
 
 
+import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.common.kit.IpUtils;
@@ -41,6 +42,7 @@ public class AccountRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
+    @Resources(verify = false)
     @ApiOperation("获取Token")
     @PostMapping("/token")
     public ApiResponses<TokenDTO> getToken(@RequestBody @Validated LoginPARM loginPARM) {
@@ -49,6 +51,7 @@ public class AccountRestController extends SuperController {
         return success(tokenDTO);
     }
 
+    @Resources
     @ApiOperation("清理Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {
@@ -56,6 +59,7 @@ public class AccountRestController extends SuperController {
     }
 
 
+    @Resources
     @ApiOperation("修改密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "oldPassword", value = "原密码", required = true, dataType = "String"),

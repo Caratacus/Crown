@@ -50,15 +50,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void users() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/user")
-                        .param("aa", "2018"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
     public void getUserDetails() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/user/details").header("Authorization", "Bearer " + token.getToken()))

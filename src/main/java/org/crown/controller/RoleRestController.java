@@ -1,6 +1,7 @@
 package org.crown.controller;
 
 
+import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.model.entity.Role;
@@ -40,6 +41,7 @@ public class RoleRestController extends SuperController {
     @Autowired
     private IRoleService roleService;
 
+    @Resources
     @ApiOperation(value = "查询所有角色")
     @GetMapping
     public ApiResponses<IPage<Role>> list() {
@@ -47,6 +49,7 @@ public class RoleRestController extends SuperController {
         return success(page);
     }
 
+    @Resources
     @ApiOperation(value = "查询当个角色")
     @GetMapping("/{id}")
     public ApiResponses<Role> get(@PathVariable("id") Integer id) {
@@ -54,6 +57,7 @@ public class RoleRestController extends SuperController {
         return success(role);
     }
 
+    @Resources
     @ApiOperation(value = "添加角色")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {

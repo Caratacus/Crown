@@ -32,7 +32,7 @@ public class RoleResource extends BaseModel {
     /**
      * 菜单ID
      */
-    private Integer resourceId;
+    private String resourceId;
 
 
     public static final String ROLE_ID = "role_id";

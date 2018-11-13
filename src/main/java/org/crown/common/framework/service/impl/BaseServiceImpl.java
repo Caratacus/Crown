@@ -157,41 +157,11 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize) {
+    public boolean saveOrUpdateBatch(Collection<T> entityList) {
         if (CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");
         }
-        Class<?> cls = null;
-        TableInfo tableInfo = null;
-        int i = 0;
-        try (SqlSession batchSqlSession = sqlSessionBatch()) {
-            for (T anEntityList : entityList) {
-                if (i == 0) {
-                    cls = anEntityList.getClass();
-                    tableInfo = TableInfoHelper.getTableInfo(cls);
-                }
-                if (null != tableInfo && StringUtils.isNotEmpty(tableInfo.getKeyProperty())) {
-                    Object idVal = ReflectionKit.getMethodValue(cls, anEntityList, tableInfo.getKeyProperty());
-                    if (StringUtils.checkValNull(idVal)) {
-                        String sqlStatement = sqlStatement(SqlMethod.INSERT_ONE);
-                        batchSqlSession.insert(sqlStatement, anEntityList);
-                    } else {
-                        String sqlStatement = sqlStatement(SqlMethod.UPDATE_BY_ID);
-                        MapperMethod.ParamMap<T> param = new MapperMethod.ParamMap<>();
-                        param.put(Constants.ENTITY, anEntityList);
-                        batchSqlSession.update(sqlStatement, param);
-                        //不知道以后会不会有人说更新失败了还要执行插入 😂😂😂
-                    }
-                    if (i >= 1 && i % batchSize == 0) {
-                        batchSqlSession.flushStatements();
-                    }
-                    i++;
-                } else {
-                    throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
-                }
-                batchSqlSession.flushStatements();
-            }
-        }
+        entityList.forEach(this::saveOrUpdate);
         return true;
     }
 
