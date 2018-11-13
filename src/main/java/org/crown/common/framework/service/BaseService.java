@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.crown.common.framework.model.convert.Convert;
-import org.crown.common.mybatisplus.Wrappers;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 
 
 /**
@@ -193,7 +193,7 @@ public interface BaseService<T extends Convert> {
      * </p>
      */
     default List<T> list() {
-        return list(Wrappers.emptyQueryWrapper());
+        return list(Wrappers.emptyWrapper());
     }
 
     /**
@@ -214,7 +214,7 @@ public interface BaseService<T extends Convert> {
      * @param page 翻页对象
      */
     default IPage<T> page(IPage<T> page) {
-        return page(page, Wrappers.emptyQueryWrapper());
+        return page(page, Wrappers.emptyWrapper());
     }
 
     /**

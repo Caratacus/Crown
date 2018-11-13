@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.crown.common.framework.service.impl.BaseServiceImpl;
 import org.crown.common.kit.BeanConverter;
-import org.crown.common.mybatisplus.Wrappers;
 import org.crown.mapper.ResourceMapper;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
 import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
