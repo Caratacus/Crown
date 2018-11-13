@@ -157,12 +157,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveOrUpdateBatch(Collection<T> entityList) {
-        return saveOrUpdateBatch(entityList, 30);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
     public boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize) {
         if (CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");

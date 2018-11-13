@@ -41,7 +41,7 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean saveBatch(Collection<T> entityList) {
-        return saveBatch(entityList, 30);
+        return saveBatch(entityList, 1000);
     }
 
     /**
@@ -61,7 +61,9 @@ public interface BaseService<T extends Convert> {
      *
      * @param entityList 实体对象集合
      */
-    boolean saveOrUpdateBatch(Collection<T> entityList);
+    default boolean saveOrUpdateBatch(Collection<T> entityList) {
+        return saveOrUpdateBatch(entityList, 30);
+    }
 
     /**
      * <p>
@@ -73,6 +75,7 @@ public interface BaseService<T extends Convert> {
      */
     boolean saveOrUpdateBatch(Collection<T> entityList, int batchSize);
 
+
     /**
      * <p>
      * 根据 ID 删除
@@ -81,6 +84,15 @@ public interface BaseService<T extends Convert> {
      * @param id 主键ID
      */
     boolean removeById(Serializable id);
+
+    /**
+     * <p>
+     * 删除所有记录
+     * </p>
+     */
+    default boolean remove() {
+        return remove(Wrappers.emptyWrapper());
+    }
 
     /**
      * <p>
@@ -118,7 +130,7 @@ public interface BaseService<T extends Convert> {
      * @param entityList 实体对象集合
      */
     default boolean updateBatchById(Collection<T> entityList) {
-        return updateBatchById(entityList, 30);
+        return updateBatchById(entityList, 1000);
     }
 
     /**
@@ -173,19 +185,19 @@ public interface BaseService<T extends Convert> {
      * <p>
      * 根据 Wrapper 条件，查询总记录数
      * </p>
-     *
-     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    int count(QueryWrapper<T> queryWrapper);
+    default int count() {
+        return count(Wrappers.emptyWrapper());
+    }
 
     /**
      * <p>
-     * 查询列表
+     * 根据 Wrapper 条件，查询总记录数
      * </p>
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    List<T> list(QueryWrapper<T> queryWrapper);
+    int count(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -198,13 +210,12 @@ public interface BaseService<T extends Convert> {
 
     /**
      * <p>
-     * 翻页查询
+     * 查询列表
      * </p>
      *
-     * @param page         翻页对象
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    IPage<T> page(IPage<T> page, QueryWrapper<T> queryWrapper);
+    List<T> list(QueryWrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -219,12 +230,45 @@ public interface BaseService<T extends Convert> {
 
     /**
      * <p>
+     * 翻页查询
+     * </p>
+     *
+     * @param page         翻页对象
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    IPage<T> page(IPage<T> page, QueryWrapper<T> queryWrapper);
+
+
+    /**
+     * <p>
+     * 根据 Wrapper 条件，查询全部记录
+     * </p>
+     */
+    default List<Object> listObjs() {
+        return listObjs(Wrappers.emptyWrapper());
+    }
+
+    /**
+     * <p>
      * 根据 Wrapper 条件，查询全部记录
      * </p>
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     List<Object> listObjs(QueryWrapper<T> queryWrapper);
+
+    /**
+     * <p>
+     * 翻页查询自定义对象
+     * </p>
+     *
+     * @param page 翻页对象
+     * @param cls
+     * @return
+     */
+    default <E> IPage<E> pageEntities(IPage page, Class<E> cls) {
+        return pageEntities(page, Wrappers.emptyWrapper(), cls);
+    }
 
     /**
      * <p>
@@ -254,6 +298,18 @@ public interface BaseService<T extends Convert> {
      * 查询自定义对象列表
      * </p>
      *
+     * @param cls
+     * @return
+     */
+    default <E extends Convert> List<E> entitys(Class<E> cls) {
+        return entitys(Wrappers.emptyWrapper(), cls);
+    }
+
+    /**
+     * <p>
+     * 查询自定义对象列表
+     * </p>
+     *
      * @param wrapper {@link Wrapper}
      * @param cls
      * @return
@@ -269,6 +325,17 @@ public interface BaseService<T extends Convert> {
      * @return 转换后的map
      */
     <V> Map<Integer, V> list2Map(List<V> list, String property);
+
+    /**
+     * 查询list,使用list中对象的某个属性做键值,转换成map
+     * <p>
+     *
+     * @param property list中对象的属性,作为键值
+     * @return 转换后的map
+     */
+    default Map<Integer, T> list2Map(String property) {
+        return list2Map(Wrappers.emptyWrapper(), property);
+    }
 
     /**
      * 查询list,使用list中对象的某个属性做键值,转换成map
