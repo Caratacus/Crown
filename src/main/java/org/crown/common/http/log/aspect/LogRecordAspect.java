@@ -13,7 +13,7 @@ import org.crown.common.http.log.LogHelper;
 @Aspect
 public class LogRecordAspect {
 
-    @Pointcut("execution(public * org.crown.controller.*.*Controller.*(..))")
+    @Pointcut("execution(public * org.crown.controller.*RestController.*(..))")
     public void pointCut() {
     }
 
