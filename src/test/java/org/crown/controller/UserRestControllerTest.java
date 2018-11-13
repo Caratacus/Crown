@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 import org.crown.CrownApplication;
 import org.crown.common.kit.JacksonUtils;
@@ -52,7 +52,7 @@ public class UserRestControllerTest {
     @Test
     public void users() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/user")
+                MockMvcRequestBuilders.get("/user")
                         .param("aa", "2018"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
@@ -61,7 +61,7 @@ public class UserRestControllerTest {
     @Test
     public void getUserDetails() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/user/details").header("Authorization", "Bearer " + token.getToken()))
+                MockMvcRequestBuilders.get("/user/details").header("Authorization", "Bearer " + token.getToken()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -73,7 +73,7 @@ public class UserRestControllerTest {
         userInfoPARM.setEmail("caratacus@qq.com");
         userInfoPARM.setPhone("13712345678");
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/api/user/info")
+                MockMvcRequestBuilders.put("/user/info")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + token.getToken())
                         .content(JacksonUtils.toJson(userInfoPARM))

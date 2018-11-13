@@ -57,7 +57,7 @@
         //渲染表格
         table.render({
             elem: '#role-table',
-            url: config.serverUrl + '/api/role',
+            url: config.serverUrl + '/role',
             request: config.request,
             parseData: config.parseData,
             response: config.response,
@@ -90,14 +90,14 @@
         form.on('submit(role-form-submit)', function (data) {
             layer.load(2);
             if (data.field.id) {
-                crown.put('/api/role/' + data.field.id, data.field, function () {
+                crown.put('/role/' + data.field.id, data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     table.reload('role-table');
                     layer.closeAll('page');
                 });
             } else {
-                crown.post('/api/role', data.field, function () {
+                crown.post('/role', data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
                     table.reload('role-table');
@@ -141,7 +141,7 @@
             layer.confirm('确定要删除吗？', function (i) {
                 layer.close(i);
                 layer.load(2);
-                crown.delete('/api/role/' + obj.data.id, {}, function () {
+                crown.delete('/role/' + obj.data.id, {}, function () {
                     layer.closeAll('loading');
                     layer.msg('删除成功', {icon: 1});
                     obj.del();

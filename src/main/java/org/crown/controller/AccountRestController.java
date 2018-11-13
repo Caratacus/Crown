@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 
 import org.crown.common.api.model.responses.ApiResponses;
@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"Account"}, description = "账号操作相关接口")
 @RestController
-@RequestMapping(value = "/api/account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class AccountRestController extends SuperController {
 

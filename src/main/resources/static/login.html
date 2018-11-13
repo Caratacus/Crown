@@ -106,7 +106,7 @@
             if (codeflag) {
                 layer.load(2);
                 $.ajax({
-                    url: config.serverUrl + '/api/account/token',
+                    url: config.serverUrl + '/account/token',
                     data: JSON.stringify(obj.field),
                     type: 'POST',
                     contentType: 'application/json',

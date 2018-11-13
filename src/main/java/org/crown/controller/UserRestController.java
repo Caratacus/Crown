@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
  * @since 2018-10-25
  */
 @RestController
-@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class UserRestController extends SuperController {
 

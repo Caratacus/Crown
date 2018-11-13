@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 
 import org.crown.common.api.model.responses.ApiResponses;
@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"Role"}, description = "角色相关接口")
 @RestController
-@RequestMapping(value = "/api/role", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class RoleRestController extends SuperController {
 

@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class RoleRestControllerTest extends SuperController {
     public void tests() throws Exception {
         //测试获取所有
         String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/role")
+                MockMvcRequestBuilders.get("/role")
                         .header("Authorization", "Bearer " + token.getToken())
         )
                 .andDo(MockMvcResultHandlers.print())
@@ -73,7 +73,7 @@ public class RoleRestControllerTest extends SuperController {
         rolePARM.setRoleName("角色测试");
         rolePARM.setRemark("角色测试");
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/role")
+                MockMvcRequestBuilders.post("/role")
                         .header("Authorization", "Bearer " + token.getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JacksonUtils.toJson(rolePARM))
@@ -85,7 +85,7 @@ public class RoleRestControllerTest extends SuperController {
         for (Role record : records) {
             //测试获取单个
             mockMvc.perform(
-                    MockMvcRequestBuilders.get("/api/role/" + record.getId())
+                    MockMvcRequestBuilders.get("/role/" + record.getId())
                             .header("Authorization", "Bearer " + token.getToken())
             )
                     .andDo(MockMvcResultHandlers.print())
@@ -95,7 +95,7 @@ public class RoleRestControllerTest extends SuperController {
                 rolePARM.setRoleName("角色测试PUT");
                 rolePARM.setRemark("角色测试PUT");
                 mockMvc.perform(
-                        MockMvcRequestBuilders.put("/api/role" + record.getId())
+                        MockMvcRequestBuilders.put("/role" + record.getId())
                                 .header("Authorization", "Bearer " + token.getToken())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(JacksonUtils.toJson(rolePARM))
@@ -104,7 +104,7 @@ public class RoleRestControllerTest extends SuperController {
                         .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
                 //测试删除
                 mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/api/role" + record.getId())
+                        MockMvcRequestBuilders.delete("/role" + record.getId())
                                 .header("Authorization", "Bearer " + token.getToken())
                 )
                         .andDo(MockMvcResultHandlers.print())
@@ -116,7 +116,7 @@ public class RoleRestControllerTest extends SuperController {
 
 
 /*     mockMvc.perform(
-             MockMvcRequestBuilders.get("/api/user")
+             MockMvcRequestBuilders.get("/user")
              .param("aa", "2018"))
             .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk());

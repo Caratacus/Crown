@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <p>
- * 角色表 前端控制器
+ * 菜单表 前端控制器
  * </p>
  *
  * @author Caratacus
  * @since 2018-10-25
  */
 @Controller
-@RequestMapping("/sys/role")
-public class RoleController extends SuperController {
+@RequestMapping("/sys/menu")
+public class MenuRestController extends SuperController {
 
 }
 

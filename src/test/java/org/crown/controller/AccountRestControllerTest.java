@@ -1,4 +1,4 @@
-package org.crown.controller.api;
+package org.crown.controller;
 
 import org.crown.CrownApplication;
 import org.crown.common.api.model.responses.SuccessResponses;
@@ -54,7 +54,7 @@ public class AccountRestControllerTest {
         loginPARM.setLoginName("crown");
         loginPARM.setPassword("crown");
         String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.post("/api/account/token")
+                MockMvcRequestBuilders.post("/account/token")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JacksonUtils.toJson(loginPARM)))
                 .andDo(MockMvcResultHandlers.print())
@@ -67,7 +67,7 @@ public class AccountRestControllerTest {
         passwordPARM.setNewPassword("crown");
         mockMvc.perform(
                 MockMvcRequestBuilders
-                        .put("/api/account/password")
+                        .put("/account/password")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + responses.getResult().getToken())
                         .content(JacksonUtils.toJson(passwordPARM)))
@@ -78,7 +78,7 @@ public class AccountRestControllerTest {
     @Test
     public void removeToken() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.delete("/api/account/token"))
+                MockMvcRequestBuilders.delete("/account/token"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
     }
