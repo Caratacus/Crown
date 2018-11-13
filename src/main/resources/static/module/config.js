@@ -4,6 +4,24 @@ layui.define(function (exports) {
         serverUrl: 'http://localhost:8088', // 服务器地址
         scope: 'crown',  // 作用域
         autoRender: false,  // 窗口大小改变后是否自动重新渲染表格，解决layui数据表格非响应式的问题
+        request: {
+            //页码的参数名称，默认：page
+            pageName: 'cursor',
+            //每页数据量的参数名，默认：limit
+            limitName: 'limit'
+        },
+        parseData: function (res) { //res 即为原始返回的数据
+            return {
+                "code": res.status, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.result.total, //解析数据长度
+                "data": res.result.records //解析数据列表
+            };
+        },
+        response: {
+            //规定成功的状态码，默认：0
+            statusCode: 200
+        },
         // 清空本地缓存
         removeAll: function () {
             layui.data(config.scope, null);
