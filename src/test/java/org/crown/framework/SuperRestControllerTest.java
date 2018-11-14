@@ -1,6 +1,7 @@
 package org.crown.framework;
 
 import org.crown.CrownApplication;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,10 @@ public class SuperRestControllerTest {
      */
     public MockMvc getMockMvc(Object... controllers) {
         return MockMvcBuilders.standaloneSetup(controllers).build();
+    }
+
+    @Test
+    public void test() {
     }
 
 
