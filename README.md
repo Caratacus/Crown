@@ -13,6 +13,8 @@
 		<img src="https://www.travis-ci.org/Caratacus/Crown.svg?branch=master"></a>
 		<a href="https://app.codacy.com/app/Caratacus/Crown?utm_source=github.com&utm_medium=referral&utm_content=Caratacus/Crown&utm_campaign=Badge_Grade_Dashboard">
 		<img src="https://api.codacy.com/project/badge/Grade/81a3765292f04b3cad7b7a548daf5953"></a>
+		<a href="https://codecov.io/gh/Caratacus/Crown">
+        <img src="https://codecov.io/gh/Caratacus/Crown/branch/master/graph/badge.svg"></a>
 		<a href="https://github.com/Caratacus/Crown">
 		<img src="https://img.shields.io/badge/JDK-1.8-green.svg" alt="JDK 1.8" title="JDK 1.8"></a>
         <a href="https://github.com/Caratacus">
