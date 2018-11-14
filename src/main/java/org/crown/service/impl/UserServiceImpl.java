@@ -77,6 +77,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
+    @Transactional
     public void resetPwd(Integer uid) {
         User user = getById(uid);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
@@ -85,6 +86,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
+    @Transactional
     public void updateStatus(Integer uid, UserStatusEnum status) {
         User user = getById(uid);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);

@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.crown.CrownApplication;
 import org.crown.common.api.model.responses.SuccessResponses;
-import org.crown.common.framework.controller.SuperController;
 import org.crown.common.kit.JacksonUtils;
+import org.crown.framework.SuperRestControllerTest;
+import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.Role;
 import org.crown.model.parm.RolePARM;
@@ -24,7 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,10 +40,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 @SpringBootTest(classes = CrownApplication.class)
 @AutoConfigureMockMvc
 @WebAppConfiguration
-public class RoleRestControllerTest extends SuperController {
+public class RoleRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 
     @Autowired
-    private RoleRestController roleRestController;
+    private RoleRestController restController;
 
     @Autowired
     private IUserService userService;
@@ -52,8 +52,9 @@ public class RoleRestControllerTest extends SuperController {
     private TokenDTO token;
 
     @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(roleRestController).build();
+    @Override
+    public void before() {
+        mockMvc = getMockMvc(restController);
         token = userService.getToken(userService.getById(1));
     }
 
@@ -115,47 +116,5 @@ public class RoleRestControllerTest extends SuperController {
     }
 
 
-/*     mockMvc.perform(
-             MockMvcRequestBuilders.get("/user")
-             .param("aa", "2018"))
-            .andDo(MockMvcResultHandlers.print())
-            .andExpect(MockMvcResultMatchers.status().isOk());
-
-    @ApiOperation(value = "查询所有角色")
-    @GetMapping
-    public ApiResponses<IPage<Role>> list() {
-        IPage<Role> page = roleService.page(this.<Role>getPage());
-        return success(page);
-    }
-
-    @ApiOperation(value = "查询当个角色")
-    @GetMapping("/{id}")
-    public ApiResponses<Role> get(@PathVariable("id") Integer id) {
-        Role role = roleService.getById(id);
-        return success(role);
-    }
-
-    @ApiOperation(value = "添加角色")
-    @PostMapping
-    public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {
-        roleService.save(rolePARM.convert(Role.class));
-        return empty();
-    }
-
-    @ApiOperation(value = "修改角色")
-    @PutMapping("/{id}")
-    public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(RolePARM.Update.class) RolePARM rolePARM) {
-        Role role = rolePARM.convert(Role.class);
-        role.setId(id);
-        roleService.updateById(role);
-        return empty();
-    }
-
-    @ApiOperation(value = "删除角色")
-    @DeleteMapping("/{id}")
-    public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
-        roleService.removeById(id);
-        return empty();
-    }*/
 }
 

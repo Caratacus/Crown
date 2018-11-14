@@ -1,24 +1,21 @@
 package org.crown.controller;
 
-import org.crown.CrownApplication;
 import org.crown.common.kit.JacksonUtils;
+import org.crown.emuns.UserStatusEnum;
+import org.crown.framework.SuperRestControllerTest;
+import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.parm.UserInfoPARM;
+import org.crown.model.parm.UserPARM;
 import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  * <p>
@@ -27,14 +24,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  *
  * @author Caratacus
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = CrownApplication.class)
-@AutoConfigureMockMvc
-@WebAppConfiguration
-public class UserRestControllerTest {
+public class UserRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 
     @Autowired
-    private UserRestController userRestController;
+    private UserRestController restController;
 
     @Autowired
     private IUserService userService;
@@ -43,8 +36,9 @@ public class UserRestControllerTest {
     private TokenDTO token;
 
     @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(userRestController).build();
+    @Override
+    public void before() {
+        mockMvc = getMockMvc(restController);
         token = userService.getToken(userService.getById(1));
 
     }
@@ -72,4 +66,90 @@ public class UserRestControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    public void list() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/user")
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void get() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/user/1")
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void resetPwd() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/user/" + token.getUid() + "/password/reset")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void updateStatus() throws Exception {
+        UserPARM userPARM = new UserPARM();
+        userPARM.setStatus(UserStatusEnum.NOMAL);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/user/" + token.getUid() + "/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JacksonUtils.toJson(userPARM))
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void create() throws Exception {
+        UserPARM userPARM = new UserPARM();
+        userPARM.setLoginName("12121");
+        userPARM.setPassword("2222");
+        userPARM.setNickname("222");
+        userPARM.setEmail("11@qq.com");
+        userPARM.setPhone("13617828937");
+        userPARM.setStatus(UserStatusEnum.DISABLE);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JacksonUtils.toJson(userPARM))
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
+    @Test
+    public void update() throws Exception {
+        UserPARM userPARM = new UserPARM();
+        userPARM.setLoginName("12121");
+        userPARM.setPassword("2222");
+        userPARM.setNickname("222");
+        userPARM.setEmail("11@qq.com");
+        userPARM.setPhone("13617828937");
+        userPARM.setStatus(UserStatusEnum.DISABLE);
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JacksonUtils.toJson(userPARM))
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
 }

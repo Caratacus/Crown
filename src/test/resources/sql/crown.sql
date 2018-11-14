@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 11/14/2018 01:58:19 AM
+ Date: 11/14/2018 17:25:06 PM
 */
 
 SET NAMES utf8;
@@ -118,23 +118,22 @@ CREATE TABLE `sys_user` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `nickname` varchar(50) NOT NULL COMMENT '用户名',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `phone` varchar(100) DEFAULT NULL COMMENT '手机',
+  `phone` varchar(11) DEFAULT NULL COMMENT '手机',
   `status` smallint(2) DEFAULT NULL COMMENT '状态 0：禁用 1：正常',
   `create_uid` int(11) NOT NULL COMMENT '创建者ID',
-  `update_uid` int(11) NOT NULL COMMENT '修改者ID',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `login_name` varchar(16) NOT NULL COMMENT '登陆名',
   `password` varchar(64) NOT NULL COMMENT '密码',
   `ip` varchar(32) DEFAULT NULL COMMENT 'IP地址',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
 -- ----------------------------
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '1', '2018-11-05 17:19:05', '2018-11-13 10:55:15', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '2018-11-05 17:19:05', '2018-11-14 16:47:33', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1');
 COMMIT;
 
 -- ----------------------------

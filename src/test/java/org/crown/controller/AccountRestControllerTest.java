@@ -3,6 +3,8 @@ package org.crown.controller;
 import org.crown.CrownApplication;
 import org.crown.common.api.model.responses.SuccessResponses;
 import org.crown.common.kit.JacksonUtils;
+import org.crown.framework.SuperRestControllerTest;
+import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.parm.LoginPARM;
 import org.crown.model.parm.PasswordPARM;
@@ -19,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -36,16 +37,17 @@ import com.alibaba.fastjson.TypeReference;
 @SpringBootTest(classes = CrownApplication.class)
 @AutoConfigureMockMvc
 @WebAppConfiguration
-public class AccountRestControllerTest {
+public class AccountRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 
     @Autowired
-    private AccountRestController accountRestController;
+    private AccountRestController restController;
 
     private MockMvc mockMvc;
 
     @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(accountRestController).build();
+    @Override
+    public void before() {
+        mockMvc = getMockMvc(restController);
     }
 
     @Test

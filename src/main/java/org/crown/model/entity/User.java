@@ -71,10 +71,6 @@ public class User extends Convert {
      */
     @TableField(fill = FieldFill.INSERT)
     private Integer createUid;
-    /**
-     * 修改者ID
-     */
-    private Integer updateUid;
 
     /**
      * 创建时间
