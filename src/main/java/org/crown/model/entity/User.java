@@ -2,7 +2,7 @@ package org.crown.model.entity;
 
 import java.time.LocalDateTime;
 
-import org.crown.common.framework.model.BaseModel;
+import org.crown.common.framework.model.convert.Convert;
 import org.crown.emuns.UserStatusEnum;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_user")
-public class User extends BaseModel {
+public class User extends Convert {
 
     private static final long serialVersionUID = 1L;
 
@@ -108,13 +108,5 @@ public class User extends BaseModel {
     public static final String CREATE_TIME = "create_time";
 
     public static final String UPDATE_TIME = "update_time";
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
 }

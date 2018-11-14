@@ -10,8 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
-
 import org.crown.common.annotations.Resources;
 import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
@@ -43,7 +41,6 @@ public class ScanMappings {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
-    @PostConstruct
     public void doScan() {
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping.getHandlerMethods();
         List<Resource> resources = handlerMethods.values().stream().map(this::getResources).flatMap(Collection::stream).collect(Collectors.toList());

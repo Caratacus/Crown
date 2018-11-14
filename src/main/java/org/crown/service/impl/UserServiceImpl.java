@@ -76,4 +76,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         updateById(user);
     }
 
+    @Override
+    public void resetPwd(Integer uid) {
+        User user = getById(uid);
+        ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
+        user.setPassword(Md5Crypt.apr1Crypt(user.getLoginName(), user.getLoginName()));
+        updateById(user);
+    }
+
+    @Override
+    public void updateStatus(Integer uid, UserStatusEnum status) {
+        User user = getById(uid);
+        ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
+        user.setStatus(status);
+        updateById(user);
+    }
+
 }

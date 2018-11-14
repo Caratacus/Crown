@@ -1,6 +1,7 @@
 package org.crown.service;
 
 import org.crown.common.framework.service.BaseService;
+import org.crown.emuns.UserStatusEnum;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
@@ -51,4 +52,16 @@ public interface IUserService extends BaseService<User> {
      */
     void updatePassword(Integer uid, String oldPassword, String newPassword);
 
+    /**
+     * 重置用户密码
+     *
+     * @param uid
+     */
+    void resetPwd(Integer uid);
+
+    /**
+     * @param uid
+     * @param status
+     */
+    void updateStatus(Integer uid, UserStatusEnum status);
 }

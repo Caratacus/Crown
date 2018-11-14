@@ -1,6 +1,7 @@
 package org.crown.emuns;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ public enum UserStatusEnum {
         this.code = code;
     }
 
+    @JsonValue
     public int code() {
         return this.code;
     }
