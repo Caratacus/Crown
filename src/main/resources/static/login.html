@@ -113,9 +113,7 @@
                     success: function (data) {
                         config.putUid(data.result.uid);
                         config.putToken(data.result.token);
-                        layer.msg('登录成功', {icon: 1}, function () {
-                            location.replace('./');
-                        });
+                        location.replace('./');
                     },
                     error: function (xhr) {
                         layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});

@@ -108,128 +108,45 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         closePopupCenter: function () {
             layer.close(popupCenterIndex);
         },
-        // 封装ajax请求
-        req: function (url, data, success, method) {
-            var token = config.getToken();
-            if (token) {
-                data.access_token = token.access_token;
+        get: function (url, data, success) {
+            return this.request(url, data, "GET", success);
+        },
+        post: function (url, data, success) {
+            return this.request(url, data, "POST", success);
+        },
+        put: function (url, data, success) {
+            return this.request(url, data, "PUT", success);
+        },
+        delete: function (url, data, success) {
+            return this.request(url, data, "DELETE", success);
+        },
+        request: function (url, data, method, success) {
+            var contentType;
+            switch (method) {
+                case "GET":
+                    contentType = '';
+                    break;
+                case "POST":
+                    contentType = 'application/json; charset=UTF-8';
+                    break;
+                case "PUT":
+                    contentType = 'application/json; charset=UTF-8';
+                    break;
+                case "DELETE":
+                    contentType = '';
+                    break;
+                default:
+                    contentType = '';
             }
             $.ajax({
                 url: config.serverUrl + url,
                 data: data,
                 type: method,
-                dataType: 'JSON',
-                success: function (data) {
-                    success(data);
+                contentType: contentType,
+                xhrFields: {
+                    withCredentials: true
                 },
-                error: function (xhr) {
-                    console.log(xhr.status + ' - ' + xhr.statusText);
-                    if (xhr.status == 401) {
-                        config.removeAll();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    } else {
-                        success({code: xhr.status, msg: xhr.statusText});
-                    }
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        get: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'GET',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeAll();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        post: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: JSON.stringify(data),
-                type: 'POST',
-                contentType: 'application/json',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeAll();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        put: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: JSON.stringify(data),
-                type: 'PUT',
-                contentType: 'application/json',
-                success: function (data) {
-                    success(data);
-                },
-                error: function (xhr) {
-                    if (xhr.status == 401) {
-                        config.removeAll();
-                        layer.msg('登录过期', {icon: 2}, function () {
-                            location.href = '/login.html';
-                        });
-                    }
-                    layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
-                    layer.closeAll('loading');
-                },
-                beforeSend: function (xhr) {
-                    var token = config.getToken();
-                    if (token) {
-                        xhr.setRequestHeader('Authorization', token);
-                    }
-                }
-            });
-        },
-        // 封装ajax请求
-        delete: function (url, data, success) {
-            $.ajax({
-                url: config.serverUrl + url,
-                data: data,
-                type: 'DELETE',
+                crossDomain: true,
                 success: function (data) {
                     success(data);
                 },
