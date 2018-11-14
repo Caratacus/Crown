@@ -18,6 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
  *
  * @author Caratacus
  */
+@SuppressWarnings({"Annotator", "SyntaxError"})
 @ApiIgnore
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")

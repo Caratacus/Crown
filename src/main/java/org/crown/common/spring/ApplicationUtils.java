@@ -1,5 +1,7 @@
 package org.crown.common.spring;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
@@ -75,7 +77,10 @@ public class ApplicationUtils {
     public static HttpServletRequest getRequest() {
         HttpServletRequest request = null;
         try {
-            request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (Objects.nonNull(requestAttributes)) {
+                request = requestAttributes.getRequest();
+            }
         } catch (Exception ignored) {
         }
         return request;

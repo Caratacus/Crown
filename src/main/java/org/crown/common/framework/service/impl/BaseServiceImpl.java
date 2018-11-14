@@ -284,6 +284,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
         Map<Integer, V> map = new LinkedHashMap<>(list.size());
         for (V v : list) {
             Field field = ReflectionUtils.findField(v.getClass(), property);
+            if (Objects.isNull(field)) {
+                continue;
+            }
             ReflectionUtils.makeAccessible(field);
             Object fieldValue = ReflectionUtils.getField(field, v);
             map.put((Integer) fieldValue, v);

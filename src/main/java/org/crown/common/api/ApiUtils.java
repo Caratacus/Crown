@@ -2,6 +2,7 @@ package org.crown.common.api;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,10 +70,13 @@ public abstract class ApiUtils {
         } else if (exception instanceof ConstraintViolationException) {
             StringBuilder builder = new StringBuilder("方法.参数字段");
             ConstraintViolationException ex = (ConstraintViolationException) exception;
-            ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().stream().findFirst().get();
-            builder.append(constraintViolation.getPropertyPath().toString());
-            builder.append("校验不通过");
-            failureResponsesBuilder.exception(builder.toString()).msg(constraintViolation.getMessage());
+            Optional<ConstraintViolation<?>> first = ex.getConstraintViolations().stream().findFirst();
+            if (first.isPresent()) {
+                ConstraintViolation<?> constraintViolation = first.get();
+                builder.append(constraintViolation.getPropertyPath().toString());
+                builder.append("校验不通过");
+                failureResponsesBuilder.exception(builder.toString()).msg(constraintViolation.getMessage());
+            }
             return failureResponsesBuilder;
         }
 

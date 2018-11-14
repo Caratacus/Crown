@@ -334,6 +334,7 @@ public abstract class TypeUtils {
 
                 Object result;
                 try {
+                    assert oracleTimestampMethod != null;
                     result = oracleTimestampMethod.invoke(value);
                 } catch (Exception e) {
                     throw new CrownException("can not cast oracle.sql.TIMESTAMP to Date", e);
@@ -354,6 +355,7 @@ public abstract class TypeUtils {
 
                 Object result;
                 try {
+                    assert oracleDateMethod != null;
                     result = oracleDateMethod.invoke(value);
                 } catch (Exception e) {
                     throw new CrownException("can not cast oracle.sql.DATE to Date", e);

@@ -64,9 +64,9 @@ public class ScanMappings {
             return Collections.emptyList();
         }
         ApiOperation apiOperation = handlerMethod.getMethodAnnotation(ApiOperation.class);
-        String[] requestMappings = requestMappingAnnotation.value();
-        String[] methodMappings = methodMappingAnnotation.path();
-        RequestMethod[] method = methodMappingAnnotation.method();
+        String[] requestMappings = Objects.nonNull(requestMappingAnnotation) ? requestMappingAnnotation.value() : new String[]{""};
+        String[] methodMappings = Objects.nonNull(methodMappingAnnotation) ? methodMappingAnnotation.path() : new String[]{""};
+        RequestMethod[] method = Objects.nonNull(methodMappingAnnotation) ? methodMappingAnnotation.method() : new RequestMethod[0];
         Set<String> mappings = new HashSet<>(1);
         for (String reqMapping : requestMappings) {
             for (String methodMapping : methodMappings) {

@@ -36,10 +36,6 @@ public class ApiResponseWrapper extends HttpServletResponseWrapper {
         setErrorCode(errorcode);
     }
 
-    private HttpServletResponse _getHttpServletResponse() {
-        return (HttpServletResponse) super.getResponse();
-    }
-
     /**
      * 获取ErrorCode
      *
