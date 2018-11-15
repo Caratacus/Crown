@@ -66,6 +66,7 @@ public class ApiRequestWrapper extends HttpServletRequestWrapper {
             }
 
             @Override
+            @SuppressWarnings("EmptyMethod")
             public void setReadListener(ReadListener readListener) {
 
             }

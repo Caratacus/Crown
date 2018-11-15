@@ -37,6 +37,7 @@ public class SuperRestControllerTest {
         return MockMvcBuilders.standaloneSetup(controllers).build();
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Test
     public void test() {
     }

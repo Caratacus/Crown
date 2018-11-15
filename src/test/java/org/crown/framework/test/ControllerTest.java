@@ -11,6 +11,7 @@ public interface ControllerTest {
 
     void before();
 
+    @SuppressWarnings("EmptyMethod")
     default void after() {
 
     }

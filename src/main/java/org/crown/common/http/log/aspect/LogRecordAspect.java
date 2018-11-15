@@ -14,6 +14,7 @@ import org.crown.common.http.log.LogHelper;
 public class LogRecordAspect {
 
     @Pointcut("execution(public * org.crown.controller.*RestController.*(..))")
+    @SuppressWarnings("EmptyMethod")
     public void pointCut() {
     }
 

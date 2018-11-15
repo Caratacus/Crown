@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 public class CrownFilter implements Filter {
 
     @Override
+    @SuppressWarnings("EmptyMethod")
     public void destroy() {
     }
 
@@ -35,6 +36,7 @@ public class CrownFilter implements Filter {
     }
 
     @Override
+    @SuppressWarnings("EmptyMethod")
     public void init(FilterConfig config) {
     }
 

@@ -146,6 +146,7 @@ public class SqlPerformanceInterceptor implements Interceptor {
     }
 
     @Override
+    @SuppressWarnings("EmptyMethod")
     public void setProperties(Properties properties) {
 
     }
