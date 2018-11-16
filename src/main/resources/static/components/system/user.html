@@ -33,9 +33,9 @@
 </script>
 
 <!-- 表格状态列 -->
-<script type="text/html" id="user-tpl-state">
-    <input type="checkbox" lay-filter="user-tpl-state" value="{{d.userId}}" lay-skin="switch" lay-text="正常|锁定"
-           {{d.state==0?'checked':''}}/>
+<script type="text/html" id="user-tpl-status">
+    <input type="checkbox" lay-filter="user-tpl-status" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
+           {{d.status==0?'checked':''}}/>
 </script>
 
 <script>
@@ -60,13 +60,13 @@
                 {field: 'loginName', sort: true, title: '账号'},
                 {field: 'nickname', sort: true, title: '用户名'},
                 {field: 'phone', sort: true, title: '手机号'},
-                {field: 'sex', sort: true, title: '性别'},
+                {field: 'email', sort: true, title: '邮箱'},
                 {
                     sort: true, templet: function (d) {
                         return util.toDateString(d.createTime);
                     }, title: '创建时间'
                 },
-                {field: 'state', sort: true, templet: '#user-tpl-state', title: '状态'},
+                {field: 'status', sort: true, templet: '#user-tpl-status', title: '状态'},
                 {align: 'center', toolbar: '#user-table-bar', title: '操作'}
             ]]
         });
@@ -84,17 +84,13 @@
             if (layEvent === 'edit') { // 修改
                 showEditModel(data);
             } else if (layEvent === 'reset') { // 重置密码
-                layer.confirm('确定重置此用户的密码吗？', function (i) {
+                layer.confirm('确定重置此用户密码？', function (i) {
                     layer.close(i);
                     layer.load(2);
-                    crown.req('user/psw/' + obj.data.userId, {}, function (data) {
+                    crown.put('/user/' + obj.data.id + '/password/reset', {}, function () {
                         layer.closeAll('loading');
-                        if (data.code == 200) {
-                            layer.msg(data.msg, {icon: 1});
-                        } else {
-                            layer.msg(data.msg, {icon: 2});
-                        }
-                    }, 'PUT');
+                        layer.msg('重置密码成功', {icon: 1});
+                    });
                 });
             }
         });
@@ -120,22 +116,14 @@
         });
 
         // 修改user状态
-        form.on('switch(user-tpl-state)', function (obj) {
+        form.on('switch(user-tpl-status)', function (obj) {
             layer.load(2);
-            crown.req('user/state', {
-                userId: obj.elem.value,
-                state: obj.elem.checked ? 0 : 1
-            }, function (data) {
+            crown.put('/user/' + obj.elem.value + '/status', {
+                status: obj.elem.checked ? 0 : 1
+            }, function () {
                 layer.closeAll('loading');
-                if (data.code == 200) {
-                    layer.msg(data.msg, {icon: 1});
-                    //table.reload('table-user', {});
-                } else {
-                    layer.msg(data.msg, {icon: 2});
-                    $(obj.elem).prop('checked', !obj.elem.checked);
-                    form.render('checkbox');
-                }
-            }, 'PUT');
+                layer.msg('用户状态更新成功', {icon: 1});
+            });
         });
     });
 </script>

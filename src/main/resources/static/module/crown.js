@@ -127,9 +127,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                     contentType = '';
                     break;
                 case "POST":
+                    data = JSON.stringify(data);
                     contentType = 'application/json; charset=UTF-8';
                     break;
                 case "PUT":
+                    data = JSON.stringify(data);
                     contentType = 'application/json; charset=UTF-8';
                     break;
                 case "DELETE":
