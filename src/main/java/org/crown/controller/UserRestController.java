@@ -1,14 +1,11 @@
 package org.crown.controller;
 
 
-import java.util.List;
-
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.controller.SuperController;
-import org.crown.common.kit.BeanConverter;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
@@ -25,6 +22,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -47,10 +46,9 @@ public class UserRestController extends SuperController {
     @Resources
     @ApiOperation("查询所有用户")
     @GetMapping
-    public ApiResponses<List<UserDTO>> list() {
-        List<User> users = userService.list();
-        List<UserDTO> userDTOs = BeanConverter.convert(UserDTO.class, users);
-        return success(userDTOs);
+    public ApiResponses<IPage<UserDTO>> list() {
+        IPage<User> page = userService.page(this.<User>getPage());
+        return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 
     @Resources

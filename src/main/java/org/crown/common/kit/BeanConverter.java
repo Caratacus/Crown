@@ -4,9 +4,9 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.crown.common.modelmapper.jdk8.Jdk8Module;
 import org.crown.common.modelmapper.jsr310.Jsr310Module;
@@ -135,23 +135,9 @@ public class BeanConverter {
      *
      * @param clazz the clazz
      * @param list  the list
-     * @return the page list
      */
     public static <T> List<T> convert(Class<T> clazz, List<?> list) {
-        //返回的list列表
-        List<T> resultList = Collections.emptyList();
-        if (CollectionUtils.isEmpty(list)) {
-            return resultList;
-        }
-        resultList = new ArrayList<>(list.size());
-        Iterator<?> iterator = list.iterator();
-        //循环调用转换单个对象
-        while (iterator.hasNext()) {
-            Object obj = iterator.next();
-            T t = convert(clazz, obj);
-            resultList.add(t);
-        }
-        return resultList;
+        return CollectionUtils.isEmpty(list) ? Collections.emptyList() : list.stream().map(e -> convert(clazz, e)).collect(Collectors.toList());
     }
 
     /**
