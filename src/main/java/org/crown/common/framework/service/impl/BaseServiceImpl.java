@@ -161,7 +161,31 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
         if (CollectionUtils.isEmpty(entityList)) {
             throw new IllegalArgumentException("Error: entityList must not be empty");
         }
-        entityList.forEach(this::saveOrUpdate);
+        Class<?> cls = currentModelClass();
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
+        int i = 0;
+        try (SqlSession batchSqlSession = sqlSessionBatch()) {
+            for (T entity : entityList) {
+                if (null != tableInfo && StringUtils.isNotEmpty(tableInfo.getKeyProperty())) {
+                    Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
+                    if (StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal))) {
+                        batchSqlSession.insert(sqlStatement(SqlMethod.INSERT_ONE), entity);
+                    } else {
+                        MapperMethod.ParamMap<T> param = new MapperMethod.ParamMap<>();
+                        param.put(Constants.ENTITY, entity);
+                        batchSqlSession.update(sqlStatement(SqlMethod.UPDATE_BY_ID), param);
+                    }
+                    //不知道以后会不会有人说更新失败了还要执行插入 😂😂😂
+                    if (i >= 1 && i % batchSize == 0) {
+                        batchSqlSession.flushStatements();
+                    }
+                    i++;
+                } else {
+                    throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
+                }
+                batchSqlSession.flushStatements();
+            }
+        }
         return true;
     }
 
