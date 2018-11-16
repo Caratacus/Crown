@@ -1,12 +1,12 @@
 package org.crown.config;
 
-import org.crown.common.OptimisticLockerInterceptor;
 import org.crown.common.mybatisplus.CommonMetaObjectHandler;
 import org.crown.common.mybatisplus.MybatisPlusSqlInjector;
 import org.crown.common.mybatisplus.SqlPerformanceInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 
 
