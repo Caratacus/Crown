@@ -146,7 +146,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
                     /*
                      * 更新成功直接返回，失败执行插入逻辑
                      */
-                    return updateById(entity) || save(entity);
+                    return Objects.nonNull(getById((Serializable) idVal)) ? updateById(entity) : save(entity);
                 }
             } else {
                 throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");

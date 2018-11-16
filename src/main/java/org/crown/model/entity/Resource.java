@@ -1,10 +1,13 @@
 package org.crown.model.entity;
 
+import java.time.LocalDateTime;
+
 import org.crown.common.framework.model.convert.Convert;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -50,7 +53,11 @@ public class Resource extends Convert {
      * 是否需要验证
      */
     private Boolean verify;
-
+    /**
+     * 修改时间
+     */
+    @Version
+    private LocalDateTime updateTime;
 
     public static final String ID = "id";
 

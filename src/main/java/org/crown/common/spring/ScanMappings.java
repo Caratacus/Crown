@@ -1,5 +1,6 @@
 package org.crown.common.spring;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -83,6 +84,7 @@ public class ScanMappings {
                 resource.setMapping(mapping);
                 resource.setMethod(requestMethod.name());
                 resource.setVerify(res.verify());
+                resource.setUpdateTime(LocalDateTime.now());
                 resources.add(resource);
             }
         }

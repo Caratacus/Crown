@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 11/14/2018 17:25:06 PM
+ Date: 11/16/2018 15:39:34 PM
 */
 
 SET NAMES utf8;
@@ -56,6 +56,7 @@ CREATE TABLE `sys_resource` (
   `mapping` varchar(64) DEFAULT NULL COMMENT '路径映射',
   `method` varchar(6) DEFAULT NULL COMMENT '请求方式',
   `verify` bit(1) DEFAULT NULL COMMENT '是否需要验证',
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源表';
 
@@ -63,7 +64,7 @@ CREATE TABLE `sys_resource` (
 --  Records of `sys_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_resource` VALUES ('2856ae2858a7ad748c2a3ca507068800', '修改密码', '/account/password', 'PUT', b'1'), ('35cbac1c6d9e7a11faed85568093fb6b', '获取Token', '/account/token', 'POST', b'0'), ('46d3e1d55597a7943ec79f7502c7942a', '修改用户信息', '/user/info', 'PUT', b'1'), ('9291c7b9fed9d9c7f10c4f3ccca85251', '清理Token', '/account/token', 'DELETE', b'1'), ('d5a8d43937dbc7e0729cbe99a7ec3ec6', '获取用户详情', '/user/details', 'GET', b'1'), ('e523e00b15e63b23a7851e6f2847f6f5', '查询当个角色', '/role/{id}', 'GET', b'1');
+INSERT INTO `sys_resource` VALUES ('0d30e9ad366ce4b4ecef0856bf4e7d65', '重置用户密码', '/user/{id}/password/reset', 'PUT', b'1', '2018-11-16 13:01:34'), ('2856ae2858a7ad748c2a3ca507068800', '修改密码', '/account/password', 'PUT', b'1', '2018-11-16 13:01:34'), ('35cbac1c6d9e7a11faed85568093fb6b', '获取Token', '/account/token', 'POST', b'0', '2018-11-16 13:01:34'), ('46d3e1d55597a7943ec79f7502c7942a', '修改用户信息', '/user/info', 'PUT', b'1', '2018-11-16 13:01:34'), ('9291c7b9fed9d9c7f10c4f3ccca85251', '清理Token', '/account/token', 'DELETE', b'1', '2018-11-16 13:01:34'), ('9954cc4aba01dca400bc327845809335', '设置用户状态', '/user/{id}/status', 'PUT', b'1', '2018-11-16 13:01:34'), ('b47576c58976231d3ede0fd9265320d0', '修改用户', '/user/{id}', 'PUT', b'1', '2018-11-16 13:01:34'), ('c99d9db8780d813083bd4d030674e43a', '查询单个用户', '/user/{id}', 'GET', b'1', '2018-11-16 13:01:34'), ('d5a8d43937dbc7e0729cbe99a7ec3ec6', '获取用户详情', '/user/details', 'GET', b'1', '2018-11-16 13:01:34'), ('e523e00b15e63b23a7851e6f2847f6f5', '查询当个角色', '/role/{id}', 'GET', b'1', '2018-11-16 13:01:34');
 COMMIT;
 
 -- ----------------------------
@@ -79,7 +80,7 @@ CREATE TABLE `sys_role` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `remark` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 -- ----------------------------
 --  Records of `sys_role`
@@ -127,7 +128,7 @@ CREATE TABLE `sys_user` (
   `password` varchar(64) NOT NULL COMMENT '密码',
   `ip` varchar(32) DEFAULT NULL COMMENT 'IP地址',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
 -- ----------------------------
 --  Records of `sys_user`
