@@ -116,7 +116,6 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     public void create() throws Exception {
         UserPARM userPARM = new UserPARM();
         userPARM.setLoginName("12121");
-        userPARM.setPassword("2222");
         userPARM.setNickname("222");
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
@@ -136,7 +135,6 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     public void update() throws Exception {
         UserPARM userPARM = new UserPARM();
         userPARM.setLoginName("12121");
-        userPARM.setPassword("2222");
         userPARM.setNickname("222");
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
