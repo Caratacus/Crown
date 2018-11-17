@@ -31,11 +31,8 @@ public class UserPARM extends Convert {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(notes = "登陆名")
-    @NotBlank(groups = Create.class, message = "用户名不能为空")
+    @NotBlank(groups = {Create.class, Update.class}, message = "用户名不能为空")
     private String loginName;
-    @ApiModelProperty(notes = "密码")
-    @NotBlank(groups = Create.class, message = "密码不能为空")
-    private String password;
     @ApiModelProperty(notes = "昵称")
     @NotBlank(groups = {Create.class, Update.class}, message = "昵称不能为空")
     private String nickname;
@@ -45,7 +42,7 @@ public class UserPARM extends Convert {
     @Pattern(groups = {Create.class, Update.class}, regexp = Regex.PHONE, message = "手机号码格式不正确")
     @ApiModelProperty(notes = "手机号")
     private String phone;
-    @NotNull(groups = {Create.class, Update.class, Status.class}, message = "用户状态不能为空")
+    @NotNull(groups = Status.class, message = "用户状态不能为空")
     @ApiModelProperty(notes = "状态:0：禁用 1：正常")
     private UserStatusEnum status;
 

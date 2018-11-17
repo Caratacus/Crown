@@ -7,20 +7,27 @@
         </span>
     </div>
     <div class="layui-card-body">
+        <!-- 搜索条件 -->
         <div class="layui-form toolbar">
-            搜索：
-            <select id="user-search-key">
-                <option value="">-请选择-</option>
-                <option value="user_id">ID</option>
-                <option value="username">账号</option>
-                <option value="nick_name">用户名</option>
-                <option value="phone">手机号</option>
-            </select>&emsp;
-            <input id="user-search-value" class="layui-input search-input" type="text" placeholder="输入关键字"/>&emsp;
-            <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-            <button id="user-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+            <form id="searchForm" onsubmit="return false;">
+                账号：<input name="username" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
+                用户名：<input name="realName" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
+                状态：<select name="status" lay-verify="">
+                <option value="">请选择状态</option>
+                <option value="0">正常</option>
+                <option value="-1">禁用</option>
+            </select>
+                <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            </form>
         </div>
-
+        <!-- 表格顶部操作列 -->
+        <script type="text/html" id="user-toolbar">
+            <div class="layui-btn-container">
+                <button id="user-btn-add" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
+            </div>
+        </script>
         <table class="layui-table" id="user-table" lay-filter="user-table"></table>
     </div>
 </div>
@@ -50,6 +57,7 @@
         // 渲染表格
         table.render({
             elem: '#user-table',
+            toolbar: '#user-toolbar',
             url: config.serverUrl + '/user',
             request: config.request,
             parseData: config.parseData,
