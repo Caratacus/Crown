@@ -5,6 +5,7 @@ import org.crown.emuns.UserStatusEnum;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
+import org.crown.model.entity.User;
 import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
 import org.crown.service.IUserService;
@@ -16,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -41,6 +44,14 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         mockMvc = getMockMvc(restController);
         token = userService.getToken(userService.getById(1));
 
+    }
+
+    @Test
+    public void getUserDetails1() throws Exception {
+        User user = new User();
+        user.setId(2);
+        user.setIp("2222");
+        userService.update(user, Wrappers.<User>update().set("uid", 22).eq("uid", 1));
     }
 
     @Test

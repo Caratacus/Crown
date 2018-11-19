@@ -1,6 +1,7 @@
 package org.crown.controller;
 
 
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -81,6 +83,10 @@ public class UserRestController extends SuperController {
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
         User user = userPARM.convert(User.class);
+        //没设置密码 设置默认密码
+        if (StringUtils.isEmpty(user.getPassword())) {
+            user.setPassword(Md5Crypt.apr1Crypt(user.getLoginName(), user.getLoginName()));
+        }
         userService.save(user);
         return empty();
     }
