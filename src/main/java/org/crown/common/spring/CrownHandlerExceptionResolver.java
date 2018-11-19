@@ -31,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver;
 
-import com.alibaba.fastjson.JSONException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.google.common.base.Throwables;
 
@@ -111,8 +110,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
                 handleAsyncRequestTimeoutException((AsyncRequestTimeoutException) ex, request, response);
             } else if (ex instanceof ConstraintViolationException) {
                 handleConstraintViolationException((ConstraintViolationException) ex, request, response);
-            } else if (ex instanceof JSONException) {
-                handleJSONException((JSONException) ex, request, response);
             } else {
                 handleException(ex, request, response);
             }
@@ -405,21 +402,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request,
                                                       HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
-    }
-
-    /**
-     * Handle the case parse json error.
-     * <p>
-     * The default implementation sends an HTTP 400 error.
-     *
-     * @param ex       the {@link JSONException }to be handled
-     * @param request  current HTTP request
-     * @param response current HTTP response
-     * @since 4.2.8
-     */
-    protected void handleJSONException(JSONException ex, HttpServletRequest request,
-                                       HttpServletResponse response) {
         ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 

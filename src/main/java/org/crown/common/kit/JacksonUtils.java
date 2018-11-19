@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import org.crown.common.exception.CrownException;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
@@ -120,7 +119,7 @@ public abstract class JacksonUtils {
     public static Object parse(String json) {
         Object object = null;
         try {
-            object = JSON.parse(json);
+            object = getObjectMapper().readValue(json, Object.class);
         } catch (Exception ignored) {
         }
         return object;
