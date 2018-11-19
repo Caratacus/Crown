@@ -52,7 +52,6 @@
         // 获取所有角色
         layer.load(2);
         crown.get('/role/roles', {}, function (data) {
-            layer.closeAll('loading');
             // 渲染多选下拉框
             var roleSelectData = new Array();
             for (var i = 0; i < data.result.length; i++) {
@@ -70,6 +69,7 @@
                 }
                 formSelects.value('roleIds', rds);
             }
+            layer.closeAll('loading');
         });
 
         // 表单提交事件
