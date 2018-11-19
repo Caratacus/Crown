@@ -1,5 +1,7 @@
 package org.crown.service;
 
+import java.util.List;
+
 import org.crown.common.framework.service.BaseService;
 import org.crown.emuns.UserStatusEnum;
 import org.crown.model.dto.TokenDTO;
@@ -64,4 +66,13 @@ public interface IUserService extends BaseService<User> {
      * @param status
      */
     void updateStatus(Integer uid, UserStatusEnum status);
+
+    /**
+     * 添加用户角色
+     *
+     * @param uid
+     * @param roleIds
+     */
+    void saveUserRoles(Integer uid, List<Integer> roleIds);
+
 }

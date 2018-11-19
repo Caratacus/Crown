@@ -1,6 +1,10 @@
 package org.crown.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.collections4.CollectionUtils;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
@@ -10,7 +14,9 @@ import org.crown.mapper.UserMapper;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
+import org.crown.model.entity.UserRole;
 import org.crown.service.IResourceService;
+import org.crown.service.IUserRoleService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +37,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Autowired
     private IResourceService resourceService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @Override
     @Transactional
@@ -92,6 +100,20 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         user.setStatus(status);
         updateById(user);
+    }
+
+    @Override
+    @Transactional
+    public void saveUserRoles(Integer uid, List<Integer> roleIds) {
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            userRoleService.remove(Wrappers.<UserRole>query().eq(UserRole.UID, uid));
+            userRoleService.saveBatch(roleIds.stream().map(e -> {
+                UserRole userRole = new UserRole();
+                userRole.setRoleId(e);
+                userRole.setUid(uid);
+                return userRole;
+            }).collect(Collectors.toList()));
+        }
     }
 
 }

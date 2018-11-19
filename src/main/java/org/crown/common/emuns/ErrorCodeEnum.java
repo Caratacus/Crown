@@ -78,6 +78,10 @@ public enum ErrorCodeEnum {
      * 原密码不正确
      */
     ORIGINAL_PASSWORD_IS_INCORRECT(HttpServletResponse.SC_BAD_REQUEST, true, "原密码不正确"),
+    /**
+     * 用户名已存在
+     */
+    USERNAME_ALREADY_EXISTS(HttpServletResponse.SC_BAD_REQUEST, true, "用户名已存在"),
 
     ;
 

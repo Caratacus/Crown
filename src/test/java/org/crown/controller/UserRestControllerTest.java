@@ -1,5 +1,7 @@
 package org.crown.controller;
 
+import java.util.Collections;
+
 import org.crown.common.kit.JacksonUtils;
 import org.crown.emuns.UserStatusEnum;
 import org.crown.framework.SuperRestControllerTest;
@@ -131,6 +133,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
         userPARM.setStatus(UserStatusEnum.DISABLE);
+        userPARM.setRoleIds(Collections.singletonList(1));
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -150,6 +153,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
         userPARM.setStatus(UserStatusEnum.DISABLE);
+        userPARM.setRoleIds(Collections.singletonList(1));
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/1")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -109,6 +109,10 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveBatch(Collection<T> entityList, int batchSize) {
+        //批量对象插入 不存在直接返回true
+        if (CollectionUtils.isEmpty(entityList)) {
+            return true;
+        }
         int i = 0;
         String sqlStatement = sqlStatement(SqlMethod.INSERT_ONE);
         try (SqlSession batchSqlSession = sqlSessionBatch()) {
@@ -158,8 +162,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveOrUpdateBatch(Collection<T> entityList) {
+        //批量对象插入 不存在直接返回true
         if (CollectionUtils.isEmpty(entityList)) {
-            throw new IllegalArgumentException("Error: entityList must not be empty");
+            return true;
         }
         Class<?> cls = currentModelClass();
         TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
@@ -216,8 +221,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateBatchById(Collection<T> entityList, int batchSize) {
+        //批量对象插入 不存在直接返回true
         if (CollectionUtils.isEmpty(entityList)) {
-            throw new IllegalArgumentException("Error: entityList must not be empty");
+            return true;
         }
         int i = 0;
         String sqlStatement = sqlStatement(SqlMethod.UPDATE_BY_ID);

@@ -204,13 +204,13 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         putTempData: function (key, value) {
             if (value) {
                 layui.sessionData('tempData', {key: key, value: value});
-            } else {
-                layui.sessionData('tempData', {key: key, remove: true});
             }
         },
-        // 获取缓存临时数据
+        // 获取缓存临时数据 获取完删除
         getTempData: function (key) {
-            return layui.sessionData('tempData')[key];
+            var tempData = layui.sessionData('tempData')[key];
+            layui.sessionData('tempData', {key: key, remove: true});
+            return tempData;
         }
     };
 
