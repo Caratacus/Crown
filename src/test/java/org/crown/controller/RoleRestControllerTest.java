@@ -26,7 +26,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
@@ -60,14 +59,21 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
 
     @Test
     public void tests() throws Exception {
-        //测试获取所有
-        String responseString = mockMvc.perform(
+        //测试获取所有(分页)
+        mockMvc.perform(
                 MockMvcRequestBuilders.get("/role")
                         .header("Authorization", "Bearer " + token.getToken())
         )
                 .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        //测试获取所有
+        String responseString = mockMvc.perform(
+                MockMvcRequestBuilders.get("/role/roles")
+                        .header("Authorization", "Bearer " + token.getToken())
+        )
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        SuccessResponses<Page<Role>> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<Page<Role>>>() {
+        SuccessResponses<List<Role>> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<List<Role>>>() {
         });
         //添加测试
         RolePARM rolePARM = new RolePARM();
@@ -82,7 +88,7 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 
-        List<Role> records = responses.getResult().getRecords();
+        List<Role> records = responses.getResult();
         for (Role record : records) {
             //测试获取单个
             mockMvc.perform(

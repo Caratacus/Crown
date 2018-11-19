@@ -1,6 +1,7 @@
 package org.crown.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.crown.common.framework.model.convert.Convert;
 import org.crown.emuns.UserStatusEnum;
@@ -44,5 +45,6 @@ public class UserDTO extends Convert {
     private LocalDateTime createTime;
     @ApiModelProperty(notes = "修改时间")
     private LocalDateTime updateTime;
-
+    @ApiModelProperty(notes = "用户角色ID")
+    private List<Integer> roleIds;
 }

@@ -105,10 +105,13 @@
 
         //显示表单弹窗
         var showEditModel = function (data) {
-            crown.putTempData('t_user', data);
-            var title = data ? '修改用户' : '添加用户';
+            if (data) {
+                crown.get('/user/' + data.id, {}, function (data) {
+                    crown.putTempData('t_user', data.result);
+                });
+            }
             crown.popupCenter({
-                title: title,
+                title: data ? '修改用户' : '添加用户',
                 path: 'components/system/user_form.html',
                 finish: function () {
                     table.reload('user-table', {});

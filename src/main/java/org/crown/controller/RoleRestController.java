@@ -1,5 +1,6 @@
 package org.crown.controller;
 
+import java.util.List;
 
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
@@ -42,11 +43,18 @@ public class RoleRestController extends SuperController {
     private IRoleService roleService;
 
     @Resources
-    @ApiOperation(value = "查询所有角色")
+    @ApiOperation(value = "查询所有角色(分页)")
     @GetMapping
-    public ApiResponses<IPage<Role>> list() {
+    public ApiResponses<IPage<Role>> page() {
         IPage<Role> page = roleService.page(this.<Role>getPage());
         return success(page);
+    }
+
+    @Resources
+    @ApiOperation(value = "查询所有角色")
+    @GetMapping("/roles")
+    public ApiResponses<List<Role>> list() {
+        return success(roleService.list());
     }
 
     @Resources

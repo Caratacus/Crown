@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.ibatis.binding.MapperMethod;
@@ -15,7 +16,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.crown.common.framework.mapper.BaseMapper;
 import org.crown.common.framework.model.convert.Convert;
 import org.crown.common.framework.service.BaseService;
-import org.crown.common.kit.BeanConverter;
 import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -183,8 +183,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
                 } else {
                     throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
                 }
-                batchSqlSession.flushStatements();
             }
+            batchSqlSession.flushStatements();
         }
         return true;
     }
@@ -248,11 +248,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public Object getObj(QueryWrapper<T> queryWrapper) {
-        return SqlHelper.getObject(baseMapper.selectObjs(queryWrapper));
-    }
-
-    @Override
     public int count(QueryWrapper<T> queryWrapper) {
         return SqlHelper.retCount(baseMapper.selectCount(queryWrapper));
     }
@@ -268,15 +263,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public List<Object> listObjs(QueryWrapper<T> queryWrapper) {
-        return baseMapper.selectObjs(queryWrapper).stream().filter(Objects::nonNull).collect(Collectors.toList());
+    public <R> List<R> listObjs(QueryWrapper<T> queryWrapper, Function<? super Object, R> mapper) {
+        return baseMapper.selectObjs(queryWrapper).stream().filter(Objects::nonNull).map(mapper).collect(Collectors.toList());
     }
 
     @Override
-    public <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Class<E> cls) {
-        page(page, wrapper);
-        page.setRecords(BeanConverter.convert(cls, page.getRecords()));
-        return page;
+    public <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Function<? super T, E> mapper) {
+        return page(page, wrapper).convert(mapper);
     }
 
     @Override
@@ -290,13 +283,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public <E extends Convert> List<E> entitys(QueryWrapper wrapper, Class<E> cls) {
-        List<E> entitys = Collections.emptyList();
-        List<T> list = list(wrapper);
-        if (CollectionUtils.isNotEmpty(list)) {
-            entitys = BeanConverter.convert(cls, list);
-        }
-        return entitys;
+    public <E> List<E> entitys(QueryWrapper wrapper, Function<? super T, E> mapper) {
+        return (List<E>) list(wrapper).stream().map(mapper).collect(Collectors.toList());
     }
 
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 import org.crown.common.framework.model.convert.Convert;
 
@@ -169,8 +170,8 @@ public interface BaseService<T extends Convert> {
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    default Object getObj(QueryWrapper<T> queryWrapper) {
-        return SqlHelper.getObject(listObjs(queryWrapper));
+    default <R> R getObj(QueryWrapper<T> queryWrapper, Function<? super Object, R> mapper) {
+        return SqlHelper.getObject(listObjs(queryWrapper, mapper));
     }
 
     /**
@@ -236,8 +237,8 @@ public interface BaseService<T extends Convert> {
      * 根据 Wrapper 条件，查询全部记录
      * </p>
      */
-    default List<Object> listObjs() {
-        return listObjs(Wrappers.emptyWrapper());
+    default <R> List<R> listObjs(Function<? super Object, R> mapper) {
+        return listObjs(Wrappers.emptyWrapper(), mapper);
     }
 
     /**
@@ -247,19 +248,20 @@ public interface BaseService<T extends Convert> {
      *
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
-    List<Object> listObjs(QueryWrapper<T> queryWrapper);
+
+    <R> List<R> listObjs(QueryWrapper<T> queryWrapper, Function<? super Object, R> mapper);
 
     /**
      * <p>
      * 翻页查询自定义对象
      * </p>
      *
-     * @param page 翻页对象
-     * @param cls
+     * @param page   翻页对象
+     * @param mapper
      * @return
      */
-    default <E> IPage<E> pageEntities(IPage page, Class<E> cls) {
-        return pageEntities(page, Wrappers.emptyWrapper(), cls);
+    default <E> IPage<E> pageEntities(IPage page, Function<? super T, E> mapper) {
+        return pageEntities(page, Wrappers.emptyWrapper(), mapper);
     }
 
     /**
@@ -269,10 +271,10 @@ public interface BaseService<T extends Convert> {
      *
      * @param page    翻页对象
      * @param wrapper {@link Wrapper}
-     * @param cls
+     * @param mapper
      * @return
      */
-    <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Class<E> cls);
+    <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Function<? super T, E> mapper);
 
     /**
      * <p>
@@ -290,11 +292,11 @@ public interface BaseService<T extends Convert> {
      * 查询自定义对象列表
      * </p>
      *
-     * @param cls
+     * @param mapper
      * @return
      */
-    default <E extends Convert> List<E> entitys(Class<E> cls) {
-        return entitys(Wrappers.emptyWrapper(), cls);
+    default <E> List<E> entitys(Function<? super T, E> mapper) {
+        return entitys(Wrappers.emptyWrapper(), mapper);
     }
 
     /**
@@ -303,10 +305,10 @@ public interface BaseService<T extends Convert> {
      * </p>
      *
      * @param wrapper {@link Wrapper}
-     * @param cls
+     * @param mapper
      * @return
      */
-    <E extends Convert> List<E> entitys(QueryWrapper wrapper, Class<E> cls);
+    <E> List<E> entitys(QueryWrapper wrapper, Function<? super T, E> mapper);
 
     /**
      * 以list中对象的某个属性做键值,转换成map

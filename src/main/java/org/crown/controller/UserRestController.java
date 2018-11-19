@@ -1,17 +1,23 @@
 package org.crown.controller;
 
 
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.ApiAssert;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.controller.SuperController;
+import org.crown.common.kit.TypeUtils;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
+import org.crown.model.entity.UserRole;
 import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
+import org.crown.service.IUserRoleService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -44,6 +51,8 @@ public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @Resources
     @ApiOperation("查询所有用户")
@@ -59,7 +68,11 @@ public class UserRestController extends SuperController {
     public ApiResponses<UserDTO> get(@PathVariable("id") Integer id) {
         User user = userService.getById(id);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
-        return success(user.convert(UserDTO.class));
+        UserDTO userDTO = user.convert(UserDTO.class);
+        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>query().select(UserRole.ROLE_ID).eq(UserRole.UID, id), TypeUtils::castToInt);
+        userDTO.setRoleIds(roleIds);
+        userDTO.setRoleIds(Collections.singletonList(1));
+        return success(userDTO);
     }
 
     @Resources
@@ -101,7 +114,6 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    //----
     @Resources
     @ApiOperation("获取用户详情")
     @GetMapping("/details")
