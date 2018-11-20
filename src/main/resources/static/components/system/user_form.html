@@ -11,7 +11,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择图标</label>
         <div class="layui-input-block">
-            <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input" value="layui-icon">
         </div>
     </div>
     <div class="layui-form-item">
@@ -116,7 +116,10 @@
             limit: 12,
             // 点击回调
             click: function (data) {
-                console.log(data);
+                console.log($("#iconPicker").val());
+                console.log(data.icon);
+                $("#iconPicker").val(data.icon);
+                console.log($("#iconPicker").val());
             }
         });
     });

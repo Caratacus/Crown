@@ -7,9 +7,21 @@
         </span>
     </div>
     <div class="layui-card-body">
+        <!-- 搜索条件 -->
         <div class="layui-form toolbar">
-            <button id="role-btn-add" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+            <form id="searchForm" onsubmit="return false;">
+                角色名：<input name="roleName" class="layui-input search-input" type="text" placeholder="输入角色名"/>&emsp;
+                <button id="role-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            </form>
         </div>
+        <!-- 表格顶部操作列 -->
+        <script type="text/html" id="role-toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
+            </div>
+        </script>
         <!-- 数据表格 -->
         <table class="layui-table" id="role-table" lay-filter="role-table"></table>
     </div>
@@ -55,8 +67,9 @@
         var crown = layui.crown;
 
         //渲染表格
-        table.render({
+        var roleTable = table.render({
             elem: '#role-table',
+            toolbar: '#role-toolbar',
             url: config.serverUrl + '/role',
             request: config.request,
             parseData: config.parseData,
@@ -67,23 +80,17 @@
                 {field: 'id', sort: true, title: 'ID'},
                 {field: 'roleName', sort: true, title: '角色名'},
                 {field: 'remark', sort: true, title: '备注'},
-                {
-                    field: 'createTime', sort: true, templet: function (d) {
-                        return util.toDateString(d.createTime);
-                    }, title: '创建时间'
-                },
-                {
-                    field: 'updateTime', sort: true, templet: function (d) {
-                        return util.toDateString(d.updateTime);
-                    }, title: '修改时间'
-                },
+                {field: 'createTime', sort: true, title: '创建时间'},
+                {field: 'updateTime', sort: true, title: '修改时间'},
                 {align: 'center', toolbar: '#role-table-bar', title: '操作'}
             ]]
         });
 
-        // 添加按钮点击事件
-        $('#role-btn-add').click(function () {
-            showEditModel();
+        // 添加
+        table.on('toolbar(role-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            }
         });
 
         // 表单提交事件
@@ -93,14 +100,14 @@
                 crown.put('/role/' + data.field.id, data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
-                    table.reload('role-table');
+                    roleTable.reload('role-table');
                     layer.closeAll('page');
                 });
             } else {
                 crown.post('/role', data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
-                    table.reload('role-table');
+                    roleTable.reload('role-table');
                     layer.closeAll('page');
                 });
             }
@@ -148,6 +155,11 @@
                 });
             });
         };
+
+        // 搜索按钮点击事件
+        $('#role-btn-search').click(function () {
+            roleTable.reload({where: crown.getSearchForm()});
+        });
     });
 
 </script>

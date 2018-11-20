@@ -18,11 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -44,9 +49,12 @@ public class RoleRestController extends SuperController {
 
     @Resources
     @ApiOperation(value = "查询所有角色(分页)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
+    })
     @GetMapping
-    public ApiResponses<IPage<Role>> page() {
-        IPage<Role> page = roleService.page(this.<Role>getPage());
+    public ApiResponses<IPage<Role>> page(@RequestParam(value = "roleName", required = false) String roleName) {
+        IPage<Role> page = roleService.page(this.<Role>getPage(), Wrappers.<Role>query().like(StringUtils.isNotEmpty(roleName), Role.ROLE_NAME, roleName));
         return success(page);
     }
 

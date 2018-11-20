@@ -81,7 +81,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     }
 
     @Test
-    public void list() throws Exception {
+    public void page() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/user")
                         .header("Authorization", "Bearer " + token.getToken())

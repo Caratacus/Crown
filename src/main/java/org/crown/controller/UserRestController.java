@@ -67,7 +67,7 @@ public class UserRestController extends SuperController {
             @ApiImplicitParam(name = "status", value = "需要检查的账号", paramType = "query")
     })
     @GetMapping
-    public ApiResponses<IPage<UserDTO>> list(@RequestParam(value = "loginName", required = false) String loginName,
+    public ApiResponses<IPage<UserDTO>> page(@RequestParam(value = "loginName", required = false) String loginName,
                                              @RequestParam(value = "nickname", required = false) String nickname,
                                              @RequestParam(value = "status", required = false) UserStatusEnum status) {
         IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
