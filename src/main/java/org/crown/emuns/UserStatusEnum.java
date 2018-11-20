@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum UserStatusEnum implements IEnum {
 
-    NOMAL(0), DISABLE(1);
+    NORMAL(0), DISABLE(1);
 
     @EnumValue
     private final int value;

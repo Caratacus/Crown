@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class RequestKit {
 
-    /*
+    /**
      * 判断请求方式GET
      *
      * @param request
@@ -43,7 +43,7 @@ public abstract class RequestKit {
     }
 
     /**
-     * 判断请求方式GET
+     * 判断请求方式POST
      *
      * @param request
      * @return
