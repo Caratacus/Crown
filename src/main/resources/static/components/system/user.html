@@ -23,7 +23,7 @@
         <!-- 表格顶部操作列 -->
         <script type="text/html" id="user-toolbar">
             <div class="layui-btn-container">
-                <button id="user-btn-add" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
                         class="layui-icon">&#xe654;</i>添加
                 </button>
             </div>
@@ -32,30 +32,28 @@
     </div>
 </div>
 
-
 <!-- 表格操作列 -->
 <script type="text/html" id="user-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
 </script>
 
 <!-- 表格状态列 -->
 <script type="text/html" id="user-tpl-status">
-    <input type="checkbox" lay-filter="user-tpl-status" value="{{d.id}}" lay-skin="switch" lay-text="正常|锁定"
-           {{d.status==0?'checked':''}}/>
+    <input type="checkbox" lay-filter="user-tpl-status" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|禁用" {{d.status==0?'checked':''}}/>
 </script>
 
 <script>
-    layui.use(['form', 'table', 'util', 'config', 'crown'], function () {
+    layui.use(['form', 'table', 'config', 'crown'], function () {
         var form = layui.form;
         var table = layui.table;
         var config = layui.config;
         var layer = layui.layer;
-        var util = layui.util;
         var crown = layui.crown;
 
         // 渲染表格
-        table.render({
+        var userTable = table.render({
             elem: '#user-table',
             toolbar: '#user-toolbar',
             url: config.serverUrl + '/user',
@@ -69,29 +67,26 @@
                 {field: 'nickname', sort: true, title: '用户名'},
                 {field: 'phone', sort: true, title: '手机号'},
                 {field: 'email', sort: true, title: '邮箱'},
-                {
-                    sort: true, templet: function (d) {
-                        return util.toDateString(d.createTime);
-                    }, title: '创建时间'
-                },
+                {field: 'createTime', sort: true, title: '创建时间'},
                 {field: 'status', sort: true, templet: '#user-tpl-status', title: '状态'},
                 {align: 'center', toolbar: '#user-table-bar', title: '操作'}
             ]]
         });
-
-        // 添加按钮点击事件
-        $('#user-btn-add').click(function () {
-            showEditModel();
+        // 表格顶部操作列
+        table.on('toolbar(user-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            }
         });
-
-        // 工具条点击事件
+        // 表格操作列事件
         table.on('tool(user-table)', function (obj) {
             var data = obj.data;
             var layEvent = obj.event;
 
-            if (layEvent === 'edit') { // 修改
+            if (layEvent === 'edit') {
+                // 修改
                 showEditModel(data);
-            } else if (layEvent === 'reset') { // 重置密码
+            } else if (layEvent === 'reset') {
                 layer.confirm('确定重置此用户密码？', function (i) {
                     layer.close(i);
                     layer.load(2);
@@ -114,15 +109,14 @@
                 title: data ? '修改用户' : '添加用户',
                 path: 'components/system/user_form.html',
                 finish: function () {
-                    table.reload('user-table', {});
+                    userTable.reload('user-table', {});
                 }
             });
         };
 
         // 搜索按钮点击事件
         $('#user-btn-search').click(function () {
-            var searchForm = crown.getSearchForm();
-            table.reload('user-table', {where: searchForm});
+            userTable.reload({where: crown.getSearchForm()});
         });
 
         // 修改user状态

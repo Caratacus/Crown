@@ -70,7 +70,7 @@ public class UserRestController extends SuperController {
     public ApiResponses<IPage<UserDTO>> list(@RequestParam(value = "loginName", required = false) String loginName,
                                              @RequestParam(value = "nickname", required = false) String nickname,
                                              @RequestParam(value = "status", required = false) UserStatusEnum status) {
-        IPage<User> page = userService.page(this.<User>getPage(1), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
+        IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 
