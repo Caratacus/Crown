@@ -42,12 +42,12 @@
 <script type="text/javascript" src="assets/libs/q.js"></script>
 <script type="text/javascript" src="assets/libs/pandyle.min.js"></script>
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
-
 <script>
     layui.config({
         base: 'module/'
     }).extend({
-        formSelects: 'formSelects/formSelects-v4'
+        formSelects: 'formSelects/formSelects-v4',
+        iconPicker: 'iconPicker/iconPicker'
     }).use(['config', 'index', 'element'], function () {
         var config = layui.config;
         var index = layui.index;
@@ -65,7 +65,6 @@
             index.initRouter();
             index.bindEvent();
         });
-
     });
 </script>
 </body>
