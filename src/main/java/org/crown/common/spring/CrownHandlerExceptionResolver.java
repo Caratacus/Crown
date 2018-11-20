@@ -56,7 +56,6 @@ import lombok.extern.slf4j.Slf4j;
  * @see #handleMissingServletRequestPartException
  * @see #handleBindException
  * @see org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver
- * @since 3.0
  */
 @Slf4j
 public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
@@ -206,7 +205,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param ex       the MissingPathVariableException to be handled
      * @param request  current HTTP request
      * @param response current HTTP response
-     * @since 4.2
      */
     protected void handleMissingPathVariable(MissingPathVariableException ex, HttpServletRequest request,
                                              HttpServletResponse response) {
@@ -368,7 +366,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param ex       the NoHandlerFoundException to be handled
      * @param request  current HTTP request
      * @param response current HTTP response
-     * @since 4.0
      */
     protected void handleNoHandlerFoundException(NoHandlerFoundException ex, HttpServletRequest request,
                                                  HttpServletResponse response) {
@@ -383,7 +380,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param ex       the {@link AsyncRequestTimeoutException }to be handled
      * @param request  current HTTP request
      * @param response current HTTP response
-     * @since 4.2.8
      */
     protected void handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex, HttpServletRequest request,
                                                       HttpServletResponse response) {
@@ -398,7 +394,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param ex       the {@link ConstraintViolationException }to be handled
      * @param request  current HTTP request
      * @param response current HTTP response
-     * @since 4.2.8
      */
     protected void handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request,
                                                       HttpServletResponse response) {
@@ -413,7 +408,6 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param ex       the {@link Exception }to be handled
      * @param request  current HTTP request
      * @param response current HTTP response
-     * @since 4.2.8
      */
     protected void handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
         ApiUtils.sendRestFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);

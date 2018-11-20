@@ -31,7 +31,6 @@ import liquibase.util.MD5Util;
  * </p>
  *
  * @author Caratacus
- * @since 2017-10-19
  */
 @Service
 public class ScanMappings {

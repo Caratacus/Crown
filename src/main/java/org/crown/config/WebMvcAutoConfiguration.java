@@ -41,7 +41,6 @@ import io.undertow.Undertow;
  * </p>
  *
  * @author Caratacus
- * @since 2018-04-06
  */
 @Configuration
 public class WebMvcAutoConfiguration implements WebMvcConfigurer {

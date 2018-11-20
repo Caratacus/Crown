@@ -11,7 +11,6 @@ import lombok.ToString;
  * app请求日志详情
  *
  * @author Caratacus
- * @since 2018-04-06
  */
 @Getter
 @ToString

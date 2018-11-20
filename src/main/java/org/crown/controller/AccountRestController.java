@@ -31,7 +31,6 @@ import io.swagger.annotations.ApiOperation;
  * </p>
  *
  * @author Caratacus
- * @since 2018-11-5
  */
 @Api(tags = {"Account"}, description = "账号操作相关接口")
 @RestController
