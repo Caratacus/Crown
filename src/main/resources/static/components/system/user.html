@@ -108,7 +108,7 @@
             if (data) {
                 crown.get('/user/' + data.id, {}, function (data) {
                     crown.putTempData('t_user', data.result);
-                });
+                }, false);
             }
             crown.popupCenter({
                 title: data ? '修改用户' : '添加用户',

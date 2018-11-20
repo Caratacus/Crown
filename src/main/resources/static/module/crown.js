@@ -108,19 +108,19 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         closePopupCenter: function () {
             layer.close(popupCenterIndex);
         },
-        get: function (url, data, success) {
-            return this.request(url, data, "GET", success);
+        get: function (url, data, success, async) {
+            return this.request(url, data, "GET", success, async);
         },
-        post: function (url, data, success) {
-            return this.request(url, data, "POST", success);
+        post: function (url, data, success, async) {
+            return this.request(url, data, "POST", success, async);
         },
-        put: function (url, data, success) {
-            return this.request(url, data, "PUT", success);
+        put: function (url, data, success, async) {
+            return this.request(url, data, "PUT", success, async);
         },
-        delete: function (url, data, success) {
-            return this.request(url, data, "DELETE", success);
+        delete: function (url, data, success, async) {
+            return this.request(url, data, "DELETE", success, async);
         },
-        request: function (url, data, method, success) {
+        request: function (url, data, method, success, async) {
             var contentType;
             switch (method) {
                 case "GET":
@@ -148,6 +148,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 xhrFields: {
                     withCredentials: true
                 },
+                async: async !== false,
                 crossDomain: true,
                 success: function (data) {
                     success(data);
