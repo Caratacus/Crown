@@ -2,6 +2,7 @@ package org.crown.controller;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
@@ -29,12 +30,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -57,9 +61,16 @@ public class UserRestController extends SuperController {
 
     @Resources
     @ApiOperation("查询所有用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
+            @ApiImplicitParam(name = "nickname", value = "需要检查的账号", paramType = "query"),
+            @ApiImplicitParam(name = "status", value = "需要检查的账号", paramType = "query")
+    })
     @GetMapping
-    public ApiResponses<IPage<UserDTO>> list() {
-        IPage<User> page = userService.page(this.<User>getPage());
+    public ApiResponses<IPage<UserDTO>> list(@RequestParam(value = "loginName", required = false) String loginName,
+                                             @RequestParam(value = "nickname", required = false) String nickname,
+                                             @RequestParam(value = "status", required = false) UserStatusEnum status) {
+        IPage<User> page = userService.page(this.<User>getPage(1), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.crown.common.http.log.aspect.LogRecordAspect;
 import org.crown.common.spring.CrownHandlerExceptionResolver;
+import org.crown.common.spring.IEnumConverterFactory;
 import org.crown.common.spring.interceptor.GlobalInterceptor;
 import org.crown.common.spring.validator.ValidatorCollectionImpl;
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.Validator;
@@ -54,6 +56,10 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         return new SpringValidatorAdapter(new ValidatorCollectionImpl());
     }
 
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverterFactory(new IEnumConverterFactory());
+    }
 
     @Bean
     @ConditionalOnClass(Undertow.class)

@@ -10,20 +10,24 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *
  * @author Caratacus
  */
-public enum UserStatusEnum {
+public enum UserStatusEnum implements IEnum {
 
     NOMAL(0), DISABLE(1);
 
     @EnumValue
-    private final int code;
+    private final int value;
 
-    UserStatusEnum(final int code) {
-        this.code = code;
+    UserStatusEnum(final int value) {
+        this.value = value;
     }
 
     @JsonValue
-    public int code() {
-        return this.code;
+    public int value() {
+        return this.value;
     }
 
+    @Override
+    public int getValue() {
+        return value();
+    }
 }

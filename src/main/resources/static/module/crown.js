@@ -212,6 +212,23 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             var tempData = layui.sessionData('tempData')[key];
             layui.sessionData('tempData', {key: key, remove: true});
             return tempData;
+        },
+        getSearchForm: function () {
+            var val = {};
+            var inputVals = $('#searchForm').find(':input').filter(function () {
+                return $.trim(this.value).length > 0;
+            }).serializeArray();
+            $(inputVals).each(function () {
+                if (val[this.name] !== undefined) {
+                    if (!Array.isArray(val[this.name])) {
+                        val[this.name] = [val[this.name]];
+                    }
+                    val[this.name].push(this.value);
+                } else {
+                    val[this.name] = this.value;
+                }
+            });
+            return val;
         }
     };
 

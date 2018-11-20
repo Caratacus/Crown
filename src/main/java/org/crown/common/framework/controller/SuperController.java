@@ -1,5 +1,7 @@
 package org.crown.common.framework.controller;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -57,7 +59,7 @@ public class SuperController {
      * @return
      */
     protected <T> Page<T> getPage() {
-        return getPage(PageCons.DEFAULT_LIMIT);
+        return getPage(null);
     }
 
     /**
@@ -66,12 +68,12 @@ public class SuperController {
      * @param size
      * @return
      */
-    protected <T> Page<T> getPage(int size) {
+    protected <T> Page<T> getPage(Integer size) {
         int index = 1;
         // 页数
         Integer cursor = TypeUtils.castToInt(request.getParameter(PageCons.PAGE_PAGE), index);
         // 分页大小
-        Integer limit = TypeUtils.castToInt(request.getParameter(PageCons.PAGE_ROWS), size);
+        Integer limit = Objects.nonNull(size) && size > 0 ? size : TypeUtils.castToInt(request.getParameter(PageCons.PAGE_ROWS), PageCons.DEFAULT_LIMIT);
         // 是否查询分页
         Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(PageCons.SEARCH_COUNT), false);
         limit = limit > PageCons.MAX_LIMIT ? PageCons.MAX_LIMIT : limit;

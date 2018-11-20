@@ -10,12 +10,12 @@
         <!-- 搜索条件 -->
         <div class="layui-form toolbar">
             <form id="searchForm" onsubmit="return false;">
-                账号：<input name="username" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
-                用户名：<input name="realName" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
+                账号：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
+                用户名：<input name="nickname" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
                 状态：<select name="status" lay-verify="">
                 <option value="">请选择状态</option>
                 <option value="0">正常</option>
-                <option value="-1">禁用</option>
+                <option value="1">禁用</option>
             </select>
                 <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             </form>
@@ -121,9 +121,8 @@
 
         // 搜索按钮点击事件
         $('#user-btn-search').click(function () {
-            var key = $('#user-search-key').val();
-            var value = $('#user-search-value').val();
-            table.reload('user-table', {where: {searchKey: key, searchValue: value}});
+            var searchForm = crown.getSearchForm();
+            table.reload('user-table', {where: searchForm});
         });
 
         // 修改user状态
