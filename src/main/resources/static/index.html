@@ -44,7 +44,12 @@
 <script type="text/javascript" src="assets/libs/layui/layui.js"></script>
 <script>
     layui.config({
-        base: 'module/'
+        //设定扩展的Layui模块的所在目录，一般用于外部模块扩展
+        base: 'module/',
+        //一般用于更新模块缓存，默认不开启。设为true即让浏览器不缓存。也可以设为一个固定的值，如：201610
+        version: true,
+        //用于开启调试模式，默认false，如果设为true，则JS模块的节点会保留在页面
+        debug: true
     }).extend({
         formSelects: 'formSelects/formSelects-v4',
         iconPicker: 'iconPicker/iconPicker'
