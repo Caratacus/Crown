@@ -1,4 +1,4 @@
-package org.crown.emuns;
+package org.crown.common.emuns;
 
 /**
  * <p>

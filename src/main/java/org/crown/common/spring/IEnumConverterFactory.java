@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
-import org.crown.emuns.IEnum;
+import org.crown.common.emuns.IEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 

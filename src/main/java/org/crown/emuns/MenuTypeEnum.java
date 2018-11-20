@@ -7,19 +7,30 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * <p>
- * 用户状态枚举
+ * 菜单类型枚举
  * </p>
  *
  * @author Caratacus
  */
-public enum UserStatusEnum implements IEnum {
+public enum MenuTypeEnum implements IEnum {
 
-    NOMAL(0), DISABLE(1);
+    /**
+     * 目录
+     */
+    CATALOG(0),
+    /**
+     * 菜单
+     */
+    MENU(1),
+    /**
+     * 按钮
+     */
+    BUTTON(2);
 
     @EnumValue
     private final int value;
 
-    UserStatusEnum(final int value) {
+    MenuTypeEnum(final int value) {
         this.value = value;
     }
 

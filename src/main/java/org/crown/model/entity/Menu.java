@@ -3,6 +3,7 @@ package org.crown.model.entity;
 import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.BaseModel;
+import org.crown.emuns.MenuTypeEnum;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -44,9 +45,9 @@ public class Menu extends BaseModel {
     private String path;
 
     /**
-     * 类型:0:目录,1:菜单,2:按钮
+     * 类型:1:目录,2:菜单,3:按钮
      */
-    private Integer menuType;
+    private MenuTypeEnum menuType;
 
     /**
      * 菜单图标

@@ -91,9 +91,9 @@ layui.define(function (exports) {
                 path: 'system/role.html',
                 auth: 'get:/role'
             }, {
-                name: '权限管理',
-                url: 'authorities',
-                path: 'system/authorities.html',
+                name: '菜单管理',
+                url: 'menu',
+                path: 'system/menu.html',
                 auth: 'get:/authorities'
             }, {
                 name: '登录日志',
