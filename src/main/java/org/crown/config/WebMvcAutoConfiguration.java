@@ -103,4 +103,10 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new GlobalInterceptor()).addPathPatterns("/**").excludePathPatterns("/error", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-resources/configuration/ui", "/v2/api-docs");
     }
 
+   /* @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/*").allowedOrigins("*")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE")
+                .allowCredentials(true).maxAge(3600);
+    }*/
 }

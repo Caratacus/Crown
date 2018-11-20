@@ -26,11 +26,12 @@ public class GlobalInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof ResourceHttpRequestHandler) {
             return true;
         }
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        // 获取约定的请求头
         request.setAttribute(APICons.API_BEGIN_TIME, System.currentTimeMillis());
-        // 获取请求路径
-        setAttributeOfPath(request, handlerMethod);
+        if (handler instanceof HandlerMethod) {
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+            // 获取请求路径
+            setAttributeOfPath(request, handlerMethod);
+        }
         return super.preHandle(request, response, handler);
     }
 
