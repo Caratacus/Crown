@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.core.toolkit.SystemClock;
 import com.baomidou.mybatisplus.core.toolkit.sql.SqlUtils;
+import com.mysql.cj.jdbc.ServerPreparedStatement;
 
 
 /**
@@ -42,12 +43,6 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlUtils;
 public class SqlPerformanceInterceptor implements Interceptor {
 
     private static final Log logger = LogFactory.getLog(SqlPerformanceInterceptor.class);
-
-    private static final String DruidPooledPreparedStatement = "com.alibaba.druid.pool.DruidPooledPreparedStatement";
-    private static final String T4CPreparedStatement = "oracle.jdbc.driver.T4CPreparedStatement";
-    private static final String OraclePreparedStatementWrapper = "oracle.jdbc.driver.OraclePreparedStatementWrapper";
-    private Method oracleGetOriginalSqlMethod;
-    private Method druidGetSQLMethod;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -72,48 +67,7 @@ public class SqlPerformanceInterceptor implements Interceptor {
             }
         }
 
-        String originalSql = null;
-        String stmtClassName = statement.getClass().getName();
-        if (DruidPooledPreparedStatement.equals(stmtClassName)) {
-            try {
-                if (druidGetSQLMethod == null) {
-                    Class<?> clazz = Class.forName(DruidPooledPreparedStatement);
-                    druidGetSQLMethod = clazz.getMethod("getSql");
-                }
-                Object stmtSql = druidGetSQLMethod.invoke(statement);
-                if (stmtSql instanceof String) {
-                    originalSql = (String) stmtSql;
-                }
-            } catch (Exception ignored) {
-            }
-        } else if (T4CPreparedStatement.equals(stmtClassName)
-                || OraclePreparedStatementWrapper.equals(stmtClassName)) {
-            try {
-                if (oracleGetOriginalSqlMethod != null) {
-                    Object stmtSql = oracleGetOriginalSqlMethod.invoke(statement);
-                    if (stmtSql instanceof String) {
-                        originalSql = (String) stmtSql;
-                    }
-                } else {
-                    Class<?> clazz = Class.forName(stmtClassName);
-                    oracleGetOriginalSqlMethod = getMethodRegular(clazz, "getOriginalSql");
-                    if (oracleGetOriginalSqlMethod != null) {
-                        oracleGetOriginalSqlMethod.setAccessible(true);//OraclePreparedStatementWrapper is not a public class, need set this.
-                        if (oracleGetOriginalSqlMethod != null) {
-                            Object stmtSql = oracleGetOriginalSqlMethod.invoke(statement);
-                            if (stmtSql instanceof String) {
-                                originalSql = (String) stmtSql;
-                            }
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                //ignore
-            }
-        }
-        if (originalSql == null) {
-            originalSql = statement.toString();
-        }
+        String originalSql = ((ServerPreparedStatement) statement).asSql(false);
         originalSql = originalSql.replaceAll("[\\s]+", " ");
         int index = indexOfSqlStart(originalSql);
         if (index > 0) {

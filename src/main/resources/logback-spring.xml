@@ -60,6 +60,7 @@
         </encoder>
     </appender>
     <logger name="org.crown" level="DEBUG"/>
+    <logger name="org.crown.mapper" level="INFO"/>
     <!-- 日志输出级别 -->
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>
