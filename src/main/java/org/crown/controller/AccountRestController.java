@@ -46,7 +46,7 @@ public class AccountRestController extends SuperController {
     @PostMapping("/token")
     public ApiResponses<TokenDTO> getToken(@RequestBody @Validated LoginPARM loginPARM) {
         User user = userService.login(loginPARM.getLoginName(), loginPARM.getPassword(), IpUtils.getIpAddr(request));
-        TokenDTO tokenDTO  = userService.getToken(user);
+        TokenDTO tokenDTO = userService.getToken(user);
         return success(tokenDTO);
     }
 
