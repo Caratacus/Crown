@@ -40,7 +40,7 @@ public class IEnumConverterFactory implements ConverterFactory<String, IEnum> {
 
     class IntegerStrToEnum<T extends IEnum> implements Converter<String, T> {
 
-        private Map<String, T> enumMap = new HashMap<>();
+        private final Map<String, T> enumMap = new HashMap<>();
 
         public IntegerStrToEnum(Class<T> enumType) {
             T[] enums = enumType.getEnumConstants();

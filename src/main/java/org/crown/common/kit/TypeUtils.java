@@ -16,10 +16,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * 类型转换
+ * 修改fastjson类型转换
  *
  * @author Caratacus
- * @see com.alibaba.fastjson.util.TypeUtils
+ * https://github.com/alibaba/fastjson/blob/master/src/main/java/com/alibaba/fastjson/util/TypeUtils.java
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class TypeUtils {
