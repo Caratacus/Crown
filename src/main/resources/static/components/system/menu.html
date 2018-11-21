@@ -1,0 +1,149 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">菜单管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>菜单管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <div class="layui-form toolbar">
+            查看角色菜单：
+            <select id="auth-slt-role" lay-filter="auth-slt-role">
+                <option value="">-请选择角色-</option>
+                <option p-for="roles" p-bind="value:{{roleId}}">{{roleName}}</option>
+            </select>&emsp;
+            <button id="auth-btn-sync" class="layui-btn icon-btn" lay-tips="自动扫描所有接口同步到数据库">
+                <i class="layui-icon">&#xe669;</i>同步
+            </button>
+        </div>
+
+        <!-- 数据表格 -->
+        <table class="layui-table" id="auth-table" lay-filter="auth-table"></table>
+    </div>
+</div>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="auth-state">
+    <input type="checkbox" lay-filter="auth-state" value="{{d.authority}}" lay-skin="switch" lay-text="ON|OFF"
+           {{d.checked==1?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'config', 'crown', 'treetable'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var crown = layui.crown;
+        var treetable = layui.treetable;
+
+
+        // 渲染表格
+        var renderTable = function () {
+            treetable.render({
+                treeColIndex: 1,
+                treeSpid: 0,
+                treeIdName: 'id',
+                treePidName: 'parentId',
+                treeDefaultClose: true,
+                elem: '#auth-table',
+                url: config.serverUrl + '/menu',
+                cols: [[
+                    {field: 'id', sort: true, title: 'ID'},
+                    {field: 'parentId', sort: true, title: '父菜单ID'},
+                    {
+                        field: 'icon', title: '图标', width: 60, align: 'center'
+                        , templet: function (d) {
+                            return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
+                        }
+                    },
+                    {field: 'menuName', sort: true, title: '菜单名称'},
+                    {field: 'path', sort: true, title: '菜单路径'},
+                    {
+                        minWidth: 80, align: 'center', templet: function (d) {
+                            if (d.menuType == 1) {
+                                return '<span class="layui-badge layui-bg-gray">按钮</span>';
+                            }
+                            if (d.menuType == 2) {
+                                return '<span class="layui-badge layui-bg-blue">目录</span>';
+                            } else {
+                                return '<span class="layui-badge-rim">菜单</span>';
+                            }
+                        }, title: '类型'
+                    },
+                    {field: 'createTime', sort: true, title: '创建时间'},
+                    {field: 'updateTime', sort: true, title: '修改时间'},
+                    {field: 'checked', sort: true, templet: '#auth-state', title: '授权'},
+                    {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
+                ]]
+            });
+        };
+        renderTable();
+
+
+        // 角色切换事件
+        form.on('select(auth-slt-role)', function (data) {
+            table.reload('auth-table', {where: {roleId: data.value}});
+        });
+
+        // 同步按钮点击事件
+        $('#auth-btn-sync').click(function () {
+            layer.confirm('确定进行同步？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                layer.load(2);
+                /*   $.get(config.serverUrl + 'v2/api-docs', function (data) {
+                       crown.post('authorities/sync', {
+                           json: JSON.stringify(data)
+                       }, function (data) {
+                           layer.closeAll('loading');
+                           if (200 == data.code) {
+                               layer.msg(data.msg, {icon: 1});
+                               table.reload('auth-table');
+                           } else {
+                               layer.msg(data.msg, {icon: 2});
+                           }
+                       });
+                   });*/
+            });
+        });
+
+        // 获取角色
+        //crown.showLoading('.toolbar');
+        /*     crown.get('role', {}, function (data) {
+                 //crown.removeLoading('.toolbar');
+                 if (0 == data.code) {
+                     $('#auth-slt-role').vm({roles: data.data});
+                     form.render('select');
+                 } else {
+                     layer.msg('获取角色失败', {icon: 2});
+                 }
+             });*/
+
+        // 监听状态开关操作
+        form.on('switch(auth-state)', function (obj) {
+            var roleId = $('#auth-slt-role').val();
+            if (!roleId) {
+                layer.msg('请选择角色再进行授权操作', {icon: 2});
+                $(obj.elem).prop('checked', !obj.elem.checked);
+                form.render('checkbox');
+                return;
+            }
+            layer.load(2);
+            /*     crown.post('authorities/role', {
+                     roleId: roleId,
+                     authId: obj.value
+                 }, function (data) {
+                     layer.closeAll('loading');
+                     if (data.code == 200) {
+                         layer.msg(data.msg, {icon: 1});
+                     } else {
+                         layer.msg(data.msg, {icon: 2});
+                         $(obj.elem).prop('checked', !obj.elem.checked);
+                         form.render('checkbox');
+                     }
+                 });*/
+        });
+    });
+</script>
