@@ -26,6 +26,7 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
     //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
+
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
     maven { url "http://repo.maven.apache.org/maven2" }
@@ -42,25 +43,24 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
     api("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     api("com.baomidou:mybatis-plus-boot-starter:3.0.7.1-SNAPSHOT")
-    api("mysql:mysql-connector-java:8.0.12")
-    api("org.apache.commons:commons-lang3:3.8")
-    api("io.springfox:springfox-swagger-ui:2.7.0")
-    api("io.springfox:springfox-swagger2:2.7.0")
+    api("mysql:mysql-connector-java:8.0.13")
+    api("org.apache.commons:commons-lang3:3.8.1")
+    api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+    api("io.springfox:springfox-swagger2:${swaggerVersion}")
     api("io.jsonwebtoken:jjwt:0.9.1")
     api("org.apache.commons:commons-collections4:4.2")
     api("commons-io:commons-io:2.5")
-    api("aopalliance:aopalliance:1.0")
     api("commons-codec:commons-codec:1.11")
     api("org.hibernate:hibernate-validator:6.0.13.Final")
-    api("org.liquibase:liquibase-core:3.5.3")
-    api("org.modelmapper:modelmapper:2.3.0")
-    api("com.vip.vjtools:vjkit:1.0.6")
+    api("org.liquibase:liquibase-core:${liquibaseVersion}")
+    api("org.modelmapper:modelmapper:2.3.1")
+    api("com.vip.vjtools:vjkit:1.0.7")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile("org.apache.velocity:velocity-engine-core:2.0")
-    testCompile("org.projectlombok:lombok:1.16.18")
-    compileOnly("org.projectlombok:lombok:1.16.18")
-    annotationProcessor("org.projectlombok:lombok:1.16.18")
-    testAnnotationProcessor("org.projectlombok:lombok:1.16.18")
+    testCompile("org.projectlombok:lombok:${lombokVersion}")
+    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 }
 
 tasks.matching { it instanceof Test }.all {
