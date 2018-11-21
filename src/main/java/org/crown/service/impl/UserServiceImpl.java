@@ -49,7 +49,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         //用户名密码错误
         ApiAssert.isTrue(ErrorCodeEnum.USERNAME_OR_PASSWORD_IS_WRONG, Md5Crypt.apr1Crypt(password, loginName).equals(user.getPassword()));
         //用户被禁用
-        ApiAssert.isTrue(ErrorCodeEnum.USER_IS_DISABLED, UserStatusEnum.NOMAL.equals(user.getStatus()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_IS_DISABLED, UserStatusEnum.NORMAL.equals(user.getStatus()));
         user.setIp(ipAddr);
         updateById(user);
         return user;

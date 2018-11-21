@@ -67,7 +67,6 @@ public class ValidatorCollectionImpl implements javax.validation.Validator {
     @Override
     public <T> Set<ConstraintViolation<T>> validateValue(
             Class<T> beanType, String propertyName, Object value, Class<?>... groups) {
-
         Assert.state(this.targetValidator != null, "No target Validator set");
         return this.targetValidator.validateValue(beanType, propertyName, value, groups);
     }

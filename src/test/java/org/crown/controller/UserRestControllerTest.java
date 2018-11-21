@@ -114,7 +114,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void updateStatus() throws Exception {
         UserPARM userPARM = new UserPARM();
-        userPARM.setStatus(UserStatusEnum.NOMAL);
+        userPARM.setStatus(UserStatusEnum.NORMAL);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/" + token.getUid() + "/status")
                         .contentType(MediaType.APPLICATION_JSON)
