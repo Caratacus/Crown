@@ -70,37 +70,29 @@ layui.define(function (exports) {
         },
         // 导航菜单
         menus: [{
-            name: '主页',
-            icon: 'layui-icon-home',
-            subMenus: [{
-                name: '主页一',
-                url: 'console',
-                path: 'console.html'
-            }]
-        }, {
             name: '系统管理',
             icon: 'layui-icon-set',
-            subMenus: [{
-                name: '用户管理',
-                url: 'user',  // 这里url不能带斜杠，因为是用递归循环进行关键字注册，带斜杠会被q.js理解为其他注册模式
-                path: 'system/user.html',
-                auth: 'post:/user/query'
-            }, {
-                name: '角色管理',
-                url: 'role',
-                path: 'system/role.html',
-                auth: 'get:/role'
-            }, {
-                name: '菜单管理',
-                url: 'menu',
-                path: 'system/menu.html',
-                auth: 'get:/authorities'
-            }, {
-                name: '登录日志',
-                url: 'login_record',
-                path: 'system/login_record.html',
-                auth: 'get:/loginRecord'
-            }]
+            subMenus: [
+                {
+                    name: '项目主页',
+                    url: 'console',
+                    path: 'console.html'
+                }, {
+                    name: '用户管理',
+                    url: 'user',  // 这里url不能带斜杠，因为是用递归循环进行关键字注册，带斜杠会被q.js理解为其他注册模式
+                    path: 'system/user.html',
+                    auth: 'post:/user/query'
+                }, {
+                    name: '角色管理',
+                    url: 'role',
+                    path: 'system/role.html',
+                    auth: 'get:/role'
+                }, {
+                    name: '菜单管理',
+                    url: 'menu',
+                    path: 'system/menu.html',
+                    auth: 'get:/authorities'
+                }]
         }],
         // 当前登录的用户
         getUser: function () {

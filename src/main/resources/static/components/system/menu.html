@@ -49,32 +49,48 @@
                 treeDefaultClose: true,
                 elem: '#auth-table',
                 url: config.serverUrl + '/menu',
-                cols: [[
-                    {field: 'id', sort: true, title: 'ID'},
-                    {field: 'parentId', sort: true, title: '父菜单ID'},
+                /*cols: [[
+                    {type: 'numbers'},
+                    {field: 'name', title: '名称', width: 200},
                     {
                         field: 'icon', title: '图标', width: 60, align: 'center'
                         , templet: function (d) {
                             return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
                         }
                     },
+                    {field: 'code', title: '编码', width: 120},
+                    {field: 'uri', title: 'URI', width: 120},
+                    {field: 'path', title: '资源路径'},
+                    {field: 'sort', title: '排序', width: 60},
+                    {field: 'status', templet: '#resource-tpl-status', title: '状态', width: 100},
+                    {field: 'createTime', title: '创建时间', sort: true, width: 150},
+                    {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
+                ]]*/
+                cols: [[
+                    {field: 'id', sort: true, title: 'ID'},
                     {field: 'menuName', sort: true, title: '菜单名称'},
+                    {
+                        field: 'icon', title: '图标', width: 60, align: 'center'
+                        , templet: function (d) {
+                            return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
+                        }
+                    },
                     {field: 'path', sort: true, title: '菜单路径'},
                     {
                         minWidth: 80, align: 'center', templet: function (d) {
-                            if (d.menuType == 1) {
-                                return '<span class="layui-badge layui-bg-gray">按钮</span>';
-                            }
-                            if (d.menuType == 2) {
+                            if (d.menuType === 1) {
+                                return '<span class="layui-badge layui-bg-gray">菜单</span>';
+                            } else if (d.menuType === 2) {
                                 return '<span class="layui-badge layui-bg-blue">目录</span>';
+                            } else if (d.menuType === 3) {
+                                return '<span class="layui-badge layui-badge-rim">按钮</span>';
                             } else {
-                                return '<span class="layui-badge-rim">菜单</span>';
+                                return '<span class="layui-bg-black">未知</span>';
                             }
                         }, title: '类型'
                     },
                     {field: 'createTime', sort: true, title: '创建时间'},
                     {field: 'updateTime', sort: true, title: '修改时间'},
-                    {field: 'checked', sort: true, templet: '#auth-state', title: '授权'},
                     {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
                 ]]
             });
