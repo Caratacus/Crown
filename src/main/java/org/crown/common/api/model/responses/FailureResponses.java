@@ -11,7 +11,7 @@ import lombok.ToString;
 
 
 /**
- * 接口失败返回
+ * 失败返回
  *
  * @author Caratacus
  */

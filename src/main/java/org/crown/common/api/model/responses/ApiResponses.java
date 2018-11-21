@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 
 
 /**
- * 接口返回
+ * 接口返回(多态)
  *
  * @author Caratacus
  */

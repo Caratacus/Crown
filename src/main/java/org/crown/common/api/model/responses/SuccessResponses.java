@@ -9,7 +9,7 @@ import lombok.ToString;
 
 
 /**
- * 接口成功返回
+ * 成功返回
  *
  * @author Caratacus
  */

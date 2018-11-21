@@ -2,7 +2,7 @@ package org.crown.common.exception;
 
 /**
  * <p>
- * 枚举 异常类
+ * 未知枚举 异常
  * </p>
  *
  * @author Caratacus
