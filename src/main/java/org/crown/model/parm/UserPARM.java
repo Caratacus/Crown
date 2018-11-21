@@ -10,7 +10,7 @@ import javax.validation.constraints.Pattern;
 
 import org.crown.common.framework.model.convert.Convert;
 import org.crown.cons.Regex;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -47,7 +47,7 @@ public class UserPARM extends Convert {
     private String phone;
     @NotNull(groups = Status.class, message = "用户状态不能为空")
     @ApiModelProperty(notes = "状态:0：禁用 1：正常")
-    private UserStatusEnum status;
+    private StatusEnum status;
     @ApiModelProperty(notes = "用户角色ID")
     @NotEmpty(groups = {Create.class, Update.class}, message = "用户角色不能为空")
     private List<Integer> roleIds;

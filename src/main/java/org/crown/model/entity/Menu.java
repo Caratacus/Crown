@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.BaseModel;
 import org.crown.emuns.MenuTypeEnum;
+import org.crown.emuns.StatusEnum;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -53,7 +54,10 @@ public class Menu extends BaseModel {
      * 菜单图标
      */
     private String icon;
-
+    /**
+     * 状态 0：禁用 1：正常
+     */
+    private StatusEnum status;
     /**
      * 创建者ID
      */

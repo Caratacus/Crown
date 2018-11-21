@@ -11,7 +11,7 @@ import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.controller.SuperController;
 import org.crown.common.kit.TypeUtils;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
@@ -69,7 +69,7 @@ public class UserRestController extends SuperController {
     @GetMapping
     public ApiResponses<IPage<UserDTO>> page(@RequestParam(value = "loginName", required = false) String loginName,
                                              @RequestParam(value = "nickname", required = false) String nickname,
-                                             @RequestParam(value = "status", required = false) UserStatusEnum status) {
+                                             @RequestParam(value = "status", required = false) StatusEnum status) {
         IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
@@ -114,7 +114,7 @@ public class UserRestController extends SuperController {
             user.setPassword(Md5Crypt.apr1Crypt(user.getLoginName(), user.getLoginName()));
         }
         //默认禁用
-        user.setStatus(UserStatusEnum.DISABLE);
+        user.setStatus(StatusEnum.DISABLE);
         userService.save(user);
         userService.saveUserRoles(user.getId(), userPARM.getRoleIds());
         return empty();

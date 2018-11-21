@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.crown.common.framework.model.convert.Convert;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -40,7 +40,7 @@ public class UserDTO extends Convert {
     @ApiModelProperty(notes = "IP地址")
     private String ip;
     @ApiModelProperty(notes = "状态:0：禁用 1：正常")
-    private UserStatusEnum status;
+    private StatusEnum status;
     @ApiModelProperty(notes = "创建时间")
     private LocalDateTime createTime;
     @ApiModelProperty(notes = "修改时间")

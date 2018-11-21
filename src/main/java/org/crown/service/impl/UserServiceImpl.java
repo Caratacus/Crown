@@ -9,7 +9,7 @@ import org.crown.common.api.ApiAssert;
 import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
 import org.crown.common.kit.JWTTokenUtils;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 import org.crown.mapper.UserMapper;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;
@@ -49,7 +49,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         //用户名密码错误
         ApiAssert.isTrue(ErrorCodeEnum.USERNAME_OR_PASSWORD_IS_WRONG, Md5Crypt.apr1Crypt(password, loginName).equals(user.getPassword()));
         //用户被禁用
-        ApiAssert.isTrue(ErrorCodeEnum.USER_IS_DISABLED, UserStatusEnum.NORMAL.equals(user.getStatus()));
+        ApiAssert.isTrue(ErrorCodeEnum.USER_IS_DISABLED, StatusEnum.NORMAL.equals(user.getStatus()));
         user.setIp(ipAddr);
         updateById(user);
         return user;
@@ -95,7 +95,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     @Transactional
-    public void updateStatus(Integer uid, UserStatusEnum status) {
+    public void updateStatus(Integer uid, StatusEnum status) {
         User user = getById(uid);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         user.setStatus(status);

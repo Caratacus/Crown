@@ -3,7 +3,7 @@ package org.crown.model.entity;
 import java.time.LocalDateTime;
 
 import org.crown.common.framework.model.convert.Convert;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -64,7 +64,7 @@ public class User extends Convert {
     /**
      * 状态 0：禁用 1：正常
      */
-    private UserStatusEnum status;
+    private StatusEnum status;
 
     /**
      * 创建者ID

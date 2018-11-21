@@ -18,9 +18,9 @@
         <script type="text/html" id="menu-toolbar">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>添加</button>
-                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expand"><i class="layui-icon">&#xe6b1;</i>全部展开
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expandAll"><i class="layui-icon">&#xe6b1;</i>全部展开
                 </button>
-                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="fold"><i
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="foldAll"><i
                         class="layui-icon">&#xe656;</i>全部折叠
                 </button>
             </div>
@@ -30,10 +30,15 @@
     </div>
 </div>
 
-<!-- 表格状态列 -->
-<script type="text/html" id="auth-state">
-    <input type="checkbox" lay-filter="auth-state" value="{{d.authority}}" lay-skin="switch" lay-text="ON|OFF"
-           {{d.checked==1?'checked':''}}/>
+<script type="text/html" id="menu-tpl-status">
+    <input type="checkbox" lay-filter="menu-tpl-status" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|禁用" {{d.status==0?'checked':''}}/>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="menu-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 <script>
@@ -45,7 +50,6 @@
         var crown = layui.crown;
         var treetable = layui.treetable;
         var tableId = '#menu-table';
-
         // 渲染表格
         var renderTable = function () {
             treetable.render({
@@ -57,23 +61,6 @@
                 treeDefaultClose: true,
                 toolbar: '#menu-toolbar',
                 url: config.serverUrl + '/menu',
-                /*cols: [[
-                    {type: 'numbers'},
-                    {field: 'name', title: '名称', width: 200},
-                    {
-                        field: 'icon', title: '图标', width: 60, align: 'center'
-                        , templet: function (d) {
-                            return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
-                        }
-                    },
-                    {field: 'code', title: '编码', width: 120},
-                    {field: 'uri', title: 'URI', width: 120},
-                    {field: 'path', title: '资源路径'},
-                    {field: 'sort', title: '排序', width: 60},
-                    {field: 'status', templet: '#resource-tpl-status', title: '状态', width: 100},
-                    {field: 'createTime', title: '创建时间', sort: true, width: 150},
-                    {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
-                ]]*/
                 cols: [[
                     {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
                     {field: 'menuName', align: 'center', sort: true, title: '菜单名称'},
@@ -97,9 +84,10 @@
                             }
                         }, title: '类型'
                     },
+                    {field: 'status', align: 'center', templet: '#menu-tpl-status', title: '状态', width: 100},
                     {field: 'createTime', align: 'center', sort: true, width: 170, title: '创建时间'},
                     {field: 'updateTime', align: 'center', sort: true, width: 170, title: '修改时间'},
-                    {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
+                    {fixed: 'right', align: 'center', toolbar: '#menu-table-bar', title: '操作'}
                 ]]
             });
         };
@@ -109,75 +97,52 @@
         table.on('toolbar(menu-table)', function (obj) {
             if (obj.event === 'add') {
                 showEditModel();
-            } else if (obj.event === 'expand') {
+            } else if (obj.event === 'expandAll') {
                 treetable.expandAll(tableId);
-            } else if (obj.event === 'fold') {
+            } else if (obj.event === 'foldAll') {
                 treetable.foldAll(tableId);
             }
         });
 
-        // 角色切换事件
-        form.on('select(auth-slt-role)', function (data) {
-            table.reload('menu-table', {where: {roleId: data.value}});
-        });
-
-        // 同步按钮点击事件
-        $('#auth-btn-sync').click(function () {
-            layer.confirm('确定进行同步？', {
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                layer.load(2);
-                /*   $.get(config.serverUrl + 'v2/api-docs', function (data) {
-                       crown.post('authorities/sync', {
-                           json: JSON.stringify(data)
-                       }, function (data) {
-                           layer.closeAll('loading');
-                           if (200 == data.code) {
-                               layer.msg(data.msg, {icon: 1});
-                               table.reload('menu-table');
-                           } else {
-                               layer.msg(data.msg, {icon: 2});
-                           }
-                       });
-                   });*/
-            });
-        });
-
-        // 获取角色
-        //crown.showLoading('.toolbar');
-        /*     crown.get('role', {}, function (data) {
-                 //crown.removeLoading('.toolbar');
-                 if (0 == data.code) {
-                     $('#auth-slt-role').vm({roles: data.data});
-                     form.render('select');
-                 } else {
-                     layer.msg('获取角色失败', {icon: 2});
-                 }
-             });*/
-
-        // 监听状态开关操作
-        form.on('switch(auth-state)', function (obj) {
-            var roleId = $('#auth-slt-role').val();
-            if (!roleId) {
-                layer.msg('请选择角色再进行授权操作', {icon: 2});
-                $(obj.elem).prop('checked', !obj.elem.checked);
-                form.render('checkbox');
-                return;
+        // 工具条点击事件
+        table.on('tool(menu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'edit') {
+                showEditModel(data);
+            } else if (obj.event === 'del') {
+                layer.confirm('确定删除该记录吗？', function () {
+                    treetable.reload('menu-table', {});
+                    // ant.deleteRow(obj, '/sys/resource/' + obj.data.id);
+                });
             }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            /*if (data) {
+                crown.get('/user/' + data.id, {}, function (data) {
+                    crown.putTempData('t_user', data.result);
+                }, false);
+            }*/
+            crown.popupCenter({
+                title: data ? '修改用户' : '添加用户',
+                path: 'components/system/user_form.html',
+                finish: function () {
+                    treetable.reload('menu-table', {});
+                }
+            });
+        };
+
+        // 修改状态
+        form.on('switch(menu-tpl-status)', function (obj) {
             layer.load(2);
-            /*     crown.post('authorities/role', {
-                     roleId: roleId,
-                     authId: obj.value
-                 }, function (data) {
-                     layer.closeAll('loading');
-                     if (data.code == 200) {
-                         layer.msg(data.msg, {icon: 1});
-                     } else {
-                         layer.msg(data.msg, {icon: 2});
-                         $(obj.elem).prop('checked', !obj.elem.checked);
-                         form.render('checkbox');
-                     }
-                 });*/
+            crown.put('/user/' + obj.elem.value + '/status', {
+                status: obj.elem.checked ? 0 : 1
+            }, function () {
+                layer.closeAll('loading');
+                layer.msg('用户状态更新成功', {icon: 1});
+            });
         });
     });
 </script>

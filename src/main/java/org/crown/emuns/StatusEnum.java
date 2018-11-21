@@ -7,19 +7,19 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * <p>
- * 用户状态枚举
+ * 状态枚举
  * </p>
  *
  * @author Caratacus
  */
-public enum UserStatusEnum implements IEnum {
+public enum StatusEnum implements IEnum {
 
     NORMAL(0), DISABLE(1);
 
     @EnumValue
     private final int value;
 
-    UserStatusEnum(final int value) {
+    StatusEnum(final int value) {
         this.value = value;
     }
 

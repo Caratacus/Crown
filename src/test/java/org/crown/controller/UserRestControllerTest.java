@@ -3,7 +3,7 @@ package org.crown.controller;
 import java.util.Collections;
 
 import org.crown.common.kit.JacksonUtils;
-import org.crown.emuns.UserStatusEnum;
+import org.crown.emuns.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
@@ -114,7 +114,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void updateStatus() throws Exception {
         UserPARM userPARM = new UserPARM();
-        userPARM.setStatus(UserStatusEnum.NORMAL);
+        userPARM.setStatus(StatusEnum.NORMAL);
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/" + token.getUid() + "/status")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -132,7 +132,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setNickname("222");
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
-        userPARM.setStatus(UserStatusEnum.DISABLE);
+        userPARM.setStatus(StatusEnum.DISABLE);
         userPARM.setRoleIds(Collections.singletonList(1));
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/user")
@@ -152,7 +152,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setNickname("222");
         userPARM.setEmail("11@qq.com");
         userPARM.setPhone("13617828937");
-        userPARM.setStatus(UserStatusEnum.DISABLE);
+        userPARM.setStatus(StatusEnum.DISABLE);
         userPARM.setRoleIds(Collections.singletonList(1));
         mockMvc.perform(
                 MockMvcRequestBuilders.put("/user/1")
