@@ -23,13 +23,9 @@ public enum UserStatusEnum implements IEnum {
         this.value = value;
     }
 
-    @JsonValue
-    public int value() {
-        return this.value;
-    }
-
     @Override
+    @JsonValue
     public int getValue() {
-        return value();
+        return this.value;
     }
 }

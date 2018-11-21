@@ -62,13 +62,13 @@
             response: config.response,
             page: true,
             cols: [[
-                {field: 'id', title: 'ID'},
-                {field: 'loginName', sort: true, title: '账号'},
-                {field: 'nickname', sort: true, title: '用户名'},
-                {field: 'phone', sort: true, title: '手机号'},
-                {field: 'email', sort: true, title: '邮箱'},
-                {field: 'createTime', sort: true, title: '创建时间'},
-                {field: 'status', sort: true, templet: '#user-tpl-status', title: '状态'},
+                {field: 'id', width: 60, title: 'ID'},
+                {field: 'loginName', align: 'center', sort: true, title: '账号'},
+                {field: 'nickname', align: 'center', sort: true, title: '用户名'},
+                {field: 'phone', align: 'center', sort: true, title: '手机号'},
+                {field: 'email', align: 'center', sort: true, title: '邮箱'},
+                {field: 'createTime', align: 'center', sort: true, title: '创建时间'},
+                {field: 'status', align: 'center', sort: true, templet: '#user-tpl-status', title: '状态'},
                 {align: 'center', toolbar: '#user-table-bar', title: '操作'}
             ]]
         });

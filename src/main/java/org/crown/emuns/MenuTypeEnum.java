@@ -17,15 +17,15 @@ public enum MenuTypeEnum implements IEnum {
     /**
      * 目录
      */
-    CATALOG(0),
+    CATALOG(1),
     /**
      * 菜单
      */
-    MENU(1),
+    MENU(2),
     /**
      * 按钮
      */
-    BUTTON(2);
+    BUTTON(3);
 
     @EnumValue
     private final int value;
@@ -34,13 +34,9 @@ public enum MenuTypeEnum implements IEnum {
         this.value = value;
     }
 
-    @JsonValue
-    public int value() {
-        return this.value;
-    }
-
     @Override
+    @JsonValue
     public int getValue() {
-        return value();
+        return this.value;
     }
 }

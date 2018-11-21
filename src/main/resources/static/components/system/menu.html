@@ -13,13 +13,20 @@
                 <option value="">-请选择角色-</option>
                 <option p-for="roles" p-bind="value:{{roleId}}">{{roleName}}</option>
             </select>&emsp;
-            <button id="auth-btn-sync" class="layui-btn icon-btn" lay-tips="自动扫描所有接口同步到数据库">
-                <i class="layui-icon">&#xe669;</i>同步
-            </button>
-        </div>
 
+        </div>
+        <script type="text/html" id="menu-toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>添加</button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expand"><i class="layui-icon">&#xe6b1;</i>全部展开
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="fold"><i
+                        class="layui-icon">&#xe656;</i>全部折叠
+                </button>
+            </div>
+        </script>
         <!-- 数据表格 -->
-        <table class="layui-table" id="auth-table" lay-filter="auth-table"></table>
+        <table class="layui-table" id="menu-table" lay-filter="menu-table"></table>
     </div>
 </div>
 
@@ -37,17 +44,18 @@
         var layer = layui.layer;
         var crown = layui.crown;
         var treetable = layui.treetable;
-
+        var tableId = '#menu-table';
 
         // 渲染表格
         var renderTable = function () {
             treetable.render({
+                elem: tableId,
                 treeColIndex: 1,
                 treeSpid: 0,
                 treeIdName: 'id',
                 treePidName: 'parentId',
                 treeDefaultClose: true,
-                elem: '#auth-table',
+                toolbar: '#menu-toolbar',
                 url: config.serverUrl + '/menu',
                 /*cols: [[
                     {type: 'numbers'},
@@ -67,21 +75,21 @@
                     {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
                 ]]*/
                 cols: [[
-                    {field: 'id', sort: true, title: 'ID'},
-                    {field: 'menuName', sort: true, title: '菜单名称'},
+                    {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
+                    {field: 'menuName', align: 'center', sort: true, title: '菜单名称'},
                     {
-                        field: 'icon', title: '图标', width: 60, align: 'center'
+                        field: 'icon', title: '图标', align: 'center'
                         , templet: function (d) {
                             return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
                         }
                     },
-                    {field: 'path', sort: true, title: '菜单路径'},
+                    {field: 'path', align: 'center', sort: true, title: '菜单路径'},
                     {
                         minWidth: 80, align: 'center', templet: function (d) {
                             if (d.menuType === 1) {
-                                return '<span class="layui-badge layui-bg-gray">菜单</span>';
+                                return '<span class="layui-badge layui-bg-gray">目录</span>';
                             } else if (d.menuType === 2) {
-                                return '<span class="layui-badge layui-bg-blue">目录</span>';
+                                return '<span class="layui-badge layui-bg-blue">菜单</span>';
                             } else if (d.menuType === 3) {
                                 return '<span class="layui-badge layui-badge-rim">按钮</span>';
                             } else {
@@ -89,18 +97,28 @@
                             }
                         }, title: '类型'
                     },
-                    {field: 'createTime', sort: true, title: '创建时间'},
-                    {field: 'updateTime', sort: true, title: '修改时间'},
+                    {field: 'createTime', align: 'center', sort: true, width: 170, title: '创建时间'},
+                    {field: 'updateTime', align: 'center', sort: true, width: 170, title: '修改时间'},
                     {fixed: 'right', align: 'center', toolbar: '#resource-table-bar', title: '操作', width: 120}
                 ]]
             });
         };
         renderTable();
 
+        // 表格顶部操作列
+        table.on('toolbar(menu-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            } else if (obj.event === 'expand') {
+                treetable.expandAll(tableId);
+            } else if (obj.event === 'fold') {
+                treetable.foldAll(tableId);
+            }
+        });
 
         // 角色切换事件
         form.on('select(auth-slt-role)', function (data) {
-            table.reload('auth-table', {where: {roleId: data.value}});
+            table.reload('menu-table', {where: {roleId: data.value}});
         });
 
         // 同步按钮点击事件
@@ -116,7 +134,7 @@
                            layer.closeAll('loading');
                            if (200 == data.code) {
                                layer.msg(data.msg, {icon: 1});
-                               table.reload('auth-table');
+                               table.reload('menu-table');
                            } else {
                                layer.msg(data.msg, {icon: 2});
                            }
