@@ -50,13 +50,12 @@ public class AccountRestController extends SuperController {
         return success(tokenDTO);
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("清理Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {
         return empty();
     }
-
 
     @Resources
     @ApiOperation("修改密码")

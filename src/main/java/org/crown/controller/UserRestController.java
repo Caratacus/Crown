@@ -59,7 +59,7 @@ public class UserRestController extends SuperController {
     @Autowired
     private IUserRoleService userRoleService;
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("查询所有用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
@@ -74,7 +74,7 @@ public class UserRestController extends SuperController {
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("查询单个用户")
     @GetMapping("/{id}")
     public ApiResponses<UserDTO> get(@PathVariable("id") Integer id) {
@@ -86,7 +86,7 @@ public class UserRestController extends SuperController {
         return success(userDTO);
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("重置用户密码")
     @PutMapping("/{id}/password/reset")
     public ApiResponses<Void> resetPwd(@PathVariable("id") Integer id) {
@@ -102,7 +102,7 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("创建用户")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
@@ -132,7 +132,7 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation("获取用户详情")
     @GetMapping("/details")
     public ApiResponses<UserDetailsDTO> getUserDetails() {

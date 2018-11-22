@@ -34,7 +34,7 @@ public class MenuRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
     public ApiResponses<List<Menu>> list() {

@@ -61,6 +61,10 @@ public enum ErrorCodeEnum {
      * 503
      */
     SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "请求超时"),
+    /**
+     * 演示系统，无法该操作
+     */
+    DEMO_SYSTEM_CANNOT_DO(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "演示系统，无法该操作"),
     //----------------------------------------------------业务异常----------------------------------------------------
     /**
      * 用户名密码错误

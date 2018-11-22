@@ -47,7 +47,7 @@ public class RoleRestController extends SuperController {
     @Autowired
     private IRoleService roleService;
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation(value = "查询所有角色(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
@@ -58,14 +58,14 @@ public class RoleRestController extends SuperController {
         return success(page);
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation(value = "查询所有角色")
     @GetMapping("/roles")
     public ApiResponses<List<Role>> list() {
         return success(roleService.list());
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation(value = "查询当个角色")
     @GetMapping("/{id}")
     public ApiResponses<Role> get(@PathVariable("id") Integer id) {
@@ -73,7 +73,7 @@ public class RoleRestController extends SuperController {
         return success(role);
     }
 
-    @Resources
+    @Resources(verify = false)
     @ApiOperation(value = "添加角色")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {
@@ -81,6 +81,7 @@ public class RoleRestController extends SuperController {
         return empty();
     }
 
+    @Resources
     @ApiOperation(value = "修改角色")
     @PutMapping("/{id}")
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(RolePARM.Update.class) RolePARM rolePARM) {
@@ -90,6 +91,7 @@ public class RoleRestController extends SuperController {
         return empty();
     }
 
+    @Resources
     @ApiOperation(value = "删除角色")
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
