@@ -37,6 +37,26 @@
 
 <br>
 
+-----------------------------------------------------------------------------------------------
+
+##### Development Tools :checkered_flag:
+<sup>
+<sup>1</sup> JDK1.8+ <br/>
+<sup>2</sup> MySQL5.7+ <br/>
+<sup>3</sup> Gradle4.10+ <br/>
+</sup>
+<br>
+
+-----------------------------------------------------------------------------------------------
+##### Start :dog:
+<sup>
+<sup>1</sup> 准备好上述基本环境 <br/>
+<sup>2</sup> 导入crown.sql文件(src/test/resources/sql/crown.sql) <br/>
+<sup>3</sup> 启动CrownApplication.java <br/>
+<sup>4</sup> 访问http://localhost:8088 <br/>
+</sup>
+<br>
+<br>
 
 -----------------------------------------------------------------------------------------------
 
@@ -51,16 +71,6 @@
 <sup>7</sup> 各项配置调制最优，再也不需要担心默认值性能问题 <br/>
 <sup>8</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
 <sup>N</sup> 更多特性持续更新 <br/>
-</sup>
-<br>
-
------------------------------------------------------------------------------------------------
-
-##### Development Tools :checkered_flag:
-<sup>
-<sup>1</sup> JDK1.8+ <br/>
-<sup>2</sup> MySQL5.7+ <br/>
-<sup>3</sup> Gradle4.10+ <br/>
 </sup>
 <br>
 
