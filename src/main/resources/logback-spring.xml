@@ -62,8 +62,8 @@
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
-    <logger name="org.crown" level="DEBUG"/>
-    <logger name="org.crown.mapper" level="INFO"/>
+    <logger name="org.crown" level="INFO"/>
+    <logger name="org.crown.mapper" level="DEBUG"/>
     <!-- 日志输出级别 -->
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>
