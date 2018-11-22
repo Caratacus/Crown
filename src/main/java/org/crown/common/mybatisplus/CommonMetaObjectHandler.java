@@ -65,7 +65,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
      * @param fieldFill
      * @return
      */
-    public void setFieldValByName(String fieldName, Object fieldVal, MetaObject metaObject, FieldFill fieldFill) {
+    public MetaObjectHandler setFieldValByName(String fieldName, Object fieldVal, MetaObject metaObject, FieldFill fieldFill) {
         if (Objects.nonNull(fieldVal)) {
             if (metaObject.hasSetter(fieldName) && metaObject.hasGetter(fieldName) && isFill(fieldName, metaObject, fieldFill)) {
                 metaObject.setValue(fieldName, fieldVal);
@@ -79,6 +79,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
                 }
             }
         }
+        return this;
     }
 
     /**
