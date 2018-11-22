@@ -60,6 +60,16 @@
 <br>
 
 -----------------------------------------------------------------------------------------------
+##### Show :palm_tree:
+
+![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/login.jpg)
+<br>
+![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
+<br>
+![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
+<br>
+
+-----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
 <sup>
 <sup>1</sup> 标准的Restful风格，完美的标准化API <br/>
@@ -90,16 +100,6 @@
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 <br>
-
------------------------------------------------------------------------------------------------
-##### Show :palm_tree:
-
-  ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/login.jpg)
-  <br>
-  ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
-  <br>
-  ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
-  <br>
 
 -----------------------------------------------------------------------------------------------
 ##### [Lombok](http://projectlombok.org/) FAQ :mushroom:
