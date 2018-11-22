@@ -23,7 +23,6 @@
         <img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
     </p>  
 </p>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### Intro :cat:
@@ -36,9 +35,6 @@
 
 > **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
 
-
-<br>
-
 -----------------------------------------------------------------------------------------------
 ##### Development Tools :checkered_flag:
 <sup>
@@ -46,7 +42,6 @@
 <sup>2</sup> MySQL5.7+ <br/>
 <sup>3</sup> Gradle4.10+ <br/>
 </sup>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### Start :dog:
@@ -56,8 +51,6 @@
 <sup>3</sup> 启动CrownApplication.java <br/>
 <sup>4</sup> 访问http://localhost:8088 <br/>
 </sup>
-<br>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### Show :palm_tree:
@@ -67,7 +60,6 @@
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
 <br>
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
@@ -82,7 +74,6 @@
 <sup>8</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
 <sup>N</sup> 更多特性持续更新 <br/>
 </sup>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### Frameworks :microscope:
@@ -99,7 +90,6 @@
 <sup>10</sup> 日志: SLF4J、Logback <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### [Lombok](http://projectlombok.org/) FAQ :mushroom:
@@ -117,13 +107,11 @@
 <sup>
     答：上图所示，IDEA下载Lombok插件并开启注解编译支持
 </sup>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
 
    The Corwn is released under of the [Mit License](https://mit-license.org). <br/>
-<br>
 
 -----------------------------------------------------------------------------------------------
 ##### 有事烧钱 :octocat:
