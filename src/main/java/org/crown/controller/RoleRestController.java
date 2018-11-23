@@ -86,7 +86,10 @@ public class RoleRestController extends SuperController {
     }
 
     @Resources(verify = false)
-    @ApiOperation(value = "查询当个角色")
+    @ApiOperation(value = "查询单个角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
+    })
     @GetMapping("/{id}")
     public ApiResponses<Role> get(@PathVariable("id") Integer id) {
         Role role = roleService.getById(id);
@@ -103,6 +106,9 @@ public class RoleRestController extends SuperController {
 
     @Resources
     @ApiOperation(value = "修改角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
+    })
     @PutMapping("/{id}")
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(RolePARM.Update.class) RolePARM rolePARM) {
         Role role = rolePARM.convert(Role.class);
@@ -113,6 +119,9 @@ public class RoleRestController extends SuperController {
 
     @Resources
     @ApiOperation(value = "删除角色")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
+    })
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
         roleService.removeById(id);

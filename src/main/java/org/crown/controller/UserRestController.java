@@ -41,7 +41,6 @@ import org.crown.service.IUserRoleService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -95,6 +94,9 @@ public class UserRestController extends SuperController {
 
     @Resources(verify = false)
     @ApiOperation("查询单个用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+    })
     @GetMapping("/{id}")
     public ApiResponses<UserDTO> get(@PathVariable("id") Integer id) {
         User user = userService.getById(id);
@@ -107,6 +109,9 @@ public class UserRestController extends SuperController {
 
     @Resources(verify = false)
     @ApiOperation("重置用户密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+    })
     @PutMapping("/{id}/password/reset")
     public ApiResponses<Void> resetPwd(@PathVariable("id") Integer id) {
         userService.resetPwd(id);
@@ -115,6 +120,9 @@ public class UserRestController extends SuperController {
 
     @Resources
     @ApiOperation("设置用户状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+    })
     @PutMapping("/{id}/status")
     public ApiResponses<Void> updateStatus(@PathVariable("id") Integer id, @RequestBody @Validated(UserPARM.Status.class) UserPARM userPARM) {
         userService.updateStatus(id, userPARM.getStatus());
@@ -141,8 +149,10 @@ public class UserRestController extends SuperController {
 
     @Resources
     @ApiOperation("修改用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
+    })
     @PutMapping("/{id}")
-    @Transactional
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(UserPARM.Update.class) UserPARM userPARM) {
         User user = userPARM.convert(User.class);
         user.setId(id);

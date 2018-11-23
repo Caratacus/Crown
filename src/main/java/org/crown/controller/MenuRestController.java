@@ -30,11 +30,18 @@ import org.crown.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -59,6 +66,48 @@ public class MenuRestController extends SuperController {
     @GetMapping
     public ApiResponses<List<Menu>> list() {
         return success(menuService.list());
+    }
+
+    @Resources(verify = false)
+    @ApiOperation(value = "查询单个菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
+    })
+    @GetMapping("/{id}")
+    public ApiResponses<Menu> get(@PathVariable("id") Integer id) {
+        Menu menu = menuService.getById(id);
+        return success(menu);
+    }
+
+    @Resources
+    @ApiOperation(value = "添加菜单")
+    @PostMapping
+    public ApiResponses<Void> create(@RequestBody @Validated Menu menu) {
+        menuService.save(menu);
+        return empty();
+    }
+
+    @Resources
+    @ApiOperation(value = "修改菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
+    })
+    @PutMapping("/{id}")
+    public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated Menu menu) {
+        menu.setId(id);
+        menuService.updateById(menu);
+        return empty();
+    }
+
+    @Resources
+    @ApiOperation(value = "删除菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
+    })
+    @DeleteMapping("/{id}")
+    public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
+        menuService.removeById(id);
+        return empty();
     }
 
 }
