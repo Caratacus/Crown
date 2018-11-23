@@ -87,7 +87,7 @@
 <sup>7</sup> JSON转换: Jackson <br/>
 <sup>8</sup> 接口文档: Swagger <br/>
 <sup>9</sup> 基础工具类: ApacheCommons、VjTools <br/>
-<sup>10</sup> 日志: SLF4J、Logback <br/>
+<sup>10</sup> 日志: SLF4J、Async Log4j2 <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 
