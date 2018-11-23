@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出。-->
+<!--monitorInterval：Log4j2能够自动检测修改配置 文件和重新配置本身，设置间隔秒数。-->
+<Configuration status="off" monitorInterval="600">
+    <properties>
+        <!--通用变量-->
+        <property name="LOG_HOME" value="logs"/>
+        <property name="ERROR_LOG_FILE_NAME" value="error"/>
+        <property name="INFO_LOG_FILE_NAME" value="info"/>
+        <Property name="PID">????</Property>
+        <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
+        <Property name="LOG_LEVEL_PATTERN">%5p</Property>
+        <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{${LOG_LEVEL_PATTERN}} %clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint}
+            %clr{${sys:PID}}{magenta} %clr{%F:%L}{cyan} %clr{-}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
+        </Property>
+        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %F:%L - %m%n"/>
+    </properties>
+    <Appenders>
+        <!--console-->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <Filters>
+                <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <!--输出日志的格式-->
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+        <RollingRandomAccessFile name="ERROR_LOG"
+                                 fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout
+                    pattern="${LOG_PATTERN}"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="128MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="INFO_LOG"
+                                 fileName="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+            <PatternLayout
+                    pattern="${LOG_PATTERN}"/>
+            <Filters>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="128MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <!--AsyncLogger-->
+        <AsyncLogger name="org.crown" level="info" includeLocation="true"/>
+        <AsyncLogger name="org.crown.common.p6spy" level="debug" includeLocation="true"/>
+        <!--AsyncRoot-->
+        <AsyncRoot level="warn" includeLocation="true">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="INFO_LOG"/>
+            <appender-ref ref="ERROR_LOG"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

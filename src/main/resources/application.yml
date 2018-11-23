@@ -1,5 +1,5 @@
 logging:
-  config: classpath:logback-spring.xml
+  config: classpath:log4j2.xml
 mybatis-plus:
   global-config:
     db-config:
