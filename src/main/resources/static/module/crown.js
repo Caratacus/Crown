@@ -146,7 +146,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 type: method,
                 contentType: contentType,
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: false
                 },
                 async: async !== false,
                 crossDomain: true,

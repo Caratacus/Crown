@@ -49,7 +49,7 @@ public abstract class JWTTokenUtils {
     public static final String _ID = "id";
     public static final String _USERNAME = "un";
     private static final String SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTMZPZNMDJu3k";
-    private static final long expire = 7 * 24 * 60 * 60 * 1000;
+    private static final long expire = 60 * 60 * 1000;
 
     /**
      * 生成token
