@@ -63,15 +63,14 @@
         layer.load(2);
         crown.get('/menu/combos', {}, function (data) {
             $('#parentId').vm({parents: data.result});
+            form.render('select');
             // 回显menu数据
             var menu = crown.getTempData('t_menu');
             if (menu) {
                 crown.fromVal('menu-form', menu);
                 iconPicker.checkIcon('icon', menu.icon);
             } else {
-                form.render();
                 iconPicker.checkIcon('icon', 'layui-icon-rate-half');
-
             }
             layer.closeAll('loading');
         });
@@ -110,6 +109,6 @@
             click: function (data) {
             }
         });
-        form.render('select');
+        form.render();
     });
 </script>
