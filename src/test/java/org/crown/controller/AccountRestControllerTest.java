@@ -21,7 +21,6 @@
 package org.crown.controller;
 
 import org.crown.common.api.model.responses.SuccessResponses;
-import org.crown.common.kit.JacksonUtils;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
@@ -30,11 +29,7 @@ import org.crown.model.parm.PasswordPARM;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -61,37 +56,23 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
 
     @Test
     public void getToken() throws Exception {
+        //登陆
         LoginPARM loginPARM = new LoginPARM();
         loginPARM.setLoginName("crown");
         loginPARM.setPassword("crown");
-        String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.post("/account/token")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JacksonUtils.toJson(loginPARM)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        SuccessResponses<TokenDTO> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<TokenDTO>>() {
+        TokenDTO tokenDTO = getResponseModel(mockMvc, post("/account/token", null, loginPARM), new TypeReference<SuccessResponses<TokenDTO>>() {
         });
+
         //updatePassword
         PasswordPARM passwordPARM = new PasswordPARM();
         passwordPARM.setOldPassword("crown");
         passwordPARM.setNewPassword("crown");
-        mockMvc.perform(
-                MockMvcRequestBuilders
-                        .put("/account/password")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + responses.getResult().getToken())
-                        .content(JacksonUtils.toJson(passwordPARM)))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        responseOk(mockMvc, put("/account/password", tokenDTO.getToken(), passwordPARM));
     }
 
     @Test
     public void removeToken() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.delete("/account/token"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+        responseOk(mockMvc, delete("/account/token", null));
     }
 
 }

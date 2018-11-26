@@ -23,7 +23,6 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.api.model.responses.SuccessResponses;
-import org.crown.common.kit.JacksonUtils;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
@@ -33,11 +32,7 @@ import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -69,62 +64,25 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void tests() throws Exception {
         //测试获取所有(分页)
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/role")
-                        .header("Authorization", "Bearer " + token.getToken())
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-        //测试获取所有
-        String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.get("/role/roles")
-                        .header("Authorization", "Bearer " + token.getToken())
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        SuccessResponses<List<Role>> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<List<Role>>>() {
-        });
+        responseOk(mockMvc, get("/role", token.getToken()));
         //添加测试
         RolePARM rolePARM = new RolePARM();
         rolePARM.setRoleName("角色测试");
         rolePARM.setRemark("角色测试");
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/role")
-                        .header("Authorization", "Bearer " + token.getToken())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JacksonUtils.toJson(rolePARM))
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
-
-        List<Role> records = responses.getResult();
+        responseOk(mockMvc, post("/role", token.getToken(), rolePARM));
+        //测试获取所有
+        List<Role> records = getResponseModel(mockMvc, get("/role/roles", token.getToken()), new TypeReference<SuccessResponses<List<Role>>>() {
+        });
         for (Role record : records) {
             //测试获取单个
-            mockMvc.perform(
-                    MockMvcRequestBuilders.get("/role/" + record.getId())
-                            .header("Authorization", "Bearer " + token.getToken())
-            )
-                    .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+            responseOk(mockMvc, get("/role/" + record.getId(), token.getToken()));
             if ("角色测试".equals(record.getRemark())) {
                 //测试修改
                 rolePARM.setRoleName("角色测试PUT");
                 rolePARM.setRemark("角色测试PUT");
-                mockMvc.perform(
-                        MockMvcRequestBuilders.put("/role" + record.getId())
-                                .header("Authorization", "Bearer " + token.getToken())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(JacksonUtils.toJson(rolePARM))
-                )
-                        .andDo(MockMvcResultHandlers.print())
-                        .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+                responseOk(mockMvc, put("/role/" + record.getId(), token.getToken(), rolePARM));
                 //测试删除
-                mockMvc.perform(
-                        MockMvcRequestBuilders.delete("/role" + record.getId())
-                                .header("Authorization", "Bearer " + token.getToken())
-                )
-                        .andDo(MockMvcResultHandlers.print())
-                        .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+                responseOk(mockMvc, delete("/role/" + record.getId(), token.getToken()));
             }
         }
 

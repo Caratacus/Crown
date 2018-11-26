@@ -23,7 +23,6 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.api.model.responses.SuccessResponses;
-import org.crown.common.kit.JacksonUtils;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;
@@ -35,11 +34,7 @@ import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -71,57 +66,25 @@ public class MenuRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void list() throws Exception {
         //测试获取所有
-        String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.get("/menu")
-                        .header("Authorization", "Bearer " + token.getToken())
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        SuccessResponses<List<Menu>> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<List<Menu>>>() {
-        });
-        List<Menu> result = responses.getResult();
+        List<Menu> result = getResponseModel(mockMvc, get("/menu", token.getToken()),
+                new TypeReference<SuccessResponses<List<Menu>>>() {
+                });
         for (Menu menu : result) {
             //获取单个
-            mockMvc.perform(
-                    MockMvcRequestBuilders.get("/menu/" + menu.getId())
-                            .header("Authorization", "Bearer " + token.getToken())
-            )
-                    .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isOk());
+            responseOk(mockMvc, get("/menu/" + menu.getId(), token.getToken()));
             //修改
-            System.out.println(menu.getId());
-            mockMvc.perform(
-                    MockMvcRequestBuilders.put("/menu/" + menu.getId())
-                            .header("Authorization", "Bearer " + token.getToken())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(JacksonUtils.toJson(menu.convert(MenuPARM.class)))
-            )
-                    .andExpect(MockMvcResultMatchers.status().isOk());
+            responseOk(mockMvc, put("/menu/" + menu.getId(), token.getToken(), menu.convert(MenuPARM.class)));
             //修改状态
             MenuPARM menuPARM = new MenuPARM();
             menuPARM.setStatus(StatusEnum.NORMAL);
-            mockMvc.perform(
-                    MockMvcRequestBuilders.put("/menu/" + menu.getId() + "/status")
-                            .header("Authorization", "Bearer " + token.getToken())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(JacksonUtils.toJson(menuPARM))
-            )
-                    .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isOk());
-
+            responseOk(mockMvc, put("/menu/" + menu.getId() + "/status", token.getToken(), menuPARM));
         }
 
     }
 
     @Test
     public void combos() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/menu/combos")
-                        .header("Authorization", "Bearer " + token.getToken())
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
+        responseOk(mockMvc, get("/menu/combos", token.getToken()));
     }
 
 
@@ -134,34 +97,13 @@ public class MenuRestControllerTest extends SuperRestControllerTest implements C
         menuPARM.setMenuType(MenuTypeEnum.MENU);
         menuPARM.setIcon("icon");
         menuPARM.setStatus(StatusEnum.NORMAL);
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/menu")
-                        .header("Authorization", "Bearer " + token.getToken())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(JacksonUtils.toJson(menuPARM))
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
+        responseOk(mockMvc, post("/menu", token.getToken(), menuPARM));
         //测试获取所有
-        String responseString = mockMvc.perform(
-                MockMvcRequestBuilders.get("/menu")
-                        .header("Authorization", "Bearer " + token.getToken())
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
-        SuccessResponses<List<Menu>> responses = JacksonUtils.readValue(responseString, new TypeReference<SuccessResponses<List<Menu>>>() {
-        });
-        List<Menu> result = responses.getResult();
+        List<Menu> result = getResponseModel(mockMvc, get("/menu", token.getToken()),
+                new TypeReference<SuccessResponses<List<Menu>>>() {
+                });
         for (Menu menu : result) {
-
-            //删除
-            mockMvc.perform(
-                    MockMvcRequestBuilders.delete("/menu/" + menu.getId())
-                            .header("Authorization", "Bearer " + token.getToken())
-            )
-                    .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().isOk());
+            responseOk(mockMvc, delete("/menu/" + menu.getId(), token.getToken()));
         }
 
     }
