@@ -105,6 +105,10 @@ public enum ErrorCodeEnum {
      * 用户名已存在
      */
     USERNAME_ALREADY_EXISTS(HttpServletResponse.SC_BAD_REQUEST, true, "用户名已存在"),
+    /**
+     * 未找到该菜单
+     */
+    MENU_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "未找到该菜单"),
 
     ;
 

@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 11/23/2018 10:53:01 AM
+ Date: 11/26/2018 19:55:38 PM
 */
 
 SET NAMES utf8;
@@ -34,13 +34,13 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `status` smallint(2) NOT NULL COMMENT '状态 0：禁用 1：正常',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
 -- ----------------------------
 --  Records of `sys_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES ('1', '0', '测试目录', '/aa', '1', 'layui-icon-app', '1', '2', '2018-11-20 23:29:26', '2018-11-20 23:29:30', '0'), ('2', '1', '测试菜单', '/aa', '2', 'layui-icon-app', '1', '2', '2018-11-20 23:35:10', '2018-11-20 23:35:15', '0'), ('3', '2', '测试按钮', null, '3', 'layui-icon-app', '1', '2', '2018-11-20 23:35:36', '2018-11-20 23:35:39', '0');
+INSERT INTO `sys_menu` VALUES ('1', '0', '测试目录', '/aa', '1', 'layui-icon-auz', '1', '1', '2018-11-20 23:29:26', '2018-11-26 18:49:21', '0'), ('2', '1', '测试菜单', '/aa', '2', 'layui-icon-app', '1', '2', '2018-11-20 23:35:10', '2018-11-20 23:35:15', '0'), ('3', '2', '测试按钮', null, '3', 'layui-icon-app', '1', '2', '2018-11-20 23:35:36', '2018-11-20 23:35:39', '0'), ('4', '3', '1212', '11', '3', 'layui-icon-app', '1', '2', '2018-11-26 12:49:52', '2018-11-26 12:49:55', '0'), ('5', '4', '1212', '11', '3', 'layui-icon-app', '1', '2', '2018-11-26 12:49:52', '2018-11-26 12:49:55', '0'), ('6', '5', '1212', '11', '3', 'layui-icon-app', '1', '2', '2018-11-26 12:49:52', '2018-11-26 12:49:55', '0'), ('7', '6', '1212', '11', '3', 'layui-icon-app', '1', '1', '2018-11-26 12:49:52', '2018-11-26 17:00:23', '0');
 COMMIT;
 
 -- ----------------------------
@@ -88,7 +88,7 @@ CREATE TABLE `sys_role` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `remark` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 -- ----------------------------
 --  Records of `sys_role`
@@ -136,13 +136,13 @@ CREATE TABLE `sys_user` (
   `password` varchar(64) NOT NULL COMMENT '密码',
   `ip` varchar(32) DEFAULT NULL COMMENT 'IP地址',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
 -- ----------------------------
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '2018-11-05 17:19:05', '2018-11-22 14:18:08', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1'), ('18', 'crown1', '11@qq.com', '13718867899', '1', '1', '2018-11-19 18:56:19', '2018-11-19 19:10:49', 'crown1', '$apr1$crown1$NsepppGmlSjqtwPTlaLb1/', null);
+INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '2018-11-05 17:19:05', '2018-11-26 18:48:12', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1'), ('18', 'crown1', '11@qq.com', '13718867899', '1', '1', '2018-11-19 18:56:19', '2018-11-26 10:37:33', 'crown1', '$apr1$crown1$NsepppGmlSjqtwPTlaLb1/', null);
 COMMIT;
 
 -- ----------------------------
@@ -154,7 +154,7 @@ CREATE TABLE `sys_user_role` (
   `uid` int(11) DEFAULT NULL COMMENT '用户ID',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户角色关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户角色关系表';
 
 -- ----------------------------
 --  Records of `sys_user_role`

@@ -22,7 +22,10 @@ package org.crown.service.impl;
 
 import java.util.Objects;
 
+import org.crown.common.api.ApiAssert;
+import org.crown.common.emuns.ErrorCodeEnum;
 import org.crown.common.framework.service.impl.BaseServiceImpl;
+import org.crown.emuns.StatusEnum;
 import org.crown.mapper.MenuMapper;
 import org.crown.model.entity.Menu;
 import org.crown.service.IMenuService;
@@ -54,6 +57,15 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
             removeById(id);
         }
 
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Integer id, StatusEnum status) {
+        Menu menu = getById(id);
+        ApiAssert.notNull(ErrorCodeEnum.MENU_NOT_FOUND, menu);
+        menu.setStatus(status);
+        updateById(menu);
     }
 
     /**

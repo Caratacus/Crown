@@ -21,8 +21,10 @@
 package org.crown.emuns;
 
 import org.crown.common.emuns.IEnum;
+import org.crown.common.exception.UnknownEnumException;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
@@ -58,5 +60,16 @@ public enum MenuTypeEnum implements IEnum {
     @JsonValue
     public int getValue() {
         return this.value;
+    }
+
+
+    @JsonCreator
+    public static MenuTypeEnum getEnum(int value) {
+        for (MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()) {
+            if (menuTypeEnum.getValue() == value) {
+                return menuTypeEnum;
+            }
+        }
+        throw new UnknownEnumException("Error: Invalid MenuTypeEnum type value: " + value);
     }
 }

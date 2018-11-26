@@ -28,6 +28,7 @@ import org.crown.common.framework.controller.SuperController;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.model.dto.ComboDTO;
 import org.crown.model.entity.Menu;
+import org.crown.model.parm.MenuPARM;
 import org.crown.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -75,7 +76,7 @@ public class MenuRestController extends SuperController {
     @Resources(verify = false)
     @ApiOperation(value = "查询父级菜单(下拉框)")
     @GetMapping("/combos")
-    public ApiResponses<List<ComboDTO>> list1() {
+    public ApiResponses<List<ComboDTO>> combos() {
         List<ComboDTO> combos = menuService.entitys(Wrappers.<Menu>query().select(Menu.ID, Menu.MENU_NAME).in(Menu.MENU_TYPE, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU), e -> {
             ComboDTO combo = new ComboDTO();
             combo.setId(e.getId());
@@ -99,7 +100,8 @@ public class MenuRestController extends SuperController {
     @Resources
     @ApiOperation(value = "添加菜单")
     @PostMapping
-    public ApiResponses<Void> create(@RequestBody @Validated Menu menu) {
+    public ApiResponses<Void> create(@RequestBody @Validated(MenuPARM.Create.class) MenuPARM menuPARM) {
+        Menu menu = menuPARM.convert(Menu.class);
         menuService.save(menu);
         return empty();
     }
@@ -110,7 +112,8 @@ public class MenuRestController extends SuperController {
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
     })
     @PutMapping("/{id}")
-    public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated Menu menu) {
+    public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(MenuPARM.Update.class) MenuPARM menuPARM) {
+        Menu menu = menuPARM.convert(Menu.class);
         menu.setId(id);
         menuService.updateById(menu);
         return empty();
@@ -124,6 +127,17 @@ public class MenuRestController extends SuperController {
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
         menuService.removeMenu(id);
+        return empty();
+    }
+
+    @Resources
+    @ApiOperation("设置菜单状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
+    })
+    @PutMapping("/{id}/status")
+    public ApiResponses<Void> updateStatus(@PathVariable("id") Integer id, @RequestBody @Validated(MenuPARM.Status.class) MenuPARM menuPARM) {
+        menuService.updateStatus(id, menuPARM.getStatus());
         return empty();
     }
 

@@ -21,6 +21,7 @@
 package org.crown.service;
 
 import org.crown.common.framework.service.BaseService;
+import org.crown.emuns.StatusEnum;
 import org.crown.model.entity.Menu;
 
 /**
@@ -39,4 +40,12 @@ public interface IMenuService extends BaseService<Menu> {
      * @param id
      */
     void removeMenu(Integer id);
+
+    /**
+     * 修改菜单状态
+     *
+     * @param id
+     * @param status
+     */
+    void updateStatus(Integer id, StatusEnum status);
 }

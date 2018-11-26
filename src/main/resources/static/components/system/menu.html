@@ -137,11 +137,11 @@
         // 修改状态
         form.on('switch(menu-tpl-status)', function (obj) {
             layer.load(2);
-            crown.put('/user/' + obj.elem.value + '/status', {
+            crown.put('/menu/' + obj.elem.value + '/status', {
                 status: obj.elem.checked ? 0 : 1
             }, function () {
                 layer.closeAll('loading');
-                layer.msg('用户状态更新成功', {icon: 1});
+                layer.msg('菜单状态更新成功', {icon: 1});
             });
         });
     });
