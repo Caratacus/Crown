@@ -7,14 +7,6 @@
         </span>
     </div>
     <div class="layui-card-body">
-        <div class="layui-form toolbar">
-            查看角色菜单：
-            <select id="auth-slt-role" lay-filter="auth-slt-role">
-                <option value="">-请选择角色-</option>
-                <option p-for="roles" p-bind="value:{{roleId}}">{{roleName}}</option>
-            </select>&emsp;
-
-        </div>
         <script type="text/html" id="menu-toolbar">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>添加</button>
