@@ -54,10 +54,15 @@
         var renderTable = function () {
             treetable.render({
                 elem: tableId,
+                //树形图标显示在第几列
                 treeColIndex: 1,
+                //最上级的父级id
                 treeSpid: 0,
+                //id字段的名称
                 treeIdName: 'id',
+                //pid字段的名称
                 treePidName: 'parentId',
+                //是否默认折叠
                 treeDefaultClose: true,
                 toolbar: '#menu-toolbar',
                 url: config.serverUrl + '/menu',
@@ -107,13 +112,18 @@
         // 工具条点击事件
         table.on('tool(menu-table)', function (obj) {
             var data = obj.data;
+            console.log(data);
             var layEvent = obj.event;
             if (layEvent === 'edit') {
                 showEditModel(data);
             } else if (obj.event === 'del') {
                 layer.confirm('确定删除该记录吗？', function () {
-                    treetable.reload('menu-table', {});
-                    // ant.deleteRow(obj, '/sys/resource/' + obj.data.id);
+                    crown.delete('/menu/' + data.id, {}, function () {
+                        layer.closeAll('loading');
+                        layer.msg('删除成功', {icon: 1});
+                        treetable.reload('menu-table', {});
+                    }, false);
+                    renderTable();
                 });
             }
         });
@@ -126,8 +136,8 @@
                 }, false);
             }*/
             crown.popupCenter({
-                title: data ? '修改用户' : '添加用户',
-                path: 'components/system/user_form.html',
+                title: data ? '修改菜单' : '添加菜单',
+                path: 'components/system/menu_form.html',
                 finish: function () {
                     treetable.reload('menu-table', {});
                 }

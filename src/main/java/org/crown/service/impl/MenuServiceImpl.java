@@ -20,11 +20,16 @@
  */
 package org.crown.service.impl;
 
+import java.util.Objects;
+
 import org.crown.common.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.MenuMapper;
 import org.crown.model.entity.Menu;
 import org.crown.service.IMenuService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -37,4 +42,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implements IMenuService {
 
+    @Override
+    @Transactional
+    public void removeMenu(Integer id) {
+        if (parentIdNotNull(id)) {
+            list(Wrappers.<Menu>query().eq(Menu.PARENT_ID, id)).forEach(e -> {
+                if (parentIdNotNull(e.getParentId())) {
+                    removeMenu(e.getId());
+                }
+            });
+            removeById(id);
+        }
+
+    }
+
+    /**
+     * 父ID不为0并且不为空
+     *
+     * @param parentId
+     * @return
+     */
+    private boolean parentIdNotNull(Integer parentId) {
+        return Objects.nonNull(parentId) && parentId != 0;
+    }
 }

@@ -106,7 +106,7 @@ public class MenuRestController extends SuperController {
     })
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
-        menuService.removeById(id);
+        menuService.removeMenu(id);
         return empty();
     }
 

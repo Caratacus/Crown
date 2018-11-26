@@ -9,6 +9,12 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">选择图标</label>
+        <div class="layui-input-block">
+            <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input" value="layui-icon">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-block">
             <input name="nickname" placeholder="请输入用户名" type="text" class="layui-input" maxlength="20"
@@ -96,6 +102,25 @@
                 });
             }
             return false;
+        });
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false
+            search: true,
+            // 是否开启分页
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 点击回调
+            click: function (data) {
+                console.log($("#iconPicker").val());
+                console.log(data.icon);
+                $("#iconPicker").val(data.icon);
+                console.log($("#iconPicker").val());
+            }
         });
     });
 </script>

@@ -33,4 +33,10 @@ import org.crown.model.entity.Menu;
  */
 public interface IMenuService extends BaseService<Menu> {
 
+    /**
+     * 递归删除菜单
+     *
+     * @param id
+     */
+    void removeMenu(Integer id);
 }
