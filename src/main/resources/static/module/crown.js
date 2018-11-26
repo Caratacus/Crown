@@ -104,6 +104,46 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             layer.close(popupCenterIndex);
             popupCenterParam.finish ? popupCenterParam.finish() : '';
         },
+        fromVal: function (filter, object) {
+            var formElem = $('.layui-form[lay-filter="' + filter + '"]');
+            formElem.each(function () {
+                var itemFrom = $(this);
+                layui.each(object, function (key, value) {
+                    if (typeof (value) === 'object') {
+                        fromVal(filter, value);//递归
+                    }
+                    var itemElem = itemFrom.find('[name="' + key + '"]');
+                    //如果对应的表单不存在，则不执行
+                    if (!itemElem[0]) {
+                        return;
+                    }
+                    var type = itemElem[0].type;
+                    //如果为复选框
+                    if (type === 'checkbox') {
+                        if (typeof (value) !== 'object') {
+                            itemElem[0].checked = value;
+                        } else {
+                            layui.each(value, function (index, item) {
+                                itemElem.each(function () {
+                                    if (this.value === item.toString()) {
+                                        this.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                    } else if (type === 'radio') { //如果为单选框
+                        itemElem.each(function () {
+                            if (this.value === value.toString()) {
+                                this.checked = true;
+                            }
+                        });
+                    } else { //其它类型的表单
+                        itemElem.val(value);
+                    }
+                });
+            });
+            form.render(null, filter);
+        },
         // 关闭中间弹出
         closePopupCenter: function () {
             layer.close(popupCenterIndex);
