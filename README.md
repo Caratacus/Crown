@@ -16,6 +16,8 @@
 		<a href="https://codecov.io/gh/Caratacus/Crown">
         <img src="https://codecov.io/gh/Caratacus/Crown/branch/master/graph/badge.svg"></a>
 		<a href="https://github.com/Caratacus/Crown">
+        <img src="https://tokei.rs/b1/github/Caratacus/Crown?category=lines"></a>
+		<a href="https://github.com/Caratacus/Crown">
 		<img src="https://img.shields.io/badge/JDK-1.8-green.svg" alt="JDK 1.8" title="JDK 1.8"></a>
         <a href="https://github.com/Caratacus">
         <img src="https://img.shields.io/badge/author-Caratacus-ff69b4.svg"></a>
