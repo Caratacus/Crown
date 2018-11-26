@@ -25,6 +25,8 @@ import java.util.List;
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
+import org.crown.emuns.MenuTypeEnum;
+import org.crown.model.dto.ComboDTO;
 import org.crown.model.entity.Menu;
 import org.crown.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -66,6 +70,19 @@ public class MenuRestController extends SuperController {
     @GetMapping
     public ApiResponses<List<Menu>> list() {
         return success(menuService.list());
+    }
+
+    @Resources(verify = false)
+    @ApiOperation(value = "查询父级菜单(下拉框)")
+    @GetMapping("/combos")
+    public ApiResponses<List<ComboDTO>> list1() {
+        List<ComboDTO> combos = menuService.entitys(Wrappers.<Menu>query().select(Menu.ID, Menu.MENU_NAME).in(Menu.MENU_TYPE, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU), e -> {
+            ComboDTO combo = new ComboDTO();
+            combo.setId(e.getId());
+            combo.setName(e.getMenuName());
+            return combo;
+        });
+        return success(combos);
     }
 
     @Resources(verify = false)

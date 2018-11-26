@@ -49,7 +49,7 @@ private Integer parentId;
         <div class="layui-input-inline">
             <select id="parentId" name="parentId" lay-filter="parentId">
                 <option value="0">首级菜单</option>
-                <option p-for="parents" p-bind="value:{{id}}">{{menuName}}</option>
+                <option p-for="parents" p-bind="value:{{id}}">{{name}}</option>
             </select>
         </div>
     </div>
@@ -68,7 +68,7 @@ private Integer parentId;
         var iconPicker = layui.iconPicker;
         // 获取所有菜单
         layer.load(2);
-        crown.get('/menu', {}, function (data) {
+        crown.get('/menu/combos', {}, function (data) {
             $('#parentId').vm({parents: data.result});
             // 回显menu数据
             var menu = crown.getTempData('t_menu');
