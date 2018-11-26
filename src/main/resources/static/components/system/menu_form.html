@@ -30,8 +30,8 @@ private Integer parentId;
         <label class="layui-form-label">类型</label>
         <div class="layui-input-inline">
             <select name="menuType">
-                <option value="">请选择类型</option>
-                <option value="1" selected="">目录</option>
+                <option value="" selected="selected">请选择类型</option>
+                <option value="1">目录</option>
                 <option value="2">菜单</option>
                 <option value="3">按钮</option>
             </select>
@@ -40,8 +40,17 @@ private Integer parentId;
     <div class="layui-form-item">
         <label class="layui-form-label">状态</label>
         <div class="layui-input-block">
-            <input type="radio" name="status" value="1" title="正常">
+            <input type="radio" name="status" value="1" title="正常" checked="checked">
             <input type="radio" name="status" value="0" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级菜单</label>
+        <div class="layui-input-inline">
+            <select id="parentId" name="parentId" lay-filter="parentId">
+                <option value="0">首级菜单</option>
+                <option p-for="parents" p-bind="value:{{id}}">{{menuName}}</option>
+            </select>
         </div>
     </div>
     <div class="layui-form-item model-form-footer">
@@ -60,12 +69,13 @@ private Integer parentId;
         // 获取所有菜单
         layer.load(2);
         crown.get('/menu', {}, function (data) {
+            $('#parentId').vm({parents: data.result});
             // 回显menu数据
             var menu = crown.getTempData('t_menu');
             if (menu) {
                 crown.fromVal('menu-form', menu);
                 iconPicker.checkIcon('icon', menu.icon);
-            }else{
+            } else {
                 iconPicker.checkIcon('icon', 'layui-icon-rate-half');
             }
             layer.closeAll('loading');
