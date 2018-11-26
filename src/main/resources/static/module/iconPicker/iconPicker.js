@@ -83,7 +83,6 @@ layui.define(['laypage', 'form'], function (exports) {
             toggleSelect: function () {
                 var item = '#' + TITLE_ID + ' .layui-iconpicker-item,#' + TITLE_ID + ' .layui-iconpicker-item .layui-edge';
                 a.event('click', item, function (e) {
-                    console.log('xxxx');
                     var $icon = $('#' + ICON_BODY);
                     if ($icon.hasClass(selected)) {
                         $icon.removeClass(selected).addClass(unselect);

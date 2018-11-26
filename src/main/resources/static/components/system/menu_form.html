@@ -10,7 +10,7 @@ private Integer parentId;
         <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-block">
             <input name="menuName" placeholder="请输入菜单名称" type="text" class="layui-input" maxlength="20"
-                   lay-verify="required" required/>
+                   lay-verify="required"/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -23,12 +23,12 @@ private Integer parentId;
         <label class="layui-form-label">菜单路径</label>
         <div class="layui-input-block">
             <input name="path" placeholder="请输入路径" type="text" class="layui-input" maxlength="20"
-                   lay-verify="required" required/>
+                   lay-verify="required"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">类型</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <select name="menuType">
                 <option value="" selected="selected">请选择类型</option>
                 <option value="1">目录</option>
@@ -46,8 +46,9 @@ private Integer parentId;
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">上级菜单</label>
-        <div class="layui-input-inline">
+        <div class="layui-input-block">
             <select id="parentId" name="parentId" lay-filter="parentId">
+                <option value="">请选择</option>
                 <option value="0">首级菜单</option>
                 <option p-for="parents" p-bind="value:{{id}}">{{name}}</option>
             </select>
@@ -70,6 +71,7 @@ private Integer parentId;
         layer.load(2);
         crown.get('/menu/combos', {}, function (data) {
             $('#parentId').vm({parents: data.result});
+            form.render('select');
             // 回显menu数据
             var menu = crown.getTempData('t_menu');
             if (menu) {
@@ -118,8 +120,8 @@ private Integer parentId;
             limit: 12,
             // 点击回调
             click: function (data) {
-                console.log($("#icon").val());
             }
         });
+        form.render();
     });
 </script>
