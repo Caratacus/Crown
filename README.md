@@ -62,6 +62,10 @@
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
 <br>
 ![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
+<br>
+![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu.png)
+<br>
+![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/resource.png)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
