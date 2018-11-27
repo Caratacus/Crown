@@ -23,7 +23,6 @@ package org.crown.common.http.wrapper;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.ReadListener;
@@ -32,24 +31,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.crown.common.http.RequestKit;
-import org.crown.common.kit.AntiSQLFilter;
 import org.springframework.web.util.HtmlUtils;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+
 
 /**
  * Request包装类
  * <p>
  * 1.预防xss攻击
  * 2.拓展requestbody无限获取(HttpServletRequestWrapper只能获取一次)
- * 3.防止sql注入
  * </p>
  *
  * @author Caratacus
  */
 public class ApiRequestWrapper extends HttpServletRequestWrapper {
 
-    private Map<String, String[]> safeParameterMap;
     /**
      * 存储requestBody byte[]
      */
@@ -99,7 +96,7 @@ public class ApiRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String[] getParameterValues(String name) {
-        String[] values = getParameterMap().get(name);
+        String[] values = super.getParameterValues(name);
         if (values == null) {
             return null;
         }
@@ -113,12 +110,11 @@ public class ApiRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public String getParameter(String name) {
-        String[] values = getParameterValues(name);
-        if (values != null && values.length > 0) {
-            return htmlEscape(values[0]);
-        } else {
+        String value = super.getParameter(name);
+        if (value == null) {
             return null;
         }
+        return htmlEscape(value);
     }
 
     @Override
@@ -146,15 +142,6 @@ public class ApiRequestWrapper extends HttpServletRequestWrapper {
             return null;
         }
         return htmlEscape(value);
-    }
-
-    @Override
-    public Map<String, String[]> getParameterMap() {
-        if (safeParameterMap == null) {
-            Map<String, String[]> originalParameterMap = super.getParameterMap();
-            safeParameterMap = AntiSQLFilter.getSafeParameterMap(originalParameterMap);
-        }
-        return safeParameterMap;
     }
 
     /**

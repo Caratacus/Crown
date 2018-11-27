@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.http.RequestKit;
+import org.crown.common.kit.AntiSQLFilter;
 import org.crown.common.kit.TypeUtils;
 import org.crown.cons.PageCons;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +97,18 @@ public class SuperController {
         Boolean searchCount = TypeUtils.castToBoolean(request.getParameter(PageCons.SEARCH_COUNT), true);
         limit = limit > PageCons.MAX_LIMIT ? PageCons.MAX_LIMIT : limit;
         Page<T> page = new Page<>(cursor, limit, searchCount);
-        page.setAsc(request.getParameterValues(PageCons.PAGE_ASCS));
-        page.setDesc(request.getParameterValues(PageCons.PAGE_DESCS));
+        page.setAsc(getParameterSafeValues(PageCons.PAGE_ASCS));
+        page.setDesc(getParameterSafeValues(PageCons.PAGE_DESCS));
         return page;
+    }
+
+    /**
+     * 获取安全参数(SQL ORDER BY 过滤)
+     *
+     * @param parameter
+     * @return
+     */
+    protected String[] getParameterSafeValues(String parameter) {
+        return AntiSQLFilter.getSafeValues(request.getParameterValues(parameter));
     }
 }

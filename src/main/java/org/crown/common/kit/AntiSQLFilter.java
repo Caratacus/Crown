@@ -60,13 +60,18 @@ public class AntiSQLFilter {
         while (iter.hasNext()) {
             String key = iter.next();
             String[] oldValues = parameterMap.get(key);
-            String[] newValues = new String[oldValues.length];
-            for (int i = 0; i < oldValues.length; i++) {
-                newValues[i] = getSafeValue(oldValues[i]);
-            }
-            builder.put(key, newValues);
+            builder.put(key, getSafeValues(oldValues));
         }
         return builder.unmodifiable().build();
+    }
+
+
+    public static String[] getSafeValues(String[] oldValues) {
+        String[] newValues = new String[oldValues.length];
+        for (int i = 0; i < oldValues.length; i++) {
+            newValues[i] = getSafeValue(oldValues[i]);
+        }
+        return newValues;
     }
 
     public static String getSafeValue(String oldValue) {
