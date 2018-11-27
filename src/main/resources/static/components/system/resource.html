@@ -10,9 +10,9 @@
         <!-- 搜索条件 -->
         <div class="layui-form toolbar">
             <form id="searchForm" onsubmit="return false;">
-                资源名：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入资源名"/>&emsp;
+                资源名：<input name="resourceName" class="layui-input search-input" type="text" placeholder="输入资源名"/>&emsp;
                 请求方式：
-                <select name="status" lay-verify="">
+                <select name="method" lay-verify="">
                     <option value="">选择请求方式</option>
                     <option value="GET">GET</option>
                     <option value="POST">POST</option>
@@ -20,10 +20,10 @@
                     <option value="DELETE">DELETE</option>
                 </select>
                 验证：
-                <select name="status" lay-verify="">
+                <select name="verify" lay-verify="">
                     <option value="">选择验证方式</option>
-                    <option value="1">是</option>
-                    <option value="0">否</option>
+                    <option value="true">是</option>
+                    <option value="false">否</option>
                 </select>
                 <button id="resource-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索
                 </button>

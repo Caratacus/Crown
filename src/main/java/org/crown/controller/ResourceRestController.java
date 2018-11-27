@@ -20,6 +20,8 @@
  */
 package org.crown.controller;
 
+import java.util.Objects;
+
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
@@ -36,9 +38,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -63,12 +68,17 @@ public class ResourceRestController extends SuperController {
 
     @Resources(verify = false)
     @ApiOperation(value = "查询所有资源(分页)")
-   /* @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
-    })*/
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "resourceName", value = "需要查询的资源名", paramType = "query"),
+            @ApiImplicitParam(name = "method", value = "需要查询的请求方式", paramType = "query"),
+            @ApiImplicitParam(name = "verify", value = "是否需要验证", paramType = "query"),
+    })
     @GetMapping
-    public ApiResponses<IPage<Resource>> page(@RequestParam(value = "roleName", required = false) String roleName) {
-        IPage<Resource> page = resourceService.page(this.<Resource>getPage(), Wrappers.<Resource>query());
+    public ApiResponses<IPage<Resource>> page(@RequestParam(value = "resourceName", required = false) String resourceName,
+                                              @RequestParam(value = "method", required = false) String method,
+                                              @RequestParam(value = "verify", required = false) Boolean verify
+    ) {
+        IPage<Resource> page = resourceService.page(this.<Resource>getPage(), Wrappers.<Resource>lambdaQuery().like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName).eq(StringUtils.isNotEmpty(method), Resource::getMethod, method).eq(Objects.nonNull(verify), Resource::getVerify, verify));
         return success(page);
     }
 
