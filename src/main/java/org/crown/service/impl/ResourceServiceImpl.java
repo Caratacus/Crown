@@ -46,7 +46,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     @Override
     public List<ResourcePermDTO> getUserPerms(Integer uid) {
         //TODO 目前是查询所有权限 后期需要更改
-        List<Resource> resources = list(Wrappers.<Resource>query().select(Resource.METHOD, Resource.MAPPING));
+        List<Resource> resources = list(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping));
         return BeanConverter.convert(ResourcePermDTO.class, resources);
     }
 }

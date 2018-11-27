@@ -25,10 +25,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+
 
 /**
  * BaseMapper 基于 MP 删减
@@ -63,7 +63,7 @@ public interface BaseMapper<T> {
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    int delete(@Param(Constants.WRAPPER) QueryWrapper<T> queryWrapper);
+    int delete(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -82,7 +82,7 @@ public interface BaseMapper<T> {
      * @param entity        实体对象 (set 条件值,不能为 null)
      * @param updateWrapper 实体对象封装操作类（可以为 null,里面的 entity 用于生成 where 语句）
      */
-    int update(@Param(Constants.ENTITY) T entity, @Param(Constants.WRAPPER) UpdateWrapper<T> updateWrapper);
+    int update(@Param(Constants.ENTITY) T entity, @Param(Constants.WRAPPER) Wrapper<T> updateWrapper);
 
     /**
      * <p>
@@ -100,7 +100,7 @@ public interface BaseMapper<T> {
      *
      * @param queryWrapper 实体对象
      */
-    Integer selectCount(@Param(Constants.WRAPPER) QueryWrapper<T> queryWrapper);
+    Integer selectCount(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -109,7 +109,7 @@ public interface BaseMapper<T> {
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    List<T> selectList(@Param(Constants.WRAPPER) QueryWrapper<T> queryWrapper);
+    List<T> selectList(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -119,7 +119,7 @@ public interface BaseMapper<T> {
      *
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    List<Object> selectObjs(@Param(Constants.WRAPPER) QueryWrapper<T> queryWrapper);
+    List<Object> selectObjs(@Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -129,6 +129,6 @@ public interface BaseMapper<T> {
      * @param page         分页查询条件（可以为 RowBounds.DEFAULT）
      * @param queryWrapper 实体对象封装操作类（可以为 null）
      */
-    IPage<T> selectPage(IPage<T> page, @Param(Constants.WRAPPER) QueryWrapper<T> queryWrapper);
+    IPage<T> selectPage(IPage<T> page, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper);
 
 }

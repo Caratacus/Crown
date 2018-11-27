@@ -54,8 +54,4 @@ public class RoleResource extends BaseModel {
      */
     private String resourceId;
 
-    public static final String ROLE_ID = "role_id";
-
-    public static final String RESOURCE_ID = "resource_id";
-
 }

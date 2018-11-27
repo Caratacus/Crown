@@ -79,14 +79,4 @@ public class Resource extends Convert {
     @Version
     private LocalDateTime updateTime;
 
-    public static final String ID = "id";
-
-    public static final String RESOURCE_NAME = "resource_name";
-
-    public static final String MAPPING = "mapping";
-
-    public static final String METHOD = "method";
-
-    public static final String VERIFY = "verify";
-
 }

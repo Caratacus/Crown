@@ -54,8 +54,4 @@ public class RoleMenu extends BaseModel {
      */
     private Integer menuId;
 
-    public static final String ROLE_ID = "role_id";
-
-    public static final String MENU_ID = "menu_id";
-
 }

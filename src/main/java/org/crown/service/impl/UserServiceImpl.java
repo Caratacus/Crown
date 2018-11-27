@@ -63,7 +63,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     @Transactional
     public User login(String loginName, String password, String ipAddr) {
-        User user = getOne(Wrappers.<User>query().eq(User.LOGIN_NAME, loginName));
+        User user = getOne(Wrappers.<User>lambdaQuery().eq(User::getLoginName, loginName));
         //用户不存在
         ApiAssert.notNull(ErrorCodeEnum.USERNAME_OR_PASSWORD_IS_WRONG, user);
         //用户名密码错误
@@ -126,7 +126,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Transactional
     public void saveUserRoles(Integer uid, List<Integer> roleIds) {
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            userRoleService.remove(Wrappers.<UserRole>query().eq(UserRole.UID, uid));
+            userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUid, uid));
             userRoleService.saveBatch(roleIds.stream().map(e -> {
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(e);

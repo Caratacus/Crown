@@ -80,16 +80,4 @@ public class Role extends BaseModel {
      */
     private String remark;
 
-    public static final String ROLE_NAME = "role_name";
-
-    public static final String CREATE_UID = "create_uid";
-
-    public static final String UPDATE_UID = "update_uid";
-
-    public static final String CREATE_TIME = "create_time";
-
-    public static final String UPDATE_TIME = "update_time";
-
-    public static final String REMARK = "remark";
-
 }

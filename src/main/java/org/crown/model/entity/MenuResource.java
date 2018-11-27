@@ -54,8 +54,5 @@ public class MenuResource extends BaseModel {
      */
     private String resourceId;
 
-    public static final String MENU_ID = "menu_id";
-
-    public static final String RESOURCE_ID = "resource_id";
 
 }

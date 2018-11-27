@@ -105,24 +105,4 @@ public class Menu extends BaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    public static final String PARENT_ID = "parent_id";
-
-    public static final String MENU_NAME = "menu_name";
-
-    public static final String PATH = "path";
-
-    public static final String ROUTER = "router";
-
-    public static final String MENU_TYPE = "menu_type";
-
-    public static final String ICON = "icon";
-
-    public static final String CREATE_UID = "create_uid";
-
-    public static final String UPDATE_UID = "update_uid";
-
-    public static final String CREATE_TIME = "create_time";
-
-    public static final String UPDATE_TIME = "update_time";
-
 }

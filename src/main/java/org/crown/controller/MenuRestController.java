@@ -77,7 +77,7 @@ public class MenuRestController extends SuperController {
     @ApiOperation(value = "查询父级菜单(下拉框)")
     @GetMapping("/combos")
     public ApiResponses<List<ComboDTO>> combos() {
-        List<ComboDTO> combos = menuService.entitys(Wrappers.<Menu>query().select(Menu.ID, Menu.MENU_NAME).in(Menu.MENU_TYPE, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU), e -> {
+        List<ComboDTO> combos = menuService.entitys(Wrappers.<Menu>lambdaQuery().select(Menu::getId, Menu::getMenuName).in(Menu::getMenuType, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU), e -> {
             ComboDTO combo = new ComboDTO();
             combo.setId(e.getId());
             combo.setName(e.getMenuName());

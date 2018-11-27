@@ -74,7 +74,7 @@ public class RoleRestController extends SuperController {
     })
     @GetMapping
     public ApiResponses<IPage<Role>> page(@RequestParam(value = "roleName", required = false) String roleName) {
-        IPage<Role> page = roleService.page(this.<Role>getPage(), Wrappers.<Role>query().like(StringUtils.isNotEmpty(roleName), Role.ROLE_NAME, roleName));
+        IPage<Role> page = roleService.page(this.<Role>getPage(), Wrappers.<Role>lambdaQuery().like(StringUtils.isNotEmpty(roleName), Role::getRoleName, roleName));
         return success(page);
     }
 

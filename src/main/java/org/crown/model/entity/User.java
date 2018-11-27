@@ -103,26 +103,4 @@ public class User extends Convert {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    public static final String UID = "uid";
-
-    public static final String LOGIN_NAME = "login_name";
-
-    public static final String PASSWORD = "password";
-
-    public static final String NICKNAME = "nickname";
-
-    public static final String EMAIL = "email";
-
-    public static final String PHONE = "phone";
-
-    public static final String STATUS = "status";
-
-    public static final String CREATE_UID = "create_uid";
-
-    public static final String UPDATE_UID = "update_uid";
-
-    public static final String CREATE_TIME = "create_time";
-
-    public static final String UPDATE_TIME = "update_time";
-
 }

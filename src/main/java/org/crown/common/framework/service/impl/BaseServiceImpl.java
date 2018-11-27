@@ -41,8 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
@@ -54,6 +53,7 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
+
 
 /**
  * <p>
@@ -221,7 +221,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean remove(QueryWrapper<T> queryWrapper) {
+    public boolean remove(Wrapper<T> queryWrapper) {
         return SqlHelper.delBool(baseMapper.delete(queryWrapper));
     }
 
@@ -233,7 +233,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean update(T entity, UpdateWrapper<T> updateWrapper) {
+    public boolean update(T entity, Wrapper<T> updateWrapper) {
         return retBool(baseMapper.update(entity, updateWrapper));
     }
 
@@ -267,39 +267,39 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public T getOne(QueryWrapper<T> queryWrapper) {
+    public T getOne(Wrapper<T> queryWrapper) {
         return SqlHelper.getObject(baseMapper.selectList(queryWrapper));
     }
 
     @Override
-    public int count(QueryWrapper<T> queryWrapper) {
+    public int count(Wrapper<T> queryWrapper) {
         return SqlHelper.retCount(baseMapper.selectCount(queryWrapper));
     }
 
     @Override
-    public List<T> list(QueryWrapper<T> queryWrapper) {
+    public List<T> list(Wrapper<T> queryWrapper) {
         return baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    public IPage<T> page(IPage<T> page, QueryWrapper<T> queryWrapper) {
+    public IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper) {
         return baseMapper.selectPage(page, queryWrapper);
     }
 
     @Override
-    public <R> List<R> listObjs(QueryWrapper<T> queryWrapper, Function<? super Object, R> mapper) {
+    public <R> List<R> listObjs(Wrapper<T> queryWrapper, Function<? super Object, R> mapper) {
         return baseMapper.selectObjs(queryWrapper).stream().filter(Objects::nonNull).map(mapper).collect(Collectors.toList());
     }
 
     @Override
-    public <E> IPage<E> pageEntities(IPage page, QueryWrapper wrapper, Function<? super T, E> mapper) {
+    public <E> IPage<E> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, E> mapper) {
         return page(page, wrapper).convert(mapper);
     }
 
     @Override
-    public <E extends Convert> E entity(QueryWrapper wrapper, Class<E> cls) {
+    public <E extends Convert> E entity(Wrapper<T> wrapper, Class<E> cls) {
         E entity = null;
-        T t = (T) getOne(wrapper);
+        T t = getOne(wrapper);
         if (Objects.nonNull(t)) {
             entity = t.convert(cls);
         }
@@ -307,8 +307,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public <E> List<E> entitys(QueryWrapper wrapper, Function<? super T, E> mapper) {
-        return (List<E>) list(wrapper).stream().map(mapper).collect(Collectors.toList());
+    public <E> List<E> entitys(Wrapper<T> wrapper, Function<? super T, E> mapper) {
+        return list(wrapper).stream().map(mapper).collect(Collectors.toList());
     }
 
     @Override
@@ -330,7 +330,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public Map<Integer, T> list2Map(QueryWrapper<T> wrapper, String property) {
+    public Map<Integer, T> list2Map(Wrapper<T> wrapper, String property) {
         return list2Map(list(wrapper), property);
     }
 

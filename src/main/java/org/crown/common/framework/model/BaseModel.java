@@ -38,8 +38,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class BaseModel extends Convert {
 
-    public static final String ID = "id";
-
     private Integer id;
 
 }

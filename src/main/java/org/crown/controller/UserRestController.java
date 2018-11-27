@@ -90,7 +90,7 @@ public class UserRestController extends SuperController {
     public ApiResponses<IPage<UserDTO>> page(@RequestParam(value = "loginName", required = false) String loginName,
                                              @RequestParam(value = "nickname", required = false) String nickname,
                                              @RequestParam(value = "status", required = false) StatusEnum status) {
-        IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>query().likeRight(StringUtils.isNotEmpty(loginName), User.LOGIN_NAME, loginName).likeRight(StringUtils.isNotEmpty(nickname), User.NICKNAME, nickname).eq(Objects.nonNull(status), User.STATUS, status));
+        IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>lambdaQuery().likeRight(StringUtils.isNotEmpty(loginName), User::getLoginName, loginName).likeRight(StringUtils.isNotEmpty(nickname), User::getNickname, nickname).eq(Objects.nonNull(status), User::getStatus, status));
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 
@@ -104,7 +104,7 @@ public class UserRestController extends SuperController {
         User user = userService.getById(id);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         UserDTO userDTO = user.convert(UserDTO.class);
-        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>query().select(UserRole.ROLE_ID).eq(UserRole.UID, id), TypeUtils::castToInt);
+        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getId, id), TypeUtils::castToInt);
         userDTO.setRoleIds(roleIds);
         return success(userDTO);
     }
@@ -135,7 +135,7 @@ public class UserRestController extends SuperController {
     @ApiOperation("创建用户")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
-        int count = userService.count(Wrappers.<User>query().eq(User.LOGIN_NAME, userPARM.getLoginName()));
+        int count = userService.count(Wrappers.<User>lambdaQuery().eq(User::getLoginName, userPARM.getLoginName()));
         ApiAssert.isTrue(ErrorCodeEnum.USERNAME_ALREADY_EXISTS, count == 0);
         User user = userPARM.convert(User.class);
         //没设置密码 设置默认密码

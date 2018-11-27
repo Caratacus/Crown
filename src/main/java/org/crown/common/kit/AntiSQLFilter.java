@@ -69,7 +69,7 @@ public class AntiSQLFilter {
 
 
     public static String[] getSafeValues(String[] oldValues) {
-        if (ArrayUtils.isNotEmpty(oldValues)){
+        if (ArrayUtils.isNotEmpty(oldValues)) {
             String[] newValues = new String[oldValues.length];
             for (int i = 0; i < oldValues.length; i++) {
                 newValues[i] = getSafeValue(oldValues[i]);

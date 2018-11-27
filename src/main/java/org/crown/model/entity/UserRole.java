@@ -54,8 +54,4 @@ public class UserRole extends BaseModel {
      */
     private Integer roleId;
 
-    public static final String UID = "uid";
-
-    public static final String ROLE_ID = "role_id";
-
 }

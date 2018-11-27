@@ -49,7 +49,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     @Transactional
     public void removeMenu(Integer id) {
         if (parentIdNotNull(id)) {
-            list(Wrappers.<Menu>query().eq(Menu.PARENT_ID, id)).forEach(e -> {
+            list(Wrappers.<Menu>lambdaQuery().eq(Menu::getParentId, id)).forEach(e -> {
                 if (parentIdNotNull(e.getParentId())) {
                     removeMenu(e.getId());
                 }
