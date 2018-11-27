@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+
 /**
  * AntiSQLFilter is a J2EE Web Application Filter that protects web components from SQL Injection hacker attacks.<br>
  * Must to be configured with web.xml descriptors.
@@ -67,11 +69,14 @@ public class AntiSQLFilter {
 
 
     public static String[] getSafeValues(String[] oldValues) {
-        String[] newValues = new String[oldValues.length];
-        for (int i = 0; i < oldValues.length; i++) {
-            newValues[i] = getSafeValue(oldValues[i]);
+        if (ArrayUtils.isNotEmpty(oldValues)){
+            String[] newValues = new String[oldValues.length];
+            for (int i = 0; i < oldValues.length; i++) {
+                newValues[i] = getSafeValue(oldValues[i]);
+            }
+            return newValues;
         }
-        return newValues;
+        return null;
     }
 
     public static String getSafeValue(String oldValue) {
