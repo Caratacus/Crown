@@ -55,9 +55,11 @@ public class MenuPARM extends Convert {
     @ApiModelProperty(notes = "菜单名称")
     private String menuName;
 
-    @NotBlank(groups = MenuPARM.Create.class, message = "路径不能为空")
     @ApiModelProperty(notes = "路径")
     private String path;
+
+    @ApiModelProperty(notes = "路由")
+    private String router;
 
     @NotNull(groups = MenuPARM.Create.class, message = "类型不能为空")
     @ApiModelProperty(notes = "类型:1:目录,2:菜单,3:按钮")

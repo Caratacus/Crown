@@ -66,6 +66,11 @@ public class Menu extends BaseModel {
     private String path;
 
     /**
+     * 路由
+     */
+    private String router;
+
+    /**
      * 类型:1:目录,2:菜单,3:按钮
      */
     private MenuTypeEnum menuType;
@@ -105,6 +110,8 @@ public class Menu extends BaseModel {
     public static final String MENU_NAME = "menu_name";
 
     public static final String PATH = "path";
+
+    public static final String ROUTER = "router";
 
     public static final String MENU_TYPE = "menu_type";
 

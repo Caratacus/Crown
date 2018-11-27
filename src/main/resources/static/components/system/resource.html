@@ -10,13 +10,21 @@
         <!-- 搜索条件 -->
         <div class="layui-form toolbar">
             <form id="searchForm" onsubmit="return false;">
-                账号：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
-                用户名：<input name="nickname" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
-                状态：<select name="status" lay-verify="">
-                <option value="">请选择状态</option>
-                <option value="0">正常</option>
-                <option value="1">禁用</option>
-            </select>
+                资源名：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入资源名"/>&emsp;
+                请求方式：
+                <select name="status" lay-verify="">
+                    <option value="">选择请求方式</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+                验证：
+                <select name="status" lay-verify="">
+                    <option value="">选择验证方式</option>
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
                 <button id="resource-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索
                 </button>
             </form>
@@ -36,7 +44,7 @@
 <!-- 表格操作列 -->
 <script type="text/html" id="resource-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">删除</a>
 </script>
 <script>
     layui.use(['form', 'table', 'config', 'crown'], function () {

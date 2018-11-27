@@ -9,7 +9,9 @@
     <div class="layui-card-body">
         <script type="text/html" id="menu-toolbar">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i>添加</button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expandAll"><i class="layui-icon">&#xe6b1;</i>全部展开
                 </button>
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="foldAll"><i
@@ -55,21 +57,21 @@
                 //pid字段的名称
                 treePidName: 'parentId',
                 //是否默认折叠
-                treeDefaultClose: true,
+                treeDefaultClose: false,
                 toolbar: '#menu-toolbar',
                 url: config.serverUrl + '/menu',
                 cols: [[
                     {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
                     {field: 'menuName', align: 'center', sort: true, title: '菜单名称'},
                     {
-                        field: 'icon', title: '图标', align: 'center'
-                        , templet: function (d) {
+                        field: 'icon', title: '图标', align: 'center', width: 60, templet: function (d) {
                             return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
                         }
                     },
                     {field: 'path', align: 'center', sort: true, title: '菜单路径'},
+                    {field: 'router', align: 'center', sort: true, title: '路由'},
                     {
-                        minWidth: 80, align: 'center', templet: function (d) {
+                        align: 'center', templet: function (d) {
                             if (d.menuType === 1) {
                                 return '<span class="layui-badge layui-bg-gray">目录</span>';
                             } else if (d.menuType === 2) {
@@ -82,8 +84,7 @@
                         }, title: '类型'
                     },
                     {field: 'status', align: 'center', templet: '#menu-tpl-status', title: '状态', width: 100},
-                    {field: 'createTime', align: 'center', sort: true, width: 170, title: '创建时间'},
-                    {field: 'updateTime', align: 'center', sort: true, width: 170, title: '修改时间'},
+                    {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
                     {fixed: 'right', align: 'center', toolbar: '#menu-table-bar', title: '操作'}
                 ]]
             });
