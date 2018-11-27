@@ -32,10 +32,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -82,7 +84,7 @@ public class SuperRestControllerTest {
      * @param params
      * @return
      */
-    private MockHttpServletRequestBuilder getMockMvcRequestBodyBuilders(HttpMethod httpMethod, String url, String authorization, Object object, MultiValueMap<String, String> params) {
+    private MockHttpServletRequestBuilder getMockMvcRequestBodyBuilder(HttpMethod httpMethod, String url, String authorization, Object object, MultiValueMap<String, String> params) {
         MockHttpServletRequestBuilder requestBuilder;
         switch (httpMethod) {
             case GET:
@@ -135,7 +137,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder get(String url, String authorization, MultiValueMap<String, String> params) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.GET, url, authorization, null, params);
+        return getMockMvcRequestBodyBuilder(HttpMethod.GET, url, authorization, null, params);
     }
 
     /**
@@ -146,7 +148,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder get(String url, String authorization) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.GET, url, authorization, null, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.GET, url, authorization, null, null);
     }
 
     /**
@@ -158,7 +160,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder delete(String url, String authorization, MultiValueMap<String, String> params) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.DELETE, url, authorization, null, params);
+        return getMockMvcRequestBodyBuilder(HttpMethod.DELETE, url, authorization, null, params);
     }
 
     /**
@@ -169,7 +171,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder delete(String url, String authorization) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.DELETE, url, authorization, null, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.DELETE, url, authorization, null, null);
     }
 
     /**
@@ -181,7 +183,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder post(String url, String authorization, Object object) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.POST, url, authorization, object, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.POST, url, authorization, object, null);
     }
 
     /**
@@ -192,7 +194,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder post(String url, String authorization) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.POST, url, authorization, null, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.POST, url, authorization, null, null);
     }
 
     /**
@@ -204,7 +206,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder put(String url, String authorization, Object object) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.PUT, url, authorization, object, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.PUT, url, authorization, object, null);
     }
 
     /**
@@ -215,7 +217,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder put(String url, String authorization) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.PUT, url, authorization, null, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.PUT, url, authorization, null, null);
     }
 
     /**
@@ -227,7 +229,7 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder patch(String url, String authorization, Object object) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.PATCH, url, authorization, object, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.PATCH, url, authorization, object, null);
     }
 
     /**
@@ -238,21 +240,19 @@ public class SuperRestControllerTest {
      * @return
      */
     public MockHttpServletRequestBuilder patch(String url, String authorization) {
-        return getMockMvcRequestBodyBuilders(HttpMethod.PATCH, url, authorization, null, null);
+        return getMockMvcRequestBodyBuilder(HttpMethod.PATCH, url, authorization, null, null);
     }
 
     /**
-     * 获取MockMvc测试字符串返回
+     * 获取Mock测试请求结果是否成功
      *
      * @param mockMvc
      * @param mockHttpServletRequestBuilder
      * @return
      * @throws Exception
      */
-    public void responseOk(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
-        mockMvc.perform(
-                mockHttpServletRequestBuilder
-        )
+    public ResultActions isOk(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
+        return mockMvc.perform(mockHttpServletRequestBuilder)
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -265,12 +265,10 @@ public class SuperRestControllerTest {
      * @return
      * @throws Exception
      */
-    public String getResponseString(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
-        return mockMvc.perform(
-                mockHttpServletRequestBuilder
-        )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse().getContentAsString();
+    public MockHttpServletResponse getResponse(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
+        return isOk(mockMvc, mockHttpServletRequestBuilder)
+                .andReturn()
+                .getResponse();
     }
 
     /**
@@ -282,9 +280,9 @@ public class SuperRestControllerTest {
      * @return
      * @throws Exception
      */
-    public <T> T getResponseModel(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder,
-                                  TypeReference<SuccessResponses<T>> valueTypeRef) throws Exception {
-        String responseString = getResponseString(mockMvc, mockHttpServletRequestBuilder);
+    public <T> T getResult(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder,
+                           TypeReference<SuccessResponses<T>> valueTypeRef) throws Exception {
+        String responseString = getResponse(mockMvc, mockHttpServletRequestBuilder).getContentAsString();
         SuccessResponses<T> responses = JacksonUtils.readValue(responseString, valueTypeRef);
         return responses.getResult();
     }

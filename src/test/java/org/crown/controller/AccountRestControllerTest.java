@@ -60,19 +60,19 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
         LoginPARM loginPARM = new LoginPARM();
         loginPARM.setLoginName("crown");
         loginPARM.setPassword("crown");
-        TokenDTO tokenDTO = getResponseModel(mockMvc, post("/account/token", null, loginPARM), new TypeReference<SuccessResponses<TokenDTO>>() {
+        TokenDTO tokenDTO = getResult(mockMvc, post("/account/token", null, loginPARM), new TypeReference<SuccessResponses<TokenDTO>>() {
         });
 
         //updatePassword
         PasswordPARM passwordPARM = new PasswordPARM();
         passwordPARM.setOldPassword("crown");
         passwordPARM.setNewPassword("crown");
-        responseOk(mockMvc, put("/account/password", tokenDTO.getToken(), passwordPARM));
+        isOk(mockMvc, put("/account/password", tokenDTO.getToken(), passwordPARM));
     }
 
     @Test
     public void removeToken() throws Exception {
-        responseOk(mockMvc, delete("/account/token", null));
+        isOk(mockMvc, delete("/account/token", null));
     }
 
 }

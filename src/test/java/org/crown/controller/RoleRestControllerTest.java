@@ -64,25 +64,25 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void tests() throws Exception {
         //测试获取所有(分页)
-        responseOk(mockMvc, get("/role", token.getToken()));
+        isOk(mockMvc, get("/role", token.getToken()));
         //添加测试
         RolePARM rolePARM = new RolePARM();
         rolePARM.setRoleName("角色测试");
         rolePARM.setRemark("角色测试");
-        responseOk(mockMvc, post("/role", token.getToken(), rolePARM));
+        isOk(mockMvc, post("/role", token.getToken(), rolePARM));
         //测试获取所有
-        List<Role> records = getResponseModel(mockMvc, get("/role/roles", token.getToken()), new TypeReference<SuccessResponses<List<Role>>>() {
+        List<Role> records = getResult(mockMvc, get("/role/roles", token.getToken()), new TypeReference<SuccessResponses<List<Role>>>() {
         });
         for (Role record : records) {
             //测试获取单个
-            responseOk(mockMvc, get("/role/" + record.getId(), token.getToken()));
+            isOk(mockMvc, get("/role/" + record.getId(), token.getToken()));
             if ("角色测试".equals(record.getRemark())) {
                 //测试修改
                 rolePARM.setRoleName("角色测试PUT");
                 rolePARM.setRemark("角色测试PUT");
-                responseOk(mockMvc, put("/role/" + record.getId(), token.getToken(), rolePARM));
+                isOk(mockMvc, put("/role/" + record.getId(), token.getToken(), rolePARM));
                 //测试删除
-                responseOk(mockMvc, delete("/role/" + record.getId(), token.getToken()));
+                isOk(mockMvc, delete("/role/" + record.getId(), token.getToken()));
             }
         }
 
