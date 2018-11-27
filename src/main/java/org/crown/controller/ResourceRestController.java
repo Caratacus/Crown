@@ -78,7 +78,11 @@ public class ResourceRestController extends SuperController {
                                               @RequestParam(value = "method", required = false) String method,
                                               @RequestParam(value = "verify", required = false) Boolean verify
     ) {
-        IPage<Resource> page = resourceService.page(this.<Resource>getPage(), Wrappers.<Resource>lambdaQuery().like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName).eq(StringUtils.isNotEmpty(method), Resource::getMethod, method).eq(Objects.nonNull(verify), Resource::getVerify, verify));
+        IPage<Resource> page = resourceService.page(this.<Resource>getPage(),
+        Wrappers.<Resource>lambdaQuery()
+                .like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName)
+                .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
+                .eq(Objects.nonNull(verify), Resource::getVerify, verify));
         return success(page);
     }
 
