@@ -1,0 +1,137 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">资源管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>资源管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <!-- 搜索条件 -->
+        <div class="layui-form toolbar">
+            <form id="searchForm" onsubmit="return false;">
+                账号：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
+                用户名：<input name="nickname" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
+                状态：<select name="status" lay-verify="">
+                <option value="">请选择状态</option>
+                <option value="0">正常</option>
+                <option value="1">禁用</option>
+            </select>
+                <button id="resource-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索
+                </button>
+            </form>
+        </div>
+        <!-- 表格顶部操作列 -->
+        <script type="text/html" id="resource-toolbar">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="refresh"><i
+                        class="layui-icon"></i>刷新资源
+                </button>
+            </div>
+        </script>
+        <table class="layui-table" id="resource-table" lay-filter="resource-table"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="resource-table-bar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+</script>
+<script>
+    layui.use(['form', 'table', 'config', 'crown'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var crown = layui.crown;
+
+        // 渲染表格
+        var resourceTable = table.render({
+            elem: '#resource-table',
+            toolbar: '#resource-toolbar',
+            url: config.serverUrl + '/resource',
+            request: config.request,
+            parseData: config.parseData,
+            response: config.response,
+            page: true,
+            cols: [[
+                {field: 'id', title: 'ID'},
+                {field: 'resourceName', align: 'center', sort: true, title: '资源名称'},
+                {field: 'method', align: 'center', sort: true, title: '请求方式'},
+                {field: 'mapping', align: 'center', sort: true, title: '路径映射'},
+                {
+                    minWidth: 80, align: 'center', templet: function (d) {
+                        if (d.verify == 0) {
+                            return '<span class="layui-badge layui-bg-gray">否</span>';
+                        } else {
+                            return '<span class="layui-badge layui-bg-blue">是</span>';
+                        }
+                    }, title: '是否需要验证'
+                },
+                {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
+                {align: 'center', toolbar: '#resource-table-bar', title: '操作'}
+            ]]
+        });
+        // 表格顶部操作列
+        table.on('toolbar(resource-table)', function (obj) {
+            if (obj.event === 'refresh') {
+                crown.put('/resource/refresh', {}, function (data) {
+                    layer.msg('刷新成功', {icon: 1});
+                    resourceTable.reload('resource-table', {});
+                });
+            }
+        });
+        // 表格操作列事件
+        table.on('tool(resource-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'edit') {
+                // 修改
+                showEditModel(data);
+            } else if (layEvent === 'reset') {
+                layer.confirm('确定重置此用户密码？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    crown.put('/resource/' + obj.data.id + '/password/reset', {}, function () {
+                        layer.closeAll('loading');
+                        layer.msg('重置密码成功', {icon: 1});
+                    });
+                });
+            }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            if (data) {
+                crown.get('/resource/' + data.id, {}, function (data) {
+                    crown.putTempData('t_resource', data.result);
+                }, false);
+            }
+            crown.popupCenter({
+                title: data ? '修改用户' : '添加用户',
+                path: 'components/system/resource_form.html',
+                finish: function () {
+                    resourceTable.reload('resource-table', {});
+                }
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#resource-btn-search').click(function () {
+            resourceTable.reload({where: crown.getSearchForm()});
+        });
+
+        // 修改resource状态
+        form.on('switch(resource-tpl-status)', function (obj) {
+            layer.load(2);
+            crown.put('/resource/' + obj.elem.value + '/status', {
+                status: obj.elem.checked ? 0 : 1
+            }, function () {
+                layer.closeAll('loading');
+                layer.msg('用户状态更新成功', {icon: 1});
+            });
+        });
+    });
+</script>

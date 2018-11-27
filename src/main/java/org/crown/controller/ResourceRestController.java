@@ -20,9 +20,26 @@
  */
 package org.crown.controller;
 
+import org.crown.common.annotations.Resources;
+import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
-import org.springframework.stereotype.Controller;
+import org.crown.common.spring.ScanMappings;
+import org.crown.model.entity.Resource;
+import org.crown.service.IResourceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * <p>
@@ -32,9 +49,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Caratacus
  * @since 2018-10-25
  */
-@Controller
-@RequestMapping("/sys/resource")
+@Api(tags = {"Resource"}, description = "资源操作相关接口")
+@RestController
+@RequestMapping(value = "/resource", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@Validated
 public class ResourceRestController extends SuperController {
+
+    @Autowired
+    private IResourceService resourceService;
+
+    @Autowired
+    private ScanMappings scanMappings;
+
+    @Resources(verify = false)
+    @ApiOperation(value = "查询所有资源(分页)")
+   /* @ApiImplicitParams({
+            @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
+    })*/
+    @GetMapping
+    public ApiResponses<IPage<Resource>> page(@RequestParam(value = "roleName", required = false) String roleName) {
+        IPage<Resource> page = resourceService.page(this.<Resource>getPage(), Wrappers.<Resource>query());
+        return success(page);
+    }
+
+    @Resources(verify = false)
+    @ApiOperation(value = "刷新资源")
+    @PutMapping("/refresh")
+    public ApiResponses<Void> refresh() {
+        scanMappings.doScan();
+        return empty();
+    }
+
 
 }
 

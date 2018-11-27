@@ -87,12 +87,20 @@ layui.define(function (exports) {
                     url: 'role',
                     path: 'system/role.html',
                     auth: 'get:/role'
-                }, {
+                },
+                {
                     name: '菜单管理',
                     url: 'menu',
                     path: 'system/menu.html',
                     auth: 'get:/authorities'
-                }]
+                },
+                {
+                    name: '资源管理',
+                    url: 'resource',
+                    path: 'system/resource.html',
+                    auth: 'get:/authorities'
+                }
+                ]
         }],
         // 当前登录的用户
         getUser: function () {

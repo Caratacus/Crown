@@ -70,7 +70,7 @@ public class AccountRestController extends SuperController {
     }
 
     @Resources(verify = false)
-    @ApiOperation("清理Token")
+    @ApiOperation("清除Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {
         return empty();
