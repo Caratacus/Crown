@@ -104,7 +104,7 @@ public class UserRestController extends SuperController {
         User user = userService.getById(id);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         UserDTO userDTO = user.convert(UserDTO.class);
-        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getId, id), TypeUtils::castToInt);
+        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUid, id), TypeUtils::castToInt);
         userDTO.setRoleIds(roleIds);
         return success(userDTO);
     }

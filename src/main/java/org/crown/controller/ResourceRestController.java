@@ -71,7 +71,7 @@ public class ResourceRestController extends SuperController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "resourceName", value = "需要查询的资源名", paramType = "query"),
             @ApiImplicitParam(name = "method", value = "需要查询的请求方式", paramType = "query"),
-            @ApiImplicitParam(name = "verify", value = "是否需要验证", paramType = "query"),
+            @ApiImplicitParam(name = "verify", value = "是否需要验证", paramType = "query")
     })
     @GetMapping
     public ApiResponses<IPage<Resource>> page(@RequestParam(value = "resourceName", required = false) String resourceName,
