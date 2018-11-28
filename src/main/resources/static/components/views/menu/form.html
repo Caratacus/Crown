@@ -3,36 +3,37 @@
     <div class="layui-form-item">
         <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-block">
-            <input name="menuName" placeholder="请输入菜单名称" type="text" class="layui-input" maxlength="20" lay-verify="required"/>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">选择图标</label>
-        <div class="layui-input-block">
-            <input type="text" id="iconPicker" name="icon" lay-filter="iconPicker" class="layui-input" lay-verify="required"/>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单路径</label>
-        <div class="layui-input-block">
-            <input name="path" placeholder="请输入路径" type="text" class="layui-input" maxlength="64" lay-verify=""/>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">路由</label>
-        <div class="layui-input-block">
-            <input name="router" placeholder="请输入路由地址" type="text" class="layui-input" maxlength="64" lay-verify=""/>
+            <input name="menuName" placeholder="请输入菜单名称" type="text" class="layui-input" maxlength="20"
+                   lay-verify="required"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">类型</label>
         <div class="layui-input-block">
-            <select name="menuType" lay-verify="required">
-                <option value="" selected="selected">请选择类型</option>
-                <option value="1">目录</option>
+            <select name="menuType" lay-verify="required" lay-filter="menuType">
+                <option value="1" selected="selected">目录</option>
                 <option value="2">菜单</option>
                 <option value="3">按钮</option>
             </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择图标</label>
+        <div class="layui-input-block">
+            <input type="text" id="iconPicker" name="icon" lay-filter="iconPicker" class="layui-input"
+                   lay-verify="required"/>
+        </div>
+    </div>
+    <div class="layui-form-item" id="pathDiv" style="display: none">
+        <label class="layui-form-label">菜单路径</label>
+        <div class="layui-input-block">
+            <input name="path" placeholder="请输入路径" type="text" class="layui-input" maxlength="64" lay-verify=""/>
+        </div>
+    </div>
+    <div class="layui-form-item" id="routerDiv" style="display: none">
+        <label class="layui-form-label">路由</label>
+        <div class="layui-input-block">
+            <input name="router" placeholder="请输入路由地址" type="text" class="layui-input" maxlength="64" lay-verify=""/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -73,6 +74,10 @@
             // 回显menu数据
             var menu = crown.getTempData('t_menu');
             if (menu) {
+                if (menu.menuType == 2) {
+                    $("#pathDiv").css('display', 'block');
+                    $("#routerDiv").css('display', 'block');
+                }
                 crown.fromVal('menu-form', menu);
                 iconPicker.checkIcon('iconPicker', menu.icon);
             } else {
@@ -80,7 +85,16 @@
             }
             layer.closeAll('loading');
         });
-
+        // 表单提交事件
+        form.on('select(menuType)', function (data) {
+            if (data.value == 2) {
+                $("#pathDiv").css('display', 'block');
+                $("#routerDiv").css('display', 'block');
+            } else {
+                $("#pathDiv").css('display', 'none');
+                $("#routerDiv").css('display', 'none');
+            }
+        });
         // 表单提交事件
         form.on('submit(menu-form-submit)', function (data) {
             layer.load(2);
