@@ -41,14 +41,8 @@
     </div>
 </div>
 
-<!-- 表格操作列 -->
-<script type="text/html" id="resource-table-bar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">删除</a>
-</script>
 <script>
     layui.use(['form', 'table', 'config', 'crown'], function () {
-        var form = layui.form;
         var table = layui.table;
         var config = layui.config;
         var layer = layui.layer;
@@ -77,69 +71,21 @@
                         }
                     }, title: '是否需要验证'
                 },
-                {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
-                {align: 'center', toolbar: '#resource-table-bar', title: '操作'}
+                {field: 'updateTime', align: 'center', sort: true, title: '修改时间'}
             ]]
         });
         // 表格顶部操作列
         table.on('toolbar(resource-table)', function (obj) {
             if (obj.event === 'refresh') {
-                crown.put('/resource/refresh', {}, function (data) {
+                crown.put('/resource/refresh', {}, function () {
                     layer.msg('刷新成功', {icon: 1});
                     resourceTable.reload('resource-table', {});
                 });
             }
         });
-        // 表格操作列事件
-        table.on('tool(resource-table)', function (obj) {
-            var data = obj.data;
-            var layEvent = obj.event;
-
-            if (layEvent === 'edit') {
-                // 修改
-                showEditModel(data);
-            } else if (layEvent === 'reset') {
-                layer.confirm('确定重置此用户密码？', function (i) {
-                    layer.close(i);
-                    layer.load(2);
-                    crown.put('/resource/' + obj.data.id + '/password/reset', {}, function () {
-                        layer.closeAll('loading');
-                        layer.msg('重置密码成功', {icon: 1});
-                    });
-                });
-            }
-        });
-
-        //显示表单弹窗
-        var showEditModel = function (data) {
-            if (data) {
-                crown.get('/resource/' + data.id, {}, function (data) {
-                    crown.putTempData('t_resource', data.result);
-                }, false);
-            }
-            crown.popupCenter({
-                title: data ? '修改用户' : '添加用户',
-                path: 'components/views/resource/form.html',
-                finish: function () {
-                    resourceTable.reload('resource-table', {});
-                }
-            });
-        };
-
         // 搜索按钮点击事件
         $('#resource-btn-search').click(function () {
             resourceTable.reload({where: crown.getSearchForm()});
-        });
-
-        // 修改resource状态
-        form.on('switch(resource-tpl-status)', function (obj) {
-            layer.load(2);
-            crown.put('/resource/' + obj.elem.value + '/status', {
-                status: obj.elem.checked ? 0 : 1
-            }, function () {
-                layer.closeAll('loading');
-                layer.msg('用户状态更新成功', {icon: 1});
-            });
         });
     });
 </script>

@@ -62,7 +62,6 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
         loginPARM.setPassword("crown");
         TokenDTO tokenDTO = getResult(mockMvc, post("/account/token", null, loginPARM), new TypeReference<SuccessResponses<TokenDTO>>() {
         });
-
         //updatePassword
         PasswordPARM passwordPARM = new PasswordPARM();
         passwordPARM.setOldPassword("crown");

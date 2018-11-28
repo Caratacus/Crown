@@ -3,8 +3,8 @@ description = "Crown"
 configurations.all {
     //每隔100天检查远程依赖是否存在更新
     resolutionStrategy.cacheChangingModulesFor 2400, 'hours'
-    // cache dynamic versions for 10 minutes
-    //resolutionStrategy.cacheDynamicVersionsFor 10*60, 'seconds'
+    // cache dynamic versions for 24*60 minutes
+    resolutionStrategy.cacheDynamicVersionsFor 24*60*60, 'seconds'
 }
 
 configurations {
