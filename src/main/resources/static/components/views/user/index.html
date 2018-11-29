@@ -22,11 +22,13 @@
         </div>
         <!-- 表格顶部操作列 -->
         <script type="text/html" id="user-toolbar">
+            {{#  if({{show}} == true){ }}
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
                         class="layui-icon">&#xe654;</i>添加
                 </button>
             </div>
+            {{#  } }}
         </script>
         <table class="layui-table" id="user-table" lay-filter="user-table"></table>
     </div>
@@ -51,7 +53,7 @@
         var config = layui.config;
         var layer = layui.layer;
         var crown = layui.crown;
-
+       $('.layui-card').vm({show:true});
         // 渲染表格
         var userTable = table.render({
             elem: '#user-table',

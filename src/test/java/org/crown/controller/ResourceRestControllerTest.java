@@ -18,26 +18,51 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.framework.model;
+package org.crown.controller;
 
-import org.crown.common.framework.model.convert.Convert;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import org.crown.framework.SuperRestControllerTest;
+import org.crown.framework.test.ControllerTest;
+import org.crown.model.dto.TokenDTO;
+import org.crown.service.IUserService;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
 
 /**
  * <p>
- * 自增主键父类
+ * AccountRestControllerTest
  * </p>
  *
  * @author Caratacus
+ * @date 2018/11/7
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class BaseModel extends Convert {
+public class ResourceRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 
-    protected Integer id;
+    @Autowired
+    private ResourceRestController restController;
+
+    @Autowired
+    private IUserService userService;
+
+    private MockMvc mockMvc;
+    private TokenDTO token;
+
+    @Before
+    @Override
+    public void before() {
+        mockMvc = getMockMvc(restController);
+        token = userService.getToken(userService.getById(1));
+    }
+
+    @Test
+    public void page() throws Exception {
+        isOk(mockMvc, get("/resource", token.getToken()));
+    }
+
+    @Test
+    public void refresh() throws Exception {
+        isOk(mockMvc, put("/resource/refresh", token.getToken()));
+    }
 
 }

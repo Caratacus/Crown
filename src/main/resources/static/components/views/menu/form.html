@@ -75,8 +75,8 @@
             var menu = crown.getTempData('t_menu');
             if (menu) {
                 if (menu.menuType == 2) {
-                    $("#pathDiv").css('display', 'block');
-                    $("#routerDiv").css('display', 'block');
+                    $("#pathDiv").show();
+                    $("#routerDiv").show();
                 }
                 crown.fromVal('menu-form', menu);
                 iconPicker.checkIcon('iconPicker', menu.icon);
@@ -88,11 +88,11 @@
         // 表单提交事件
         form.on('select(menuType)', function (data) {
             if (data.value == 2) {
-                $("#pathDiv").css('display', 'block');
-                $("#routerDiv").css('display', 'block');
+                $("#pathDiv").show();
+                $("#routerDiv").show();
             } else {
-                $("#pathDiv").css('display', 'none');
-                $("#routerDiv").css('display', 'none');
+                $("#pathDiv").hide();
+                $("#routerDiv").hide();
             }
         });
         // 表单提交事件
