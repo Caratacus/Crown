@@ -22,6 +22,7 @@ package org.crown.controller;
 
 import java.util.Objects;
 
+import org.crown.common.annotations.RequiresAuthentication;
 import org.crown.common.annotations.Resources;
 import org.crown.common.api.model.responses.ApiResponses;
 import org.crown.common.framework.controller.SuperController;
@@ -67,6 +68,7 @@ public class ResourceRestController extends SuperController {
     private ScanMappings scanMappings;
 
     @Resources(verify = false)
+    @RequiresAuthentication(requires = false)
     @ApiOperation(value = "查询所有资源(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "resourceName", value = "需要查询的资源名", paramType = "query"),
