@@ -21,9 +21,9 @@
 package org.crown.controller;
 
 import org.crown.common.annotations.Resources;
-import org.crown.common.api.model.responses.ApiResponses;
-import org.crown.common.framework.controller.SuperController;
-import org.crown.common.kit.IpUtils;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.controller.SuperController;
+import org.crown.common.utils.IpUtils;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.User;
 import org.crown.model.parm.LoginPARM;

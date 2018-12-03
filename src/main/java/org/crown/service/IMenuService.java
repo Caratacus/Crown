@@ -20,7 +20,7 @@
  */
 package org.crown.service;
 
-import org.crown.common.framework.service.BaseService;
+import org.crown.framework.service.BaseService;
 import org.crown.emuns.StatusEnum;
 import org.crown.model.entity.Menu;
 

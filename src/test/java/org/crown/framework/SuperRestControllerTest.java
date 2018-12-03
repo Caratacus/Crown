@@ -23,9 +23,9 @@ package org.crown.framework;
 import java.util.Objects;
 
 import org.crown.CrownApplication;
-import org.crown.common.api.model.responses.SuccessResponses;
-import org.crown.common.exception.CrownException;
-import org.crown.common.kit.JacksonUtils;
+import org.crown.framework.responses.SuccessResponses;
+import org.crown.framework.exception.CrownException;
+import org.crown.common.utils.JacksonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

@@ -22,7 +22,7 @@ package org.crown.model.parm;
 
 import javax.validation.constraints.NotBlank;
 
-import org.crown.common.framework.model.convert.Convert;
+import org.crown.framework.model.convert.Convert;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

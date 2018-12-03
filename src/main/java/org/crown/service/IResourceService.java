@@ -22,7 +22,7 @@ package org.crown.service;
 
 import java.util.List;
 
-import org.crown.common.framework.service.BaseService;
+import org.crown.framework.service.BaseService;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 

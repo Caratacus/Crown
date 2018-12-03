@@ -7,7 +7,7 @@ mybatis-plus:
       id-type: auto
       db-type: mysql
     banner: false
-    super-mapper-class: org.crown.common.framework.mapper.BaseMapper
+    super-mapper-class: org.crown.framework.mapper.BaseMapper
   mapper-locations: classpath:mapper/*Mapper.xml
   type-enums-package: org.crown.emuns
   type-aliases-package: org.crown.model.entity,org.crown.model.dto

@@ -58,7 +58,7 @@
     <Loggers>
         <!--AsyncLogger-->
         <AsyncLogger name="org.crown" level="info" includeLocation="true"/>
-        <AsyncLogger name="org.crown.common.p6spy" level="debug" includeLocation="true"/>
+        <AsyncLogger name="org.crown.framework.p6spy" level="debug" includeLocation="true"/>
         <!--AsyncRoot-->
         <AsyncRoot level="warn" includeLocation="true">
             <appender-ref ref="CONSOLE"/>

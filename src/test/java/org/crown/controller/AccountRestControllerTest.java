@@ -20,7 +20,7 @@
  */
 package org.crown.controller;
 
-import org.crown.common.api.model.responses.SuccessResponses;
+import org.crown.framework.responses.SuccessResponses;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;

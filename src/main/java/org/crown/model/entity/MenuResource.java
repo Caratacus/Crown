@@ -20,7 +20,7 @@
  */
 package org.crown.model.entity;
 
-import org.crown.common.framework.model.BaseModel;
+import org.crown.framework.model.BaseModel;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 

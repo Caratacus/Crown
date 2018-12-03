@@ -23,9 +23,9 @@ package org.crown.common.spring;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.common.api.ApiUtils;
-import org.crown.common.api.model.ErrorCode;
-import org.crown.common.exception.ApiException;
+import org.crown.framework.model.ErrorCode;
+import org.crown.framework.exception.ApiException;
+import org.crown.framework.utils.ResponseUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -53,7 +53,7 @@ public class GlobalControllerExceptionHandler {
     @ExceptionHandler(value = ApiException.class)
     public void handleBadRequest(HttpServletRequest request, HttpServletResponse response, ApiException exception) {
         ErrorCode code = exception.getErrorCode();
-        ApiUtils.sendRestFail(request, response, code);
+        ResponseUtils.sendFail(request, response, code);
         if (code.getHttpCode() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
             log.info("Info: code: {} ,httpCode: {} ,msg: {}", code.getError(), code.getHttpCode(), code.getMsg());
         } else {

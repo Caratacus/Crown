@@ -20,7 +20,7 @@
  */
 package org.crown.emuns;
 
-import org.crown.common.emuns.IEnum;
+import org.crown.framework.emuns.IEnum;
 import org.crown.common.exception.UnknownEnumException;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;

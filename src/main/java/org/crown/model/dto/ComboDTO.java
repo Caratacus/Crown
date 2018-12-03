@@ -20,7 +20,7 @@
  */
 package org.crown.model.dto;
 
-import org.crown.common.framework.model.BaseModel;
+import org.crown.framework.model.BaseModel;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

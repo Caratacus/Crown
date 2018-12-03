@@ -23,8 +23,8 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.annotations.Resources;
-import org.crown.common.api.model.responses.ApiResponses;
-import org.crown.common.framework.controller.SuperController;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.controller.SuperController;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.model.dto.ComboDTO;
 import org.crown.model.entity.Menu;

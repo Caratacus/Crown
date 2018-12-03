@@ -23,8 +23,8 @@ package org.crown.common.spring;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.common.api.ApiUtils;
-import org.crown.common.emuns.ErrorCodeEnum;
+import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.utils.ResponseUtils;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,7 +87,7 @@ public class BasicErrorController implements ErrorController {
             default:
                 errorCode = ErrorCodeEnum.INTERNAL_SERVER_ERROR;
         }
-        ApiUtils.sendRestFail(request, response, errorCode);
+        ResponseUtils.sendFail(request, response, errorCode);
     }
 
 }

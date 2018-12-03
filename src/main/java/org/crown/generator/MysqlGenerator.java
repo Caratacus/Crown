@@ -120,18 +120,18 @@ public class MysqlGenerator {
                         .setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
                         //.setInclude(new String[] { "user" }) // 需要生成的表
                         //自定义实体父类
-                        .setSuperEntityClass("org.crown.common.framework.model.BaseModel")
+                        .setSuperEntityClass("org.crown.framework.model.BaseModel")
                         // 自定义实体，公共字段
                         .setSuperEntityColumns("id")
                         .setTableFillList(tableFillList)
                         // 自定义 mapper 父类
-                        .setSuperMapperClass("org.crown.common.framework.mapper.BaseMapper")
+                        .setSuperMapperClass("org.crown.framework.mapper.BaseMapper")
                         // 自定义 controller 父类
-                        .setSuperControllerClass("org.crown.common.framework.controller.SuperController")
+                        .setSuperControllerClass("org.crown.framework.controller.SuperController")
                         // 自定义 service 实现类父类
-                        .setSuperServiceImplClass("org.crown.common.framework.service.impl.BaseServiceImpl")
+                        .setSuperServiceImplClass("org.crown.framework.service.impl.BaseServiceImpl")
                         // 自定义 service 接口父类
-                        .setSuperServiceClass("org.crown.common.framework.service.BaseService")
+                        .setSuperServiceClass("org.crown.framework.service.BaseService")
                         // 【实体】是否生成字段常量（默认 false）
                         .setEntityColumnConstant(true)
                         // 【实体】是否为构建者模型（默认 false）

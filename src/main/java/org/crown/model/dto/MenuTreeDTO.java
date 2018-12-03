@@ -1,6 +1,6 @@
 package org.crown.model.dto;
 
-import org.crown.common.framework.model.TreeNode;
+import org.crown.framework.model.TreeNode;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

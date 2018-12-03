@@ -22,8 +22,8 @@ package org.crown.service.impl;
 
 import java.util.List;
 
-import org.crown.common.framework.service.impl.BaseServiceImpl;
-import org.crown.common.kit.BeanConverter;
+import org.crown.framework.service.impl.BaseServiceImpl;
+import org.crown.framework.converter.BeanConverter;
 import org.crown.mapper.ResourceMapper;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;

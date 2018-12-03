@@ -26,7 +26,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.crown.common.http.log.aspect.LogRecordAspect;
+import org.crown.framework.aspect.LogRecordAspect;
 import org.crown.common.spring.CrownHandlerExceptionResolver;
 import org.crown.common.spring.IEnumConverterFactory;
 import org.crown.common.spring.interceptor.GlobalInterceptor;

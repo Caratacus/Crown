@@ -22,7 +22,7 @@ package org.crown.model.entity;
 
 import java.time.LocalDateTime;
 
-import org.crown.common.framework.model.BaseModel;
+import org.crown.framework.model.BaseModel;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
 

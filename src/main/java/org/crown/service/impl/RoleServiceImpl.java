@@ -20,7 +20,7 @@
  */
 package org.crown.service.impl;
 
-import org.crown.common.framework.service.impl.BaseServiceImpl;
+import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.RoleMapper;
 import org.crown.model.entity.Role;
 import org.crown.service.IRoleService;

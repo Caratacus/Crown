@@ -23,7 +23,7 @@ package org.crown.common.mybatisplus;
 import java.time.LocalDateTime;
 
 import org.apache.ibatis.reflection.MetaObject;
-import org.crown.common.http.RequestKit;
+import org.crown.common.utils.ApiUtils;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
@@ -72,7 +72,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
     private Integer currentUid() {
         Integer uid = null;
         try {
-            uid = RequestKit.currentUid();
+            uid = ApiUtils.currentUid();
         } catch (Exception ignored) {
         }
         return uid;

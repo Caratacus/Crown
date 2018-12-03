@@ -22,7 +22,7 @@ package org.crown.model.entity;
 
 import java.time.LocalDateTime;
 
-import org.crown.common.framework.model.convert.Convert;
+import org.crown.framework.model.convert.Convert;
 import org.crown.emuns.StatusEnum;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;

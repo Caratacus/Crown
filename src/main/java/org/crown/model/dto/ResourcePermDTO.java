@@ -20,7 +20,7 @@
  */
 package org.crown.model.dto;
 
-import org.crown.common.framework.model.convert.Convert;
+import org.crown.framework.model.convert.Convert;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

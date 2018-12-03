@@ -22,7 +22,7 @@ package org.crown.controller;
 
 import java.util.List;
 
-import org.crown.common.api.model.responses.SuccessResponses;
+import org.crown.framework.responses.SuccessResponses;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;

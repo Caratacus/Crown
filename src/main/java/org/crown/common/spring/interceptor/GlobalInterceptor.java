@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.crown.common.annotations.Resources;
-import org.crown.common.exception.CrownException;
+import org.crown.framework.exception.CrownException;
 import org.crown.cons.APICons;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;

@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.shiro.ShiroException;
-import org.crown.common.api.ApiUtils;
-import org.crown.common.emuns.ErrorCodeEnum;
-import org.crown.common.exception.ApiException;
+import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.exception.ApiException;
+import org.crown.framework.utils.ResponseUtils;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
@@ -157,7 +157,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleApi(ApiException ex,
                              HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ex.getErrorCode());
+        ResponseUtils.sendFail(request, response, ex.getErrorCode());
 
     }
 
@@ -176,7 +176,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
                                                        HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.METHOD_NOT_ALLOWED, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.METHOD_NOT_ALLOWED, ex);
     }
 
     /**
@@ -188,7 +188,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleShiroException(ShiroException ex,
                                         HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.UNAUTHORIZED, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.UNAUTHORIZED, ex);
     }
 
     /**
@@ -207,7 +207,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpServletRequest request,
                                                    HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.UNSUPPORTED_MEDIA_TYPE, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.UNSUPPORTED_MEDIA_TYPE, ex);
     }
 
     /**
@@ -226,7 +226,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex, HttpServletRequest request,
                                                     HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.NOT_ACCEPTABLE, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.NOT_ACCEPTABLE, ex);
     }
 
     /**
@@ -243,7 +243,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleMissingPathVariable(MissingPathVariableException ex, HttpServletRequest request,
                                              HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
     }
 
     /**
@@ -259,7 +259,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
                                                         HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -276,7 +276,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleServletRequestBindingException(ServletRequestBindingException ex, HttpServletRequest request,
                                                         HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -309,7 +309,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param response current HTTP response
      */
     protected void handleTypeMismatch(TypeMismatchException ex, HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -328,9 +328,9 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
     protected void handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpServletRequest request,
                                                 HttpServletResponse response) {
         if (ex.getCause() instanceof JsonParseException) {
-            ApiUtils.sendRestFail(request, response, ErrorCodeEnum.JSON_FORMAT_ERROR, ex);
+            ResponseUtils.sendFail(request, response, ErrorCodeEnum.JSON_FORMAT_ERROR, ex);
         } else {
-            ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+            ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
         }
     }
 
@@ -362,7 +362,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request,
                                                          HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -375,7 +375,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleMissingServletRequestPartException(MissingServletRequestPartException ex,
                                                             HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -388,7 +388,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param response current HTTP response
      */
     protected void handleBindException(BindException ex, HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -404,7 +404,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleNoHandlerFoundException(NoHandlerFoundException ex, HttpServletRequest request,
                                                  HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.NOT_FOUND, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.NOT_FOUND, ex);
     }
 
     /**
@@ -418,7 +418,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex, HttpServletRequest request,
                                                       HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.SERVICE_UNAVAILABLE, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.SERVICE_UNAVAILABLE, ex);
     }
 
     /**
@@ -432,7 +432,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      */
     protected void handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request,
                                                       HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.BAD_REQUEST, ex);
     }
 
     /**
@@ -445,7 +445,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param response current HTTP response
      */
     protected void handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
     }
 
     /**
@@ -453,7 +453,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * request attribute "javax.servlet.error.exception" to the Exception.
      */
     protected void sendServerError(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        ApiUtils.sendRestFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.INTERNAL_SERVER_ERROR, ex);
     }
 
 }

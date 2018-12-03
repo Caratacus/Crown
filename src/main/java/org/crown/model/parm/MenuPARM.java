@@ -23,7 +23,7 @@ package org.crown.model.parm;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.crown.common.framework.model.convert.Convert;
+import org.crown.framework.model.convert.Convert;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
 

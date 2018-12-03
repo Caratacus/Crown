@@ -21,7 +21,7 @@
 package org.crown.config;
 
 import org.crown.common.mybatisplus.CommonMetaObjectHandler;
-import org.crown.common.mybatisplus.MybatisPlusSqlInjector;
+import org.crown.framework.mybatisplus.MybatisPlusSqlInjector;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
