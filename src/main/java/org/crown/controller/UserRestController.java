@@ -29,7 +29,7 @@ import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.controller.SuperController;
-import org.crown.framework.utils.TypeUtils;
+import org.crown.common.utils.TypeUtils;
 import org.crown.emuns.StatusEnum;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;

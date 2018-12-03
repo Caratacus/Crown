@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.AntiSQLFilter;
-import org.crown.framework.utils.TypeUtils;
+import org.crown.common.utils.TypeUtils;
 import org.crown.common.utils.ApiUtils;
 import org.crown.cons.PageCons;
 import org.springframework.beans.factory.annotation.Autowired;

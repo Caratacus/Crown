@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.model.Log;

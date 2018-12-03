@@ -94,7 +94,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['**/kit/*.class', '**/modelmapper/*.class', '**/api/*.class'])
+            fileTree(dir: it, exclude: ['**/common/utils/*.class', '**/common/modelmapper/*.class'])
         })
     }
 }
