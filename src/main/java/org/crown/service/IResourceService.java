@@ -23,7 +23,6 @@ package org.crown.service;
 import java.util.List;
 
 import org.crown.framework.service.BaseService;
-import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 
 /**
@@ -42,5 +41,5 @@ public interface IResourceService extends BaseService<Resource> {
      * @param uid
      * @return
      */
-    List<ResourcePermDTO> getUserPerms(Integer uid);
+    List<String> getUserPerms(Integer uid);
 }

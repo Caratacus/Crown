@@ -22,8 +22,8 @@ package org.crown.framework.emuns;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.crown.framework.model.ErrorCode;
 import org.crown.common.exception.UnknownEnumException;
+import org.crown.framework.model.ErrorCode;
 
 /**
  * 业务异常枚举
@@ -162,4 +162,5 @@ public enum ErrorCodeEnum {
     public boolean show() {
         return this.show;
     }
+
 }

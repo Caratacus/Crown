@@ -22,10 +22,9 @@ package org.crown.service.impl;
 
 import java.util.List;
 
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.service.impl.BaseServiceImpl;
-import org.crown.framework.converter.BeanConverter;
 import org.crown.mapper.ResourceMapper;
-import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
 import org.springframework.stereotype.Service;
@@ -44,9 +43,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resource> implements IResourceService {
 
     @Override
-    public List<ResourcePermDTO> getUserPerms(Integer uid) {
+    public List<String> getUserPerms(Integer uid) {
         //TODO 目前是查询所有权限 后期需要更改
-        List<Resource> resources = list(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping));
-        return BeanConverter.convert(ResourcePermDTO.class, resources);
+        return listObjs(Wrappers.<Resource>lambdaQuery().select(Resource::getPerm), TypeUtils::castToString);
     }
 }

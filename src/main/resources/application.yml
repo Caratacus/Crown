@@ -58,4 +58,6 @@ spring:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
-
+  aop:
+    auto: true
+    proxy-target-class: true

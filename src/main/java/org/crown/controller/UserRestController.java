@@ -25,19 +25,16 @@ import java.util.Objects;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
-import org.crown.framework.utils.ApiAssert;
-import org.crown.framework.responses.ApiResponses;
-import org.crown.framework.emuns.ErrorCodeEnum;
-import org.crown.framework.controller.SuperController;
-import org.crown.common.utils.TypeUtils;
 import org.crown.emuns.StatusEnum;
+import org.crown.framework.controller.SuperController;
+import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.responses.ApiResponses;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
-import org.crown.model.entity.UserRole;
 import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
-import org.crown.service.IUserRoleService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -76,8 +73,6 @@ public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
-    @Autowired
-    private IUserRoleService userRoleService;
 
     @Resources(verify = false)
     @ApiOperation("查询所有用户")
@@ -104,7 +99,7 @@ public class UserRestController extends SuperController {
         User user = userService.getById(id);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         UserDTO userDTO = user.convert(UserDTO.class);
-        List<Integer> roleIds = userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUid, id), TypeUtils::castToInt);
+        List<Integer> roleIds = userService.getRoleIds(user.getId());
         userDTO.setRoleIds(roleIds);
         return success(userDTO);
     }
@@ -166,6 +161,7 @@ public class UserRestController extends SuperController {
     @Resources(verify = false)
     @ApiOperation("获取用户详情")
     @GetMapping("/details")
+    //@RequiresPermissions("sys:role:list")
     public ApiResponses<UserDetailsDTO> getUserDetails() {
         Integer uid = currentUid();
         UserDetailsDTO userDetails = userService.getUserDetails(uid);

@@ -58,6 +58,6 @@ public class UserDetailsDTO extends Convert {
     private String phone;
 
     @ApiModelProperty(notes = "权限路径")
-    private List<ResourcePermDTO> perms;
+    private List<String> perms;
 
 }

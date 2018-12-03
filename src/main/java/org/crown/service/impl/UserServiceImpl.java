@@ -25,11 +25,12 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.collections4.CollectionUtils;
-import org.crown.framework.utils.ApiAssert;
+import org.crown.common.utils.JWTTokenUtils;
+import org.crown.common.utils.TypeUtils;
+import org.crown.emuns.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
-import org.crown.common.utils.JWTTokenUtils;
-import org.crown.emuns.StatusEnum;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.mapper.UserMapper;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;
@@ -80,7 +81,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         Integer id = user.getId();
         TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setUid(id);
-        tokenDTO.setToken(JWTTokenUtils.generate(id, user.getEmail()));
+        tokenDTO.setToken(JWTTokenUtils.generate(id));
         return tokenDTO;
     }
 
@@ -134,6 +135,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
                 return userRole;
             }).collect(Collectors.toList()));
         }
+    }
+
+    @Override
+    public List<Integer> getRoleIds(Integer uid) {
+        return userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUid, uid), TypeUtils::castToInt);
     }
 
 }

@@ -56,7 +56,7 @@ import io.undertow.Undertow;
 
 /**
  * <p>
- * Service 配置
+ * Spring Boot 配置
  * </p>
  *
  * @author Caratacus

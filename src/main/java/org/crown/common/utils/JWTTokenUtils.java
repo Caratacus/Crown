@@ -24,11 +24,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.crown.framework.utils.ApiAssert;
-import org.crown.common.model.JWTToken;
-import org.crown.framework.emuns.ErrorCodeEnum;
-
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
@@ -46,27 +44,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class JWTTokenUtils {
 
-    public static final String _ID = "id";
-    public static final String _USERNAME = "un";
-    private static final String SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTMZPZNMDJu3k";
-    private static final long expire = 60 * 60 * 1000;
+    public static final String _ID = "_id";
+    private static final String SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTZPZNMDJu3k";
+    private static final long EXPIRE = 60 * 60 * 1000;
 
     /**
      * 生成token
      *
      * @param uid
-     * @param loginName
      * @return
      */
-    public static String generate(Integer uid, String loginName) {
+    public static String generate(Integer uid) {
         Date nowDate = new Date();
         //过期时间
-        Date expireDate = new Date(nowDate.getTime() + expire * 1000);
+        Date expireDate = new Date(nowDate.getTime() + EXPIRE * 1000);
         Map<String, Object> claims = new HashMap<>(2);
         claims.put(_ID, uid);
-        claims.put(_USERNAME, loginName);
         return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
                 .setClaims(claims)
                 .setIssuedAt(nowDate)
                 .setExpiration(expireDate)
@@ -81,32 +75,53 @@ public abstract class JWTTokenUtils {
      * @return
      */
     public static Claims getClaim(String token) {
-        Claims claims = null;
-        try {
-            claims = Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (Exception e) {
-            log.debug("validate is token error ", e);
-        }
-        return claims;
+        return Jwts.parser()
+                .setSigningKey(SECRET)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     /**
-     * 解析token为JWTToken对象
+     * 获取jwt发布时间
+     */
+    public static Date getIssuedAtDate(String token) {
+        return getClaim(token).getIssuedAt();
+    }
+
+    /**
+     * 获取UID
+     */
+    public static Integer getUid(String token) {
+        return TypeUtils.castToInt(getClaim(token).get(_ID));
+    }
+
+    /**
+     * 获取jwt失效时间
+     */
+    public static Date getExpirationDate(String token) {
+        return getClaim(token).getExpiration();
+    }
+
+    /**
+     * 解析token是否正确,不正确会报异常<br>
+     */
+    public static void parseToken(String token) throws JwtException {
+        Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+    }
+
+    /**
+     * 验证token是否失效
      *
      * @param token
-     * @return
-     * @see JWTToken
+     * @return true:过期   false:没过期
      */
-    public static JWTToken parser(String token) {
-        Claims claims = getClaim(token);
-        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
-        JWTToken jwtToken = new JWTToken();
-        jwtToken.setId(TypeUtils.castToInt(claims.get(_ID)));
-        jwtToken.setUsername(claims.get(_USERNAME, String.class));
-        return jwtToken;
+    public static boolean isExpired(String token) {
+        try {
+            final Date expiration = getExpirationDate(token);
+            return expiration.before(new Date());
+        } catch (ExpiredJwtException expiredJwtException) {
+            return true;
+        }
     }
 
 }

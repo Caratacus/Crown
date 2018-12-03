@@ -18,33 +18,30 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.model.dto;
+package org.crown.common.shiro;
 
-import org.crown.framework.model.convert.Convert;
-
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import org.apache.shiro.authc.AuthenticationToken;
 
 /**
- * <p>
- * 权限 资源DTO
- * </p>
+ * JWTToken
  *
  * @author Caratacus
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-public class ResourcePermDTO extends Convert {
+public class JWTToken implements AuthenticationToken {
 
-    private static final long serialVersionUID = 1L;
+    private String token;
 
-    @ApiModelProperty(notes = "请求方式")
-    private String method;
+    public JWTToken(String token) {
+        this.token = token;
+    }
 
-    @ApiModelProperty(notes = "路径映射")
-    private String mapping;
+    @Override
+    public Object getPrincipal() {
+        return token;
+    }
 
+    @Override
+    public Object getCredentials() {
+        return token;
+    }
 }

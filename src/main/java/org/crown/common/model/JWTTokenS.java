@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class JWTToken extends Convert {
+public class JWTTokenS extends Convert {
 
     private static final long serialVersionUID = 1L;
     /**

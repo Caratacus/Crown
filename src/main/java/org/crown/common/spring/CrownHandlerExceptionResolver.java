@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.shiro.ShiroException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.utils.ResponseUtils;
@@ -130,6 +131,8 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
                 handleAsyncRequestTimeoutException((AsyncRequestTimeoutException) ex, request, response);
             } else if (ex instanceof ConstraintViolationException) {
                 handleConstraintViolationException((ConstraintViolationException) ex, request, response);
+            } else if (ex instanceof UnauthorizedException) {
+                handleUnauthorizedException((UnauthorizedException) ex, request, response);
             } else if (ex instanceof ShiroException) {
                 handleShiroException((ShiroException) ex, request, response);
             } else {
@@ -189,6 +192,17 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
     protected void handleShiroException(ShiroException ex,
                                         HttpServletRequest request, HttpServletResponse response) {
         ResponseUtils.sendFail(request, response, ErrorCodeEnum.UNAUTHORIZED, ex);
+    }
+    /**
+     * The implementation logs a warning, sends an HTTP 403 error
+     *
+     * @param ex       the UnauthorizedException to be handled
+     * @param request  current HTTP request
+     * @param response current HTTP response
+     */
+    protected void handleUnauthorizedException(UnauthorizedException ex,
+                                        HttpServletRequest request, HttpServletResponse response) {
+        ResponseUtils.sendFail(request, response, ErrorCodeEnum.FORBIDDEN, ex);
     }
 
     /**

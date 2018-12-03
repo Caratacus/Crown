@@ -22,8 +22,8 @@ package org.crown.service;
 
 import java.util.List;
 
-import org.crown.framework.service.BaseService;
 import org.crown.emuns.StatusEnum;
+import org.crown.framework.service.BaseService;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
@@ -94,5 +94,13 @@ public interface IUserService extends BaseService<User> {
      * @param roleIds
      */
     void saveUserRoles(Integer uid, List<Integer> roleIds);
+
+    /**
+     * 根据用户ID获取角色
+     *
+     * @param uid
+     * @return
+     */
+    List<Integer> getRoleIds(Integer uid);
 
 }
