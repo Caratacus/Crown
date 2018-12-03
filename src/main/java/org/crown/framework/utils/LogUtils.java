@@ -23,15 +23,18 @@ package org.crown.framework.utils;
 import java.util.Map;
 import java.util.Optional;
 
-import org.crown.framework.model.Log;
 import org.crown.common.spring.ApplicationUtils;
 import org.crown.common.utils.JacksonUtils;
+import org.crown.framework.model.Log;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 请求日志工具类
  *
  * @author Caratacus
  */
+@Slf4j
 public abstract class LogUtils {
 
     /**
@@ -47,10 +50,8 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static Log getLogger(Long beiginTime, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
-        // 调用接口结束时间
-        Long endTime = System.currentTimeMillis();
-        return Log.builder()
+    public static void printLog(Long beiginTime, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
+        Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
                 //请求体
@@ -61,10 +62,11 @@ public abstract class LogUtils {
                 .mapping(mapping)
                 //请求方法
                 .method(method)
-                .runTime((beiginTime != null ? endTime - beiginTime : 0) + "ms")
+                .runTime((beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms")
                 .result(object)
                 .ip(ip)
                 .build();
+        log.info(JacksonUtils.toJson(logInfo));
     }
 
     public static void doAfterReturning(Object ret) {

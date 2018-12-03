@@ -28,16 +28,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.TypeUtils;
+import org.crown.cons.APICons;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
-import org.crown.framework.model.Log;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.responses.FailedResponse;
 import org.crown.framework.wrapper.ResponseWrapper;
-import org.crown.common.utils.IpUtils;
-import org.crown.common.utils.JacksonUtils;
-import org.crown.cons.APICons;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -66,7 +64,7 @@ public abstract class ResponseUtils {
      * @param obj      需要转换JSON的对象
      */
     public static void writeValAsJson(HttpServletRequest request, ResponseWrapper response, Object obj) {
-        Log logger = LogUtils.getLogger((Long) request.getAttribute(APICons.API_BEGIN_TIME),
+        LogUtils.printLog((Long) request.getAttribute(APICons.API_BEGIN_TIME),
                 request.getParameterMap(),
                 RequestUtils.getRequestBody(request),
                 (String) request.getAttribute(APICons.API_REQURL),
@@ -74,8 +72,6 @@ public abstract class ResponseUtils {
                 (String) request.getAttribute(APICons.API_METHOD),
                 IpUtils.getIpAddr(request),
                 obj);
-        // 日志打印
-        log.info(JacksonUtils.toJson(logger));
         if (ObjectUtils.isNotNull(response, obj)) {
             response.writeValueAsJson(obj);
         }
