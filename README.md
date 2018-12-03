@@ -119,7 +119,7 @@
 -----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
 
-   The Corwn is released under of the [Mit License](https://mit-license.org). <br/>
+   The Crown is released under of the [Mit License](https://mit-license.org). <br/>
 
 -----------------------------------------------------------------------------------------------
 ##### 有事烧钱 :octocat:
