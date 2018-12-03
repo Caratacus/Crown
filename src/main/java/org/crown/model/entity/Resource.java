@@ -74,6 +74,10 @@ public class Resource extends Convert {
      */
     private Boolean verify;
     /**
+     * 权限标识
+     */
+    private String perm;
+    /**
      * 修改时间
      */
     @Version

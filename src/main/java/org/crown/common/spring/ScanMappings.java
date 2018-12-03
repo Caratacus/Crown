@@ -36,6 +36,7 @@ import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -61,6 +62,7 @@ public class ScanMappings {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
+    @Transactional
     public void doScan() {
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping.getHandlerMethods();
         List<Resource> resources = handlerMethods.values().stream().map(this::getResources).flatMap(Collection::stream).collect(Collectors.toList());
@@ -98,12 +100,13 @@ public class ScanMappings {
             for (String mapping : mappings) {
                 //接口描述
                 Resource resource = new Resource();
-                resource.setId(MD5Util.computeMD5(requestMethod.name() + mapping));
                 resource.setResourceName(Objects.nonNull(apiOperation) ? apiOperation.value() : "未命名资源路径");
                 resource.setMapping(mapping);
                 resource.setMethod(requestMethod.name());
                 resource.setVerify(res.verify());
+                resource.setPerm(requestMethod.name() + ":" + mapping);
                 resource.setUpdateTime(LocalDateTime.now());
+                resource.setId(MD5Util.computeMD5(resource.getPerm()));
                 resources.add(resource);
             }
         }
