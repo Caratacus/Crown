@@ -79,7 +79,9 @@
 <sup>5</sup> 运用Liquibase，增量SQL一键导出 <br/>
 <sup>6</sup> 接口日志详情打印，所有访问信息一览无遗 <br/>
 <sup>7</sup> 各项配置调制最优，再也不需要担心默认值性能问题 <br/>
-<sup>8</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
+<sup>8</sup> P6spy打印SQL，一切操作尽在掌握 <br/>
+<sup>9</sup> Shiro RestApi 鉴权，前后端完全隔离 <br/>
+<sup>10</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
 <sup>N</sup> 更多特性持续更新 <br/>
 </sup>
 
@@ -96,6 +98,8 @@
 <sup>8</sup> 接口文档: Swagger <br/>
 <sup>9</sup> 基础工具类: ApacheCommons、VjTools <br/>
 <sup>10</sup> 日志: SLF4J、Async Log4j2 <br/>
+<sup>11</sup> SQL打印: P6spy <br/>
+<sup>12</sup> 鉴权: Shiro <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 
@@ -114,6 +118,18 @@
 
 <sup>
     答：上图所示，IDEA下载Lombok插件并开启注解编译支持
+</sup>
+
+* ###### 代码编译各种不通过，是什么问题？![Travis Build标签](https://travis-ci.org/Caratacus/Crown.svg?branch=master)
+
+<sup>
+    答：查看问题上travis build标签，passing 代表代码测试用例通过，更不存在编译问题；failed表示代码测试不通过，联系作者（作者自己也会收到邮件）
+</sup>
+
+* ###### 为什么项目启动后用127.0.0.1无法访问项目，localhost却可以？
+
+<sup>
+    答：项目是前后端分离的需要127.0.0.1访问修改config.js中serverUrl路径即可
 </sup>
 
 -----------------------------------------------------------------------------------------------
