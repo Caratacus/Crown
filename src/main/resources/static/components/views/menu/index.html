@@ -60,6 +60,7 @@
                 treeDefaultClose: false,
                 toolbar: '#menu-toolbar',
                 url: config.serverUrl + '/menu',
+                headers: {Authorization: config.getToken()},
                 cols: [[
                     {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
                     {field: 'menuName', align: 'center', sort: true, title: '菜单名称'},

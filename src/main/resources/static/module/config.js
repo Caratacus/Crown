@@ -100,7 +100,7 @@ layui.define(function (exports) {
                     path: 'views/resource/index.html',
                     auth: 'get:/authorities'
                 }
-                ]
+            ]
         }],
         // 当前登录的用户
         getUser: function () {

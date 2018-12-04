@@ -74,6 +74,7 @@
             request: config.request,
             parseData: config.parseData,
             response: config.response,
+            headers: {Authorization: config.getToken()},
             page: true,
             cols: [[
                 {type: 'numbers'},
