@@ -23,8 +23,10 @@ package org.crown.service.impl;
 import java.util.List;
 
 import org.crown.common.utils.TypeUtils;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.ResourceMapper;
+import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,20 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     public List<String> getUserPerms(Integer uid) {
         //TODO 目前是查询所有权限 后期需要更改
         return listObjs(Wrappers.<Resource>lambdaQuery().select(Resource::getPerm), TypeUtils::castToString);
+    }
+
+    @Override
+    public List<ResourcePermDTO> getOpenPerms() {
+        return getPerms(AuthTypeEnum.OPEN);
+    }
+
+    @Override
+    public List<ResourcePermDTO> getLoginPerms() {
+        return getPerms(AuthTypeEnum.LOGIN);
+    }
+
+    @Override
+    public List<ResourcePermDTO> getPerms(AuthTypeEnum authType) {
+        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod,Resource::getMapping).eq(Resource::getAuthType, authType),e->e.convert(ResourcePermDTO.class));
     }
 }

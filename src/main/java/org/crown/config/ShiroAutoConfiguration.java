@@ -50,9 +50,18 @@ public class ShiroAutoConfiguration {
         filters.put("jwt", new JWTFilter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/**/**.*", "anon");
         filterMap.put("/", "anon");
+        filterMap.put("/**/**.*", "anon");
         filterMap.put("/**", "jwt");
+        /*filterMap.put("/", "anon");
+        filterMap.put("/webjars/**", "anon");
+        filterMap.put("/swagger/**", "anon");
+        filterMap.put("/v2/api-docs", "anon");
+        filterMap.put("/swagger-ui.html", "anon");
+        filterMap.put("/swagger-resources/**", "anon");
+        filterMap.put("/assets/**", "anon");
+        filterMap.put("/login.html", "anon");
+        filterMap.put("/**", "jwt");*/
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }

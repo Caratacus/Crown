@@ -70,14 +70,14 @@ public class AccountRestController extends SuperController {
         return success(tokenDTO);
     }
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources(auth = AuthTypeEnum.LOGIN)
     @ApiOperation("清除Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {
         return empty();
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.LOGIN)
     @ApiOperation("修改密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "oldPassword", value = "原密码", required = true, dataType = "String"),

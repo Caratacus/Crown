@@ -67,7 +67,7 @@ public class ResourceRestController extends SuperController {
     @Autowired
     private ScanMappings scanMappings;
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources
     @ApiOperation(value = "查询所有资源(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "resourceName", value = "需要查询的资源名", paramType = "query"),
@@ -87,7 +87,7 @@ public class ResourceRestController extends SuperController {
         return success(page);
     }
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources
     @ApiOperation(value = "刷新资源")
     @PutMapping("/refresh")
     public ApiResponses<Void> refresh() {

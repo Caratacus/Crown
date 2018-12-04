@@ -67,7 +67,7 @@ public class MenuRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
     public ApiResponses<List<Menu>> list() {
@@ -87,7 +87,7 @@ public class MenuRestController extends SuperController {
         return success(combos);
     }
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources
     @ApiOperation(value = "查询单个菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")

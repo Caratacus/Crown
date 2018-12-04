@@ -18,54 +18,33 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.service;
+package org.crown.model.dto;
 
-import java.util.List;
+import org.crown.framework.model.convert.Convert;
 
-import org.crown.emuns.AuthTypeEnum;
-import org.crown.framework.service.BaseService;
-import org.crown.model.dto.ResourcePermDTO;
-import org.crown.model.entity.Resource;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 资源表 服务类
+ * 权限 资源DTO
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
-public interface IResourceService extends BaseService<Resource> {
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class ResourcePermDTO extends Convert {
 
-    /**
-     * 根据用户ID获取用户所有权限
-     *
-     * @param uid
-     * @return
-     */
-    List<String> getUserPerms(Integer uid);
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * 获取开放权限资源列表
-     *
-     * @return
-     */
-    List<ResourcePermDTO> getOpenPerms();
+    @ApiModelProperty(notes = "请求方式")
+    private String method;
 
-    /**
-     * 获取需要登录权限资源列表
-     *
-     * @return
-     */
-    List<ResourcePermDTO> getLoginPerms();
-
-    /**
-     * 获取指定类型权限资源列表
-     *
-     * @param authType 类型
-     * @return
-     */
-    List<ResourcePermDTO> getPerms(AuthTypeEnum authType);
-
+    @ApiModelProperty(notes = "路径映射")
+    private String mapping;
 
 }
