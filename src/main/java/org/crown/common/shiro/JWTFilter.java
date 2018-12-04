@@ -54,7 +54,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     }
 
     @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
         //获取请求token，如果token不存在，直接返回401
         String token = getToken((HttpServletRequest) request);
         if (StringUtils.isBlank(token)) {

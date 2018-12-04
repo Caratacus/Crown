@@ -20,13 +20,11 @@
  */
 package org.crown.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,11 +33,9 @@ import org.crown.common.annotations.Resources;
 import org.crown.model.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import io.swagger.annotations.ApiOperation;
@@ -61,11 +57,19 @@ public class ScanMappings {
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
 
-    @Transactional
+    /**
+     * 扫描资源插入数据库
+     */
     public void doScan() {
-        Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping.getHandlerMethods();
-        List<Resource> resources = handlerMethods.values().stream().map(this::getResources).flatMap(Collection::stream).collect(Collectors.toList());
-        resourceService.saveOrUpdateBatch(resources);
+        resourceService.saveOrUpdateBatch(
+                handlerMapping.getHandlerMethods()
+                        .values()
+                        .stream()
+                        .map(this::getResources)
+                        .flatMap(Collection::stream)
+                        .map(this::setUpdateTime)
+                        .collect(Collectors.toList())
+        );
     }
 
     /**
@@ -102,9 +106,8 @@ public class ScanMappings {
                 resource.setResourceName(Objects.nonNull(apiOperation) ? apiOperation.value() : "未命名资源路径");
                 resource.setMapping(mapping);
                 resource.setMethod(requestMethod.name());
-                resource.setVerify(res.verify());
+                resource.setAuthType(res.auth());
                 resource.setPerm(requestMethod.name() + ":" + mapping);
-                resource.setUpdateTime(LocalDateTime.now());
                 resource.setId(MD5Util.computeMD5(resource.getPerm()));
                 resources.add(resource);
             }
@@ -112,4 +115,17 @@ public class ScanMappings {
         return resources;
     }
 
+    /**
+     * 设置修改时间
+     *
+     * @param resource
+     * @return
+     */
+    private Resource setUpdateTime(Resource resource) {
+        Resource res = resourceService.getById(resource.getId());
+        if (Objects.nonNull(res)) {
+            resource.setUpdateTime(res.getUpdateTime());
+        }
+        return resource;
+    }
 }

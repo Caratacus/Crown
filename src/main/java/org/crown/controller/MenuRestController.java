@@ -23,6 +23,7 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.annotations.Resources;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.controller.SuperController;
 import org.crown.emuns.MenuTypeEnum;
@@ -66,14 +67,14 @@ public class MenuRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
     public ApiResponses<List<Menu>> list() {
         return success(menuService.list());
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询父级菜单(下拉框)")
     @GetMapping("/combos")
     public ApiResponses<List<ComboDTO>> combos() {
@@ -86,7 +87,7 @@ public class MenuRestController extends SuperController {
         return success(combos);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询单个菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")

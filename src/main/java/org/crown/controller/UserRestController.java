@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.emuns.ErrorCodeEnum;
@@ -74,7 +75,7 @@ public class UserRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("查询所有用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
@@ -89,7 +90,7 @@ public class UserRestController extends SuperController {
         return success(page.convert(e -> e.convert(UserDTO.class)));
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("查询单个用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
@@ -104,7 +105,7 @@ public class UserRestController extends SuperController {
         return success(userDTO);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("重置用户密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
@@ -126,7 +127,7 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("创建用户")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
@@ -158,10 +159,9 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("获取用户详情")
     @GetMapping("/details")
-    //@RequiresPermissions("sys:role:list")
     public ApiResponses<UserDetailsDTO> getUserDetails() {
         Integer uid = currentUid();
         UserDetailsDTO userDetails = userService.getUserDetails(uid);

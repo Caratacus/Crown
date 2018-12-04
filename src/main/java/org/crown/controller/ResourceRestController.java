@@ -23,11 +23,12 @@ package org.crown.controller;
 import java.util.Objects;
 
 import org.crown.common.annotations.Resources;
-import org.crown.framework.responses.ApiResponses;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
-import org.crown.service.ScanMappings;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
+import org.crown.service.ScanMappings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -66,27 +67,27 @@ public class ResourceRestController extends SuperController {
     @Autowired
     private ScanMappings scanMappings;
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询所有资源(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "resourceName", value = "需要查询的资源名", paramType = "query"),
             @ApiImplicitParam(name = "method", value = "需要查询的请求方式", paramType = "query"),
-            @ApiImplicitParam(name = "verify", value = "是否需要验证", paramType = "query")
+            @ApiImplicitParam(name = "authType", value = "权限认证类型", paramType = "query")
     })
     @GetMapping
     public ApiResponses<IPage<Resource>> page(@RequestParam(value = "resourceName", required = false) String resourceName,
                                               @RequestParam(value = "method", required = false) String method,
-                                              @RequestParam(value = "verify", required = false) Boolean verify
+                                              @RequestParam(value = "authType", required = false) AuthTypeEnum authType
     ) {
         IPage<Resource> page = resourceService.page(this.<Resource>getPage(),
         Wrappers.<Resource>lambdaQuery()
                 .like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName)
                 .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
-                .eq(Objects.nonNull(verify), Resource::getVerify, verify));
+                .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
         return success(page);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "刷新资源")
     @PutMapping("/refresh")
     public ApiResponses<Void> refresh() {

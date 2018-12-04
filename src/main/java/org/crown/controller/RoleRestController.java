@@ -23,8 +23,9 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.annotations.Resources;
-import org.crown.framework.responses.ApiResponses;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
+import org.crown.framework.responses.ApiResponses;
 import org.crown.model.entity.Role;
 import org.crown.model.parm.RolePARM;
 import org.crown.service.IRoleService;
@@ -67,7 +68,7 @@ public class RoleRestController extends SuperController {
     @Autowired
     private IRoleService roleService;
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询所有角色(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
@@ -78,14 +79,14 @@ public class RoleRestController extends SuperController {
         return success(page);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询所有角色")
     @GetMapping("/roles")
     public ApiResponses<List<Role>> list() {
         return success(roleService.list());
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "查询单个角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
@@ -96,7 +97,7 @@ public class RoleRestController extends SuperController {
         return success(role);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation(value = "添加角色")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {

@@ -22,6 +22,7 @@ package org.crown.controller;
 
 import org.crown.common.annotations.Resources;
 import org.crown.common.utils.IpUtils;
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.model.dto.TokenDTO;
@@ -60,7 +61,7 @@ public class AccountRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("获取Token")
     @PostMapping("/token")
     public ApiResponses<TokenDTO> getToken(@RequestBody @Validated LoginPARM loginPARM) {
@@ -69,7 +70,7 @@ public class AccountRestController extends SuperController {
         return success(tokenDTO);
     }
 
-    @Resources(verify = false)
+    @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("清除Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {

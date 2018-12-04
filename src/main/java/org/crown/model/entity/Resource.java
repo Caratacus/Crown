@@ -22,9 +22,12 @@ package org.crown.model.entity;
 
 import java.time.LocalDateTime;
 
+import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.model.convert.Convert;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.Version;
@@ -70,9 +73,9 @@ public class Resource extends Convert {
     private String method;
 
     /**
-     * 是否需要验证
+     * 权限认证类型
      */
-    private Boolean verify;
+    private AuthTypeEnum authType;
     /**
      * 权限标识
      */
@@ -81,6 +84,7 @@ public class Resource extends Convert {
      * 修改时间
      */
     @Version
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime updateTime;
 
 }
