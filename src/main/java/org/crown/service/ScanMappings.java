@@ -38,6 +38,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+
 import io.swagger.annotations.ApiOperation;
 import liquibase.util.MD5Util;
 
@@ -56,6 +58,8 @@ public class ScanMappings {
 
     @Autowired
     private RequestMappingHandlerMapping handlerMapping;
+
+    private String[] emptyArray = new String[]{""};
 
     /**
      * 扫描资源插入数据库
@@ -89,9 +93,11 @@ public class ScanMappings {
             return Collections.emptyList();
         }
         ApiOperation apiOperation = handlerMethod.getMethodAnnotation(ApiOperation.class);
-        String[] requestMappings = Objects.nonNull(requestMappingAnnotation) ? requestMappingAnnotation.value() : new String[]{""};
-        String[] methodMappings = Objects.nonNull(methodMappingAnnotation) ? methodMappingAnnotation.path() : new String[]{""};
+        String[] requestMappings = Objects.nonNull(requestMappingAnnotation) ? requestMappingAnnotation.value() : emptyArray;
+        String[] methodMappings = Objects.nonNull(methodMappingAnnotation) ? methodMappingAnnotation.path() : emptyArray;
         RequestMethod[] method = Objects.nonNull(methodMappingAnnotation) ? methodMappingAnnotation.method() : new RequestMethod[0];
+        requestMappings = ArrayUtils.isEmpty(requestMappings) ? emptyArray : requestMappings;
+        methodMappings = ArrayUtils.isEmpty(methodMappings) ? emptyArray : methodMappings;
         Set<String> mappings = new HashSet<>(1);
         for (String reqMapping : requestMappings) {
             for (String methodMapping : methodMappings) {

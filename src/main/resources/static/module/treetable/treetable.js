@@ -1,7 +1,8 @@
-layui.define(['layer', 'table'], function (exports) {
+layui.define(['layer', 'table', 'laytpl'], function (exports) {
     var $ = layui.jquery;
     var layer = layui.layer;
     var table = layui.table;
+    var laytpl = layui.laytpl;
 
     var treetable = {
         // 渲染树形表格
@@ -14,8 +15,18 @@ layui.define(['layer', 'table'], function (exports) {
             if (param.data) {
                 treetable.init(param, param.data);
             } else {
-                $.getJSON(param.url, param.where, function (res) {
-                    treetable.init(param, res.result);
+                $.ajax({
+                    type: "get",
+                    url: param.url,
+                    data: param.where,
+                    dataType: "json",
+                    headers: param.headers || {},
+                    success: function(res) {
+                        treetable.init(param, res.result);
+                    },
+                    error: function(e, t) {
+                        laytpl.layMain.html('<div class="' + laytpl + '">数据接口请求异常：' + t + "</div>"), laytpl.renderForm(), laytpl.setColsWidth();
+                    }
                 });
             }
         },

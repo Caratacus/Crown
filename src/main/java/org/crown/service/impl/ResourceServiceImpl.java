@@ -44,10 +44,19 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 @Service
 public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resource> implements IResourceService {
 
+
     @Override
     public List<String> getUserPerms(Integer uid) {
         //TODO 目前是查询所有权限 后期需要更改
         return listObjs(Wrappers.<Resource>lambdaQuery().select(Resource::getPerm), TypeUtils::castToString);
+    }
+
+    @Override
+    public List<ResourcePermDTO> getUserResourcePerms(Integer uid) {
+        //List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.LOGIN, AuthTypeEnum.LOGIN);
+        List<ResourcePermDTO> userPerms = entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping), e -> e.convert(ResourcePermDTO.class));
+       // perms.addAll(userPerms);
+        return userPerms;
     }
 
     @Override
@@ -61,7 +70,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     }
 
     @Override
-    public List<ResourcePermDTO> getPerms(AuthTypeEnum authType) {
-        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod,Resource::getMapping).eq(Resource::getAuthType, authType),e->e.convert(ResourcePermDTO.class));
+    public List<ResourcePermDTO> getPerms(AuthTypeEnum... authTypes) {
+        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).in(Resource::getAuthType, authTypes), e -> e.convert(ResourcePermDTO.class));
     }
 }

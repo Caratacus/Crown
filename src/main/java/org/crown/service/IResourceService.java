@@ -62,10 +62,17 @@ public interface IResourceService extends BaseService<Resource> {
     /**
      * 获取指定类型权限资源列表
      *
-     * @param authType 类型
+     * @param authTypes 类型
      * @return
      */
-    List<ResourcePermDTO> getPerms(AuthTypeEnum authType);
+    List<ResourcePermDTO> getPerms(AuthTypeEnum... authTypes);
 
+    /**
+     * 获取用户所有权限
+     *
+     * @param uid
+     * @return
+     */
+    List<ResourcePermDTO> getUserResourcePerms(Integer uid);
 
 }
