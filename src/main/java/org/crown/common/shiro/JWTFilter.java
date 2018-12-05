@@ -2,23 +2,26 @@ package org.crown.common.shiro;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.crown.common.spring.ApplicationUtils;
 import org.crown.common.utils.JWTTokenUtils;
+import org.crown.cons.APICons;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.utils.ResponseUtils;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.service.IResourceService;
-import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.util.UrlPathHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
-    private AntPathMatcher antPathMatcher = new AntPathMatcher();
-
-    private UrlPathHelper urlPathHelper = new UrlPathHelper();
+    private PathMatcher pathMatcher;
+    private IResourceService resourceService;
+    private UrlPathHelper urlPathHelper;
 
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) {
@@ -48,23 +51,32 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        IResourceService resourceService = ApplicationUtils.getBean(IResourceService.class);
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        log.info(httpRequest.getRequestURL().toString());
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+
         String token = getToken(httpRequest);
         String method = httpRequest.getMethod();
         String requestUri = urlPathHelper.getOriginatingRequestUri(httpRequest);
+        Optional<ResourcePermDTO> optional = resourceService.getPerms().stream().filter(match(method, requestUri)).findFirst();
+        request.setAttribute(APICons.API_REQURL, requestUri);
+        request.setAttribute(APICons.API_METHOD, method);
+        if (optional.isPresent()) {
+            request.setAttribute(APICons.API_MAPPING, optional.get().getMapping());
+        } else {
+            httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return false;
+        }
         if (Objects.isNull(token)) {
             List<ResourcePermDTO> openPerms = resourceService.getOpenPerms();
             return anyMatch(openPerms, method, requestUri);
         }
-
         if (isLoginRequest(request, response)) {
             if (executeLogin(request, response)) {
                 Integer uid = JWTTokenUtils.getUid(token);
                 List<ResourcePermDTO> perms = resourceService.getUserResourcePerms(uid);
                 return anyMatch(perms, method, requestUri);
             } else {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return sendUnauthorizedFail(request, response);
             }
         }
@@ -74,7 +86,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
-        return sendForbiddenFail(request, response);
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+        switch (httpResponse.getStatus()) {
+            case HttpServletResponse.SC_NOT_FOUND:
+                return sendNotFoundFail(request, response);
+            case HttpServletResponse.SC_UNAUTHORIZED:
+                return sendUnauthorizedFail(request, response);
+            default:
+                return sendForbiddenFail(request, response);
+        }
     }
 
     @Override
@@ -87,7 +107,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     protected String getToken(HttpServletRequest request) {
         //从header中获取token
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(AUTHORIZATION_HEADER);
         return StringUtils.isBlank(token) ? null : token.replaceFirst("Bearer ", "");
     }
 
@@ -95,6 +115,14 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * 无权限
      */
     protected boolean sendForbiddenFail(ServletRequest request, ServletResponse response) {
+        ResponseUtils.sendFail(WebUtils.toHttp(request), WebUtils.toHttp(response), ErrorCodeEnum.FORBIDDEN);
+        return false;
+    }
+
+    /**
+     * 路径不存在
+     */
+    protected boolean sendNotFoundFail(ServletRequest request, ServletResponse response) {
         ResponseUtils.sendFail(WebUtils.toHttp(request), WebUtils.toHttp(response), ErrorCodeEnum.FORBIDDEN);
         return false;
     }
@@ -115,7 +143,18 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * @return
      */
     protected boolean anyMatch(List<ResourcePermDTO> perms, String method, String requestUri) {
-        return perms.stream().anyMatch(res -> res.getMethod().equalsIgnoreCase(method) && antPathMatcher.match(res.getMapping(), requestUri));
+        return perms.stream().anyMatch(match(method, requestUri));
+    }
+
+    /**
+     * 匹配请求方法与路径
+     *
+     * @param method
+     * @param requestUri
+     * @return
+     */
+    private Predicate<ResourcePermDTO> match(String method, String requestUri) {
+        return res -> res.getMethod().equalsIgnoreCase(method) && pathMatcher.match(res.getMapping(), requestUri);
     }
 
     @Override
@@ -127,9 +166,16 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return false;
     }
 
-    @Override
-    public String getAuthzScheme() {
-        return "Bearer";
+    public void setResourceService(IResourceService resourceService) {
+        this.resourceService = resourceService;
+    }
+
+    public void setPathMatcher(PathMatcher pathMatcher) {
+        this.pathMatcher = pathMatcher;
+    }
+
+    public void setUrlPathHelper(UrlPathHelper urlPathHelper) {
+        this.urlPathHelper = urlPathHelper;
     }
 
 }

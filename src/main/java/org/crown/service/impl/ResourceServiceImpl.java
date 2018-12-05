@@ -31,6 +31,7 @@ import org.crown.model.entity.Resource;
 import org.crown.service.IResourceService;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
@@ -53,10 +54,11 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public List<ResourcePermDTO> getUserResourcePerms(Integer uid) {
-        //List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.LOGIN, AuthTypeEnum.LOGIN);
+        //TODO 目前是查询所有权限 后期需要更改
+        List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.LOGIN, AuthTypeEnum.LOGIN);
         List<ResourcePermDTO> userPerms = entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping), e -> e.convert(ResourcePermDTO.class));
-       // perms.addAll(userPerms);
-        return userPerms;
+        perms.addAll(userPerms);
+        return perms;
     }
 
     @Override
@@ -71,6 +73,11 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public List<ResourcePermDTO> getPerms(AuthTypeEnum... authTypes) {
-        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).in(Resource::getAuthType, authTypes), e -> e.convert(ResourcePermDTO.class));
+        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).in(ArrayUtils.isNotEmpty(authTypes), Resource::getAuthType, (Object[]) authTypes), e -> e.convert(ResourcePermDTO.class));
+    }
+
+    @Override
+    public List<ResourcePermDTO> getPerms() {
+        return getPerms((AuthTypeEnum[]) null);
     }
 }

@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.crown.common.spring.CrownHandlerExceptionResolver;
 import org.crown.common.spring.IEnumConverterFactory;
-import org.crown.common.spring.interceptor.GlobalInterceptor;
 import org.crown.common.spring.validator.ValidatorCollectionImpl;
 import org.crown.common.undertow.UndertowServerFactoryCustomizer;
 import org.crown.framework.aspect.LogRecordAspect;
@@ -43,7 +42,6 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -111,20 +109,4 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         exceptionResolvers.add(new CrownHandlerExceptionResolver());
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        /**
-         * 放行Swagger
-         * @see springfox.documentation.swagger.web.ApiResourceController
-         * @see springfox.documentation.swagger2.web.Swagger2Controller
-         */
-        registry.addInterceptor(new GlobalInterceptor()).addPathPatterns("/**").excludePathPatterns("/error", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-resources/configuration/ui", "/v2/api-docs");
-    }
-
-   /* @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/*").allowedOrigins("*")
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE")
-                .allowCredentials(true).maxAge(3600);
-    }*/
 }
