@@ -12,6 +12,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.crown.common.shiro.JWTFilter;
+import org.crown.common.shiro.JWTRealm;
 import org.crown.service.IResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ import org.springframework.web.util.UrlPathHelper;
 public class ShiroAutoConfiguration {
 
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(@Autowired JWTRealm realm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         DefaultSubjectDAO subjectDAO = (DefaultSubjectDAO) securityManager.getSubjectDAO();
         DefaultSessionStorageEvaluator evaluator = (DefaultSessionStorageEvaluator) subjectDAO.getSessionStorageEvaluator();
@@ -38,13 +39,14 @@ public class ShiroAutoConfiguration {
          */
         evaluator.setSessionStorageEnabled(false);
         securityManager.setSubjectDAO(subjectDAO);
+        securityManager.setRealm(realm);
         return securityManager;
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(@Autowired IResourceService resourceService) {
+    public ShiroFilterFactoryBean shiroFilter(@Autowired SecurityManager securityManager, @Autowired IResourceService resourceService) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
-        shiroFilter.setSecurityManager(securityManager());
+        shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new HashMap<>();
         JWTFilter value = new JWTFilter();
         value.setAuthzScheme("Bearer");
