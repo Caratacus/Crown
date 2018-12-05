@@ -125,7 +125,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * 路径不存在
      */
     protected boolean sendNotFoundFail(ServletRequest request, ServletResponse response) {
-        ResponseUtils.sendFail(WebUtils.toHttp(request), WebUtils.toHttp(response), ErrorCodeEnum.FORBIDDEN);
+        ResponseUtils.sendFail(WebUtils.toHttp(request), WebUtils.toHttp(response), ErrorCodeEnum.NOT_FOUND);
         return false;
     }
 

@@ -24,6 +24,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.utils.ApiAssert;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -75,10 +78,16 @@ public abstract class JWTTokenUtils {
      * @return
      */
     public static Claims getClaim(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token)
-                .getBody();
+        Claims claims = null;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            ApiAssert.failure(ErrorCodeEnum.UNAUTHORIZED);
+        }
+        return claims;
     }
 
     /**
