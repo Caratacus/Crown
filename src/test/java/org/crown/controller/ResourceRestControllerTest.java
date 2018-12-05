@@ -23,6 +23,7 @@ package org.crown.controller;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
+import org.crown.service.IResourceService;
 import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,9 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
 
     @Autowired
     private ResourceRestController restController;
+
+    @Autowired
+    private IResourceService resourceService;
 
     @Autowired
     private IUserService userService;
@@ -65,4 +69,28 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
         isOk(mockMvc, put("/resource/refresh", token.getToken()));
     }
 
+    @Test
+    public void getUserPerms() {
+        resourceService.getUserPerms(1);
+    }
+
+    @Test
+    public void getOpenPerms() {
+        resourceService.getOpenPerms();
+    }
+
+    @Test
+    public void getLoginPerms() {
+        resourceService.getLoginPerms();
+    }
+
+    @Test
+    public void getPerms() {
+        resourceService.getPerms();
+    }
+
+    @Test
+    public void getUserResourcePerms() {
+        resourceService.getUserResourcePerms(1);
+    }
 }
