@@ -97,11 +97,11 @@ jacocoTestReport {
             fileTree(dir: it, exclude: [
                     '**/common/cons/Regex.class',
                     '**/common/modelmapper/jsr310/*.class',
-                    '**/common/shiro/JWTRealm.class',
                     '**/common/spring/BasicErrorController.class',
                     '**/common/spring/ApplicationUtils.class',
                     '**/common/utils/Maps.class',
                     '**/common/utils/TypeUtils.class',
+                    '**/common/shiro/*.class',
                     '**/common/utils/*.class',
                     '**/framework/converter/BeanConverter.class',
                     '**/framework/emuns/ErrorCodeEnum.class',
@@ -111,8 +111,7 @@ jacocoTestReport {
                     '**/framework/utils/ApiAssert.class',
                     '**/framework/utils/RequestUtils.class',
                     '**/framework/utils/ResponseUtils.class',
-                    '**/generator/MysqlGenerator.class',
-                    '**/model/**.class'
+                    '**/generator/MysqlGenerator.class'
             ])
         })
     }
