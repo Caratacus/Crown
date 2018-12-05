@@ -44,7 +44,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 @TableName("sys_menu")
 public class Menu extends BaseModel {
 

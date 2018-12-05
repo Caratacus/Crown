@@ -40,7 +40,7 @@ import lombok.NoArgsConstructor;
 @ApiModel
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 public class PasswordPARM extends Convert {
 
     @ApiModelProperty(notes = "原密码")

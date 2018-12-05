@@ -46,7 +46,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 @TableName("sys_resource")
 public class Resource extends Convert {
 

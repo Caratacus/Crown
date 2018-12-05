@@ -4,7 +4,6 @@ import org.crown.framework.model.TreeNode;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -17,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 public class MenuTreeDTO extends TreeNode {
 
     @ApiModelProperty(notes = "菜单名称", dataType = "string")

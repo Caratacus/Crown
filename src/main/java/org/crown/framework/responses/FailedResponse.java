@@ -37,7 +37,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 @AllArgsConstructor
 @NoArgsConstructor
 public class FailedResponse extends ApiResponses {

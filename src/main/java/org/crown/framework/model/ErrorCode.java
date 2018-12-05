@@ -22,7 +22,6 @@ package org.crown.framework.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -34,7 +33,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 @AllArgsConstructor
 public class ErrorCode {
 

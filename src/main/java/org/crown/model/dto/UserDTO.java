@@ -42,7 +42,7 @@ import lombok.NoArgsConstructor;
 @ApiModel
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("Lombok")
 public class UserDTO extends Convert {
 
     private static final long serialVersionUID = 1L;
