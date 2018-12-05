@@ -110,6 +110,7 @@ jacocoTestReport {
                     '**/common/shiro/*.class',
                     '**/common/utils/*.class',
                     '**/common/exception/*.class',
+                    '**/common/spring/IEnumConverterFactory.class',
                     '**/framework/converter/BeanConverter.class',
                     '**/framework/emuns/ErrorCodeEnum.class',
                     '**/framework/exception/*.class',

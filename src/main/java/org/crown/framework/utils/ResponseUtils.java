@@ -65,7 +65,7 @@ public abstract class ResponseUtils {
      */
     public static void writeValAsJson(HttpServletRequest request, ResponseWrapper response, Object obj) {
         LogUtils.printLog((Long) request.getAttribute(APICons.API_BEGIN_TIME),
-                (String) request.getAttribute(APICons.API_UID),
+                TypeUtils.castToString(request.getAttribute(APICons.API_UID)),
                 request.getParameterMap(),
                 RequestUtils.getRequestBody(request),
                 (String) request.getAttribute(APICons.API_REQURL),

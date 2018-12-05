@@ -29,7 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
 
 /**
  * <p>
@@ -62,9 +61,7 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
 
     @Test
     public void page() throws Exception {
-        LinkedMultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-        multiValueMap.set("authType", "1");
-        isOk(mockMvc, get("/resource", token.getToken(), multiValueMap));
+        isOk(mockMvc, get("/resource", token.getToken()));
     }
 
     @Test
