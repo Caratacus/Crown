@@ -20,11 +20,11 @@
  */
 package org.crown.common.utils;
 
+import org.crown.common.spring.ApplicationUtils;
+import org.crown.cons.APICons;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.utils.ApiAssert;
-import org.crown.common.spring.ApplicationUtils;
 
-import io.jsonwebtoken.Claims;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,12 +43,9 @@ public abstract class ApiUtils {
      * 获取当前用户id
      */
     public static Integer currentUid() {
-        String token = ApplicationUtils.getRequest().getHeader("Authorization");
+        Integer token = (Integer) ApplicationUtils.getRequest().getAttribute(APICons.API_UID);
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
-        token = token.replaceFirst("Bearer ", "");
-        Claims claims = JWTTokenUtils.getClaim(token);
-        ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
-        return claims.get(JWTTokenUtils._ID, Integer.class);
+        return token;
     }
 
 }

@@ -51,6 +51,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        request.setAttribute(APICons.API_BEGIN_TIME, System.currentTimeMillis());
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
 
@@ -73,6 +74,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         if (isLoginRequest(request, response)) {
             if (executeLogin(request, response)) {
                 Integer uid = JWTTokenUtils.getUid(token);
+                request.setAttribute(APICons.API_UID, uid);
                 List<ResourcePermDTO> perms = resourceService.getUserResourcePerms(uid);
                 return anyMatch(perms, method, requestUri);
             } else {

@@ -70,5 +70,9 @@ public class Log {
      * IP地址
      */
     private String ip;
+    /**
+     * UID
+     */
+    private String uid;
 
 }

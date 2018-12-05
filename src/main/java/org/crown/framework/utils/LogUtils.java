@@ -50,10 +50,11 @@ public abstract class LogUtils {
      * @param object
      * @return
      */
-    public static void printLog(Long beiginTime, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
+    public static void printLog(Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
         Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
+                .uid(uid)
                 //请求体
                 .requestBody(Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody))
                 //请求路径
