@@ -96,6 +96,7 @@ jacocoTestReport {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     '**/common/cons/Regex.class',
+                    '**/common/modelmapper/jsr310/*.class',
                     '**/common/modelmapper/jdk8/FromOptionalConverter.class',
                     '**/common/modelmapper/jdk8/ToOptionalConverter.class',
                     '**/common/spring/BasicErrorController.class',
@@ -119,9 +120,10 @@ jacocoTestReport {
                     '**/framework/utils/ResponseUtils.class',
                     '**/framework/service/*.class',
                     '**/framework/responses/FailedResponse.class',
-                    '**/generator/MysqlGenerator.class',
+                    '**/generate/MysqlGenerator.class',
                     '**/framework/model/ErrorCode.class',
                     '**/framework/wrapper/*.class',
+                    '**/framework/filter/CrownFilter.class'
             ])
         })
     }
