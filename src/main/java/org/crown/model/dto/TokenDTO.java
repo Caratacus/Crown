@@ -25,6 +25,7 @@ import org.crown.framework.model.convert.Convert;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -37,7 +38,7 @@ import lombok.NoArgsConstructor;
 @ApiModel
 @Data
 @NoArgsConstructor
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 public class TokenDTO extends Convert {
 
     @ApiModelProperty(notes = "账号id")

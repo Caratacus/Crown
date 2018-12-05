@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 public class BaseModel extends Convert {
 
     protected Integer id;

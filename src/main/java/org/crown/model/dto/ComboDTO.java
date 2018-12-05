@@ -24,6 +24,7 @@ import org.crown.framework.model.BaseModel;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -34,9 +35,9 @@ import lombok.NoArgsConstructor;
  * @author Caratacus
  * @since 2018-10-25
  */
-@SuppressWarnings("Lombok")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class ComboDTO extends BaseModel {
 
     private static final long serialVersionUID = 1L;

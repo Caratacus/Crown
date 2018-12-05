@@ -42,7 +42,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 @TableName("sys_role")
 public class Role extends BaseModel {
 

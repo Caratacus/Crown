@@ -35,7 +35,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 public class Log {
 
     /**

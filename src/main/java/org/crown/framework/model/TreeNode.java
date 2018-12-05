@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 public class TreeNode extends BaseModel {
 
     protected Integer parentId;

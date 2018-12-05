@@ -42,7 +42,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@SuppressWarnings("Lombok")
+@EqualsAndHashCode(callSuper = false)
 public class MenuPARM extends Convert {
 
     private static final long serialVersionUID = 1L;
