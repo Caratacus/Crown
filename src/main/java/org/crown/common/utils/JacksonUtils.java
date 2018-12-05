@@ -25,8 +25,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import org.crown.framework.exception.CrownException;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -58,7 +61,7 @@ public abstract class JacksonUtils {
     private final static ObjectMapper objectMapper;
 
     static {
-        objectMapper = initWrapperObjectMapper(new ObjectMapper());
+        objectMapper = initObjectMapper(new ObjectMapper());
     }
 
     /**
@@ -88,15 +91,25 @@ public abstract class JacksonUtils {
     }
 
     /**
-     * 初始化 Wrapper ObjectMapper
+     * 初始化 ObjectMapper
      *
      * @param objectMapper
      * @return
      */
-    public static ObjectMapper initWrapperObjectMapper(ObjectMapper objectMapper) {
+    public static ObjectMapper initObjectMapper(ObjectMapper objectMapper) {
         if (Objects.isNull(objectMapper)) {
             objectMapper = new ObjectMapper();
         }
+        return doInitObjectMapper(objectMapper);
+    }
+
+    /**
+     * 初始化 ObjectMapper 时间方法
+     *
+     * @param objectMapper
+     * @return
+     */
+    private static ObjectMapper doInitObjectMapper(ObjectMapper objectMapper) {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         //不显示为null的字段
@@ -115,6 +128,21 @@ public abstract class JacksonUtils {
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         objectMapper.registerModule(simpleModule);
         return objectMapper;
+    }
+
+
+    /**
+     * 包装 MappingJackson2HttpMessageConverter
+     *
+     * @return
+     */
+    public static Consumer<HttpMessageConverter<?>> wrapperObjectMapper() {
+        return converter -> {
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                MappingJackson2HttpMessageConverter httpMessageConverter = (MappingJackson2HttpMessageConverter) converter;
+                initObjectMapper(httpMessageConverter.getObjectMapper());
+            }
+        };
     }
 
     /**
