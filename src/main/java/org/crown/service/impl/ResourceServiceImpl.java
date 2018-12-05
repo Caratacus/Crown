@@ -80,4 +80,9 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     public List<ResourcePermDTO> getPerms() {
         return getPerms((AuthTypeEnum[]) null);
     }
+
+    @Override
+    public List<ResourcePermDTO> getResourcePerms(String method) {
+        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).eq(Resource::getMethod, method), e -> e.convert(ResourcePermDTO.class));
+    }
 }

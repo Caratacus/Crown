@@ -75,12 +75,19 @@ public interface IResourceService extends BaseService<Resource> {
      */
     List<ResourcePermDTO> getUserResourcePerms(Integer uid);
 
-
     /**
      * 获取所有权限
      *
      * @return
      */
     List<ResourcePermDTO> getPerms();
+
+    /**
+     * 获取某种请求方式资源权限
+     *
+     * @param method
+     * @return
+     */
+    List<ResourcePermDTO> getResourcePerms(String method);
 
 }

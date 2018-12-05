@@ -58,7 +58,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String token = getToken(httpRequest);
         String method = httpRequest.getMethod();
         String requestUri = urlPathHelper.getOriginatingRequestUri(httpRequest);
-        Optional<ResourcePermDTO> optional = resourceService.getPerms().stream().filter(match(method, requestUri)).findFirst();
+        Optional<ResourcePermDTO> optional = resourceService.getResourcePerms(method).stream().filter(match(method, requestUri)).findFirst();
         request.setAttribute(APICons.API_REQURL, requestUri);
         request.setAttribute(APICons.API_METHOD, method);
         if (optional.isPresent()) {
