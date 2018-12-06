@@ -21,8 +21,8 @@
 package org.crown.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.crown.common.utils.TypeUtils;
 import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.ResourceMapper;
@@ -45,19 +45,21 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 @Service
 public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resource> implements IResourceService {
 
-
     @Override
     public List<String> getUserPerms(Integer uid) {
-        //TODO 目前是查询所有权限 后期需要更改
-        return listObjs(Wrappers.<Resource>lambdaQuery().select(Resource::getPerm), TypeUtils::castToString);
+        return getUserResourcePerms(uid).stream().map(e -> this.getResourcePermTag(e.getMethod(), e.getMapping())).collect(Collectors.toList());
+    }
+
+    @Override
+    public String getResourcePermTag(String method, String mapping) {
+        return method + ":" + mapping;
     }
 
     @Override
     public List<ResourcePermDTO> getUserResourcePerms(Integer uid) {
-        //TODO 目前是查询所有权限 后期需要更改
-        List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.LOGIN, AuthTypeEnum.LOGIN);
-        List<ResourcePermDTO> userPerms = entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping), e -> e.convert(ResourcePermDTO.class));
-        perms.addAll(userPerms);
+        List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.OPEN, AuthTypeEnum.LOGIN);
+        List<ResourcePermDTO> resourcePerms = baseMapper.getUserResourcePerms(uid);
+        perms.addAll(resourcePerms);
         return perms;
     }
 

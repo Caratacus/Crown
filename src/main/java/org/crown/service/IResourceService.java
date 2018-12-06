@@ -90,4 +90,13 @@ public interface IResourceService extends BaseService<Resource> {
      */
     List<ResourcePermDTO> getResourcePerms(String method);
 
+    /**
+     * 获取资源权限标记
+     *
+     * @param method
+     * @param mapping
+     * @return
+     */
+    String getResourcePermTag(String method, String mapping);
+
 }

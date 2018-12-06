@@ -113,13 +113,14 @@ public class ScanMappings {
                 resource.setMapping(mapping);
                 resource.setMethod(requestMethod.name());
                 resource.setAuthType(res.auth());
-                resource.setPerm(requestMethod.name() + ":" + mapping);
+                resource.setPerm(resourceService.getResourcePermTag(requestMethod.name(), mapping));
                 resource.setId(MD5Util.computeMD5(resource.getPerm()));
                 resources.add(resource);
             }
         }
         return resources;
     }
+
 
     /**
      * 设置修改时间

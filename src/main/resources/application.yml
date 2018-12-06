@@ -1,6 +1,7 @@
 logging:
   config: classpath:log4j2.xml
 mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml
   global-config:
     db-config:
       field-strategy: not_empty
@@ -8,7 +9,6 @@ mybatis-plus:
       db-type: mysql
     banner: false
     super-mapper-class: org.crown.framework.mapper.BaseMapper
-  mapper-locations: classpath:mapper/*Mapper.xml
   type-enums-package: org.crown.emuns
   type-aliases-package: org.crown.model.entity,org.crown.model.dto
 server:

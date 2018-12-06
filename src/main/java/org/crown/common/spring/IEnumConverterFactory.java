@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 
+import org.crown.common.utils.TypeUtils;
 import org.crown.framework.emuns.IEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
@@ -65,7 +66,7 @@ public class IEnumConverterFactory implements ConverterFactory<String, IEnum> {
         public IntegerStrToEnum(Class<T> enumType) {
             T[] enums = enumType.getEnumConstants();
             for (T e : enums) {
-                enumMap.put(e.getValue() + "", e);
+                enumMap.put(TypeUtils.castToString(e.getValue()), e);
             }
         }
 
