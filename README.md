@@ -39,9 +39,9 @@
 -----------------------------------------------------------------------------------------------
 ##### Intro :cat:
 
-> 本人作为**MyBatisPlus核心开发**之一，编写了该项目以推广**MyBatisPlus3.0**的使用
+> 本人作为**mybatis-plus核心开发**之一，编写了该项目以推广**mybatis-plus3.0**的使用
 
-> 参考本项目完全可以让你轻松玩转MyBatisPlus最新版本（**持续更新**），故也称为教学版本
+> 参考本项目完全可以让你轻松玩转**mybatis-plus**最新版本（**持续更新**），故也称为教学版本
 
 > 除了基本使用，还有一些**进阶玩法**在项目中等待大家来发现
 
@@ -84,7 +84,7 @@
 <sup>
 <sup>1</sup> 标准的Restful风格，完美的标准化API <br/>
 <sup>2</sup> 防止XSS攻击、SQL注入，妈妈再也不用担心我的安全问题 <br/>
-<sup>3</sup> 深度定制Mybatisplus，各种玩法意想不到 <br/>
+<sup>3</sup> 深度定制mybatis-plus，各种玩法意想不到 <br/>
 <sup>4</sup> 深入拓展ModelMapper，各种类型一键转换 <br/>
 <sup>5</sup> 运用Liquibase，增量SQL一键导出 <br/>
 <sup>6</sup> 接口日志详情打印，所有访问信息一览无遗 <br/>
@@ -99,7 +99,7 @@
 ##### Frameworks :microscope:
 <sup>
 <sup>1</sup> 核心框架: SpringBoot <br/>
-<sup>2</sup> 持久层框架: MyBatisplus <br/>
+<sup>2</sup> 持久层框架: mybatis、mybatis-plus <br/>
 <sup>3</sup> 数据库连接池: HikariCP <br/>
 <sup>4</sup> SQL脚本: Liquibase <br/>
 <sup>5</sup> 数据校验: HibernateValidator <br/>
