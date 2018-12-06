@@ -27,6 +27,16 @@
 </p>
 
 -----------------------------------------------------------------------------------------------
+<p align="center">
+    <p align="center">
+        热烈庆祝 mybatis-plus、layui 荣获 2018 年度最受欢迎中国开源软件 <a href="https://www.oschina.net/question/2896879_2290300">Top 5</a>.
+        <br>
+        <br>
+    </p>
+     <img src="https://raw.githubusercontent.com/Caratacus/Resource/master/2018-top5.jpg" alt="2018-top5.jpg">
+</p>
+
+-----------------------------------------------------------------------------------------------
 ##### Intro :cat:
 
 > 本人作为**MyBatisPlus核心开发**之一，编写了该项目以推广**MyBatisPlus3.0**的使用
@@ -38,7 +48,7 @@
 > **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
 
 -----------------------------------------------------------------------------------------------
-##### Development Tools :checkered_flag:
+#####
 <sup>
 <sup>1</sup> JDK1.8+ <br/>
 <sup>2</sup> MySQL5.7+ <br/>
@@ -99,7 +109,8 @@
 <sup>9</sup> 基础工具类: ApacheCommons、VjTools <br/>
 <sup>10</sup> 日志: SLF4J、Async Log4j2 <br/>
 <sup>11</sup> SQL打印: P6spy <br/>
-<sup>12</sup> 鉴权: Shiro <br/>
+<sup>12</sup> 权限认证: Shiro <br/>
+<sup>13</sup> 页面: layui <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 
