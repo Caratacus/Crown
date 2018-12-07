@@ -66,9 +66,9 @@
 
 <!-- 表格操作列 -->
 <script type="text/html" id="role-table-bar">
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resource">菜单授权</a>
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resource">菜单授权</a>
 </script>
 
 <script>
@@ -82,8 +82,16 @@
             enable: true
         },
         data: {
+            keep: {
+                parent: true
+            },
             simpleData: {
-                enable: true
+                enable: true,
+                idKey: "id",
+                pIdKey: "pId",
+            },
+            key: {
+                name: "name"
             }
         },
         edit: {
@@ -92,6 +100,20 @@
     };
 
     var newCount = 1;
+    var isFirst = true;;
+    function onAsyncSuccess() {
+        if (isFirst) {
+            //获得树形图对象
+            var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+            //获取根节点个数,getNodes获取的是根节点的集合
+            var nodeList = zTree.getNodes();
+            for(var i=0;i<nodeList.length;i++){
+                zTree.expandNode(nodeList[i],true,false,false,false);
+            }
+            //当再次点击节点时条件不符合,直接跳出方法
+            isFirst= false;
+        }
+    }
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
@@ -190,7 +212,7 @@
                     crown.get('/menu/combos', {}, function (data) {
                         console.log(data);
                         var zNodes =[
-                            { id:1, pId:0, name:"1111111111112222222222父节点1222", open:true},
+                            { id:1, pId:0, name:"1111111111112222222222父节点1222"},
                             { id:11, pId:1, name:"父节点11"},
                             { id:111, pId:11, name:"叶子节点111"},
                             { id:112, pId:11, name:"叶子节点112"},
@@ -203,7 +225,7 @@
                             { id:124, pId:12, name:"叶子节点124"},
                             { id:13, pId:1, name:"11111111111111111111111111父节点13", isParent:true},
                             { id:2, pId:0, name:"父节点2"},
-                            { id:21, pId:2, name:"父节点21", open:true},
+                            { id:21, pId:2, name:"父节点21"},
                             { id:211, pId:21, name:"叶子节点211"},
                             { id:212, pId:21, name:"叶子节点212"},
                             { id:213, pId:21, name:"叶子节点213"},
@@ -221,6 +243,7 @@
                             { id:3, pId:0, name:"父节点3", isParent:true}
                         ];
                         $.fn.zTree.init($("#menuTreeData"), setting, zNodes);
+                        onAsyncSuccess();
                         layer.closeAll('loading');
                     });
                     $('#menu-tree .close').click(function () {

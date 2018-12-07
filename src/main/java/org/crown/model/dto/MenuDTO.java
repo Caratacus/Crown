@@ -18,16 +18,13 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.model.parm;
+package org.crown.model.dto;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
-import org.crown.framework.model.convert.Convert;
+import org.crown.framework.model.BaseModel;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,15 +42,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class MenuPARM extends Convert {
+public class MenuDTO extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull(groups = MenuPARM.Create.class, message = "父菜单不能为空")
-    @ApiModelProperty(notes = "父菜单ID，一级菜单为0")
+    @ApiModelProperty(notes = "父菜单ID")
     private Integer parentId;
 
-    @NotBlank(groups = MenuPARM.Create.class, message = "菜单名称不能为空")
     @ApiModelProperty(notes = "菜单名称")
     private String menuName;
 
@@ -63,31 +58,16 @@ public class MenuPARM extends Convert {
     @ApiModelProperty(notes = "路由")
     private String router;
 
-    @NotNull(groups = MenuPARM.Create.class, message = "类型不能为空")
     @ApiModelProperty(notes = "类型:1:目录,2:菜单,3:按钮")
     private MenuTypeEnum menuType;
 
-    @NotBlank(groups = MenuPARM.Create.class, message = "图标不能为空")
     @ApiModelProperty(notes = "菜单图标")
     private String icon;
 
-
-    @NotNull(groups = {MenuPARM.Create.class, MenuPARM.Status.class}, message = "状态不能为空")
-    @ApiModelProperty(notes = "状态:0：禁用 1：正常")
+    @ApiModelProperty(notes = "状态 0：禁用 1：正常")
     private StatusEnum status;
 
     @ApiModelProperty(notes = "关联资源ID")
     private List<Integer> resourceIds;
 
-    public interface Create {
-
-    }
-
-    public interface Update {
-
-    }
-
-    public interface Status {
-
-    }
 }
