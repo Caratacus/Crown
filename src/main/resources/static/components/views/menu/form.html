@@ -53,6 +53,13 @@
             </select>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">对应资源</label>
+        <div class="layui-input-block">
+            <select name="resourceIds" xm-select="resourceIds" xm-select-search="" xm-select-max="3">
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item model-form-footer">
         <button class="layui-btn layui-btn-primary close" type="button">取消</button>
         <button class="layui-btn" lay-filter="menu-form-submit" lay-submit>保存</button>
@@ -60,19 +67,40 @@
 </form>
 
 <script>
-    layui.use(['layer', 'crown', 'form', 'iconPicker'], function () {
+    layui.use(['layer', 'crown', 'form', 'iconPicker', 'formSelects'], function () {
         var layer = layui.layer;
         var crown = layui.crown;
         var form = layui.form;
         var $ = layui.jquery;
         var iconPicker = layui.iconPicker;
+        var formSelects = layui.formSelects;
+        var menu = crown.getTempData('t_menu');
+
+        crown.get('/resource/resources', {}, function (data) {
+            // 渲染多选下拉框
+            var resourceSelectData = new Array();
+            for (var i = 0; i < data.result.length; i++) {
+                resourceSelectData.push({
+                    name: data.result[i].resourceName + ':' + data.result[i].perm,
+                    value: data.result[i].id
+                });
+            }
+            formSelects.data('resourceIds', 'local', {arr: resourceSelectData});
+            if (menu) {
+                var resourceIds = new Array();
+                var rds = new Array();
+                for (var i = 0; i < resourceIds.length; i++) {
+                    rds.push(resourceIds[i]);
+                }
+                formSelects.value('resourceIds', rds);
+            }
+        });
+
         // 获取所有菜单
-        layer.load(2);
         crown.get('/menu/combos', {}, function (data) {
             $('#parentId').vm({parents: data.result});
             form.render('select');
             // 回显menu数据
-            var menu = crown.getTempData('t_menu');
             if (menu) {
                 if (menu.menuType == 2) {
                     $("#pathDiv").show();
@@ -83,7 +111,6 @@
             } else {
                 iconPicker.checkIcon('iconPicker', 'layui-icon-rate-half');
             }
-            layer.closeAll('loading');
         });
         // 表单提交事件
         form.on('select(menuType)', function (data) {

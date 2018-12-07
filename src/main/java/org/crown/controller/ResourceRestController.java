@@ -20,6 +20,7 @@
  */
 package org.crown.controller;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.crown.common.annotations.Resources;
@@ -85,6 +86,13 @@ public class ResourceRestController extends SuperController {
                 .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
                 .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
         return success(page);
+    }
+    //TODO
+    @Resources
+    @ApiOperation(value = "查询所有资源")
+    @GetMapping("/resources")
+    public ApiResponses<List<Resource>> list() {
+        return success(resourceService.list());
     }
 
     @Resources
