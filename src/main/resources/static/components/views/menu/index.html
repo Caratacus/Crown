@@ -33,7 +33,6 @@
 <script type="text/html" id="menu-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resource">关联资源</a>
 </script>
 
 <script>
@@ -87,7 +86,7 @@
                     },
                     {field: 'status', align: 'center', templet: '#menu-tpl-status', title: '状态', width: 100},
                     {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
-                    {fixed: 'right', align: 'center', toolbar: '#menu-table-bar', title: '操作', width: 200}
+                    {fixed: 'right', align: 'center', toolbar: '#menu-table-bar', title: '操作'}
                 ]]
             });
         };
@@ -118,8 +117,6 @@
                     }, false);
                     renderTable();
                 });
-            }else if (obj.event === 'resource'){
-                showResourceTree(data.id);
             }
         });
 
@@ -133,18 +130,6 @@
             crown.popupCenter({
                 title: data ? '修改菜单' : '添加菜单',
                 path: 'components/views/menu/form.html',
-                finish: function () {
-                    renderTable();
-                }
-            });
-        };
-
-        //显示resource tree
-        var showResourceTree = function (menuId) {
-            console.log(menuId);
-            crown.popupCenter({
-                title: '关联资源',
-                path: 'components/views/menu/tree.html',
                 finish: function () {
                     renderTable();
                 }

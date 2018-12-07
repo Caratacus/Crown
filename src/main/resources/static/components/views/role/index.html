@@ -55,15 +55,15 @@
 <script type="text/html" id="role-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resource">菜单授权</a>
 </script>
 
 <script>
-    layui.use(['form', 'table', 'util', 'config', 'crown'], function () {
+    layui.use(['form', 'table', 'config', 'crown'], function () {
         var form = layui.form;
         var table = layui.table;
         var config = layui.config;
         var layer = layui.layer;
-        var util = layui.util;
         var crown = layui.crown;
 
         //渲染表格
@@ -83,7 +83,7 @@
                 {field: 'remark', align: 'center', sort: true, title: '备注'},
                 {field: 'createTime', align: 'center', sort: true, title: '创建时间'},
                 {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
-                {align: 'center', toolbar: '#role-table-bar', title: '操作'}
+                {align: 'center', toolbar: '#role-table-bar', title: '操作', width: 200}
             ]]
         });
 
@@ -122,8 +122,22 @@
                 showEditModel(data);
             } else if (obj.event === 'del') { //删除
                 doDelete(obj);
+            } else if (obj.event === 'resource') {
+                showMenuTree(data.id);
             }
         });
+
+        //显示菜单树
+        var showMenuTree = function (roleId) {
+            console.log(roleId);
+            crown.popupCenter({
+                title: '关联资源',
+                path: 'components/views/menu/tree.html',
+                finish: function () {
+                    roleTable();
+                }
+            });
+        };
 
         // 显示编辑弹窗
         var showEditModel = function (data) {
