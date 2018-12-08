@@ -46,4 +46,12 @@ public interface ResourceMapper extends BaseMapper<Resource> {
      * @return
      */
     List<ResourcePermDTO> getUserResourcePerms(@Param("uid") Integer uid);
+
+    /**
+     * 获取用户菜单资源权限
+     *
+     * @param uid
+     * @return
+     */
+    List<ResourcePermDTO> getUserMenuResourcePerms(@Param("uid") Integer uid);
 }

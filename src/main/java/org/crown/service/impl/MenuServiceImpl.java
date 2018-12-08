@@ -20,18 +20,25 @@
  */
 package org.crown.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
-import org.crown.framework.utils.ApiAssert;
+import org.crown.common.utils.TypeUtils;
+import org.crown.emuns.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
-import org.crown.emuns.StatusEnum;
+import org.crown.framework.utils.ApiAssert;
 import org.crown.mapper.MenuMapper;
+import org.crown.model.dto.MenuDTO;
 import org.crown.model.entity.Menu;
+import org.crown.model.entity.MenuResource;
+import org.crown.service.IMenuResourceService;
 import org.crown.service.IMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
@@ -45,24 +52,55 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implements IMenuService {
 
+    @Autowired
+    private IMenuResourceService menuResourceService;
+
     @Override
     @Transactional
-    public void removeMenu(Integer id) {
-        if (parentIdNotNull(id)) {
-            list(Wrappers.<Menu>lambdaQuery().eq(Menu::getParentId, id)).forEach(e -> {
-                if (parentIdNotNull(e.getParentId())) {
-                    removeMenu(e.getId());
-                }
-            });
-            removeById(id);
+    public void saveMenu(Menu menu, List<String> resourceIds) {
+        save(menu);
+        if (CollectionUtils.isNotEmpty(resourceIds)) {
+            Integer menuId = menu.getId();
+            //添加resource关联
+            menuResourceService.saveBatch(menuResourceService.getMenuResources(menuId, resourceIds)
+            );
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateMenu(Menu menu, List<String> resourceIds) {
+        updateById(menu);
+        if (CollectionUtils.isNotEmpty(resourceIds)) {
+            Integer menuId = menu.getId();
+            //删除resource关联
+            menuResourceService.removeByMenuId(menuId);
+            //添加resource关联
+            menuResourceService.saveBatch(menuResourceService.getMenuResources(menuId, resourceIds)
+            );
+        }
+    }
+
+    @Override
+    @Transactional
+    public void removeMenu(Integer menuId) {
+        if (parentIdNotNull(menuId)) {
+            list(Wrappers.<Menu>lambdaQuery().eq(Menu::getParentId, menuId))
+                    .stream()
+                    .filter(e -> parentIdNotNull(e.getParentId()))
+                    .forEach(e -> removeMenu(e.getId()));
+            //删除resource关联
+            menuResourceService.removeByMenuId(menuId);
+            //删除菜单
+            removeById(menuId);
         }
 
     }
 
     @Override
     @Transactional
-    public void updateStatus(Integer id, StatusEnum status) {
-        Menu menu = getById(id);
+    public void updateStatus(Integer menuId, StatusEnum status) {
+        Menu menu = getById(menuId);
         ApiAssert.notNull(ErrorCodeEnum.MENU_NOT_FOUND, menu);
         menu.setStatus(status);
         updateById(menu);
@@ -77,4 +115,20 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     private boolean parentIdNotNull(Integer parentId) {
         return Objects.nonNull(parentId) && parentId != 0;
     }
+
+    @Override
+    public MenuDTO getMenuDTODetails(Integer menuId) {
+        Menu menu = getById(menuId);
+        ApiAssert.notNull(ErrorCodeEnum.MENU_NOT_FOUND, menu);
+        MenuDTO menuDTO = menu.convert(MenuDTO.class);
+        List<String> resourceIds = menuResourceService.listObjs(
+                Wrappers.<MenuResource>lambdaQuery()
+                        .select(MenuResource::getResourceId)
+                        .eq(MenuResource::getMenuId, menuId),
+                TypeUtils::castToString
+        );
+        menuDTO.setResourceIds(resourceIds);
+        return menuDTO;
+    }
+
 }

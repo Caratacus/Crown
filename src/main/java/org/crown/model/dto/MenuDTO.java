@@ -68,6 +68,6 @@ public class MenuDTO extends BaseModel {
     private StatusEnum status;
 
     @ApiModelProperty(notes = "关联资源ID")
-    private List<Integer> resourceIds;
+    private List<String> resourceIds;
 
 }

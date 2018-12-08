@@ -20,11 +20,16 @@
  */
 package org.crown.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.MenuResourceMapper;
 import org.crown.model.entity.MenuResource;
 import org.crown.service.IMenuResourceService;
 import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -36,5 +41,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MenuResourceServiceImpl extends BaseServiceImpl<MenuResourceMapper, MenuResource> implements IMenuResourceService {
+
+    @Override
+    public void removeByMenuId(Integer menuId) {
+        remove(Wrappers.<MenuResource>lambdaQuery().eq(MenuResource::getMenuId, menuId));
+    }
+
+    @Override
+    public List<MenuResource> getMenuResources(Integer menuId, List<String> resourceIds) {
+        return resourceIds.stream().map(resourceId -> new MenuResource(menuId, resourceId)).collect(Collectors.toList());
+    }
 
 }

@@ -1,8 +1,10 @@
 package org.crown.common.shiro;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.servlet.ServletRequest;
@@ -77,7 +79,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                 request.setAttribute(APICons.API_UID, uid);
                 //crown 放任自由
                 if(uid == 1) return true;
-                List<ResourcePermDTO> perms = resourceService.getUserResourcePerms(uid);
+                Set<ResourcePermDTO> perms = resourceService.getUserResourcePerms(uid);
                 return anyMatch(perms, method, requestUri);
             } else {
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -146,7 +148,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * @param perms
      * @return
      */
-    protected boolean anyMatch(List<ResourcePermDTO> perms, String method, String requestUri) {
+    protected boolean anyMatch(Collection<ResourcePermDTO> perms, String method, String requestUri) {
         return perms.stream().anyMatch(match(method, requestUri));
     }
 

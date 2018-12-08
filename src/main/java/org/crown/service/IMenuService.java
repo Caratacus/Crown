@@ -20,8 +20,11 @@
  */
 package org.crown.service;
 
-import org.crown.framework.service.BaseService;
+import java.util.List;
+
 import org.crown.emuns.StatusEnum;
+import org.crown.framework.service.BaseService;
+import org.crown.model.dto.MenuDTO;
 import org.crown.model.entity.Menu;
 
 /**
@@ -35,17 +38,40 @@ import org.crown.model.entity.Menu;
 public interface IMenuService extends BaseService<Menu> {
 
     /**
+     * 保存菜单
+     *
+     * @param menu
+     * @param resourceIds
+     */
+    void saveMenu(Menu menu, List<String> resourceIds);
+    /**
+     * 修改菜单
+     *
+     * @param menu
+     * @param resourceIds
+     */
+    void updateMenu(Menu menu, List<String> resourceIds);
+    /**
      * 递归删除菜单
      *
-     * @param id
+     * @param menuId
      */
-    void removeMenu(Integer id);
+    void removeMenu(Integer menuId);
 
     /**
      * 修改菜单状态
      *
-     * @param id
+     * @param menuId
      * @param status
      */
-    void updateStatus(Integer id, StatusEnum status);
+    void updateStatus(Integer menuId, StatusEnum status);
+
+    /**
+     * 获取菜单详情
+     *
+     * @param menuId
+     * @return
+     */
+    MenuDTO getMenuDTODetails(Integer menuId);
+
 }

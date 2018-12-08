@@ -44,6 +44,11 @@ public class MenuResource extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
+    public MenuResource(Integer menuId, String resourceId) {
+        this.menuId = menuId;
+        this.resourceId = resourceId;
+    }
+
     /**
      * 菜单ID
      */

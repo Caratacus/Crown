@@ -21,6 +21,7 @@
 package org.crown.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.service.BaseService;
@@ -73,7 +74,7 @@ public interface IResourceService extends BaseService<Resource> {
      * @param uid
      * @return
      */
-    List<ResourcePermDTO> getUserResourcePerms(Integer uid);
+    Set<ResourcePermDTO> getUserResourcePerms(Integer uid);
 
     /**
      * 获取所有权限
@@ -98,5 +99,13 @@ public interface IResourceService extends BaseService<Resource> {
      * @return
      */
     String getResourcePermTag(String method, String mapping);
+
+    /**
+     * 获取用户菜单资源权限
+     *
+     * @param uid
+     * @return
+     */
+    List<ResourcePermDTO> getUserMenuResourcePerms(Integer uid);
 
 }

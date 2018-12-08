@@ -87,7 +87,7 @@ public class ResourceRestController extends SuperController {
                 .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
         return success(page);
     }
-    //TODO
+
     @Resources
     @ApiOperation(value = "查询所有资源")
     @GetMapping("/resources")

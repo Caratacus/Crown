@@ -20,7 +20,9 @@
  */
 package org.crown.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.crown.emuns.AuthTypeEnum;
@@ -56,11 +58,18 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
     }
 
     @Override
-    public List<ResourcePermDTO> getUserResourcePerms(Integer uid) {
+    public Set<ResourcePermDTO> getUserResourcePerms(Integer uid) {
         List<ResourcePermDTO> perms = getPerms(AuthTypeEnum.OPEN, AuthTypeEnum.LOGIN);
         List<ResourcePermDTO> resourcePerms = baseMapper.getUserResourcePerms(uid);
+        List<ResourcePermDTO> userMenuResourcePerms = getUserMenuResourcePerms(uid);
         perms.addAll(resourcePerms);
-        return perms;
+        perms.addAll(userMenuResourcePerms);
+        return new HashSet<>(perms);
+    }
+
+    @Override
+    public List<ResourcePermDTO> getUserMenuResourcePerms(Integer uid) {
+        return baseMapper.getUserMenuResourcePerms(uid);
     }
 
     @Override

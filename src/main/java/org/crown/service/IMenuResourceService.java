@@ -20,6 +20,8 @@
  */
 package org.crown.service;
 
+import java.util.List;
+
 import org.crown.framework.service.BaseService;
 import org.crown.model.entity.MenuResource;
 
@@ -32,5 +34,20 @@ import org.crown.model.entity.MenuResource;
  * @since 2018-10-25
  */
 public interface IMenuResourceService extends BaseService<MenuResource> {
+
+    /**
+     * 根据菜单ID删除资源关系记录
+     *
+     * @param menuId
+     */
+    void removeByMenuId(Integer menuId);
+
+    /**
+     * 获取菜单资源关系
+     *
+     * @param menuId
+     * @param resourceIds
+     */
+    List<MenuResource> getMenuResources(Integer menuId, List<String> resourceIds);
 
 }

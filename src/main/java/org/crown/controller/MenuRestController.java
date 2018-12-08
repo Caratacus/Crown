@@ -23,7 +23,6 @@ package org.crown.controller;
 import java.util.List;
 
 import org.crown.common.annotations.Resources;
-import org.crown.common.utils.TypeUtils;
 import org.crown.emuns.AuthTypeEnum;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.framework.controller.SuperController;
@@ -31,9 +30,7 @@ import org.crown.framework.responses.ApiResponses;
 import org.crown.model.dto.ComboDTO;
 import org.crown.model.dto.MenuDTO;
 import org.crown.model.entity.Menu;
-import org.crown.model.entity.MenuResource;
 import org.crown.model.parm.MenuPARM;
-import org.crown.service.IMenuResourceService;
 import org.crown.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -71,9 +68,6 @@ public class MenuRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Autowired
-    private IMenuResourceService menuResourceService;
-
     @Resources
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
@@ -100,13 +94,8 @@ public class MenuRestController extends SuperController {
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
     })
     @GetMapping("/{id}")
-    public ApiResponses<Menu> get(@PathVariable("id") Integer id) {
-        // TODO 该方法修改完毕 下面方法待修改
-        Menu menu = menuService.getById(id);
-        MenuDTO convert = menu.convert(MenuDTO.class);
-        List<Integer> resourceIds = menuResourceService.listObjs(Wrappers.<MenuResource>lambdaQuery().select(MenuResource::getResourceId).eq(MenuResource::getMenuId, id), TypeUtils::castToInt);
-        convert.setResourceIds(resourceIds);
-        return success(menu);
+    public ApiResponses<MenuDTO> get(@PathVariable("id") Integer id) {
+        return success(menuService.getMenuDTODetails(id));
     }
 
     @Resources
@@ -114,7 +103,7 @@ public class MenuRestController extends SuperController {
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(MenuPARM.Create.class) MenuPARM menuPARM) {
         Menu menu = menuPARM.convert(Menu.class);
-        menuService.save(menu);
+        menuService.saveMenu(menu, menuPARM.getResourceIds());
         return empty();
     }
 
@@ -127,7 +116,7 @@ public class MenuRestController extends SuperController {
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(MenuPARM.Update.class) MenuPARM menuPARM) {
         Menu menu = menuPARM.convert(Menu.class);
         menu.setId(id);
-        menuService.updateById(menu);
+        menuService.updateMenu(menu, menuPARM.getResourceIds());
         return empty();
     }
 

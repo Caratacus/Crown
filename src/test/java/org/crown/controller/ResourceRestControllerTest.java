@@ -50,6 +50,7 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
     private IUserService userService;
 
     private MockMvc mockMvc;
+
     private TokenDTO token;
 
     @Before
@@ -67,6 +68,11 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
     @Test
     public void refresh() throws Exception {
         isOk(mockMvc, put("/resource/refresh", token.getToken()));
+    }
+
+    @Test
+    public void list() throws Exception {
+        isOk(mockMvc, get("/resource/resources", token.getToken()));
     }
 
     @Test
