@@ -67,7 +67,6 @@ public class MenuPARM extends Convert {
     @ApiModelProperty(notes = "类型:1:目录,2:菜单,3:按钮")
     private MenuTypeEnum menuType;
 
-    @NotBlank(groups = MenuPARM.Create.class, message = "图标不能为空")
     @ApiModelProperty(notes = "菜单图标")
     private String icon;
 

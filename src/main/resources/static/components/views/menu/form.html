@@ -20,8 +20,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择图标</label>
         <div class="layui-input-block">
-            <input type="text" id="iconPicker" name="icon" lay-filter="iconPicker" class="layui-input"
-                   lay-verify="required"/>
+            <input type="text" id="iconPicker" name="icon" lay-filter="iconPicker" class="layui-input"/>
         </div>
     </div>
     <div class="layui-form-item" id="pathDiv" style="display: none">
@@ -53,10 +52,10 @@
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" id="resourceIdsDiv" style="display: none">
         <label class="layui-form-label">对应资源</label>
         <div class="layui-input-block">
-            <select name="resourceIds" xm-select="resourceIds" xm-select-search="" xm-select-max="3">
+            <select name="resourceIds" xm-select="resourceIds" xm-select-search="" xm-select-max="5">
             </select>
         </div>
     </div>
@@ -86,15 +85,7 @@
                 });
             }
             formSelects.data('resourceIds', 'local', {arr: resourceSelectData});
-            if (menu) {
-                var resourceIds = new Array();
-                var rds = new Array();
-                for (var i = 0; i < resourceIds.length; i++) {
-                    rds.push(resourceIds[i]);
-                }
-                formSelects.value('resourceIds', rds);
-            }
-        });
+        }, false);
 
         // 获取所有菜单
         crown.get('/menu/combos', {}, function (data) {
@@ -102,9 +93,25 @@
             form.render('select');
             // 回显menu数据
             if (menu) {
-                if (menu.menuType == 2) {
+                if (menu.menuType == 1) {
+                    $("#resourceIdsDiv").hide();
+                    $("#pathDiv").hide();
+                    $("#routerDiv").hide();
+                } else if (menu.menuType == 2) {
                     $("#pathDiv").show();
                     $("#routerDiv").show();
+                    $("#resourceIdsDiv").show();
+                } else if (menu.menuType == 3) {
+                    $("#pathDiv").hide();
+                    $("#routerDiv").hide();
+                    $("#resourceIdsDiv").show();
+                }
+                if (menu.resourceIds) {
+                    var rds = new Array();
+                    for (var i = 0; i < menu.resourceIds.length; i++) {
+                        rds.push(menu.resourceIds[i]);
+                    }
+                    formSelects.value('resourceIds', rds);
                 }
                 crown.fromVal('menu-form', menu);
                 iconPicker.checkIcon('iconPicker', menu.icon);
@@ -114,16 +121,28 @@
         });
         // 表单提交事件
         form.on('select(menuType)', function (data) {
-            if (data.value == 2) {
-                $("#pathDiv").show();
-                $("#routerDiv").show();
-            } else {
+            if (data.value == 1) {
+                $("#resourceIdsDiv").hide();
                 $("#pathDiv").hide();
                 $("#routerDiv").hide();
+            } else if (data.value == 2) {
+                $("#pathDiv").show();
+                $("#routerDiv").show();
+                $("#resourceIdsDiv").show();
+            } else if (data.value == 3) {
+                $("#pathDiv").hide();
+                $("#routerDiv").hide();
+                $("#resourceIdsDiv").show();
             }
         });
         // 表单提交事件
         form.on('submit(menu-form-submit)', function (data) {
+            //定义一数组
+            var resourceIds = new Array();
+            if (data.field.resourceIds) {
+                resourceIds = data.field.resourceIds.split(",");
+            }
+            data.field.resourceIds = resourceIds;
             layer.load(2);
             if (data.field.id) {
                 crown.put('/menu/' + data.field.id, data.field, function () {

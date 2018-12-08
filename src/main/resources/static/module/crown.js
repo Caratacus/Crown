@@ -109,9 +109,9 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             formElem.each(function () {
                 var itemFrom = $(this);
                 layui.each(object, function (key, value) {
-                    if (typeof (value) === 'object') {
+                   /* if (typeof (value) === 'object') {
                         fromVal(filter, value);//递归
-                    }
+                    }*/
                     var itemElem = itemFrom.find('[name="' + key + '"]');
                     //如果对应的表单不存在，则不执行
                     if (!itemElem[0]) {
