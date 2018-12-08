@@ -183,9 +183,10 @@ public class UserRestController extends SuperController {
     @ApiOperation("修改用户信息")
     @PutMapping("/perm/menus")
     public ApiResponses<Void> permMenus(@RequestBody @Validated UserInfoPARM userInfoPARM) {
-       // userService.getUserPermMenus(currentUid());
+        // userService.getUserPermMenus(currentUid());
         return empty();
     }
+
     @Resources
     @ApiOperation("修改用户信息")
     @PutMapping("/perm/bottons")

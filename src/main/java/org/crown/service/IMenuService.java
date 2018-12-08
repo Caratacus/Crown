@@ -44,6 +44,7 @@ public interface IMenuService extends BaseService<Menu> {
      * @param resourceIds
      */
     void saveMenu(Menu menu, List<String> resourceIds);
+
     /**
      * 修改菜单
      *
@@ -51,6 +52,7 @@ public interface IMenuService extends BaseService<Menu> {
      * @param resourceIds
      */
     void updateMenu(Menu menu, List<String> resourceIds);
+
     /**
      * 递归删除菜单
      *

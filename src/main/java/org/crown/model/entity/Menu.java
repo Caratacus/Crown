@@ -22,9 +22,9 @@ package org.crown.model.entity;
 
 import java.time.LocalDateTime;
 
-import org.crown.framework.model.BaseModel;
 import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
+import org.crown.framework.model.BaseModel;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

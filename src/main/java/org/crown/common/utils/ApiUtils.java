@@ -47,7 +47,7 @@ public abstract class ApiUtils {
      */
     public static Integer currentUid() {
         Integer uid = (Integer) ApplicationUtils.getRequest().getAttribute(APICons.API_UID);
-        if (Objects.isNull(uid)){
+        if (Objects.isNull(uid)) {
             String token = ApplicationUtils.getRequest().getHeader("Authorization");
             ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
             token = token.replaceFirst("Bearer ", "");

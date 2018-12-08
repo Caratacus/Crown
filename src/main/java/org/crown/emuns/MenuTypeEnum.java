@@ -20,8 +20,8 @@
  */
 package org.crown.emuns;
 
-import org.crown.framework.emuns.IEnum;
 import org.crown.common.exception.UnknownEnumException;
+import org.crown.framework.emuns.IEnum;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonCreator;

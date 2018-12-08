@@ -28,9 +28,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import org.crown.framework.model.convert.Convert;
 import org.crown.common.cons.Regex;
 import org.crown.emuns.StatusEnum;
+import org.crown.framework.model.convert.Convert;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -20,8 +20,8 @@
  */
 package org.crown.framework.exception;
 
-import org.crown.framework.model.ErrorCode;
 import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.model.ErrorCode;
 
 /**
  * <p>

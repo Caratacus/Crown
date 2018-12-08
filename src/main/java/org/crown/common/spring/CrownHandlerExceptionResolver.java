@@ -193,6 +193,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
                                         HttpServletRequest request, HttpServletResponse response) {
         ResponseUtils.sendFail(request, response, ErrorCodeEnum.UNAUTHORIZED, ex);
     }
+
     /**
      * The implementation logs a warning, sends an HTTP 403 error
      *
@@ -201,7 +202,7 @@ public class CrownHandlerExceptionResolver extends AbstractHandlerExceptionResol
      * @param response current HTTP response
      */
     protected void handleUnauthorizedException(UnauthorizedException ex,
-                                        HttpServletRequest request, HttpServletResponse response) {
+                                               HttpServletRequest request, HttpServletResponse response) {
         ResponseUtils.sendFail(request, response, ErrorCodeEnum.FORBIDDEN, ex);
     }
 

@@ -81,10 +81,10 @@ public class ResourceRestController extends SuperController {
                                               @RequestParam(value = "authType", required = false) AuthTypeEnum authType
     ) {
         IPage<Resource> page = resourceService.page(this.<Resource>getPage(),
-        Wrappers.<Resource>lambdaQuery()
-                .like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName)
-                .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
-                .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
+                Wrappers.<Resource>lambdaQuery()
+                        .like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName)
+                        .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
+                        .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
         return success(page);
     }
 
