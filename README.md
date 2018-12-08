@@ -149,6 +149,12 @@
     答：项目是前后端分离的需要127.0.0.1访问方式，修改config.js中serverUrl路径即可
 </sup>
 
+* ###### 为什么eclipse的环境执行时，枚举类型就不会变成数值，idea却可以？
+
+<sup>
+    答：主要是因为引入了spring-boot-devtools依赖，在eclipse运行该项目时，务必去除devtools依赖包（以及application.yml中devtolls属性）。idea则不受影响，原因是eclipse没有识别到devtools的排除文件配置，具体细节没有去深究，作者本人没有使用eclipse
+</sup>
+
 -----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
 
