@@ -47,11 +47,6 @@ import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 public class MybatisPlusSqlInjector extends AbstractSqlInjector {
 
     @Override
-    public boolean isInjectSqlRunner() {
-        return false;
-    }
-
-    @Override
     public List<AbstractMethod> getMethodList() {
         return Stream.of(
                 new Insert(),
