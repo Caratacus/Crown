@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.collections4.CollectionUtils;
-import org.crown.common.utils.JWTTokenUtils;
+import org.crown.common.utils.JWTUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
@@ -78,10 +78,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public TokenDTO getToken(User user) {
-        Integer id = user.getId();
+        Integer uid = user.getId();
         TokenDTO tokenDTO = new TokenDTO();
-        tokenDTO.setUid(id);
-        tokenDTO.setToken(JWTTokenUtils.generate(id));
+        tokenDTO.setUid(uid);
+        tokenDTO.setToken(JWTUtils.generate(uid));
         return tokenDTO;
     }
 

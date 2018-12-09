@@ -11,7 +11,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.crown.common.utils.JWTTokenUtils;
+import org.crown.common.utils.JWTUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.utils.ApiAssert;
@@ -41,7 +41,7 @@ public class JWTRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        Integer uid = JWTTokenUtils.getUid(principals.toString());
+        Integer uid = JWTUtils.getUid(principals.toString());
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roleIds = userService.getRoleIds(uid).stream().map(TypeUtils::castToString).collect(Collectors.toSet());
         simpleAuthorizationInfo.addRoles(roleIds);
@@ -53,7 +53,7 @@ public class JWTRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getPrincipal();
         // 判断Token是否过期
-        ApiAssert.isFalse(ErrorCodeEnum.UNAUTHORIZED, JWTTokenUtils.isExpired(token));
+        ApiAssert.isFalse(ErrorCodeEnum.UNAUTHORIZED, JWTUtils.isExpired(token));
         return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

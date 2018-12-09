@@ -53,7 +53,7 @@
 
 <!-- 表单tree -->
 <script type="text/html" id="menu-tree">
-    <div id="tree-div">
+    <form id="tree-form" lay-filter="tree-form" class="layui-form model-form">
         <div class="content_wrap" style="padding:20px 70px 100px;height:200px;overflow-y: auto">
             <div>
                 <ul id="menuTreeData" class="ztree"></ul>
@@ -63,7 +63,7 @@
             <button class="layui-btn layui-btn-primary layui-btn-sm close" type="button">取消</button>
             <button class="layui-btn layui-btn-sm" lay-filter="role-form-submit" lay-submit>保存</button>
         </div>
-    </div>
+    </form>
 </script>
 
 <!-- 表格操作列 -->
@@ -230,7 +230,7 @@
                         onAsyncSuccess();
                         layer.closeAll('loading');
                     });
-                    $('#tree-div .close').click(function () {
+                    $('#tree-form .close').click(function () {
                         layer.closeAll('page');
                     });
                 }

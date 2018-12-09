@@ -17,7 +17,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.crown.common.utils.JWTTokenUtils;
+import org.crown.common.utils.JWTUtils;
 import org.crown.cons.APICons;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.utils.ResponseUtils;
@@ -75,7 +75,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
         if (isLoginRequest(request, response)) {
             if (executeLogin(request, response)) {
-                Integer uid = JWTTokenUtils.getUid(token);
+                Integer uid = JWTUtils.getUid(token);
                 request.setAttribute(APICons.API_UID, uid);
                 //crown 放任自由
                 if (uid == 1) return true;

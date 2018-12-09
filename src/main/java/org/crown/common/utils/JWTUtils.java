@@ -29,7 +29,6 @@ import org.crown.framework.utils.ApiAssert;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
@@ -45,10 +44,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-public abstract class JWTTokenUtils {
+public abstract class JWTUtils {
 
-    public static final String _ID = "_id";
-    private static final String SECRET = "1s6U65P4bAay14bMDgHWgtqaTHNTZPZNMDJu3k";
+    public static final String UID = "uid";
+    private static final String SECRET = "WgtqaTHNTZPZNMDJu3k";
     private static final long EXPIRE = 60 * 60 * 1000;
 
     /**
@@ -61,8 +60,8 @@ public abstract class JWTTokenUtils {
         Date nowDate = new Date();
         //过期时间
         Date expireDate = new Date(nowDate.getTime() + EXPIRE * 1000);
-        Map<String, Object> claims = new HashMap<>(2);
-        claims.put(_ID, uid);
+        Map<String, Object> claims = new HashMap<>(1);
+        claims.put(UID, uid);
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(nowDate)
@@ -93,7 +92,7 @@ public abstract class JWTTokenUtils {
     /**
      * 获取jwt发布时间
      */
-    public static Date getIssuedAtDate(String token) {
+    public static Date getIssuedAt(String token) {
         return getClaim(token).getIssuedAt();
     }
 
@@ -101,21 +100,14 @@ public abstract class JWTTokenUtils {
      * 获取UID
      */
     public static Integer getUid(String token) {
-        return TypeUtils.castToInt(getClaim(token).get(_ID));
+        return TypeUtils.castToInt(getClaim(token).get(UID));
     }
 
     /**
      * 获取jwt失效时间
      */
-    public static Date getExpirationDate(String token) {
+    public static Date getExpiration(String token) {
         return getClaim(token).getExpiration();
-    }
-
-    /**
-     * 解析token是否正确,不正确会报异常<br>
-     */
-    public static void parseToken(String token) throws JwtException {
-        Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
     }
 
     /**
@@ -126,7 +118,7 @@ public abstract class JWTTokenUtils {
      */
     public static boolean isExpired(String token) {
         try {
-            final Date expiration = getExpirationDate(token);
+            final Date expiration = getExpiration(token);
             return expiration.before(new Date());
         } catch (ExpiredJwtException expiredJwtException) {
             return true;
