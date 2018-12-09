@@ -53,14 +53,16 @@
 
 <!-- 表单tree -->
 <script type="text/html" id="menu-tree">
-    <div class="content_wrap" style="padding:20px 70px 100px;height:200px;overflow-y: auto">
-        <div>
-            <ul id="menuTreeData" class="ztree"></ul>
+    <div id="tree-div">
+        <div class="content_wrap" style="padding:20px 70px 100px;height:200px;overflow-y: auto">
+            <div>
+                <ul id="menuTreeData" class="ztree"></ul>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item model-form-footer" style="padding:10px 30px;">
-        <button class="layui-btn layui-btn-primary layui-btn-sm close" type="button">取消</button>
-        <button class="layui-btn layui-btn-sm" lay-filter="role-form-submit" lay-submit>保存</button>
+        <div class="layui-form-item model-form-footer" style="padding:10px 30px;">
+            <button class="layui-btn layui-btn-primary layui-btn-sm close" type="button">取消</button>
+            <button class="layui-btn layui-btn-sm" lay-filter="role-form-submit" lay-submit>保存</button>
+        </div>
     </div>
 </script>
 
@@ -88,10 +90,10 @@
             simpleData: {
                 enable: true,
                 idKey: "id",
-                pIdKey: "pId",
+                pIdKey: "parentId"
             },
             key: {
-                name: "name"
+                name: "menuName"
             }
         },
         edit: {
@@ -100,35 +102,38 @@
     };
 
     var newCount = 1;
-    var isFirst = true;;
+    var isFirst = true;
+
     function onAsyncSuccess() {
         if (isFirst) {
             //获得树形图对象
             var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
             //获取根节点个数,getNodes获取的是根节点的集合
             var nodeList = zTree.getNodes();
-            for(var i=0;i<nodeList.length;i++){
-                zTree.expandNode(nodeList[i],true,false,false,false);
+            for (var i = 0; i < nodeList.length; i++) {
+                zTree.expandNode(nodeList[i], true, false, false, false);
             }
             //当再次点击节点时条件不符合,直接跳出方法
-            isFirst= false;
+            isFirst = false;
         }
     }
+
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
-        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
         var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
             + "' title='add node' onfocus='this.blur();'></span>";
         sObj.after(addStr);
-        var btn = $("#addBtn_"+treeNode.tId);
-        if (btn) btn.bind("click", function(){
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
             var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
-            zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+            zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
             return false;
         });
     };
+
     function removeHoverDom(treeId, treeNode) {
-        $("#addBtn_"+treeNode.tId).unbind().remove();
+        $("#addBtn_" + treeNode.tId).unbind().remove();
     };
     layui.use(['form', 'table', 'config', 'crown'], function () {
         var form = layui.form;
@@ -209,49 +214,27 @@
                 content: $('#menu-tree').html(),
                 success: function () {
                     //树形菜单
-                    crown.get('/menu/combos', {}, function (data) {
-                        console.log(data);
-                        var zNodes =[
-                            { id:1, pId:0, name:"1111111111112222222222父节点1222"},
-                            { id:11, pId:1, name:"父节点11"},
-                            { id:111, pId:11, name:"叶子节点111"},
-                            { id:112, pId:11, name:"叶子节点112"},
-                            { id:113, pId:11, name:"叶子节点113"},
-                            { id:114, pId:11, name:"叶子节点114"},
-                            { id:12, pId:1, name:"父节点12"},
-                            { id:121, pId:12, name:"叶子节点121"},
-                            { id:122, pId:12, name:"叶子节点122"},
-                            { id:123, pId:12, name:"叶子节点123"},
-                            { id:124, pId:12, name:"叶子节点124"},
-                            { id:13, pId:1, name:"11111111111111111111111111父节点13", isParent:true},
-                            { id:2, pId:0, name:"父节点2"},
-                            { id:21, pId:2, name:"父节点21"},
-                            { id:211, pId:21, name:"叶子节点211"},
-                            { id:212, pId:21, name:"叶子节点212"},
-                            { id:213, pId:21, name:"叶子节点213"},
-                            { id:214, pId:21, name:"叶子节点214"},
-                            { id:22, pId:2, name:"父节点22"},
-                            { id:221, pId:22, name:"叶子节点221"},
-                            { id:222, pId:22, name:"叶子节点222"},
-                            { id:223, pId:22, name:"叶子节点223"},
-                            { id:224, pId:22, name:"叶子节点224"},
-                            { id:23, pId:2, name:"父节点23"},
-                            { id:231, pId:23, name:"叶子节点231"},
-                            { id:232, pId:23, name:"叶子节点232"},
-                            { id:233, pId:23, name:"叶子节点233"},
-                            { id:234, pId:23, name:"叶子节点234"},
-                            { id:3, pId:0, name:"父节点3", isParent:true}
-                        ];
+                    crown.get('/menu', {}, function (data) {
+                        var result = data.result;
+                        //定义一数组
+                        var zNodes = [];
+                        for (var i = 0; i < result.length; i++) {
+                            var zNode = {};
+                            zNode.id = result[i].id;
+                            zNode.parentId = result[i].parentId;
+                            zNode.menuName = result[i].menuName;
+                            zNode.isParent = result[i].menuType == 3 ? false : true;
+                            zNodes.push(zNode);
+                        }
                         $.fn.zTree.init($("#menuTreeData"), setting, zNodes);
                         onAsyncSuccess();
                         layer.closeAll('loading');
                     });
-                    $('#menu-tree .close').click(function () {
+                    $('#tree-div .close').click(function () {
                         layer.closeAll('page');
                     });
                 }
             });
-            console.log(roleId);
         };
 
         // 显示编辑弹窗
