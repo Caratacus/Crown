@@ -44,6 +44,11 @@ public class RoleMenu extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
+    public RoleMenu(Integer roleId, Integer menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
+
     /**
      * 角色ID
      */

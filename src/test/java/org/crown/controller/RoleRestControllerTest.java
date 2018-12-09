@@ -20,6 +20,7 @@
  */
 package org.crown.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.crown.framework.SuperRestControllerTest;
@@ -59,6 +60,12 @@ public class RoleRestControllerTest extends SuperRestControllerTest implements C
     public void before() {
         mockMvc = getMockMvc(restController);
         token = userService.getToken(userService.getById(1));
+    }
+
+    @Test
+    public void menus() throws Exception {
+        //关联菜单
+        isOk(mockMvc, post("/role/1/menus", token.getToken(), Arrays.asList(1, 2, 3)));
     }
 
     @Test

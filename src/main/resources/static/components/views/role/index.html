@@ -54,6 +54,7 @@
 <!-- 表单tree -->
 <script type="text/html" id="menu-tree">
     <form id="tree-form" lay-filter="tree-form" class="layui-form model-form">
+        <input name="roleId" type="hidden"/>
         <div class="content_wrap" style="padding:20px 70px 100px;height:200px;overflow-y: auto">
             <div>
                 <ul id="menuTreeData" class="ztree"></ul>
@@ -61,7 +62,7 @@
         </div>
         <div class="layui-form-item model-form-footer" style="padding:10px 30px;">
             <button class="layui-btn layui-btn-primary layui-btn-sm close" type="button">取消</button>
-            <button class="layui-btn layui-btn-sm" lay-filter="role-form-submit" lay-submit>保存</button>
+            <button class="layui-btn layui-btn-sm" lay-filter="tree-form-submit" lay-submit>保存</button>
         </div>
     </form>
 </script>
@@ -192,6 +193,30 @@
             return false;
         });
 
+
+        // 表单提交事件
+        form.on('submit(tree-form-submit)', function (data) {
+            layer.load(2);
+            var zTreeObj = $.fn.zTree.getZTreeObj("menuTreeData");
+            var checked = zTreeObj.getCheckedNodes();
+            var menuIds = [];
+            for (var i = 0; i < checked.length; i++) {
+                menuIds.push(checked[i].id);
+            }
+            if (menuIds.length == 0) {
+                layer.msg('请选择关联菜单', {icon: 5});
+                layer.closeAll('page');
+                return false;
+            }
+            crown.post('/role/' + data.field.roleId + '/menus', menuIds, function () {
+                layer.closeAll('loading');
+                layer.msg('关联成功', {icon: 1});
+                roleTable.reload('role-table');
+                layer.closeAll('page');
+            });
+            return false;
+        });
+
         // 工具条点击事件
         table.on('tool(role-table)', function (obj) {
             var data = obj.data;
@@ -213,6 +238,10 @@
                 offset: '120px',
                 content: $('#menu-tree').html(),
                 success: function () {
+                    $('#tree-form')[0].reset();
+                    form.val("tree-form", {
+                        "roleId": roleId
+                    });
                     //树形菜单
                     crown.get('/menu', {}, function (data) {
                         var result = data.result;

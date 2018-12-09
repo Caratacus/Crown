@@ -20,11 +20,17 @@
  */
 package org.crown.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.RoleMenuMapper;
 import org.crown.model.entity.RoleMenu;
 import org.crown.service.IRoleMenuService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -37,4 +43,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMenu> implements IRoleMenuService {
 
+    @Override
+    @Transactional
+    public void saveRoleMenu(Integer roleId, List<Integer> menuIds) {
+        remove(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getRoleId, roleId));
+        saveBatch(menuIds.stream().map(menuId -> new RoleMenu(roleId, menuId)).collect(Collectors.toList()));
+    }
 }

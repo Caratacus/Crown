@@ -22,11 +22,14 @@ package org.crown.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.crown.common.annotations.Resources;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.model.entity.Role;
 import org.crown.model.parm.RolePARM;
+import org.crown.service.IRoleMenuService;
 import org.crown.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -66,6 +69,8 @@ public class RoleRestController extends SuperController {
 
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IRoleMenuService roleMenuService;
 
     @Resources
     @ApiOperation(value = "查询所有角色(分页)")
@@ -125,6 +130,17 @@ public class RoleRestController extends SuperController {
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
         roleService.removeById(id);
+        return empty();
+    }
+
+    @Resources
+    @ApiOperation(value = "关联菜单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
+    })
+    @PostMapping("/{id}/menus")
+    public ApiResponses<Void> menus(@PathVariable("id") Integer id, @RequestBody @NotEmpty(message = "菜单ID不能为空") List<Integer> menuIds) {
+        roleMenuService.saveRoleMenu(id, menuIds);
         return empty();
     }
 }
