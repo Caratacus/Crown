@@ -20,8 +20,13 @@
  */
 package org.crown.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.crown.emuns.MenuTypeEnum;
 import org.crown.framework.mapper.BaseMapper;
+import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.entity.Menu;
 
 /**
@@ -35,4 +40,12 @@ import org.crown.model.entity.Menu;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    /**
+     * 获取用户权限菜单
+     *
+     * @param uid
+     * @param menuTypes
+     * @return
+     */
+    List<MenuTreeDTO> getUserPermMenus(@Param("uid") Integer uid, @Param("menuTypes") List<MenuTypeEnum> menuTypes);
 }

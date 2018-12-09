@@ -56,10 +56,11 @@
         formSelects: 'formSelects/formSelects-v4',
         iconPicker: 'iconPicker/iconPicker',
         treetable: 'treetable/treetable'
-    }).use(['config', 'index', 'element'], function () {
+    }).use(['config', 'index', 'element','crown'], function () {
         var config = layui.config;
         var index = layui.index;
         var element = layui.element;
+        var crown = layui.crown;
         // 检查是否登录
         if (!config.getToken() || config.getToken() == '') {
             location.replace('login.html');
@@ -73,6 +74,8 @@
             index.initRouter();
             index.bindEvent();
         });
+
+    //TODO 权限菜单
     });
 </script>
 </body>

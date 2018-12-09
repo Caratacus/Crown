@@ -31,11 +31,13 @@ import org.crown.framework.controller.SuperController;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
+import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.dto.UserDTO;
 import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
 import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
+import org.crown.service.IMenuService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -74,6 +76,8 @@ public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IMenuService menuService;
 
     @Resources
     @ApiOperation("查询所有用户")
@@ -179,18 +183,19 @@ public class UserRestController extends SuperController {
         return empty();
     }
 
-    @Resources
-    @ApiOperation("修改用户信息")
-    @PutMapping("/perm/menus")
-    public ApiResponses<Void> permMenus(@RequestBody @Validated UserInfoPARM userInfoPARM) {
-        // userService.getUserPermMenus(currentUid());
-        return empty();
+    @Resources(auth = AuthTypeEnum.LOGIN)
+    @ApiOperation("获取用户权限菜单")
+    @GetMapping("/perm/menus")
+    public ApiResponses<List<MenuTreeDTO>> permMenus() {
+        List<MenuTreeDTO> menuTrees = menuService.getUserPermMenus(currentUid());
+        return success(menuTrees);
     }
 
     @Resources
-    @ApiOperation("修改用户信息")
-    @PutMapping("/perm/bottons")
-    public ApiResponses<Void> updateUserInf1o(@RequestBody @Validated UserInfoPARM userInfoPARM) {
+    @ApiOperation("获取用户权限按钮")
+    @GetMapping("/perm/bottons")
+    public ApiResponses<Void> permBottons() {
+        // List<MenuTreeDTO> menuTrees = userService.getUserPermBottons(currentUid());
         return empty();
     }
 

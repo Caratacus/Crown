@@ -29,6 +29,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.crown.common.annotations.Resources;
 import org.crown.model.entity.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +66,7 @@ public class ScanMappings {
     /**
      * 扫描资源插入数据库
      */
+    @PostConstruct
     public void doScan() {
         resourceService.saveOrUpdateBatch(
                 handlerMapping.getHandlerMethods()

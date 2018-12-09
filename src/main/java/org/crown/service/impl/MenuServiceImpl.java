@@ -20,16 +20,21 @@
  */
 package org.crown.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.crown.common.utils.TypeUtils;
+import org.crown.emuns.MenuTypeEnum;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.utils.ApiAssert;
+import org.crown.framework.utils.TreeUtils;
 import org.crown.mapper.MenuMapper;
 import org.crown.model.dto.MenuDTO;
+import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.entity.Menu;
 import org.crown.model.entity.MenuResource;
 import org.crown.service.IMenuResourceService;
@@ -129,6 +134,12 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         );
         menuDTO.setResourceIds(resourceIds);
         return menuDTO;
+    }
+
+    @Override
+    public List<MenuTreeDTO> getUserPermMenus(Integer uid) {
+        List<MenuTreeDTO> menus = baseMapper.getUserPermMenus(uid, Arrays.asList(MenuTypeEnum.CATALOG, MenuTypeEnum.MENU));
+        return menus.stream().filter(e -> !parentIdNotNull(e.getParentId())).map(e -> TreeUtils.findChildren(e, menus)).collect(Collectors.toList());
     }
 
 }

@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 public class MenuTreeDTO extends TreeNode {
 
     @ApiModelProperty(notes = "菜单名称", dataType = "string")
-    private String name;
+    private String menuName;
     @ApiModelProperty(notes = "类型:1:目录,2:菜单,3:按钮", dataType = "int")
-    private Integer type;
+    private Integer menuType;
     @ApiModelProperty(notes = "映射地址", dataType = "string")
-    private String mapping;
+    private String router;
     @ApiModelProperty(notes = "图标", dataType = "string")
     private String icon;
 

@@ -25,6 +25,7 @@ import java.util.List;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.service.BaseService;
 import org.crown.model.dto.MenuDTO;
+import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.entity.Menu;
 
 /**
@@ -75,5 +76,13 @@ public interface IMenuService extends BaseService<Menu> {
      * @return
      */
     MenuDTO getMenuDTODetails(Integer menuId);
+
+    /**
+     * 获取用户权限菜单
+     *
+     * @param uid
+     * @return
+     */
+    List<MenuTreeDTO> getUserPermMenus(Integer uid);
 
 }

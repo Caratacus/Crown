@@ -121,15 +121,8 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     }
 
     @Test
-    public void update() throws Exception {
-        UserPARM userPARM = new UserPARM();
-        userPARM.setLoginName("12121");
-        userPARM.setNickname("222");
-        userPARM.setEmail("11@qq.com");
-        userPARM.setPhone("13617828937");
-        userPARM.setStatus(StatusEnum.DISABLE);
-        userPARM.setRoleIds(Collections.singletonList(1));
-        isOk(mockMvc, put("/user/1", token.getToken(), userPARM));
+    public void permMenus() throws Exception {
+        isOk(mockMvc, get("/user/perm/menus", token.getToken()));
     }
 
 }
