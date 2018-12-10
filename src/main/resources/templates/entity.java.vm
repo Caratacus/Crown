@@ -1,0 +1,53 @@
+package ${package.Entity};
+
+#if(${activeRecord})
+import com.baomidou.mybatisplus.activerecord.Model;
+#end
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+#if(!${activeRecord} && !${superEntityClass})
+import java.io.Serializable;
+#end
+
+/**
+ * <p>
+ * ${table.comment}
+ * </p>
+ *
+ * @author ${author}
+ */
+#if(${table.convert})
+@TableName("${table.name}")
+#end
+#if(${superEntityClass})
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#elseif(${activeRecord})
+public class ${entity} extends Model<${entity}> {
+#else
+public class ${entity} implements Serializable{
+#end
+
+private static final long serialVersionUID=1L;
+
+#foreach($field in ${table.fields})
+    #set($fieldPropertyName=${field.propertyName.substring(0,1).toLowerCase()} + "" +${field.propertyName.substring(1)})
+    #if(${field.keyFlag})
+        #set($keyPropertyName=$fieldPropertyName)
+    #end
+    #if("$!field.comment" != "")
+    @ApiModelProperty(notes = "${field.comment}")
+    #end
+private ${field.propertyType} $fieldPropertyName;
+#end
+
+}

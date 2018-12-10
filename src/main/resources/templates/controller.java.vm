@@ -1,0 +1,38 @@
+package ${package.Controller};
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
+
+import io.swagger.annotations.Api;
+#if(${restControllerStyle})
+import org.springframework.web.bind.annotation.RestController;
+#else
+import org.springframework.stereotype.Controller;
+#end
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ */
+@Api(tags = {"${entity}"}, description = "${table.comment}相关接口")
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping(value = "#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+#if(${superControllerClass})
+@Validated
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+        }
