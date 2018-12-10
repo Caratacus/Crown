@@ -26,5 +26,5 @@ package org.crown.common.emuns;
  * @author Caratacus
  */
 public enum HTTPMethod {
-    GET, POST, PUT, DELETE, PATCH, TRACE, HEAD, OPTIONS;
+    GET, POST, PUT, DELETE, PATCH, TRACE, HEAD, OPTIONS
 }
