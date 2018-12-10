@@ -20,6 +20,7 @@
  */
 package org.crown.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -108,4 +109,12 @@ public interface IResourceService extends BaseService<Resource> {
      */
     List<ResourcePermDTO> getUserMenuResourcePerms(Integer uid);
 
+    /**
+     * <p>
+     * 批量修改插入
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    boolean saveOrUpdateBatch(Collection<Resource> entityList);
 }

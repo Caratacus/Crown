@@ -49,9 +49,12 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 
 
@@ -311,27 +314,29 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
         return list(wrapper).stream().map(mapper).collect(Collectors.toList());
     }
 
-    @Override
-    public <V> Map<Integer, V> list2Map(List<V> list, String property) {
+    private <K> Map<K, T> list2Map(List<T> list, SFunction<T, K> column) {
         if (list == null) {
             return Collections.emptyMap();
         }
-        Map<Integer, V> map = new LinkedHashMap<>(list.size());
-        for (V v : list) {
-            Field field = ReflectionUtils.findField(v.getClass(), property);
+        Map<K, T> map = new LinkedHashMap<>(list.size());
+        for (T t : list) {
+            Field field = ReflectionUtils.findField(t.getClass(), getColumn(LambdaUtils.resolve(column)));
             if (Objects.isNull(field)) {
                 continue;
             }
             ReflectionUtils.makeAccessible(field);
-            Object fieldValue = ReflectionUtils.getField(field, v);
-            map.put((Integer) fieldValue, v);
+            Object fieldValue = ReflectionUtils.getField(field, t);
+            map.put((K) fieldValue, t);
         }
         return map;
     }
 
     @Override
-    public Map<Integer, T> list2Map(Wrapper<T> wrapper, String property) {
-        return list2Map(list(wrapper), property);
+    public <K> Map<K, T> list2Map(Wrapper<T> wrapper, SFunction<T, K> column) {
+        return list2Map(list(wrapper), column);
     }
 
+    private String getColumn(SerializedLambda lambda) {
+        return StringUtils.resolveFieldName(lambda.getImplMethodName());
+    }
 }

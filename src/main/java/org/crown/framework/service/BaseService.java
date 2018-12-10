@@ -31,6 +31,7 @@ import org.crown.framework.model.convert.Convert;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 
 /**
@@ -327,34 +328,24 @@ public interface BaseService<T extends Convert> {
     <E> List<E> entitys(Wrapper<T> wrapper, Function<? super T, E> mapper);
 
     /**
-     * 以list中对象的某个属性做键值,转换成map
-     * <p>
-     *
-     * @param list     要转换的list
-     * @param property list中对象的属性,作为键值
-     * @return 转换后的map
-     */
-    <V> Map<Integer, V> list2Map(List<V> list, String property);
-
-    /**
      * 查询list,使用list中对象的某个属性做键值,转换成map
      * <p>
      *
-     * @param property list中对象的属性,作为键值
+     * @param column list中对象的属性,作为键值
      * @return 转换后的map
      */
-    default Map<Integer, T> list2Map(String property) {
-        return list2Map(Wrappers.emptyWrapper(), property);
+    default <K> Map<K, T> list2Map(SFunction<T, K> column) {
+        return list2Map(Wrappers.<T>emptyWrapper(), column);
     }
 
     /**
      * 查询list,使用list中对象的某个属性做键值,转换成map
      * <p>
      *
-     * @param wrapper  条件
-     * @param property list中对象的属性,作为键值
+     * @param wrapper 条件
+     * @param column  list中对象的属性,作为键值
      * @return 转换后的map
      */
-    Map<Integer, T> list2Map(Wrapper<T> wrapper, String property);
+    <K> Map<K, T> list2Map(Wrapper<T> wrapper, SFunction<T, K> column);
 
 }

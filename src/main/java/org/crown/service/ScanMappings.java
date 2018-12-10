@@ -74,7 +74,6 @@ public class ScanMappings {
                         .stream()
                         .map(this::getResources)
                         .flatMap(Collection::stream)
-                        .map(this::setUpdateTime)
                         .collect(Collectors.toList())
         );
     }
@@ -124,18 +123,4 @@ public class ScanMappings {
         return resources;
     }
 
-
-    /**
-     * 设置修改时间
-     *
-     * @param resource
-     * @return
-     */
-    private Resource setUpdateTime(Resource resource) {
-        Resource res = resourceService.getById(resource.getId());
-        if (Objects.nonNull(res)) {
-            resource.setUpdateTime(res.getUpdateTime());
-        }
-        return resource;
-    }
 }
