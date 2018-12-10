@@ -20,6 +20,8 @@
  */
 package org.crown.generate;
 
+import org.junit.Test;
+
 /**
  * <p>
  * MysqlGeneratorTest
@@ -29,7 +31,9 @@ package org.crown.generate;
  */
 public class MysqlGeneratorTest {
 
-    public static void main(String[] args) {
-        MysqlGenerator.generator();
+    @Test
+    public void generator() {
+        MysqlGenerator mysqlGenerator = new MysqlGenerator();
+        mysqlGenerator.generator("sys_user");
     }
 }

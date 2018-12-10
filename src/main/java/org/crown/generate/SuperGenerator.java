@@ -182,6 +182,7 @@ public class SuperGenerator {
                 .setBaseResultMap(false)// XML ResultMap
                 .setBaseColumnList(false)// XML columList
                 .setKotlin(false) //是否生成 kotlin 代码
+                .setOpen(false)
                 .setAuthor("Caratacus") //作者
                 //自定义文件命名，注意 %s 会自动填充表实体属性！
                 .setEntityName("%s")
@@ -224,7 +225,6 @@ public class SuperGenerator {
      * 获取AutoGenerator
      *
      * @param tableName
-     * @param tableFillList
      * @return
      */
     protected AutoGenerator getAutoGenerator(String tableName) {
