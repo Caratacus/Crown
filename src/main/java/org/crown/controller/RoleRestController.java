@@ -27,6 +27,7 @@ import javax.validation.constraints.NotEmpty;
 import org.crown.common.annotations.Resources;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.model.dto.RoleDTO;
 import org.crown.model.entity.Role;
 import org.crown.model.parm.RolePARM;
 import org.crown.service.IRoleMenuService;
@@ -45,8 +46,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -78,9 +77,8 @@ public class RoleRestController extends SuperController {
             @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
     })
     @GetMapping
-    public ApiResponses<IPage<Role>> page(@RequestParam(value = "roleName", required = false) String roleName) {
-        IPage<Role> page = roleService.page(this.<Role>getPage(), Wrappers.<Role>lambdaQuery().like(StringUtils.isNotEmpty(roleName), Role::getRoleName, roleName));
-        return success(page);
+    public ApiResponses<IPage<RoleDTO>> page(@RequestParam(value = "roleName", required = false) String roleName) {
+        return success(roleService.pageRoleDTO(this.<Role>getPage(), roleName));
     }
 
     @Resources

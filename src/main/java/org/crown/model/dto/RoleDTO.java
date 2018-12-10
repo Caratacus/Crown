@@ -18,31 +18,46 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.service;
+package org.crown.model.dto;
 
-import org.crown.framework.service.BaseService;
-import org.crown.model.dto.RoleDTO;
-import org.crown.model.entity.Role;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.crown.framework.model.BaseModel;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 角色表 服务类
+ * 角色表
  * </p>
  *
  * @author Caratacus
  * @since 2018-10-25
  */
-public interface IRoleService extends BaseService<Role> {
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class RoleDTO extends BaseModel {
 
-    /**
-     * 获取角色详情列表
-     *
-     * @param page
-     * @param roleName
-     * @return
-     */
-    IPage<RoleDTO> pageRoleDTO(Page<Role> page, String roleName);
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(notes = "角色名称")
+    private String roleName;
+
+    @ApiModelProperty(notes = "备注")
+    private String remark;
+
+    @ApiModelProperty(notes = "菜单ID集合")
+    private List<Integer> menuIds;
+
+    @ApiModelProperty(notes = "创建时间")
+    private LocalDateTime createTime;
+
+    @ApiModelProperty(notes = "修改时间")
+    private LocalDateTime updateTime;
+
 }

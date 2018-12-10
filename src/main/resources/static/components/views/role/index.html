@@ -103,19 +103,14 @@
     };
 
     var newCount = 1;
-    var isFirst = true;
 
     function onAsyncSuccess() {
-        if (isFirst) {
-            //获得树形图对象
-            var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
-            //获取根节点个数,getNodes获取的是根节点的集合
-            var nodeList = zTree.getNodes();
-            for (var i = 0; i < nodeList.length; i++) {
-                zTree.expandNode(nodeList[i], true, false, false, false);
-            }
-            //当再次点击节点时条件不符合,直接跳出方法
-            isFirst = false;
+        //获得树形图对象
+        var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+        //获取根节点个数,getNodes获取的是根节点的集合
+        var nodeList = zTree.getNodes();
+        for (var i = 0; i < nodeList.length; i++) {
+            zTree.expandNode(nodeList[i], true, false, false, false);
         }
     }
 
@@ -193,12 +188,11 @@
             return false;
         });
 
-
         // 表单提交事件
         form.on('submit(tree-form-submit)', function (data) {
             layer.load(2);
-            var zTreeObj = $.fn.zTree.getZTreeObj("menuTreeData");
-            var checked = zTreeObj.getCheckedNodes();
+            var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+            var checked = zTree.getCheckedNodes();
             var menuIds = [];
             for (var i = 0; i < checked.length; i++) {
                 menuIds.push(checked[i].id);
@@ -225,12 +219,13 @@
             } else if (obj.event === 'del') { //删除
                 doDelete(obj);
             } else if (obj.event === 'resource') {
-                showMenuTree(data.id);
+                showMenuTree(data);
             }
         });
 
         //显示菜单树
-        var showMenuTree = function (roleId) {
+        var showMenuTree = function (data) {
+            var menuIds = data.menuIds;
             layer.open({
                 type: 1,
                 title: '菜单关联',
@@ -240,7 +235,7 @@
                 success: function () {
                     $('#tree-form')[0].reset();
                     form.val("tree-form", {
-                        "roleId": roleId
+                        "roleId": data.id
                     });
                     //树形菜单
                     crown.get('/menu', {}, function (data) {
@@ -255,7 +250,13 @@
                             zNode.isParent = result[i].menuType == 3 ? false : true;
                             zNodes.push(zNode);
                         }
-                        $.fn.zTree.init($("#menuTreeData"), setting, zNodes);
+                        var zTree = $.fn.zTree.init($("#menuTreeData"), setting, zNodes);
+                        if (menuIds) {
+                            for (var j = 0; j < menuIds.length; j++) {
+                                var node = zTree.getNodeByParam("id", menuIds[j]);
+                                zTree.checkNode(node, true, false);
+                            }
+                        }
                         onAsyncSuccess();
                         layer.closeAll('loading');
                     });
