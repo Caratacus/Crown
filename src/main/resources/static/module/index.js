@@ -7,44 +7,27 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
     var index = {
         // 渲染左侧导航栏
         initLeftNav: function () {
-            var authMenus = new Array();
-            for (var i = 0; i < config.menus.length; i++) {
-                var tempMenu = config.menus[i];
-                var tempSubMenus = new Array();
-                for (var j = 0; j < tempMenu.subMenus.length; j++) {
-                    var tempSubMenu = tempMenu.subMenus[j];
-                    if (!tempSubMenu.auth) {
-                        tempSubMenus.push(tempSubMenu);
-                        //TODO
-                    } else if (!crown.hasPerm(tempSubMenu.auth)) {
-                        tempSubMenus.push(tempSubMenu);
-                    }
-                }
-                if (tempSubMenus.length > 0) {
-                    tempMenu.subMenus = tempSubMenus;
-                    authMenus.push(tempMenu);
-                }
-            }
-            $('.layui-layout-admin .layui-side').vm({menus: authMenus});
+            var menus = config.getMenus();
+            $('.layui-layout-admin .layui-side').vm({menus: menus});
             crown.activeNav(Q.lash);
         },
         // 路由注册
         initRouter: function () {
-            index.regRouter(config.menus);
+            index.regRouter(config.getMenus());
             Q.init({
-                index: 'console'
+                index: 'user'
             });
         },
         // 使用递归循环注册
         regRouter: function (menus) {
             $.each(menus, function (i, data) {
-                if (data.url) {
-                    Q.reg(data.url, function () {
+                if (data.router) {
+                    Q.reg(data.router, function () {
                         crown.loadView('components/' + data.path);
                     });
                 }
-                if (data.subMenus) {
-                    index.regRouter(data.subMenus);
+                if (data.childrens) {
+                    index.regRouter(data.childrens);
                 }
             });
         },

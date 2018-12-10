@@ -22,7 +22,7 @@ public abstract class TreeUtils {
      * @return
      */
     public static <T extends TreeNode> T findChildren(T treeNode, List<T> treeNodes) {
-        treeNodes.stream().filter(e -> Objects.equals(treeNode.getId(), e.getParentId())).forEach(e -> treeNode.getChildren().add(findChildren(e, treeNodes)));
+        treeNodes.stream().filter(e -> Objects.equals(treeNode.getId(), e.getParentId())).forEach(e -> treeNode.getChildrens().add(findChildren(e, treeNodes)));
         return treeNode;
     }
 }

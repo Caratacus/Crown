@@ -212,7 +212,7 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
             });
         },
-        // 判断是否有权限
+        //TODO 判断是否有权限
         hasPerm: function (auth) {
             var user = config.getUser();
             if (user.authorities) {

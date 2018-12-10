@@ -77,8 +77,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             if (executeLogin(request, response)) {
                 Integer uid = JWTUtils.getUid(token);
                 request.setAttribute(APICons.API_UID, uid);
-                //crown 放任自由
-                if (uid == 1) return true;
                 Set<ResourcePermDTO> perms = resourceService.getUserResourcePerms(uid);
                 return anyMatch(perms, method, requestUri);
             } else {

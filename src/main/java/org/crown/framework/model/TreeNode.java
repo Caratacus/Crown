@@ -21,5 +21,5 @@ public class TreeNode extends BaseModel {
 
     protected Integer parentId;
 
-    protected List<TreeNode> children = new ArrayList<>();
+    protected List<TreeNode> childrens = new ArrayList<>();
 }

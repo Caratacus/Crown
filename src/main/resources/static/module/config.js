@@ -33,18 +33,25 @@ layui.define(function (exports) {
                 return JSON.parse(token);
             }
         },
-        // 清除user
-        removeToken: function () {
-            layui.data(config.scope, {
-                key: 'token',
-                remove: true
-            });
-        },
         // 缓存token
         putToken: function (token) {
             layui.data(config.scope, {
                 key: 'token',
                 value: JSON.stringify('Bearer ' + token)
+            });
+        },
+        // 获取缓存的菜单
+        getMenus: function () {
+            var menus = layui.data(config.scope).menus;
+            if (menus) {
+                return JSON.parse(menus);
+            }
+        },
+        // 缓存菜单
+        putMenus: function (menus) {
+            layui.data(config.scope, {
+                key: 'menus',
+                value: JSON.stringify(menus)
             });
         },
         // 获取缓存的token
@@ -54,13 +61,6 @@ layui.define(function (exports) {
                 return JSON.parse(uid);
             }
         },
-        // 清除Uid
-        removeUid: function () {
-            layui.data(config.scope, {
-                key: 'uid',
-                remove: true
-            });
-        },
         // 缓存Uid
         putUid: function (uid) {
             layui.data(config.scope, {
@@ -68,40 +68,6 @@ layui.define(function (exports) {
                 value: JSON.stringify(uid)
             });
         },
-        // 导航菜单
-        menus: [{
-            name: '系统管理',
-            icon: 'layui-icon-set',
-            subMenus: [
-                {
-                    name: '项目主页',
-                    url: 'console',
-                    path: 'console.html'
-                }, {
-                    name: '用户管理',
-                    url: 'user',  // 这里url不能带斜杠，因为是用递归循环进行关键字注册，带斜杠会被q.js理解为其他注册模式
-                    path: 'views/user/index.html',
-                    auth: 'post:/user/query'
-                }, {
-                    name: '角色管理',
-                    url: 'role',
-                    path: 'views/role/index.html',
-                    auth: 'get:/role'
-                },
-                {
-                    name: '菜单管理',
-                    url: 'menu',
-                    path: 'views/menu/index.html',
-                    auth: 'get:/authorities'
-                },
-                {
-                    name: '资源管理',
-                    url: 'resource',
-                    path: 'views/resource/index.html',
-                    auth: 'get:/authorities'
-                }
-            ]
-        }],
         // 当前登录的用户
         getUser: function () {
             var user = layui.data(config.scope).user;

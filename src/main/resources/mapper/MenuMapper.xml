@@ -8,7 +8,8 @@
             sm.menu_name,
             sm.menu_type,
             sm.router,
-            sm.icon
+        sm.icon,
+        sm.path
         FROM
             sys_menu sm
         LEFT JOIN sys_role_menu srm ON sm.id = srm.menu_id

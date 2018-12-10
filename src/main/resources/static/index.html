@@ -75,7 +75,12 @@
             index.bindEvent();
         });
 
-    //TODO 权限菜单
+        if (!config.getMenus()) {
+            crown.get('/user/perm/menus', {}, function (data) {
+                config.putMenus(data.result);
+            }, false);
+        }
+
     });
 </script>
 </body>
