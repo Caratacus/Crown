@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 12/11/2018 11:12:34 AM
+ Date: 12/11/2018 11:19:25 AM
 */
 
 SET NAMES utf8;
@@ -34,7 +34,7 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `status` smallint(2) NOT NULL COMMENT '状态 0：禁用 1：正常',
   `router` varchar(64) DEFAULT NULL COMMENT '路由',
-  `alias` varchar(64) NOT NULL COMMENT '别名',
+  `alias` varchar(64) DEFAULT NULL COMMENT '别名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
