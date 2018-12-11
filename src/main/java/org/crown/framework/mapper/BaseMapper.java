@@ -76,6 +76,15 @@ public interface BaseMapper<T> {
 
     /**
      * <p>
+     * 根据 ID 修改
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    int updateAllColumnById(@Param(Constants.ENTITY) T entity);
+
+    /**
+     * <p>
      * 根据 whereEntity 条件，更新记录
      * </p>
      *

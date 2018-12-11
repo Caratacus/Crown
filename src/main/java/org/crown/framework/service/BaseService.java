@@ -125,6 +125,15 @@ public interface BaseService<T extends Convert> {
 
     /**
      * <p>
+     * 根据 ID 选择修改
+     * </p>
+     *
+     * @param entity 实体对象
+     */
+    boolean updateAllColumnById(T entity);
+
+    /**
+     * <p>
      * 根据 whereEntity 条件，更新记录
      * </p>
      *

@@ -236,6 +236,12 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    public boolean updateAllColumnById(T entity) {
+        return retBool(baseMapper.updateAllColumnById(entity));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
     public boolean update(T entity, Wrapper<T> updateWrapper) {
         return retBool(baseMapper.update(entity, updateWrapper));
     }

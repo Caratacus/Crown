@@ -54,6 +54,7 @@ public class MybatisPlusSqlInjector extends AbstractSqlInjector {
                 new DeleteById(),
                 new Update(),
                 new UpdateById(),
+                new UpdateAllColumnById(),
                 new SelectById(),
                 new SelectCount(),
                 new SelectObjs(),
