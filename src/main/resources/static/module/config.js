@@ -54,6 +54,20 @@ layui.define(function (exports) {
                 value: JSON.stringify(menus)
             });
         },
+        // 获取缓存的权限按钮
+        getPermBottons: function () {
+            var permBottons = layui.data(config.scope).permBottons;
+            if (permBottons) {
+                return JSON.parse(permBottons);
+            }
+        },
+        // 缓存权限按钮
+        putPermBottons: function (permBottons) {
+            layui.data(config.scope, {
+                key: 'permBottons',
+                value: JSON.stringify(permBottons)
+            });
+        },
         // 获取缓存的token
         getUid: function () {
             var uid = layui.data(config.scope).uid;

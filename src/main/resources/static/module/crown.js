@@ -109,9 +109,9 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
             formElem.each(function () {
                 var itemFrom = $(this);
                 layui.each(object, function (key, value) {
-                   /* if (typeof (value) === 'object') {
-                        fromVal(filter, value);//递归
-                    }*/
+                    /* if (typeof (value) === 'object') {
+                         fromVal(filter, value);//递归
+                     }*/
                     var itemElem = itemFrom.find('[name="' + key + '"]');
                     //如果对应的表单不存在，则不执行
                     if (!itemElem[0]) {
@@ -212,12 +212,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
             });
         },
-        //TODO 判断是否有权限
-        hasPerm: function (auth) {
-            var user = config.getUser();
-            if (user.authorities) {
-                for (var i = 0; i < user.authorities.length; i++) {
-                    if (auth == user.authorities[i].authority) {
+        hasPerm: function (bottonAlias) {
+            var permBottons = config.getPermBottons();
+            if (permBottons) {
+                for (var i = 0; i < permBottons.length; i++) {
+                    if (bottonAlias == permBottons[i]) {
                         return true;
                     }
                 }

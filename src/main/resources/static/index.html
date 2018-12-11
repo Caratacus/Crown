@@ -80,7 +80,11 @@
                 config.putMenus(data.result);
             }, false);
         }
-
+        if (!config.getPermBottons()) {
+            crown.get('/user/perm/botton/aliases', {}, function (data) {
+                config.putPermBottons(data.result);
+            }, false);
+        }
     });
 </script>
 </body>
