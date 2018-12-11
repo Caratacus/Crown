@@ -94,7 +94,7 @@
 <sup>4</sup> 深入拓展ModelMapper，各种类型一键转换 <br/>
 <sup>5</sup> 运用Liquibase，增量SQL一键导出 <br/>
 <sup>6</sup> 接口日志详情打印，所有访问信息一览无遗 <br/>
-<sup>7</sup> 各项配置调制最优，再也不需要担心默认值性能问题 <br/>
+<sup>7</sup> 各项配置调至最优，再也不需要担心默认值性能问题 <br/>
 <sup>8</sup> P6spy打印SQL，一切操作尽在掌握 <br/>
 <sup>9</sup> Shiro RestApi 鉴权，前后端完全隔离 <br/>
 <sup>10</sup> Mock测试、TravisCI保驾护航，BUG再见，再也不见 <br/>
