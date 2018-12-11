@@ -64,6 +64,9 @@ public class MenuDTO extends BaseModel {
     @ApiModelProperty(notes = "菜单图标")
     private String icon;
 
+    @ApiModelProperty(notes = "别名")
+    private String alias;
+
     @ApiModelProperty(notes = "状态 0：禁用 1：正常")
     private StatusEnum status;
 

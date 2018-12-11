@@ -80,6 +80,10 @@ public class Menu extends BaseModel {
      */
     private String icon;
     /**
+     * 别名
+     */
+    private String alias;
+    /**
      * 状态 0：禁用 1：正常
      */
     private StatusEnum status;

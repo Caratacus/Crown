@@ -8,6 +8,7 @@
             sm.menu_name,
             sm.menu_type,
             sm.router,
+        sm.alias,
         sm.icon,
         sm.path
         FROM

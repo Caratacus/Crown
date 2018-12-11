@@ -125,4 +125,9 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         isOk(mockMvc, get("/user/perm/menus", token.getToken()));
     }
 
+    @Test
+    public void permBottonAliases() throws Exception {
+        isOk(mockMvc, get("/user/perm/botton/aliases", token.getToken()));
+    }
+
 }

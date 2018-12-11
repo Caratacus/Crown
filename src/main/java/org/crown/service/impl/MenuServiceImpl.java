@@ -21,8 +21,10 @@
 package org.crown.service.impl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.crown.common.utils.TypeUtils;
@@ -142,4 +144,11 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         return menus.stream().filter(e -> !parentIdNotNull(e.getParentId())).map(e -> TreeUtils.findChildren(e, menus)).collect(Collectors.toList());
     }
 
+    @Override
+    public Set<String> getUserPermBottonAliases(Integer uid) {
+        return baseMapper.getUserPermMenus(uid, Collections.singletonList(MenuTypeEnum.BUTTON))
+                .stream()
+                .map(MenuTreeDTO::getAlias)
+                .collect(Collectors.toSet());
+    }
 }

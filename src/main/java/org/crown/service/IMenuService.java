@@ -21,6 +21,7 @@
 package org.crown.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.service.BaseService;
@@ -84,5 +85,13 @@ public interface IMenuService extends BaseService<Menu> {
      * @return
      */
     List<MenuTreeDTO> getUserPermMenus(Integer uid);
+
+    /**
+     * 获取用户按钮权限
+     *
+     * @param uid
+     * @return
+     */
+    Set<String> getUserPermBottonAliases(Integer uid);
 
 }

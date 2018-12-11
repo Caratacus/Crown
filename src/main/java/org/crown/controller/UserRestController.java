@@ -22,6 +22,7 @@ package org.crown.controller;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
@@ -191,12 +192,11 @@ public class UserRestController extends SuperController {
         return success(menuTrees);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.LOGIN)
     @ApiOperation("获取用户权限按钮")
-    @GetMapping("/perm/bottons")
-    public ApiResponses<Void> permBottons() {
-        // List<MenuTreeDTO> menuTrees = userService.getUserPermBottons(currentUid());
-        return empty();
+    @GetMapping("/perm/botton/aliases")
+    public ApiResponses<Set<String>> permBottonAliases() {
+        return success(menuService.getUserPermBottonAliases(currentUid()));
     }
 
 }

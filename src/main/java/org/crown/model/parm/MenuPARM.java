@@ -70,6 +70,9 @@ public class MenuPARM extends Convert {
     @ApiModelProperty(notes = "菜单图标")
     private String icon;
 
+    @ApiModelProperty(notes = "别名")
+    private String alias;
+
     @NotNull(groups = {MenuPARM.Create.class, MenuPARM.Status.class}, message = "状态不能为空")
     @ApiModelProperty(notes = "状态:0：禁用 1：正常")
     private StatusEnum status;
