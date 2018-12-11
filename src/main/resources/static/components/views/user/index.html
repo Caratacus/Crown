@@ -22,13 +22,13 @@
         </div>
         <!-- 表格顶部操作列 -->
         <script type="text/html" id="user-toolbar">
-            {{#  if({{show}} == true){ }}
             <div class="layui-btn-container">
+                {{# if({{addShow}} == true){ }}
                 <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
                         class="layui-icon">&#xe654;</i>添加
                 </button>
+                {{# } }}
             </div>
-            {{#  } }}
         </script>
         <table class="layui-table" id="user-table" lay-filter="user-table"></table>
     </div>
@@ -36,8 +36,12 @@
 
 <!-- 表格操作列 -->
 <script type="text/html" id="user-table-bar">
+    {{#  if({{editShow}} == true){ }}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    {{#  if({{resetPwdShow}} == true){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+    {{#  } }}
 </script>
 
 <!-- 表格状态列 -->
@@ -53,7 +57,13 @@
         var config = layui.config;
         var layer = layui.layer;
         var crown = layui.crown;
-       $('.layui-card').vm({show:true});
+        $('#user-toolbar').vm({
+            addShow: crown.hasPerm("sys:user:add")
+        });
+        $('#user-table-bar').vm({
+            editShow: crown.hasPerm("sys:user:edit"),
+            resetPwdShow: crown.hasPerm("sys:user:resetpwd")
+        });
         // 渲染表格
         var userTable = table.render({
             elem: '#user-table',

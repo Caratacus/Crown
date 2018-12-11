@@ -47,8 +47,8 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class JWTUtils {
 
     public static final String UID = "uid";
-    private static final String SECRET = "WgtqaTHNTZPZNMDJu3k";
-    private static final long EXPIRE = 60 * 60 * 1000;
+    private static final String SECRET = "WgtqaT1HNTZPZNMDJu3k";
+    private static final long EXPIRE = 60 * 1000;
 
     /**
      * 生成token

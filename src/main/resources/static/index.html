@@ -56,7 +56,7 @@
         formSelects: 'formSelects/formSelects-v4',
         iconPicker: 'iconPicker/iconPicker',
         treetable: 'treetable/treetable'
-    }).use(['config', 'index', 'element','crown'], function () {
+    }).use(['config', 'index', 'element', 'crown'], function () {
         var config = layui.config;
         var index = layui.index;
         var element = layui.element;
@@ -74,17 +74,12 @@
             index.initRouter();
             index.bindEvent();
         });
-
-        if (!config.getMenus()) {
-            crown.get('/user/perm/menus', {}, function (data) {
-                config.putMenus(data.result);
-            }, false);
-        }
-        if (!config.getPermBottons()) {
-            crown.get('/user/perm/botton/aliases', {}, function (data) {
-                config.putPermBottons(data.result);
-            }, false);
-        }
+        crown.get('/user/perm/menus', {}, function (data) {
+            config.putMenus(data.result);
+        }, false);
+        crown.get('/user/perm/botton/aliases', {}, function (data) {
+            config.putPermBottons(data.result);
+        }, false);
     });
 </script>
 </body>

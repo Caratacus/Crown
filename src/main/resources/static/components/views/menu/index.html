@@ -9,9 +9,11 @@
     <div class="layui-card-body">
         <script type="text/html" id="menu-toolbar">
             <div class="layui-btn-container">
+                {{# if({{addShow}} == true){ }}
                 <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
                         class="layui-icon">&#xe654;</i>添加
                 </button>
+                {{# } }}
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expandAll"><i class="layui-icon">&#xe6b1;</i>全部展开
                 </button>
                 <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="foldAll"><i
@@ -31,8 +33,12 @@
 
 <!-- 表格操作列 -->
 <script type="text/html" id="menu-table-bar">
+    {{#  if({{editShow}} == true){ }}
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    {{#  if({{deleteShow}} == true){ }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
 </script>
 
 <script>
@@ -44,6 +50,13 @@
         var crown = layui.crown;
         var treetable = layui.treetable;
         var tableId = '#menu-table';
+        $('#menu-toolbar').vm({
+            addShow: crown.hasPerm("sys:menu:add")
+        });
+        $('#menu-table-bar').vm({
+            editShow: crown.hasPerm("sys:menu:edit"),
+            deleteShow: crown.hasPerm("sys:menu:delete")
+        });
         // 渲染表格
         var renderTable = function () {
             treetable.render({
