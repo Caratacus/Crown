@@ -11,7 +11,7 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 12/11/2018 14:36:50 PM
+ Date: 12/12/2018 15:46:08 PM
 */
 
 SET NAMES utf8;
@@ -36,13 +36,13 @@ CREATE TABLE `sys_menu` (
   `router` varchar(64) DEFAULT NULL COMMENT '路由',
   `alias` varchar(64) DEFAULT NULL COMMENT '别名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
 -- ----------------------------
 --  Records of `sys_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu` VALUES ('1', '0', '系统管理', '', '1', 'layui-icon-set', '1', '1', '2018-11-27 14:52:10', '2018-11-27 15:11:15', '0', null, ''), ('23', '1', '用户管理', 'views/user/index.html', '2', 'layui-icon-username', '1', '1', '2018-11-27 15:10:32', '2018-12-11 11:04:22', '0', 'user', 'sys:user:list'), ('24', '1', '角色管理', 'views/role/index.html', '2', 'layui-icon-face-surprised', '1', '1', '2018-11-27 15:16:59', '2018-12-11 11:05:17', '0', 'role', 'sys:role:list'), ('25', '1', '菜单管理', 'views/menu/index.html', '2', 'layui-icon-template', '1', '1', '2018-11-27 15:17:59', '2018-12-11 11:06:05', '0', 'menu', 'sys:menu:list'), ('26', '1', '资源管理', 'views/resource/index.html', '2', 'layui-icon-read', '1', '1', '2018-11-27 15:18:31', '2018-12-11 11:06:50', '0', 'resource', 'sys:resource:list'), ('27', '26', '刷新资源', '', '3', 'layui-icon-refresh-3', '1', '1', '2018-11-27 15:19:15', '2018-12-11 11:07:40', '0', null, 'sys:resource:refresh'), ('28', '25', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-11 11:06:13', '0', null, 'sys:menu:add'), ('29', '25', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-11 11:06:20', '0', null, 'sys:menu:edit'), ('30', '25', '删除', '', '3', 'layui-icon-close', '1', '1', '2018-11-27 15:21:14', '2018-12-11 11:06:28', '0', null, 'sys:menu:delete'), ('31', '24', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-11 11:05:24', '0', null, 'sys:role:add'), ('32', '24', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-11 11:05:32', '0', null, 'sys:role:edit'), ('33', '24', '删除', '', '3', 'layui-icon-close', '1', '1', '2018-11-27 15:21:14', '2018-12-11 11:05:39', '0', null, 'sys:role:delete'), ('34', '23', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-11 11:04:32', '0', null, 'sys:user:add'), ('35', '23', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-11 11:04:39', '0', null, 'sys:user:edit'), ('36', '23', '重置密码', '', '3', 'layui-icon-fire', '1', '1', '2018-11-27 15:21:14', '2018-12-11 11:05:00', '0', null, 'sys:user:resetpwd'), ('42', '24', '菜单授权', null, '3', 'layui-icon-auz', '1', '1', '2018-12-08 23:58:42', '2018-12-11 11:05:53', '0', null, 'sys:role:perm');
+INSERT INTO `sys_menu` VALUES ('1', '0', '系统管理', '', '1', 'layui-icon-set', '1', '1', '2018-11-27 14:52:10', '2018-11-27 15:11:15', '0', null, ''), ('23', '1', '用户管理', 'views/user/index.html', '2', 'layui-icon-username', '1', '1', '2018-11-27 15:10:32', '2018-12-12 15:39:18', '0', 'user', 'sys:user:list'), ('24', '1', '角色管理', 'views/role/index.html', '2', 'layui-icon-face-surprised', '1', '1', '2018-11-27 15:16:59', '2018-12-12 15:40:03', '0', 'role', 'sys:role:list'), ('25', '1', '菜单管理', 'views/menu/index.html', '2', 'layui-icon-template', '1', '1', '2018-11-27 15:17:59', '2018-12-12 15:37:35', '0', 'menu', 'sys:menu:list'), ('26', '1', '资源管理', 'views/resource/index.html', '2', 'layui-icon-read', '1', '1', '2018-11-27 15:18:31', '2018-12-12 15:35:38', '0', 'resource', 'sys:resource:list'), ('27', '26', '刷新资源', '', '3', 'layui-icon-refresh-3', '1', '1', '2018-11-27 15:19:15', '2018-12-12 15:35:14', '0', null, 'sys:resource:refresh'), ('28', '25', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-12 15:45:47', '0', null, 'sys:menu:add'), ('29', '25', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-12 15:36:51', '0', null, 'sys:menu:edit'), ('30', '25', '删除', '', '3', 'layui-icon-close', '1', '1', '2018-11-27 15:21:14', '2018-12-12 15:35:49', '0', null, 'sys:menu:delete'), ('31', '24', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-12 15:38:07', '0', null, 'sys:role:add'), ('32', '24', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-12 15:44:19', '0', null, 'sys:role:edit'), ('33', '24', '删除', '', '3', 'layui-icon-close', '1', '1', '2018-11-27 15:21:14', '2018-12-12 15:36:07', '0', null, 'sys:role:delete'), ('34', '23', '添加', '', '3', 'layui-icon-add-circle-fine', '1', '1', '2018-11-27 15:20:06', '2018-12-12 15:44:04', '0', null, 'sys:user:add'), ('35', '23', '修改', '', '3', 'layui-icon-senior', '1', '1', '2018-11-27 15:20:27', '2018-12-12 15:39:36', '0', null, 'sys:user:edit'), ('36', '23', '重置密码', '', '3', 'layui-icon-fire', '1', '1', '2018-11-27 15:21:14', '2018-12-12 15:38:48', '0', null, 'sys:user:resetpwd'), ('42', '24', '菜单授权', null, '3', 'layui-icon-auz', '1', '1', '2018-12-08 23:58:42', '2018-12-12 15:41:52', '0', null, 'sys:role:perm');
 COMMIT;
 
 -- ----------------------------
@@ -54,13 +54,13 @@ CREATE TABLE `sys_menu_resource` (
   `menu_id` int(11) DEFAULT NULL COMMENT '菜单ID',
   `resource_id` varchar(32) DEFAULT NULL COMMENT '资源ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COMMENT='菜单资源关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4 COMMENT='菜单资源关系表';
 
 -- ----------------------------
 --  Records of `sys_menu_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_menu_resource` VALUES ('44', '23', '228887b7276edbacaed5954c97f5090a'), ('45', '23', '49764a50d0e0f74790ced2586b03bff8'), ('46', '34', '9be8e0df48c8ba879e5b079c73662ee4'), ('47', '35', '54522abbe7d3a2a40e7edbc9339acc50'), ('48', '35', '6c3514540b1e2e1589a9c9566273c7c7'), ('49', '36', '306628750eb9d14b64193fdfc42a2d61'), ('50', '24', '470c01a7ac3fbe02548f2abd372fff60'), ('51', '31', '46a5d7a79e6ba91e6709f3361a2edd81'), ('52', '32', 'b7b1c22076c0d28c8d0fe4c0b09b6a6e'), ('53', '32', '5e5b895e3d4dcef7510ea77fa6b4fb32'), ('54', '33', 'ddf4e3fd39264da50eec54cfd02731f4'), ('55', '42', 'a981e0acddb91de6f2a6f3f2e8ef350e'), ('56', '42', '6464c54afd4a12fca4b32d318dffee0c'), ('57', '25', 'de8b6406105c3ea1c71de78e0870595e'), ('58', '25', '6464c54afd4a12fca4b32d318dffee0c'), ('59', '28', '3a62355efcfa84646b390d508efea9b6'), ('60', '28', '59e61b4b812fba167ba2d0b55ac61ea1'), ('61', '28', 'd83a249e0e0ed84806ecba2fd8c7148d'), ('62', '29', '37687195b63b44e0d22436080de117bc'), ('63', '29', '59e61b4b812fba167ba2d0b55ac61ea1'), ('64', '29', 'd83a249e0e0ed84806ecba2fd8c7148d'), ('65', '29', '375edb54e85dc981c8df62c76f3782ed'), ('66', '30', '15da52a5f4f4a6eac3b0d6f046f040c9'), ('68', '26', 'a8bb9f9e46fe013125532c6b7747e07f'), ('69', '27', 'd88bbe26ec9af41d418924c15bfb3a21');
+INSERT INTO `sys_menu_resource` VALUES ('70', '27', 'f45f1b577d72dcd86b84c6f033682b53'), ('71', '26', '829a851334028a6e47b59f8dea0cf7cb'), ('72', '30', 'f15f7b01ffe7166b05c3984c9b967837'), ('73', '33', '6692d9d95184977f82d3252de2f5eac7'), ('74', '29', 'a11e2191656cb199bea1defb17758411'), ('75', '29', '6fd51f02b724c137a08c28587f48d7f3'), ('76', '29', '2c654f1264fc85ac80516245672f3c47'), ('77', '29', 'a5529264d2645996c83bba2e961d0ec3'), ('80', '25', '6d1170346960aa8922b9b4d08a5bf71b'), ('81', '25', '30218613e987e464b13e0c0b8721aec5'), ('83', '31', 'd82de0a17f2c63106f98eb2f88d166e9'), ('85', '36', '7baa5b852bc92715d7aa503c0a0d8925'), ('87', '23', '579e469e8ac850de1ca0adc54d01acba'), ('88', '23', 'b4770c0fe93fce7e829463328c800f20'), ('89', '35', '30386fd7b8a4feb9c59861e63537acde'), ('90', '35', '8a3b4dc05867f5946235ba5fbc492b76'), ('91', '24', '04972e9f8e65b0364d9862687666da36'), ('93', '42', 'a826bca352908155da4ca6702edfa2ed'), ('94', '42', '30218613e987e464b13e0c0b8721aec5'), ('95', '34', 'a71cb59835c613f39bd936deb20cdd27'), ('96', '34', 'd9d6f7163b313b950710a637682354d1'), ('97', '32', 'eaee955f405f6b96beab5136bfa3e29b'), ('98', '32', 'd9d6f7163b313b950710a637682354d1'), ('99', '28', '8cb1442c7814f65ce0d796e1ef93c715'), ('100', '28', 'a5529264d2645996c83bba2e961d0ec3'), ('101', '28', '2c654f1264fc85ac80516245672f3c47');
 COMMIT;
 
 -- ----------------------------
@@ -82,7 +82,7 @@ CREATE TABLE `sys_resource` (
 --  Records of `sys_resource`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_resource` VALUES ('15da52a5f4f4a6eac3b0d6f046f040c9', '删除菜单', '/menu/{id}', 'DELETE', '3', '2018-12-11 14:11:38', 'DELETE:/menu/{id}'), ('228887b7276edbacaed5954c97f5090a', '查询所有用户', '/user', 'GET', '3', '2018-12-11 14:11:38', 'GET:/user'), ('2fd8f53f78a2ec49f551caa88f2d676f', '查询所有角色', '/role/roles', 'GET', '3', '2018-12-11 14:11:38', 'GET:/role/roles'), ('306628750eb9d14b64193fdfc42a2d61', '重置用户密码', '/user/{id}/password/reset', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/user/{id}/password/reset'), ('375edb54e85dc981c8df62c76f3782ed', '查询单个菜单', '/menu/{id}', 'GET', '3', '2018-12-11 14:11:38', 'GET:/menu/{id}'), ('37687195b63b44e0d22436080de117bc', '修改菜单', '/menu/{id}', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/menu/{id}'), ('3a62355efcfa84646b390d508efea9b6', '添加菜单', '/menu', 'POST', '3', '2018-12-11 14:11:38', 'POST:/menu'), ('46a5d7a79e6ba91e6709f3361a2edd81', '添加角色', '/role', 'POST', '3', '2018-12-11 14:11:38', 'POST:/role'), ('470c01a7ac3fbe02548f2abd372fff60', '查询所有角色(分页)', '/role', 'GET', '3', '2018-12-11 14:11:38', 'GET:/role'), ('49764a50d0e0f74790ced2586b03bff8', '设置用户状态', '/user/{id}/status', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/user/{id}/status'), ('5446595d232bb7a83c02b2710c5b537c', '获取用户详情', '/user/details', 'GET', '1', '2018-12-11 14:11:38', 'GET:/user/details'), ('54522abbe7d3a2a40e7edbc9339acc50', '修改用户', '/user/{id}', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/user/{id}'), ('59e61b4b812fba167ba2d0b55ac61ea1', '查询所有资源', '/resource/resources', 'GET', '3', '2018-12-11 14:11:38', 'GET:/resource/resources'), ('5e5b895e3d4dcef7510ea77fa6b4fb32', '查询单个角色', '/role/{id}', 'GET', '3', '2018-12-11 14:11:38', 'GET:/role/{id}'), ('6464c54afd4a12fca4b32d318dffee0c', '查询所有菜单', '/menu', 'GET', '3', '2018-12-11 14:11:38', 'GET:/menu'), ('6ab0f8a49671e489f11a1bef2fcaf102', '清除Token', '/account/token', 'DELETE', '1', '2018-12-11 14:11:38', 'DELETE:/account/token'), ('6c3514540b1e2e1589a9c9566273c7c7', '查询单个用户', '/user/{id}', 'GET', '3', '2018-12-11 14:11:38', 'GET:/user/{id}'), ('7eb82846df62890a8a7a2cebc1cd76f7', '修改用户信息', '/user/info', 'PUT', '1', '2018-12-11 14:11:38', 'PUT:/user/info'), ('842e33410b5a97b6c797e4782c97a90e', '获取Token', '/account/token', 'POST', '2', '2018-12-11 14:11:38', 'POST:/account/token'), ('9a775d6cd9034e13d636d353d5b7944f', '获取用户权限按钮', '/user/perm/botton/aliases', 'GET', '1', '2018-12-11 14:11:38', 'GET:/user/perm/botton/aliases'), ('9be8e0df48c8ba879e5b079c73662ee4', '创建用户', '/user', 'POST', '3', '2018-12-11 14:11:38', 'POST:/user'), ('a8bb9f9e46fe013125532c6b7747e07f', '查询所有资源(分页)', '/resource', 'GET', '3', '2018-12-11 14:11:38', 'GET:/resource'), ('a981e0acddb91de6f2a6f3f2e8ef350e', '关联菜单', '/role/{id}/menus', 'POST', '3', '2018-12-11 14:11:38', 'POST:/role/{id}/menus'), ('ae60708a9b8f749fc5b621b7ee3de1ce', '获取用户权限菜单', '/user/perm/menus', 'GET', '1', '2018-12-11 14:11:38', 'GET:/user/perm/menus'), ('b7b1c22076c0d28c8d0fe4c0b09b6a6e', '修改角色', '/role/{id}', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/role/{id}'), ('c2db9729dcd4a7d703e45411bb445dfd', '修改密码', '/account/password', 'PUT', '1', '2018-12-11 14:11:38', 'PUT:/account/password'), ('d14123b643cc14cf150e3c08b938c216', '获取用户权限按钮', '/user/perm/bottons', 'GET', '3', '2018-12-10 16:42:51', 'GET:/user/perm/bottons'), ('d83a249e0e0ed84806ecba2fd8c7148d', '查询父级菜单(下拉框)', '/menu/combos', 'GET', '2', '2018-12-11 14:11:38', 'GET:/menu/combos'), ('d88bbe26ec9af41d418924c15bfb3a21', '刷新资源', '/resource/refresh', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/resource/refresh'), ('ddf4e3fd39264da50eec54cfd02731f4', '删除角色', '/role/{id}', 'DELETE', '3', '2018-12-11 14:11:38', 'DELETE:/role/{id}'), ('de8b6406105c3ea1c71de78e0870595e', '设置菜单状态', '/menu/{id}/status', 'PUT', '3', '2018-12-11 14:11:38', 'PUT:/menu/{id}/status');
+INSERT INTO `sys_resource` VALUES ('04972e9f8e65b0364d9862687666da36', '查询所有角色(分页)', '/roles', 'GET', '3', '2018-12-12 15:32:01', 'GET:/roles'), ('29c4c75326ecf3a82f815c43b0085b2f', '修改账户信息', '/account/info', 'PUT', '1', '2018-12-12 15:32:01', 'PUT:/account/info'), ('2c654f1264fc85ac80516245672f3c47', '查询父级菜单(下拉框)', '/menus/combos', 'GET', '2', '2018-12-12 15:32:01', 'GET:/menus/combos'), ('30218613e987e464b13e0c0b8721aec5', '查询所有菜单', '/menus', 'GET', '3', '2018-12-12 15:32:01', 'GET:/menus'), ('30386fd7b8a4feb9c59861e63537acde', '修改用户', '/users/{id}', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/users/{id}'), ('579e469e8ac850de1ca0adc54d01acba', '查询所有用户', '/users', 'GET', '3', '2018-12-12 15:32:01', 'GET:/users'), ('6692d9d95184977f82d3252de2f5eac7', '删除角色', '/roles/{id}', 'DELETE', '3', '2018-12-12 15:32:01', 'DELETE:/roles/{id}'), ('6ab0f8a49671e489f11a1bef2fcaf102', '清除Token', '/account/token', 'DELETE', '1', '2018-12-12 15:32:01', 'DELETE:/account/token'), ('6d1170346960aa8922b9b4d08a5bf71b', '设置菜单状态', '/menus/{id}/status', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/menus/{id}/status'), ('6fd51f02b724c137a08c28587f48d7f3', '查询单个菜单', '/menus/{id}', 'GET', '3', '2018-12-12 15:32:01', 'GET:/menus/{id}'), ('7baa5b852bc92715d7aa503c0a0d8925', '重置用户密码', '/users/{id}/password', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/users/{id}/password'), ('829a851334028a6e47b59f8dea0cf7cb', '查询所有资源(分页)', '/resources', 'GET', '3', '2018-12-12 15:32:01', 'GET:/resources'), ('842e33410b5a97b6c797e4782c97a90e', '获取Token', '/account/token', 'POST', '2', '2018-12-12 15:32:01', 'POST:/account/token'), ('8a3b4dc05867f5946235ba5fbc492b76', '查询单个用户', '/users/{id}', 'GET', '3', '2018-12-12 15:32:01', 'GET:/users/{id}'), ('8cb1442c7814f65ce0d796e1ef93c715', '添加菜单', '/menus', 'POST', '3', '2018-12-12 15:32:01', 'POST:/menus'), ('982803fc834e82cbb2ac1b93f2a47690', '查询单个角色', '/roles/{id}', 'GET', '3', '2018-12-12 15:32:01', 'GET:/roles/{id}'), ('a11e2191656cb199bea1defb17758411', '修改菜单', '/menus/{id}', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/menus/{id}'), ('a25e9909a0620e00ab863aed70c61432', '获取账户按钮', '/account/bottons/aliases', 'GET', '1', '2018-12-12 15:32:01', 'GET:/account/bottons/aliases'), ('a5529264d2645996c83bba2e961d0ec3', '查询所有资源', '/resources/resources', 'GET', '3', '2018-12-12 15:32:01', 'GET:/resources/resources'), ('a71cb59835c613f39bd936deb20cdd27', '创建用户', '/users', 'POST', '3', '2018-12-12 15:32:01', 'POST:/users'), ('a826bca352908155da4ca6702edfa2ed', '修改角色菜单', '/roles/{id}/menus', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/roles/{id}/menus'), ('b4770c0fe93fce7e829463328c800f20', '设置用户状态', '/users/{id}/status', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/users/{id}/status'), ('c2db9729dcd4a7d703e45411bb445dfd', '修改密码', '/account/password', 'PUT', '1', '2018-12-12 15:32:01', 'PUT:/account/password'), ('d81bffa6ffd70cc443703820b5a95e8d', '获取账户菜单', '/account/menus', 'GET', '1', '2018-12-12 15:32:01', 'GET:/account/menus'), ('d82de0a17f2c63106f98eb2f88d166e9', '添加角色', '/roles', 'POST', '3', '2018-12-12 15:32:01', 'POST:/roles'), ('d9d6f7163b313b950710a637682354d1', '查询所有角色', '/roles/roles', 'GET', '3', '2018-12-12 15:32:01', 'GET:/roles/roles'), ('e78940daf86b9ac5563d539e8802429c', '获取账户详情', '/account/info', 'GET', '1', '2018-12-12 15:32:01', 'GET:/account/info'), ('eaee955f405f6b96beab5136bfa3e29b', '修改角色', '/roles/{id}', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/roles/{id}'), ('f15f7b01ffe7166b05c3984c9b967837', '删除菜单', '/menus/{id}', 'DELETE', '3', '2018-12-12 15:32:01', 'DELETE:/menus/{id}'), ('f45f1b577d72dcd86b84c6f033682b53', '刷新资源', '/resources', 'PUT', '3', '2018-12-12 15:32:01', 'PUT:/resources');
 COMMIT;
 
 -- ----------------------------
@@ -98,7 +98,7 @@ CREATE TABLE `sys_role` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `remark` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 -- ----------------------------
 --  Records of `sys_role`
@@ -116,13 +116,13 @@ CREATE TABLE `sys_role_menu` (
   `role_id` int(11) NOT NULL COMMENT '角色ID',
   `menu_id` int(11) NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4 COMMENT='角色菜单关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=278 DEFAULT CHARSET=utf8mb4 COMMENT='角色菜单关系表';
 
 -- ----------------------------
 --  Records of `sys_role_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_role_menu` VALUES ('175', '1', '1'), ('176', '1', '23'), ('177', '1', '34'), ('178', '1', '35'), ('179', '1', '36'), ('180', '1', '24'), ('181', '1', '31'), ('182', '1', '32'), ('183', '1', '33'), ('184', '1', '42'), ('185', '1', '25'), ('186', '1', '28'), ('187', '1', '29'), ('188', '1', '30'), ('189', '1', '26'), ('190', '1', '27'), ('191', '2', '1'), ('192', '2', '23'), ('193', '2', '36'), ('194', '2', '24'), ('195', '2', '32'), ('196', '2', '25'), ('197', '2', '29'), ('198', '2', '26'), ('199', '2', '27');
+INSERT INTO `sys_role_menu` VALUES ('245', '2', '1'), ('246', '2', '26'), ('247', '2', '27'), ('262', '1', '1'), ('263', '1', '23'), ('264', '1', '34'), ('265', '1', '35'), ('266', '1', '36'), ('267', '1', '24'), ('268', '1', '31'), ('269', '1', '32'), ('270', '1', '33'), ('271', '1', '42'), ('272', '1', '25'), ('273', '1', '28'), ('274', '1', '29'), ('275', '1', '30'), ('276', '1', '26'), ('277', '1', '27');
 COMMIT;
 
 -- ----------------------------
@@ -153,13 +153,13 @@ CREATE TABLE `sys_user` (
   `password` varchar(64) NOT NULL COMMENT '密码',
   `ip` varchar(32) DEFAULT NULL COMMENT 'IP地址',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
 -- ----------------------------
 --  Records of `sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '2018-11-05 17:19:05', '2018-12-11 14:35:31', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1'), ('18', 'crown1', '11@qq.com', '13718867899', '0', '1', '2018-11-19 18:56:19', '2018-12-11 14:35:45', 'crown1', '$apr1$crown1$NsepppGmlSjqtwPTlaLb1/', '0:0:0:0:0:0:0:1'), ('19', 'crown2', '13878929833@163.com', '13878929833', '1', '18', '2018-12-10 15:25:57', '2018-12-10 15:25:57', 'crown2', '$apr1$crown2$R/8LgZ.REDrXB3jlpyglI0', null);
+INSERT INTO `sys_user` VALUES ('1', 'Crown', 'caratacus@qq.com', '13712345678', '0', '1', '2018-11-05 17:19:05', '2018-12-12 15:43:29', 'crown', '$apr1$crown$WQ2TEXVPUJ8l6N6gm0CGv.', '0:0:0:0:0:0:0:1'), ('18', 'crown1', '11@qq.com', '13718867899', '0', '1', '2018-11-19 18:56:19', '2018-12-12 15:28:18', 'crown1', '$apr1$crown1$NsepppGmlSjqtwPTlaLb1/', '0:0:0:0:0:0:0:1'), ('19', 'crown2', '13878929833@163.com', '13878929833', '1', '18', '2018-12-10 15:25:57', '2018-12-10 15:25:57', 'crown2', '$apr1$crown2$R/8LgZ.REDrXB3jlpyglI0', null);
 COMMIT;
 
 -- ----------------------------
@@ -171,7 +171,7 @@ CREATE TABLE `sys_user_role` (
   `uid` int(11) DEFAULT NULL COMMENT '用户ID',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户角色关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户角色关系表';
 
 -- ----------------------------
 --  Records of `sys_user_role`

@@ -136,7 +136,7 @@
         //显示表单弹窗
         var showEditModel = function (data) {
             if (data) {
-                crown.get('/menu/' + data.id, {}, function (data) {
+                crown.get('/menus/' + data.id, {}, function (data) {
                     crown.putTempData('t_menu', data.result);
                 }, false);
             }
