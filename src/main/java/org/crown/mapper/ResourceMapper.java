@@ -34,7 +34,6 @@ import org.crown.model.entity.Resource;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface ResourceMapper extends BaseMapper<Resource> {

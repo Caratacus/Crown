@@ -29,7 +29,6 @@ import org.crown.model.entity.UserRole;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 public interface IUserRoleService extends BaseService<UserRole> {
 

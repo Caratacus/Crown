@@ -30,7 +30,6 @@ import org.crown.model.entity.Role;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {

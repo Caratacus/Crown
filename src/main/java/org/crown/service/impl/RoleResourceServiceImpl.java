@@ -32,7 +32,6 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Service
 public class RoleResourceServiceImpl extends BaseServiceImpl<RoleResourceMapper, RoleResource> implements IRoleResourceService {

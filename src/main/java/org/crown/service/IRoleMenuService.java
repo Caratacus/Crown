@@ -31,7 +31,6 @@ import org.crown.model.entity.RoleMenu;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 public interface IRoleMenuService extends BaseService<RoleMenu> {
 

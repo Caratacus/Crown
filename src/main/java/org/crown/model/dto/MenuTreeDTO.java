@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * </p>
  *
  * @author Mybatis Plus
- * @since 2018-7-10
  */
 @Data
 @NoArgsConstructor

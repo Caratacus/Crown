@@ -38,7 +38,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Service
 public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMenu> implements IRoleMenuService {

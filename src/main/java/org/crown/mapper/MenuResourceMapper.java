@@ -30,7 +30,6 @@ import org.crown.model.entity.MenuResource;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface MenuResourceMapper extends BaseMapper<MenuResource> {

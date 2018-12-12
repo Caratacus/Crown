@@ -42,7 +42,6 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
  * 转换工具类
  *
  * @author Caratacus
- * @date 2018/09/24
  */
 public class BeanConverter {
 

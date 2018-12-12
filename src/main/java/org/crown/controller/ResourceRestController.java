@@ -54,7 +54,6 @@ import io.swagger.annotations.ApiOperation;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Api(tags = {"Resource"}, description = "资源操作相关接口")
 @RestController

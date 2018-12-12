@@ -33,7 +33,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 public interface IRoleService extends BaseService<Role> {
 

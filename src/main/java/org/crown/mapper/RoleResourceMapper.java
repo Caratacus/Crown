@@ -30,7 +30,6 @@ import org.crown.model.entity.RoleResource;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface RoleResourceMapper extends BaseMapper<RoleResource> {

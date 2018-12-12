@@ -35,7 +35,6 @@ import org.crown.model.entity.Menu;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {

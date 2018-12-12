@@ -37,7 +37,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Service
 public class MenuResourceServiceImpl extends BaseServiceImpl<MenuResourceMapper, MenuResource> implements IMenuResourceService {

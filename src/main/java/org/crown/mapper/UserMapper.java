@@ -30,7 +30,6 @@ import org.crown.model.entity.User;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

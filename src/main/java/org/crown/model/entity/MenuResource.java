@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Data
 @NoArgsConstructor

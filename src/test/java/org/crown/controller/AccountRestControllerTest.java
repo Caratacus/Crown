@@ -24,9 +24,9 @@ import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.responses.SuccessResponses;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
+import org.crown.model.parm.AccountInfoPARM;
 import org.crown.model.parm.LoginPARM;
 import org.crown.model.parm.PasswordPARM;
-import org.crown.model.parm.AccountInfoPARM;
 import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +41,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
  * </p>
  *
  * @author Caratacus
- * @date 2018/11/7
  */
 public class AccountRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 

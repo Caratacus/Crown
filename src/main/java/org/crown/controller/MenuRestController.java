@@ -57,7 +57,6 @@ import io.swagger.annotations.ApiOperation;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Api(tags = {"Menu"}, description = "菜单相关接口")
 @RestController

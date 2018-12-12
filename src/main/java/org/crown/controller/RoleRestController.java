@@ -58,7 +58,6 @@ import io.swagger.annotations.ApiOperation;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 @Api(tags = {"Role"}, description = "角色相关接口")
 @RestController

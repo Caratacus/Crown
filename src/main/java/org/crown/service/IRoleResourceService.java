@@ -29,7 +29,6 @@ import org.crown.model.entity.RoleResource;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 public interface IRoleResourceService extends BaseService<RoleResource> {
 

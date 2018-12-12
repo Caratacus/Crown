@@ -36,7 +36,6 @@ import org.springframework.test.web.servlet.MockMvc;
  * </p>
  *
  * @author Caratacus
- * @date 2018/11/7
  */
 public class ResourceRestControllerTest extends SuperRestControllerTest implements ControllerTest {
 
