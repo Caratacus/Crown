@@ -33,6 +33,7 @@ import org.crown.model.parm.RolePARM;
 import org.crown.service.IRoleMenuService;
 import org.crown.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -103,7 +104,7 @@ public class RoleRestController extends SuperController {
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {
         roleService.save(rolePARM.convert(Role.class));
-        return empty();
+        return success(HttpStatus.CREATED);
     }
 
     @Resources
@@ -116,7 +117,7 @@ public class RoleRestController extends SuperController {
         Role role = rolePARM.convert(Role.class);
         role.setId(id);
         roleService.updateById(role);
-        return empty();
+        return success();
     }
 
     @Resources
@@ -127,18 +128,18 @@ public class RoleRestController extends SuperController {
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
         roleService.removeById(id);
-        return empty();
+        return success(HttpStatus.NO_CONTENT);
     }
 
     @Resources
-    @ApiOperation(value = "关联菜单")
+    @ApiOperation(value = "修改角色菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
     })
-    @PostMapping("/{id}/menus")
+    @PutMapping("/{id}/menus")
     public ApiResponses<Void> menus(@PathVariable("id") Integer id, @RequestBody @NotEmpty(message = "菜单ID不能为空") List<Integer> menuIds) {
         roleMenuService.saveRoleMenu(id, menuIds);
-        return empty();
+        return success();
     }
 }
 

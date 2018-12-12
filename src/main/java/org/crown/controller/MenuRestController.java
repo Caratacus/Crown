@@ -33,6 +33,7 @@ import org.crown.model.entity.Menu;
 import org.crown.model.parm.MenuPARM;
 import org.crown.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -103,7 +104,7 @@ public class MenuRestController extends SuperController {
     public ApiResponses<Void> create(@RequestBody @Validated(MenuPARM.Create.class) MenuPARM menuPARM) {
         Menu menu = menuPARM.convert(Menu.class);
         menuService.saveMenu(menu, menuPARM.getResourceIds());
-        return empty();
+        return success(HttpStatus.CREATED);
     }
 
     @Resources
@@ -116,7 +117,7 @@ public class MenuRestController extends SuperController {
         Menu menu = menuPARM.convert(Menu.class);
         menu.setId(id);
         menuService.updateMenu(menu, menuPARM.getResourceIds());
-        return empty();
+        return success();
     }
 
     @Resources
@@ -127,7 +128,7 @@ public class MenuRestController extends SuperController {
     @DeleteMapping("/{id}")
     public ApiResponses<Void> delete(@PathVariable("id") Integer id) {
         menuService.removeMenu(id);
-        return empty();
+        return success(HttpStatus.NO_CONTENT);
     }
 
     @Resources
@@ -138,7 +139,7 @@ public class MenuRestController extends SuperController {
     @PutMapping("/{id}/status")
     public ApiResponses<Void> updateStatus(@PathVariable("id") Integer id, @RequestBody @Validated(MenuPARM.Status.class) MenuPARM menuPARM) {
         menuService.updateStatus(id, menuPARM.getStatus());
-        return empty();
+        return success();
     }
 
 }

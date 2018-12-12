@@ -23,11 +23,18 @@ package org.crown.framework.responses;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.utils.ResponseUtils;
 import org.springframework.http.HttpStatus;
 
 /**
+ * GET: 200 OK
+ * POST: 201 Created
+ * PUT: 200 OK
+ * PATCH: 200 OK
+ * DELETE: 204 No Content
  * 接口返回(多态)
  *
  * @author Caratacus
@@ -38,9 +45,12 @@ public class ApiResponses<T> implements Serializable {
 
     /**
      * 不需要返回结果
+     *
+     * @param status
      */
-    public static ApiResponses<Void> empty() {
-        return SuccessResponses.<Void>builder().status(HttpStatus.OK.value()).build();
+    public static ApiResponses<Void> success(HttpServletResponse response, HttpStatus status) {
+        response.setStatus(status.value());
+        return SuccessResponses.<Void>builder().status(status.value()).build();
 
     }
 
@@ -49,8 +59,20 @@ public class ApiResponses<T> implements Serializable {
      *
      * @param object
      */
-    public static <T> ApiResponses<T> success(T object) {
-        return SuccessResponses.<T>builder().status(HttpStatus.OK.value()).result(object).build();
+    public static <T> ApiResponses<T> success(HttpServletResponse response, T object) {
+        return success(response, HttpStatus.OK, object);
+
+    }
+
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @param object
+     */
+    public static <T> ApiResponses<T> success(HttpServletResponse response, HttpStatus status, T object) {
+        response.setStatus(status.value());
+        return SuccessResponses.<T>builder().status(status.value()).result(object).build();
 
     }
 

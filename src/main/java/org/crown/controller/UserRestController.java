@@ -35,6 +35,7 @@ import org.crown.model.entity.User;
 import org.crown.model.parm.UserPARM;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -109,7 +110,7 @@ public class UserRestController extends SuperController {
     @PutMapping("/{id}/password")
     public ApiResponses<Void> resetPwd(@PathVariable("id") Integer id) {
         userService.resetPwd(id);
-        return empty();
+        return success();
     }
 
     @Resources
@@ -120,7 +121,7 @@ public class UserRestController extends SuperController {
     @PutMapping("/{id}/status")
     public ApiResponses<Void> updateStatus(@PathVariable("id") Integer id, @RequestBody @Validated(UserPARM.Status.class) UserPARM userPARM) {
         userService.updateStatus(id, userPARM.getStatus());
-        return empty();
+        return success();
     }
 
     @Resources
@@ -138,7 +139,7 @@ public class UserRestController extends SuperController {
         user.setStatus(StatusEnum.DISABLE);
         userService.save(user);
         userService.saveUserRoles(user.getId(), userPARM.getRoleIds());
-        return empty();
+        return success(HttpStatus.CREATED);
     }
 
     @Resources
@@ -152,7 +153,7 @@ public class UserRestController extends SuperController {
         user.setId(id);
         userService.updateById(user);
         userService.saveUserRoles(id, userPARM.getRoleIds());
-        return empty();
+        return success();
     }
 
 }

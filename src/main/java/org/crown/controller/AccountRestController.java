@@ -38,6 +38,7 @@ import org.crown.model.parm.PasswordPARM;
 import org.crown.service.IMenuService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,7 +86,7 @@ public class AccountRestController extends SuperController {
     @ApiOperation("清除Token")
     @DeleteMapping("/token")
     public ApiResponses<Void> removeToken() {
-        return empty();
+        return success(HttpStatus.NO_CONTENT);
     }
 
     @Resources(auth = AuthTypeEnum.LOGIN)
@@ -97,7 +98,7 @@ public class AccountRestController extends SuperController {
     @PutMapping("/password")
     public ApiResponses<Void> updatePassword(@RequestBody @Validated PasswordPARM passwordPARM) {
         userService.updatePassword(currentUid(), passwordPARM.getOldPassword(), passwordPARM.getNewPassword());
-        return empty();
+        return success();
     }
 
     @Resources(auth = AuthTypeEnum.LOGIN)
@@ -117,7 +118,7 @@ public class AccountRestController extends SuperController {
         User user = accountInfoPARM.convert(User.class);
         user.setId(uid);
         userService.updateById(user);
-        return empty();
+        return success();
     }
 
     @Resources(auth = AuthTypeEnum.LOGIN)

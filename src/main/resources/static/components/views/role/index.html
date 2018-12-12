@@ -224,7 +224,7 @@
                 layer.closeAll('page');
                 return false;
             }
-            crown.post('/roles/' + data.field.roleId + '/menus', menuIds, function () {
+            crown.put('/roles/' + data.field.roleId + '/menus', menuIds, function () {
                 layer.closeAll('loading');
                 layer.msg('关联成功', {icon: 1});
                 roleTable.reload('role-table');

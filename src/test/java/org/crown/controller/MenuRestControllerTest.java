@@ -97,13 +97,13 @@ public class MenuRestControllerTest extends SuperRestControllerTest implements C
         menuPARM.setMenuType(MenuTypeEnum.MENU);
         menuPARM.setIcon("icon");
         menuPARM.setStatus(StatusEnum.NORMAL);
-        isOk(mockMvc, post("/menus", token.getToken(), menuPARM));
+        isCreated(mockMvc, post("/menus", token.getToken(), menuPARM));
         //测试获取所有
         List<Menu> result = getResult(mockMvc, get("/menus", token.getToken()),
                 new TypeReference<SuccessResponses<List<Menu>>>() {
                 });
         for (Menu menu : result) {
-            isOk(mockMvc, delete("/menus/" + menu.getId(), token.getToken()));
+            isNoContent(mockMvc, delete("/menus/" + menu.getId(), token.getToken()));
         }
 
     }

@@ -31,6 +31,7 @@ import org.crown.cons.PageCons;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.AntiSQLFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -48,21 +49,44 @@ public class SuperController {
     protected HttpServletResponse response;
 
     /**
-     * 成功的ApiResponses
+     * 成功返回
      *
+     * @param object
      * @return
      */
-    public static <T> ApiResponses<T> success(T object) {
-        return ApiResponses.<T>success(object);
+    public <T> ApiResponses<T> success(T object) {
+        return ApiResponses.<T>success(response, object);
     }
 
     /**
-     * 空的ApiResponses
+     * 成功返回
      *
      * @return
      */
-    public static ApiResponses<Void> empty() {
-        return ApiResponses.empty();
+    public ApiResponses<Void> success() {
+        return success(HttpStatus.OK);
+    }
+
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @param object
+     * @return
+     */
+    public <T> ApiResponses<T> success(HttpStatus status, T object) {
+        return ApiResponses.<T>success(response, status, object);
+    }
+
+
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @return
+     */
+    public ApiResponses<Void> success(HttpStatus status) {
+        return ApiResponses.<Void>success(response, status);
     }
 
     /**

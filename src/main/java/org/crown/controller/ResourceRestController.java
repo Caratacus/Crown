@@ -99,7 +99,7 @@ public class ResourceRestController extends SuperController {
     @PutMapping
     public ApiResponses<Void> refresh() {
         scanMappings.doScan();
-        return empty();
+        return success();
     }
 
 

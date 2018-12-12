@@ -77,16 +77,16 @@ public class SuperRestControllerTest {
     /**
      * 获取MockMvcRequestBodyBuilders
      *
-     * @param httpMethod
+     * @param method
      * @param url
      * @param authorization
      * @param object
      * @param params
      * @return
      */
-    private MockHttpServletRequestBuilder getMockMvcRequestBodyBuilder(HttpMethod httpMethod, String url, String authorization, Object object, MultiValueMap<String, String> params) {
+    private MockHttpServletRequestBuilder getMockMvcRequestBodyBuilder(HttpMethod method, String url, String authorization, Object object, MultiValueMap<String, String> params) {
         MockHttpServletRequestBuilder requestBuilder;
-        switch (httpMethod) {
+        switch (method) {
             case GET:
                 requestBuilder = MockMvcRequestBuilders.get(url);
                 if (Objects.nonNull(params)) {
@@ -244,46 +244,77 @@ public class SuperRestControllerTest {
     }
 
     /**
-     * 获取Mock测试请求结果是否成功
+     * 获取Mock测试请求结果是否为200
      *
-     * @param mockMvc
-     * @param mockHttpServletRequestBuilder
+     * @param mvc
+     * @param builder
      * @return
      * @throws Exception
      */
-    public ResultActions isOk(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
-        return mockMvc.perform(mockHttpServletRequestBuilder)
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk());
+    public ResultActions isOk(MockMvc mvc, MockHttpServletRequestBuilder builder) throws Exception {
+        return getResultActions(mvc, builder).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    /**
+     * 获取Mock测试请求结果是否为204
+     *
+     * @param mvc
+     * @param builder
+     * @return
+     * @throws Exception
+     */
+    public ResultActions isNoContent(MockMvc mvc, MockHttpServletRequestBuilder builder) throws Exception {
+        return getResultActions(mvc, builder).andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    /**
+     * 获取ResultActions
+     * @param mvc
+     * @param builder
+     * @return
+     * @throws Exception
+     */
+    private ResultActions getResultActions(MockMvc mvc, MockHttpServletRequestBuilder builder) throws Exception {
+        return mvc.perform(builder).andDo(MockMvcResultHandlers.print());
+    }
+
+    /**
+     * 获取Mock测试请求结果是否为201
+     *
+     * @param mvc
+     * @param builder
+     * @return
+     * @throws Exception
+     */
+    public ResultActions isCreated(MockMvc mvc, MockHttpServletRequestBuilder builder) throws Exception {
+        return getResultActions(mvc, builder).andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
     /**
      * 获取MockMvc测试字符串返回
      *
-     * @param mockMvc
-     * @param mockHttpServletRequestBuilder
+     * @param mvc
+     * @param builder
      * @return
      * @throws Exception
      */
-    public MockHttpServletResponse getResponse(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder) throws Exception {
-        return isOk(mockMvc, mockHttpServletRequestBuilder)
-                .andReturn()
-                .getResponse();
+    public MockHttpServletResponse getResponse(MockMvc mvc, MockHttpServletRequestBuilder builder) throws Exception {
+        return isOk(mvc, builder).andReturn().getResponse();
     }
 
     /**
      * 获取MockMvc测试实体
      *
-     * @param mockMvc
-     * @param mockHttpServletRequestBuilder
+     * @param mvc
+     * @param builder
      * @param <T>
      * @return
      * @throws Exception
      */
-    public <T> T getResult(MockMvc mockMvc, MockHttpServletRequestBuilder mockHttpServletRequestBuilder,
-                           TypeReference<SuccessResponses<T>> valueTypeRef) throws Exception {
-        String responseString = getResponse(mockMvc, mockHttpServletRequestBuilder).getContentAsString();
-        SuccessResponses<T> responses = JacksonUtils.readValue(responseString, valueTypeRef);
+    public <T> T getResult(MockMvc mvc, MockHttpServletRequestBuilder builder,
+                           TypeReference<SuccessResponses<T>> reference) throws Exception {
+        String responseString = getResponse(mvc, builder).getContentAsString();
+        SuccessResponses<T> responses = JacksonUtils.readValue(responseString, reference);
         return responses.getResult();
     }
 

@@ -101,7 +101,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setPhone("13617828937");
         userPARM.setStatus(StatusEnum.DISABLE);
         userPARM.setRoleIds(Collections.singletonList(1));
-        isOk(mockMvc, post("/users", token.getToken(), userPARM));
+        isCreated(mockMvc, post("/users", token.getToken(), userPARM));
 
     }
 

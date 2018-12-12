@@ -78,7 +78,7 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
 
     @Test
     public void removeToken() throws Exception {
-        isOk(mockMvc, delete("/account/token", null));
+        isNoContent(mockMvc, delete("/account/token", null));
     }
 
     @Test
