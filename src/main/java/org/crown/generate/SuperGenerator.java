@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
@@ -200,7 +201,8 @@ public class SuperGenerator {
      * @return
      */
     private String getRootPath() {
-        return new File(SuperGenerator.class.getClassLoader().getResource("").getFile()).getParentFile().getParentFile().getParent();
+        String file = Objects.requireNonNull(SuperGenerator.class.getClassLoader().getResource("")).getFile();
+        return new File(file).getParentFile().getParentFile().getParent();
     }
 
     /**
