@@ -33,17 +33,6 @@
 </p>
 
 -----------------------------------------------------------------------------------------------
-<p align="center">
-    <p align="center">
-        热烈庆祝 mybatis-plus、layui 荣获 2018 年度最受欢迎中国开源软件 <a href="https://www.oschina.net/question/2896879_2290300">Top 5</a>.
-        <br>
-        <br>
-    </p>
-     <img src="https://raw.githubusercontent.com/Caratacus/Resource/master/2018-top5.jpg" alt="2018-top5.jpg">
-</p>
-
------------------------------------------------------------------------------------------------
-##### Intro :cat:
 
 > 本人作为**mybatis-plus核心开发**之一，编写了该项目以推广**mybatis-plus3.0**的使用
 
@@ -51,39 +40,9 @@
 
 > 除了基本使用，还有一些**进阶玩法**在项目中等待大家来发现
 
+> **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
+
 > **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
-
------------------------------------------------------------------------------------------------
-#####
-<sup>
-<sup>1</sup> JDK1.8+ <br/>
-<sup>2</sup> MySQL5.7+ <br/>
-<sup>3</sup> Gradle4.10+ <br/>
-</sup>
-
------------------------------------------------------------------------------------------------
-##### Start :dog:
-<sup>
-<sup>1</sup> 准备好上述基本环境 <br/>
-<sup>2</sup> 导入crown.sql文件(src/test/resources/sql/crown.sql) <br/>
-<sup>3</sup> 启动CrownApplication.java <br/>
-<sup>4</sup> 访问http://localhost:8088 <br/>
-</sup>
-
------------------------------------------------------------------------------------------------
-##### Show :palm_tree:
-
-![login.jpg](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/login.jpg)
-<br>
-![user.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
-<br>
-![role.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
-<br>
-![menu.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu.png)
-<br>
-![menu-form.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu-form.png)
-<br>
-![resource.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/resource.png)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
@@ -121,39 +80,36 @@
 </sup>
 
 -----------------------------------------------------------------------------------------------
-##### [Lombok](http://projectlombok.org/) FAQ :mushroom:
-
-* ###### 为什么下载的代码后，使用IDEA打开没有相应的get set方法呢？
-
+##### Ready :cat:
 <sup>
-    答：因为框架使用了Lombok包，它是在编译的时期，自动生成get set方法，并不影响运行
+<sup>1</sup> JDK1.8+ <br/>
+<sup>2</sup> MySQL5.7+ <br/>
+<sup>3</sup> Gradle4.10+ <br/>
 </sup>
 
-* ###### 下载的代码后，使用IDEA想自己修改源码时总是莫名提示报错？
-
-![idea-annotation-compile.png](https://raw.githubusercontent.com/Caratacus/Resource/master/idea-annotation-compile.png)
-
+-----------------------------------------------------------------------------------------------
+##### Start :dog:
 <sup>
-    答：上图所示，IDEA下载Lombok插件并开启注解编译支持
+<sup>1</sup> 准备好上述基本环境 <br/>
+<sup>2</sup> 导入crown.sql文件(src/test/resources/sql/crown.sql) <br/>
+<sup>3</sup> 启动CrownApplication.java <br/>
+<sup>4</sup> 访问http://localhost:8088 <br/>
 </sup>
 
-* ###### 代码编译各种不通过，是什么问题？![Travis Build标签](https://travis-ci.org/Caratacus/Crown.svg?branch=master)
+-----------------------------------------------------------------------------------------------
+##### Show :palm_tree:
 
-<sup>
-    答：查看问题上travis build标签，passing代表代码测试用例通过，更不存在编译问题；failing表示代码测试不通过，联系作者（作者自己也会收到邮件）
-</sup>
-
-* ###### 为什么项目启动后用127.0.0.1无法访问项目，localhost却可以？
-
-<sup>
-    答：项目是前后端分离的需要127.0.0.1访问方式，修改config.js中serverUrl路径即可
-</sup>
-
-* ###### 为什么eclipse的环境执行时，枚举类型就不会变成数值，idea却可以？
-
-<sup>
-    答：主要是因为引入了spring-boot-devtools依赖，在eclipse运行该项目时，务必去除devtools依赖包（以及application.yml中devtolls属性）。idea则不受影响，原因是eclipse没有识别到devtools的排除文件配置，具体细节没有去深究，作者本人没有使用eclipse
-</sup>
+![login.jpg](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/login.jpg)
+<br>
+![user.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
+<br>
+![role.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
+<br>
+![menu.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu.png)
+<br>
+![menu-form.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu-form.png)
+<br>
+![resource.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/resource.png)
 
 -----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
