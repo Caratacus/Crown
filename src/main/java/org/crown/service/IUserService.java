@@ -34,7 +34,6 @@ import org.crown.model.entity.User;
  * </p>
  *
  * @author Caratacus
- * @since 2018-10-25
  */
 public interface IUserService extends BaseService<User> {
 

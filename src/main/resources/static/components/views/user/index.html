@@ -68,7 +68,7 @@
         var userTable = table.render({
             elem: '#user-table',
             toolbar: '#user-toolbar',
-            url: config.serverUrl + '/user',
+            url: config.serverUrl + '/users',
             request: config.request,
             parseData: config.parseData,
             response: config.response,
@@ -103,7 +103,7 @@
                 layer.confirm('确定重置此用户密码？', function (i) {
                     layer.close(i);
                     layer.load(2);
-                    crown.put('/user/' + obj.data.id + '/password/reset', {}, function () {
+                    crown.put('/users/' + obj.data.id + '/password', {}, function () {
                         layer.closeAll('loading');
                         layer.msg('重置密码成功', {icon: 1});
                     });
@@ -114,7 +114,7 @@
         //显示表单弹窗
         var showEditModel = function (data) {
             if (data) {
-                crown.get('/user/' + data.id, {}, function (data) {
+                crown.get('/users/' + data.id, {}, function (data) {
                     crown.putTempData('t_user', data.result);
                 }, false);
             }
@@ -135,7 +135,7 @@
         // 修改user状态
         form.on('switch(user-tpl-status)', function (obj) {
             layer.load(2);
-            crown.put('/user/' + obj.elem.value + '/status', {
+            crown.put('/users/' + obj.elem.value + '/status', {
                 status: obj.elem.checked ? 0 : 1
             }, function () {
                 layer.closeAll('loading');

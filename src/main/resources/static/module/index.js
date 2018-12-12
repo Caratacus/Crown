@@ -33,7 +33,7 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
         },
         // 从服务器获取登录用户的信息
         getUser: function (success) {
-            crown.get('/user/details', {}, function (data) {
+            crown.get('/account/info', {}, function (data) {
                 config.putUser(data.result);
                 success(data.result);
             });

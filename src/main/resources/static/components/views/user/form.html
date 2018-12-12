@@ -48,7 +48,7 @@
         var formSelects = layui.formSelects;
         // 获取所有角色
         layer.load(2);
-        crown.get('/role/roles', {}, function (data) {
+        crown.get('/roles/roles', {}, function (data) {
             // 渲染多选下拉框
             var roleSelectData = new Array();
             for (var i = 0; i < data.result.length; i++) {
@@ -79,13 +79,13 @@
             }
             data.field.roleIds = roleIds;
             if (data.field.id) {
-                crown.put('/user/' + data.field.id, data.field, function () {
+                crown.put('/users/' + data.field.id, data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     crown.finishPopupCenter();
                 });
             } else {
-                crown.post('/user', data.field, function () {
+                crown.post('/users', data.field, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
                     crown.finishPopupCenter();

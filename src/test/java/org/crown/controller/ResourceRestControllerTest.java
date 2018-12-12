@@ -62,17 +62,17 @@ public class ResourceRestControllerTest extends SuperRestControllerTest implemen
 
     @Test
     public void page() throws Exception {
-        isOk(mockMvc, get("/resource", token.getToken()));
+        isOk(mockMvc, get("/resources", token.getToken()));
     }
 
     @Test
     public void refresh() throws Exception {
-        isOk(mockMvc, put("/resource/refresh", token.getToken()));
+        isOk(mockMvc, put("/resources", token.getToken()));
     }
 
     @Test
     public void list() throws Exception {
-        isOk(mockMvc, get("/resource/resources", token.getToken()));
+        isOk(mockMvc, get("/resources/resources", token.getToken()));
     }
 
     @Test

@@ -41,7 +41,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class UserInfoPARM extends Convert {
+public class AccountInfoPARM extends Convert {
 
     private static final long serialVersionUID = 1L;
 

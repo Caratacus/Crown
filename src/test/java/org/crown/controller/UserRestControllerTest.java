@@ -27,7 +27,6 @@ import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.entity.User;
-import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
 import org.crown.service.IUserService;
 import org.junit.Before;
@@ -64,7 +63,7 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     }
 
     @Test
-    public void getUserDetails1() throws Exception {
+    public void getUserDetails1() {
         User user = new User();
         user.setId(2);
         user.setIp("2222");
@@ -72,39 +71,25 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
     }
 
     @Test
-    public void getUserDetails() throws Exception {
-        isOk(mockMvc, get("/user/details", token.getToken()));
-    }
-
-    @Test
-    public void updateUserInfo() throws Exception {
-        UserInfoPARM userInfoPARM = new UserInfoPARM();
-        userInfoPARM.setNickname("Crown");
-        userInfoPARM.setEmail("caratacus@qq.com");
-        userInfoPARM.setPhone("13712345678");
-        isOk(mockMvc, put("/user/info", token.getToken(), userInfoPARM));
-    }
-
-    @Test
     public void page() throws Exception {
-        isOk(mockMvc, get("/user", token.getToken()));
+        isOk(mockMvc, get("/users", token.getToken()));
     }
 
     @Test
     public void get() throws Exception {
-        isOk(mockMvc, get("/user/1", token.getToken()));
+        isOk(mockMvc, get("/users/1", token.getToken()));
     }
 
     @Test
     public void resetPwd() throws Exception {
-        isOk(mockMvc, put("/user/" + token.getUid() + "/password/reset", token.getToken()));
+        isOk(mockMvc, put("/users/" + token.getUid() + "/password", token.getToken()));
     }
 
     @Test
     public void updateStatus() throws Exception {
         UserPARM userPARM = new UserPARM();
         userPARM.setStatus(StatusEnum.NORMAL);
-        isOk(mockMvc, put("/user/" + token.getUid() + "/status", token.getToken(), userPARM));
+        isOk(mockMvc, put("/users/" + token.getUid() + "/status", token.getToken(), userPARM));
     }
 
     @Test
@@ -116,18 +101,8 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setPhone("13617828937");
         userPARM.setStatus(StatusEnum.DISABLE);
         userPARM.setRoleIds(Collections.singletonList(1));
-        isOk(mockMvc, post("/user", token.getToken(), userPARM));
+        isOk(mockMvc, post("/users", token.getToken(), userPARM));
 
-    }
-
-    @Test
-    public void permMenus() throws Exception {
-        isOk(mockMvc, get("/user/perm/menus", token.getToken()));
-    }
-
-    @Test
-    public void permBottonAliases() throws Exception {
-        isOk(mockMvc, get("/user/perm/botton/aliases", token.getToken()));
     }
 
 }

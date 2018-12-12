@@ -22,23 +22,17 @@ package org.crown.controller;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
-import org.crown.emuns.AuthTypeEnum;
 import org.crown.emuns.StatusEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.utils.ApiAssert;
-import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.dto.UserDTO;
-import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
-import org.crown.model.parm.UserInfoPARM;
 import org.crown.model.parm.UserPARM;
-import org.crown.service.IMenuService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -71,14 +65,12 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"User"}, description = "用户操作相关接口")
 @RestController
-@RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class UserRestController extends SuperController {
 
     @Autowired
     private IUserService userService;
-    @Autowired
-    private IMenuService menuService;
 
     @Resources
     @ApiOperation("查询所有用户")
@@ -115,7 +107,7 @@ public class UserRestController extends SuperController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
     })
-    @PutMapping("/{id}/password/reset")
+    @PutMapping("/{id}/password")
     public ApiResponses<Void> resetPwd(@PathVariable("id") Integer id) {
         userService.resetPwd(id);
         return empty();
@@ -162,41 +154,6 @@ public class UserRestController extends SuperController {
         userService.updateById(user);
         userService.saveUserRoles(id, userPARM.getRoleIds());
         return empty();
-    }
-
-    @Resources(auth = AuthTypeEnum.LOGIN)
-    @ApiOperation("获取用户详情")
-    @GetMapping("/details")
-    public ApiResponses<UserDetailsDTO> getUserDetails() {
-        Integer uid = currentUid();
-        UserDetailsDTO userDetails = userService.getUserDetails(uid);
-        return success(userDetails);
-    }
-
-    @Resources(auth = AuthTypeEnum.LOGIN)
-    @ApiOperation("修改用户信息")
-    @PutMapping("/info")
-    public ApiResponses<Void> updateUserInfo(@RequestBody @Validated UserInfoPARM userInfoPARM) {
-        Integer uid = currentUid();
-        User user = userInfoPARM.convert(User.class);
-        user.setId(uid);
-        userService.updateById(user);
-        return empty();
-    }
-
-    @Resources(auth = AuthTypeEnum.LOGIN)
-    @ApiOperation("获取用户权限菜单")
-    @GetMapping("/perm/menus")
-    public ApiResponses<List<MenuTreeDTO>> permMenus() {
-        List<MenuTreeDTO> menuTrees = menuService.getUserPermMenus(currentUid());
-        return success(menuTrees);
-    }
-
-    @Resources(auth = AuthTypeEnum.LOGIN)
-    @ApiOperation("获取用户权限按钮")
-    @GetMapping("/perm/botton/aliases")
-    public ApiResponses<Set<String>> permBottonAliases() {
-        return success(menuService.getUserPermBottonAliases(currentUid()));
     }
 
 }

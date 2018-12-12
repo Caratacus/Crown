@@ -66,25 +66,25 @@ public class MenuRestControllerTest extends SuperRestControllerTest implements C
     @Test
     public void list() throws Exception {
         //测试获取所有
-        List<Menu> result = getResult(mockMvc, get("/menu", token.getToken()),
+        List<Menu> result = getResult(mockMvc, get("/menus", token.getToken()),
                 new TypeReference<SuccessResponses<List<Menu>>>() {
                 });
         for (Menu menu : result) {
             //获取单个
-            isOk(mockMvc, get("/menu/" + menu.getId(), token.getToken()));
+            isOk(mockMvc, get("/menus/" + menu.getId(), token.getToken()));
             //修改
-            isOk(mockMvc, put("/menu/" + menu.getId(), token.getToken(), menu.convert(MenuPARM.class)));
+            isOk(mockMvc, put("/menus/" + menu.getId(), token.getToken(), menu.convert(MenuPARM.class)));
             //修改状态
             MenuPARM menuPARM = new MenuPARM();
             menuPARM.setStatus(StatusEnum.NORMAL);
-            isOk(mockMvc, put("/menu/" + menu.getId() + "/status", token.getToken(), menuPARM));
+            isOk(mockMvc, put("/menus/" + menu.getId() + "/status", token.getToken(), menuPARM));
         }
 
     }
 
     @Test
     public void combos() throws Exception {
-        isOk(mockMvc, get("/menu/combos", token.getToken()));
+        isOk(mockMvc, get("/menus/combos", token.getToken()));
     }
 
 
@@ -97,13 +97,13 @@ public class MenuRestControllerTest extends SuperRestControllerTest implements C
         menuPARM.setMenuType(MenuTypeEnum.MENU);
         menuPARM.setIcon("icon");
         menuPARM.setStatus(StatusEnum.NORMAL);
-        isOk(mockMvc, post("/menu", token.getToken(), menuPARM));
+        isOk(mockMvc, post("/menus", token.getToken(), menuPARM));
         //测试获取所有
-        List<Menu> result = getResult(mockMvc, get("/menu", token.getToken()),
+        List<Menu> result = getResult(mockMvc, get("/menus", token.getToken()),
                 new TypeReference<SuccessResponses<List<Menu>>>() {
                 });
         for (Menu menu : result) {
-            isOk(mockMvc, delete("/menu/" + menu.getId(), token.getToken()));
+            isOk(mockMvc, delete("/menus/" + menu.getId(), token.getToken()));
         }
 
     }

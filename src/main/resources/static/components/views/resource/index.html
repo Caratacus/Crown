@@ -58,7 +58,7 @@
         var resourceTable = table.render({
             elem: '#resource-table',
             toolbar: '#resource-toolbar',
-            url: config.serverUrl + '/resource',
+            url: config.serverUrl + '/resources',
             request: config.request,
             parseData: config.parseData,
             response: config.response,
@@ -89,7 +89,7 @@
         // 表格顶部操作列
         table.on('toolbar(resource-table)', function (obj) {
             if (obj.event === 'refresh') {
-                crown.put('/resource/refresh', {}, function () {
+                crown.put('/resources', {}, function () {
                     layer.msg('刷新成功', {icon: 1});
                     resourceTable.reload('resource-table', {});
                 });

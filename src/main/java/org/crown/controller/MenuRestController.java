@@ -61,7 +61,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"Menu"}, description = "菜单相关接口")
 @RestController
-@RequestMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/menus", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class MenuRestController extends SuperController {
 

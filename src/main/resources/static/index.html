@@ -74,10 +74,10 @@
             index.initRouter();
             index.bindEvent();
         });
-        crown.get('/user/perm/menus', {}, function (data) {
+        crown.get('/account/menus', {}, function (data) {
             config.putMenus(data.result);
         }, false);
-        crown.get('/user/perm/botton/aliases', {}, function (data) {
+        crown.get('/account/bottons/aliases', {}, function (data) {
             config.putPermBottons(data.result);
         }, false);
     });

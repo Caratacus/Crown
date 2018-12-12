@@ -72,7 +72,7 @@
                 //是否默认折叠
                 treeDefaultClose: false,
                 toolbar: '#menu-toolbar',
-                url: config.serverUrl + '/menu',
+                url: config.serverUrl + '/menus',
                 headers: {Authorization: config.getToken()},
                 cols: [[
                     {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
@@ -124,7 +124,7 @@
                 showEditModel(data);
             } else if (obj.event === 'del') {
                 layer.confirm('确定删除该记录吗？', function () {
-                    crown.delete('/menu/' + data.id, {}, function () {
+                    crown.delete('/menus/' + data.id, {}, function () {
                         layer.closeAll('loading');
                         layer.msg('删除成功', {icon: 1});
                     }, false);
@@ -152,7 +152,7 @@
         // 修改状态
         form.on('switch(menu-tpl-status)', function (obj) {
             layer.load(2);
-            crown.put('/menu/' + obj.elem.value + '/status', {
+            crown.put('/menus/' + obj.elem.value + '/status', {
                 status: obj.elem.checked ? 0 : 1
             }, function () {
                 layer.closeAll('loading');

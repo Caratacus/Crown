@@ -58,7 +58,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"Resource"}, description = "资源操作相关接口")
 @RestController
-@RequestMapping(value = "/resource", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/resources", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class ResourceRestController extends SuperController {
 
@@ -97,7 +97,7 @@ public class ResourceRestController extends SuperController {
 
     @Resources
     @ApiOperation(value = "刷新资源")
-    @PutMapping("/refresh")
+    @PutMapping
     public ApiResponses<Void> refresh() {
         scanMappings.doScan();
         return empty();

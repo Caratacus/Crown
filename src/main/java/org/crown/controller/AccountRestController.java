@@ -20,20 +20,28 @@
  */
 package org.crown.controller;
 
+import java.util.List;
+import java.util.Set;
+
 import org.crown.common.annotations.Resources;
 import org.crown.common.utils.IpUtils;
 import org.crown.emuns.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
+import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.dto.TokenDTO;
+import org.crown.model.dto.UserDetailsDTO;
 import org.crown.model.entity.User;
 import org.crown.model.parm.LoginPARM;
 import org.crown.model.parm.PasswordPARM;
+import org.crown.model.parm.AccountInfoPARM;
+import org.crown.service.IMenuService;
 import org.crown.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +69,9 @@ public class AccountRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private IMenuService menuService;
+
     @Resources(auth = AuthTypeEnum.OPEN)
     @ApiOperation("获取Token")
     @PostMapping("/token")
@@ -87,6 +98,41 @@ public class AccountRestController extends SuperController {
     public ApiResponses<Void> updatePassword(@RequestBody @Validated PasswordPARM passwordPARM) {
         userService.updatePassword(currentUid(), passwordPARM.getOldPassword(), passwordPARM.getNewPassword());
         return empty();
+    }
+
+    @Resources(auth = AuthTypeEnum.LOGIN)
+    @ApiOperation("获取账户详情")
+    @GetMapping("/info")
+    public ApiResponses<UserDetailsDTO> accountInfo() {
+        Integer uid = currentUid();
+        UserDetailsDTO userDetails = userService.getUserDetails(uid);
+        return success(userDetails);
+    }
+
+    @Resources(auth = AuthTypeEnum.LOGIN)
+    @ApiOperation("修改账户信息")
+    @PutMapping("/info")
+    public ApiResponses<Void> accountInfo(@RequestBody @Validated AccountInfoPARM accountInfoPARM) {
+        Integer uid = currentUid();
+        User user = accountInfoPARM.convert(User.class);
+        user.setId(uid);
+        userService.updateById(user);
+        return empty();
+    }
+
+    @Resources(auth = AuthTypeEnum.LOGIN)
+    @ApiOperation("获取账户菜单")
+    @GetMapping("/menus")
+    public ApiResponses<List<MenuTreeDTO>> menus() {
+        List<MenuTreeDTO> menuTrees = menuService.getUserPermMenus(currentUid());
+        return success(menuTrees);
+    }
+
+    @Resources(auth = AuthTypeEnum.LOGIN)
+    @ApiOperation("获取账户按钮")
+    @GetMapping("/bottons/aliases")
+    public ApiResponses<Set<String>> bottonsAliases() {
+        return success(menuService.getUserPermBottonAliases(currentUid()));
     }
 }
 

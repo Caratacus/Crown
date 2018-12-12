@@ -62,7 +62,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = {"Role"}, description = "角色相关接口")
 @RestController
-@RequestMapping(value = "/role", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/roles", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Validated
 public class RoleRestController extends SuperController {
 

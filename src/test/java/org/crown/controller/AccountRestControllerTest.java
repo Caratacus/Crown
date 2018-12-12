@@ -26,6 +26,8 @@ import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.parm.LoginPARM;
 import org.crown.model.parm.PasswordPARM;
+import org.crown.model.parm.AccountInfoPARM;
+import org.crown.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +48,18 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
     @Autowired
     private AccountRestController restController;
 
+    @Autowired
+    private IUserService userService;
+
+    private TokenDTO token;
+
     private MockMvc mockMvc;
 
     @Before
     @Override
     public void before() {
         mockMvc = getMockMvc(restController);
+        token = userService.getToken(userService.getById(1));
     }
 
     @Test
@@ -72,6 +80,30 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
     @Test
     public void removeToken() throws Exception {
         isOk(mockMvc, delete("/account/token", null));
+    }
+
+    @Test
+    public void getAccountInfo() throws Exception {
+        isOk(mockMvc, get("/account/info", token.getToken()));
+    }
+
+    @Test
+    public void menus() throws Exception {
+        isOk(mockMvc, get("/account/menus", token.getToken()));
+    }
+
+    @Test
+    public void bottonsAliases() throws Exception {
+        isOk(mockMvc, get("/account/bottons/aliases", token.getToken()));
+    }
+
+    @Test
+    public void updateAccountInfo() throws Exception {
+        AccountInfoPARM userInfoPARM = new AccountInfoPARM();
+        userInfoPARM.setNickname("Crown");
+        userInfoPARM.setEmail("caratacus@qq.com");
+        userInfoPARM.setPhone("13712345678");
+        isOk(mockMvc, put("/account/info", token.getToken(), userInfoPARM));
     }
 
 }
