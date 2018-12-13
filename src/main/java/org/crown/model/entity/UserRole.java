@@ -43,6 +43,11 @@ public class UserRole extends BaseModel {
 
     private static final long serialVersionUID = 1L;
 
+    public UserRole(Integer uid, Integer roleId) {
+        this.uid = uid;
+        this.roleId = roleId;
+    }
+
     /**
      * 用户ID
      */

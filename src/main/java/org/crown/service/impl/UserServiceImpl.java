@@ -127,12 +127,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public void saveUserRoles(Integer uid, List<Integer> roleIds) {
         if (CollectionUtils.isNotEmpty(roleIds)) {
             userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUid, uid));
-            userRoleService.saveBatch(roleIds.stream().map(e -> {
-                UserRole userRole = new UserRole();
-                userRole.setRoleId(e);
-                userRole.setUid(uid);
-                return userRole;
-            }).collect(Collectors.toList()));
+            userRoleService.saveBatch(roleIds.stream().map(e -> new UserRole(uid, e)).collect(Collectors.toList()));
         }
     }
 
