@@ -212,11 +212,11 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
                 }
             });
         },
-        hasPerm: function (bottonAlias) {
-            var permBottons = config.getPermBottons();
-            if (permBottons) {
-                for (var i = 0; i < permBottons.length; i++) {
-                    if (bottonAlias == permBottons[i]) {
+        hasPerm: function (buttonAlias) {
+            var permButtons = config.getPermButtons();
+            if (permButtons) {
+                for (var i = 0; i < permButtons.length; i++) {
+                    if (buttonAlias == permButtons[i]) {
                         return true;
                     }
                 }

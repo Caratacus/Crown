@@ -55,17 +55,17 @@ layui.define(function (exports) {
             });
         },
         // 获取缓存的权限按钮
-        getPermBottons: function () {
-            var permBottons = layui.data(config.scope).permBottons;
-            if (permBottons) {
-                return JSON.parse(permBottons);
+        getPermButtons: function () {
+            var permButtons = layui.data(config.scope).permButtons;
+            if (permButtons) {
+                return JSON.parse(permButtons);
             }
         },
         // 缓存权限按钮
-        putPermBottons: function (permBottons) {
+        putPermButtons: function (permButtons) {
             layui.data(config.scope, {
-                key: 'permBottons',
-                value: JSON.stringify(permBottons)
+                key: 'permButtons',
+                value: JSON.stringify(permButtons)
             });
         },
         // 获取缓存的token

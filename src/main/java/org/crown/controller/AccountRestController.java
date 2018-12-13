@@ -131,9 +131,9 @@ public class AccountRestController extends SuperController {
 
     @Resources(auth = AuthTypeEnum.LOGIN)
     @ApiOperation("获取账户按钮")
-    @GetMapping("/bottons/aliases")
-    public ApiResponses<Set<String>> bottonsAliases() {
-        return success(menuService.getUserPermBottonAliases(currentUid()));
+    @GetMapping("/buttons/aliases")
+    public ApiResponses<Set<String>> buttonsAliases() {
+        return success(menuService.getUserPermButtonAliases(currentUid()));
     }
 }
 

@@ -144,7 +144,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     }
 
     @Override
-    public Set<String> getUserPermBottonAliases(Integer uid) {
+    public Set<String> getUserPermButtonAliases(Integer uid) {
         return baseMapper.getUserPermMenus(uid, Collections.singletonList(MenuTypeEnum.BUTTON))
                 .stream()
                 .map(MenuTreeDTO::getAlias)

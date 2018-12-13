@@ -92,8 +92,8 @@ public class AccountRestControllerTest extends SuperRestControllerTest implement
     }
 
     @Test
-    public void bottonsAliases() throws Exception {
-        isOk(mockMvc, get("/account/bottons/aliases", token.getToken()));
+    public void buttonsAliases() throws Exception {
+        isOk(mockMvc, get("/account/buttons/aliases", token.getToken()));
     }
 
     @Test

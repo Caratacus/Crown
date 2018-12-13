@@ -91,6 +91,6 @@ public interface IMenuService extends BaseService<Menu> {
      * @param uid
      * @return
      */
-    Set<String> getUserPermBottonAliases(Integer uid);
+    Set<String> getUserPermButtonAliases(Integer uid);
 
 }
