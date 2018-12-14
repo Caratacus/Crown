@@ -148,47 +148,53 @@ layui.define(['config', 'layer', 'element', 'form'], function (exports) {
         closePopupCenter: function () {
             layer.close(popupCenterIndex);
         },
-        get: function (url, data, success, async) {
-            return this.request(url, data, "GET", success, async);
+        get: function (url, params, success) {
+            params.method = "GET";
+            return this.request(url, params, success);
         },
-        post: function (url, data, success, async) {
-            return this.request(url, data, "POST", success, async);
+        post: function (url, params, success) {
+            params.method = "POST";
+            return this.request(url, params, success);
         },
-        put: function (url, data, success, async) {
-            return this.request(url, data, "PUT", success, async);
+        put: function (url, params, success) {
+            params.method = "PUT";
+            return this.request(url, params, success);
         },
-        delete: function (url, data, success, async) {
-            return this.request(url, data, "DELETE", success, async);
+        delete: function (url, params, success) {
+            params.method = "DELETE";
+            return this.request(url, params, success);
         },
-        request: function (url, data, method, success, async) {
-            var contentType;
-            switch (method) {
-                case "GET":
-                    contentType = '';
-                    break;
-                case "POST":
-                    data = JSON.stringify(data);
-                    contentType = 'application/json; charset=UTF-8';
-                    break;
-                case "PUT":
-                    data = JSON.stringify(data);
-                    contentType = 'application/json; charset=UTF-8';
-                    break;
-                case "DELETE":
-                    contentType = '';
-                    break;
-                default:
-                    contentType = '';
+        request: function (url, params, success) {
+            params.method = params.method ? params.method : "GET";
+            if (!params.contentType) {
+                switch (params.method) {
+                    case "GET":
+                        params.contentType = '';
+                        break;
+                    case "POST":
+                        params.data = JSON.stringify(params.data);
+                        params.contentType = 'application/json; charset=UTF-8';
+                        break;
+                    case "PUT":
+                        params.data = JSON.stringify(params.data);
+                        params.contentType = 'application/json; charset=UTF-8';
+                        break;
+                    case "DELETE":
+                        params.contentType = '';
+                        break;
+                    default:
+                        params.contentType = '';
+                }
             }
             $.ajax({
                 url: config.serverUrl + url,
-                data: data,
-                type: method,
-                contentType: contentType,
+                data: params.data ? params.data : {},
+                type: params.method,
+                contentType: params.contentType,
                 xhrFields: {
                     withCredentials: false
                 },
-                async: async !== false,
+                async: params.async !== false,
                 crossDomain: true,
                 success: function (data) {
                     success(data);

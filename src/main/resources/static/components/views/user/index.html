@@ -114,9 +114,9 @@
         //显示表单弹窗
         var showEditModel = function (data) {
             if (data) {
-                crown.get('/users/' + data.id, {}, function (data) {
+                crown.get('/users/' + data.id, {async:false}, function (data) {
                     crown.putTempData('t_user', data.result);
-                }, false);
+                });
             }
             crown.popupCenter({
                 title: data ? '修改用户' : '添加用户',
@@ -135,12 +135,11 @@
         // 修改user状态
         form.on('switch(user-tpl-status)', function (obj) {
             layer.load(2);
-            crown.put('/users/' + obj.elem.value + '/status', {
-                status: obj.elem.checked ? 0 : 1
-            }, function () {
-                layer.closeAll('loading');
-                layer.msg('用户状态更新成功', {icon: 1});
-            });
+            crown.put('/users/' + obj.elem.value + '/status',
+                {data: {status: obj.elem.checked ? 0 : 1}}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('用户状态更新成功', {icon: 1});
+                });
         });
     });
 </script>

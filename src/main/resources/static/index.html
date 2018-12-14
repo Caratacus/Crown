@@ -74,12 +74,12 @@
             index.initRouter();
             index.bindEvent();
         });
-        crown.get('/account/menus', {}, function (data) {
+        crown.get('/account/menus', {async: false}, function (data) {
             config.putMenus(data.result);
-        }, false);
-        crown.get('/account/buttons/aliases', {}, function (data) {
+        });
+        crown.get('/account/buttons/aliases', {async: false}, function (data) {
             config.putPermButtons(data.result);
-        }, false);
+        });
     });
 </script>
 </body>

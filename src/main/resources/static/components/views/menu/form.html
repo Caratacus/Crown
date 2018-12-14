@@ -81,7 +81,7 @@
         var formSelects = layui.formSelects;
         var menu = crown.getTempData('t_menu');
 
-        crown.get('/resources/resources', {}, function (data) {
+        crown.get('/resources/resources', {async: false}, function (data) {
             // 渲染多选下拉框
             var resourceSelectData = new Array();
             for (var i = 0; i < data.result.length; i++) {
@@ -91,7 +91,7 @@
                 });
             }
             formSelects.data('resourceIds', 'local', {arr: resourceSelectData});
-        }, false);
+        });
 
         // 获取所有菜单
         crown.get('/menus/combos', {}, function (data) {
@@ -151,13 +151,13 @@
             data.field.resourceIds = resourceIds;
             layer.load(2);
             if (data.field.id) {
-                crown.put('/menus/' + data.field.id, data.field, function () {
+                crown.put('/menus/' + data.field.id, {data: data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     crown.finishPopupCenter();
                 });
             } else {
-                crown.post('/menus', data.field, function () {
+                crown.post('/menus', {data: data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
                     crown.finishPopupCenter();

@@ -79,13 +79,13 @@
             }
             data.field.roleIds = roleIds;
             if (data.field.id) {
-                crown.put('/users/' + data.field.id, data.field, function () {
+                crown.put('/users/' + data.field.id, {data: data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     crown.finishPopupCenter();
                 });
             } else {
-                crown.post('/users', data.field, function () {
+                crown.post('/users', {data:data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
                     crown.finishPopupCenter();

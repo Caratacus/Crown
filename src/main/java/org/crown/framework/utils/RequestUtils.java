@@ -23,10 +23,13 @@ package org.crown.framework.utils;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.crown.common.emuns.HTTPMethod;
 import org.springframework.util.StreamUtils;
 
@@ -132,13 +135,23 @@ public abstract class RequestUtils {
      */
     public static String getRequestBody(HttpServletRequest request) {
         String requestBody = null;
-        if (isContainBody(request))
+        if (isContainBody(request)) {
             try {
-                StringWriter writer = new StringWriter();
-                IOUtils.copy(request.getInputStream(), writer, StandardCharsets.UTF_8.name());
-                requestBody = writer.toString();
+                ServletInputStream inputStream = null;
+                if (request instanceof ShiroHttpServletRequest) {
+                    ShiroHttpServletRequest shiroRequest = (ShiroHttpServletRequest) request;
+                    inputStream = shiroRequest.getRequest().getInputStream();
+                } else {
+                    inputStream = request.getInputStream();
+                }
+                if (Objects.nonNull(inputStream)) {
+                    StringWriter writer = new StringWriter();
+                    IOUtils.copy(inputStream, writer, StandardCharsets.UTF_8.name());
+                    requestBody = writer.toString();
+                }
             } catch (IOException ignored) {
             }
+        }
         return requestBody;
     }
 

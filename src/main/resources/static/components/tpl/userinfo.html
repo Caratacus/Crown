@@ -47,7 +47,7 @@
         //监听提交
         form.on('submit(userinfo-submit)', function (data) {
             layer.load(2);
-            crown.put('/users/info', data.field, function () {
+            crown.put('/users/info', {data: data.field}, function () {
                 layer.closeAll('loading');
                 crown.closePopupRight();
                 location.href = '/index.html';

@@ -193,14 +193,14 @@
         form.on('submit(role-form-submit)', function (data) {
             layer.load(2);
             if (data.field.id) {
-                crown.put('/roles/' + data.field.id, data.field, function () {
+                crown.put('/roles/' + data.field.id, {data: data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('修改成功', {icon: 1});
                     roleTable.reload('role-table');
                     layer.closeAll('page');
                 });
             } else {
-                crown.post('/roles', data.field, function () {
+                crown.post('/roles', {data:data.field}, function () {
                     layer.closeAll('loading');
                     layer.msg('添加成功', {icon: 1});
                     roleTable.reload('role-table');
@@ -224,7 +224,7 @@
                 layer.closeAll('page');
                 return false;
             }
-            crown.put('/roles/' + data.field.roleId + '/menus', menuIds, function () {
+            crown.put('/roles/' + data.field.roleId + '/menus', {data: menuIds}, function () {
                 layer.closeAll('loading');
                 layer.msg('关联成功', {icon: 1});
                 roleTable.reload('role-table');
