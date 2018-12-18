@@ -73,4 +73,5 @@ public abstract class LogUtils {
     public static void doAfterReturning(Object ret) {
         ResponseUtils.writeValAsJson(ApplicationUtils.getRequest(), ret);
     }
+
 }
