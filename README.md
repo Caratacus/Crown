@@ -34,15 +34,13 @@
 
 -----------------------------------------------------------------------------------------------
 
-> 本人作为**mybatis-plus核心开发**之一，编写了该项目以推广**mybatis-plus3.0**的使用
-
-> 参考本项目完全可以让你轻松玩转**mybatis-plus**最新版本（**持续更新**），故也称为教学版本
-
-> 除了基本使用，还有一些**进阶玩法**在项目中等待大家来发现
+> **注意**页面地址还是V1版，V2版本完成后会替换页面效果，V2版本编写中
 
 > **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
 
 > **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
+
+> **简易版本** [https://gitee.com/cancerGit/Crown/tree/v1-Layui/](https://gitee.com/cancerGit/Crown/tree/v1-Layui/)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
@@ -75,7 +73,7 @@
 <sup>10</sup> 日志: SLF4J、Async Log4j2 <br/>
 <sup>11</sup> SQL打印: P6spy <br/>
 <sup>12</sup> 权限认证: Shiro <br/>
-<sup>13</sup> 页面: layui <br/>
+<sup>13</sup> 页面: Vue、Element UI <br/>
 <sup>N</sup> 以上依赖基本都会升级为最新版本 <br/>
 </sup>
 

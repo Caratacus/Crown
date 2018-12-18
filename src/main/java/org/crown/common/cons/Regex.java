@@ -23,9 +23,9 @@ package org.crown.common.cons;
 public interface Regex {
 
     /**
-     * 正则表达式：验证用户名
+     * 请输入5-17位的英文、数字、下划线
      */
-    String USERNAME = "^[a-zA-Z]\\w{5,17}$";
+    String USERNAME = "^[\\w]{5,17}$";
     /**
      * 正则表达式：验证密码 (必须字母与数字组合)
      */
