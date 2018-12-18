@@ -76,7 +76,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     @Override
     @Transactional
     public void updateMenu(Menu menu, List<String> resourceIds) {
-        updateById(menu);
+        updateSelectiveById(menu);
         if (CollectionUtils.isNotEmpty(resourceIds)) {
             Integer menuId = menu.getId();
             //删除resource关联
@@ -109,7 +109,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         Menu menu = getById(menuId);
         ApiAssert.notNull(ErrorCodeEnum.MENU_NOT_FOUND, menu);
         menu.setStatus(status);
-        updateById(menu);
+        updateSelectiveById(menu);
     }
 
     /**

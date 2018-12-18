@@ -172,7 +172,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
                     /*
                      * 更新成功直接返回，失败执行插入逻辑
                      */
-                    return Objects.nonNull(getById((Serializable) idVal)) ? updateById(entity) : save(entity);
+                    return Objects.nonNull(getById((Serializable) idVal)) ? updateSelectiveById(entity) : save(entity);
                 }
             } else {
                 throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
@@ -230,8 +230,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateById(T entity) {
-        return retBool(baseMapper.updateById(entity));
+    public boolean updateSelectiveById(T entity) {
+        return retBool(baseMapper.updateSelectiveById(entity));
     }
 
     @Transactional(rollbackFor = Exception.class)

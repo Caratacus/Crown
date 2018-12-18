@@ -18,7 +18,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.framework.mybatisplus;
+package org.crown.framework.mybatisplus.injector;
 
 import static java.util.stream.Collectors.joining;
 
@@ -41,7 +41,7 @@ import com.baomidou.mybatisplus.core.toolkit.sql.SqlScriptUtils;
  *
  * @author Caratacus
  */
-public class UpdateAllColumnById extends AbstractMethod {
+public class UpdateById extends AbstractMethod {
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
@@ -54,7 +54,7 @@ public class UpdateAllColumnById extends AbstractMethod {
                         .append(" AND ${et.MP_OPTLOCK_VERSION_COLUMN}=#{et.MP_OPTLOCK_VERSION_ORIGINAL}")
                         .append("</if></if>"));
         SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
-        return addUpdateMappedStatement(mapperClass, modelClass, "updateAllColumnById", sqlSource);
+        return addUpdateMappedStatement(mapperClass, modelClass, sqlMethod.getMethod(), sqlSource);
     }
 
     /**

@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.crown.framework.mybatisplus.injector.UpdateById;
+import org.crown.framework.mybatisplus.injector.UpdateSelectiveById;
+
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.AbstractSqlInjector;
 import com.baomidou.mybatisplus.core.injector.methods.Delete;
@@ -35,7 +38,6 @@ import com.baomidou.mybatisplus.core.injector.methods.SelectList;
 import com.baomidou.mybatisplus.core.injector.methods.SelectObjs;
 import com.baomidou.mybatisplus.core.injector.methods.SelectPage;
 import com.baomidou.mybatisplus.core.injector.methods.Update;
-import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
 
 /**
  * <p>
@@ -54,7 +56,7 @@ public class MybatisPlusSqlInjector extends AbstractSqlInjector {
                 new DeleteById(),
                 new Update(),
                 new UpdateById(),
-                new UpdateAllColumnById(),
+                new UpdateSelectiveById(),
                 new SelectById(),
                 new SelectCount(),
                 new SelectObjs(),

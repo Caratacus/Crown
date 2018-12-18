@@ -121,7 +121,7 @@ public interface BaseService<T extends Convert> {
      *
      * @param entity 实体对象
      */
-    boolean updateById(T entity);
+    boolean updateSelectiveById(T entity);
 
     /**
      * <p>

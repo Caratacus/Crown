@@ -116,7 +116,7 @@ public class RoleRestController extends SuperController {
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(RolePARM.Update.class) RolePARM rolePARM) {
         Role role = rolePARM.convert(Role.class);
         role.setId(id);
-        roleService.updateById(role);
+        roleService.updateSelectiveById(role);
         return success();
     }
 

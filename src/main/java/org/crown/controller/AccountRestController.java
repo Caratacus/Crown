@@ -117,7 +117,7 @@ public class AccountRestController extends SuperController {
         Integer uid = currentUid();
         User user = accountInfoPARM.convert(User.class);
         user.setId(uid);
-        userService.updateById(user);
+        userService.updateSelectiveById(user);
         return success();
     }
 

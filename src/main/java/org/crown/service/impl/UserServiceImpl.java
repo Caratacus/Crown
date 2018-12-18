@@ -71,7 +71,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         //用户被禁用
         ApiAssert.isTrue(ErrorCodeEnum.USER_IS_DISABLED, StatusEnum.NORMAL.equals(user.getStatus()));
         user.setIp(ipAddr);
-        updateById(user);
+        updateSelectiveById(user);
         return user;
     }
 
@@ -101,7 +101,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         //用户名密码错误
         ApiAssert.isTrue(ErrorCodeEnum.ORIGINAL_PASSWORD_IS_INCORRECT, Md5Crypt.apr1Crypt(oldPassword, user.getLoginName()).equals(user.getPassword()));
         user.setPassword(Md5Crypt.apr1Crypt(newPassword, user.getLoginName()));
-        updateById(user);
+        updateSelectiveById(user);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         User user = getById(uid);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         user.setPassword(Md5Crypt.apr1Crypt(user.getLoginName(), user.getLoginName()));
-        updateById(user);
+        updateSelectiveById(user);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         User user = getById(uid);
         ApiAssert.notNull(ErrorCodeEnum.USER_NOT_FOUND, user);
         user.setStatus(status);
-        updateById(user);
+        updateSelectiveById(user);
     }
 
     @Override

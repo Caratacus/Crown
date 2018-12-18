@@ -151,7 +151,7 @@ public class UserRestController extends SuperController {
     public ApiResponses<Void> update(@PathVariable("id") Integer id, @RequestBody @Validated(UserPARM.Update.class) UserPARM userPARM) {
         User user = userPARM.convert(User.class);
         user.setId(id);
-        userService.updateById(user);
+        userService.updateSelectiveById(user);
         userService.saveUserRoles(id, userPARM.getRoleIds());
         return success();
     }
