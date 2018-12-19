@@ -76,12 +76,12 @@ public interface BaseMapper<T> {
 
     /**
      * <p>
-     * 根据 ID 修改
+     * 根据 ID 修改全部字段
      * </p>
      *
      * @param entity 实体对象
      */
-    int updateAllColumnById(@Param(Constants.ENTITY) T entity);
+    int updateById(@Param(Constants.ENTITY) T entity);
 
     /**
      * <p>

@@ -236,8 +236,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateAllColumnById(T entity) {
-        return retBool(baseMapper.updateAllColumnById(entity));
+    public boolean updateById(T entity) {
+        return retBool(baseMapper.updateById(entity));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -276,11 +276,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public T getOne(Wrapper<T> queryWrapper) {
-        return SqlHelper.getObject(baseMapper.selectList(queryWrapper));
-    }
-
-    @Override
     public int count(Wrapper<T> queryWrapper) {
         return SqlHelper.retCount(baseMapper.selectCount(queryWrapper));
     }
@@ -301,22 +296,12 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> impleme
     }
 
     @Override
-    public <E> IPage<E> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, E> mapper) {
+    public <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper) {
         return page(page, wrapper).convert(mapper);
     }
 
     @Override
-    public <E extends Convert> E entity(Wrapper<T> wrapper, Class<E> cls) {
-        E entity = null;
-        T t = getOne(wrapper);
-        if (Objects.nonNull(t)) {
-            entity = t.convert(cls);
-        }
-        return entity;
-    }
-
-    @Override
-    public <E> List<E> entitys(Wrapper<T> wrapper, Function<? super T, E> mapper) {
+    public <R> List<R> entitys(Wrapper<T> wrapper, Function<? super T, R> mapper) {
         return list(wrapper).stream().map(mapper).collect(Collectors.toList());
     }
 
