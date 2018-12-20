@@ -1,0 +1,62 @@
+<div class="layui-card-header">
+    <h2 class="header-title">修改个人信息</h2>
+</div>
+<div class="layui-card-body" style="padding: 30px;">
+    <form class="layui-form" lay-filter="userinfo-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-block">
+                <input name="nickname" placeholder="请输入昵称" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input name="email" placeholder="请输入邮箱" type="text" class="layui-input" maxlength="20"
+                       lay-verify="" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-block">
+                <input name="phone" placeholder="请输入手机号" type="text" class="layui-input" maxlength="20"
+                       lay-verify="" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"/></label>
+            <button class="layui-btn" lay-filter="userinfo-submit" lay-submit>保存</button>
+            <button id="btnClose" class="layui-btn layui-btn-primary close" type="button">取消</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    layui.use(['form', 'crown', 'config'], function () {
+        var form = layui.form;
+        var crown = layui.crown;
+        var config = layui.config;
+        var $ = layui.jquery;
+        // 回显user数据
+        var user = config.getUser();
+        if (user) {
+            form.val('userinfo-form', user);
+            $('#userinfo-form').attr('method', 'PUT');
+        }
+        //监听提交
+        form.on('submit(userinfo-submit)', function (data) {
+            layer.load(2);
+            crown.put('/users/info', {data: data.field}, function () {
+                layer.closeAll('loading');
+                crown.closePopupRight();
+                location.href = '/index.html';
+            });
+            return false;
+        })
+        // 消息
+        $('#btnClose').click(function () {
+            crown.closePopupRight();
+        });
+    });
+</script>

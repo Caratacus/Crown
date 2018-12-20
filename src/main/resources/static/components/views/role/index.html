@@ -1,0 +1,330 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">角色管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>角色管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <!-- 搜索条件 -->
+        <div class="layui-form toolbar">
+            <form id="searchForm" onsubmit="return false;">
+                角色名：<input name="roleName" class="layui-input search-input" type="text" placeholder="输入角色名"/>&emsp;
+                <button id="role-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            </form>
+        </div>
+        <!-- 表格顶部操作列 -->
+        <script type="text/html" id="role-toolbar">
+            <div class="layui-btn-container">
+                {{# if({{addShow}} == true){ }}
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
+                {{# } }}
+            </div>
+        </script>
+        <!-- 数据表格 -->
+        <table class="layui-table" id="role-table" lay-filter="role-table"></table>
+    </div>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="role-model">
+    <form id="role-form" lay-filter="role-form" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名</label>
+            <div class="layui-input-block">
+                <input name="roleName" placeholder="请输入角色名" type="text" class="layui-input" maxlength="20"
+                       lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入内容" class="layui-textarea" maxlength="200"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+            <button class="layui-btn" lay-filter="role-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表单tree -->
+<script type="text/html" id="menu-tree">
+    <form id="tree-form" lay-filter="tree-form" class="layui-form model-form">
+        <input name="roleId" type="hidden"/>
+        <div class="content_wrap" style="padding:20px 70px 100px;height:200px;overflow-y: auto">
+            <div>
+                <ul id="menuTreeData" class="ztree"></ul>
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer" style="padding:10px 30px;">
+            <button class="layui-btn layui-btn-primary layui-btn-sm close" type="button">取消</button>
+            <button class="layui-btn layui-btn-sm" lay-filter="tree-form-submit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="role-table-bar">
+    {{#  if({{permShow}} == true){ }}
+    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="resource">菜单授权</a>
+    {{#  } }}
+    {{#  if({{editShow}} == true){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    {{#  if({{deleteShow}} == true){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
+</script>
+
+<script>
+    var setting = {
+        view: {
+            addHoverDom: addHoverDom,
+            removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        check: {
+            enable: true
+        },
+        data: {
+            keep: {
+                parent: true
+            },
+            simpleData: {
+                enable: true,
+                idKey: "id",
+                pIdKey: "parentId"
+            },
+            key: {
+                name: "menuName"
+            },
+            check: {
+                enable: true, // 显示多选框按钮
+                chkStyle: "checkbox", // 添加生效
+                chkboxType: {"Y": "", "N": ""} //Y:勾选（参数：p:影响父节点），N：不勾（参数s：影响子节点）[p 和 s 为参数]
+            }
+        },
+        edit: {
+            enable: true
+        }
+
+    };
+
+    var newCount = 1;
+
+    function onAsyncSuccess() {
+        //获得树形图对象
+        var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+        //获取根节点个数,getNodes获取的是根节点的集合
+        var nodeList = zTree.getNodes();
+        for (var i = 0; i < nodeList.length; i++) {
+            zTree.expandNode(nodeList[i], true, false, false, false);
+        }
+    }
+
+    function addHoverDom(treeId, treeNode) {
+        var sObj = $("#" + treeNode.tId + "_span");
+        if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
+        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+            + "' title='add node' onfocus='this.blur();'></span>";
+        sObj.after(addStr);
+        var btn = $("#addBtn_" + treeNode.tId);
+        if (btn) btn.bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+            zTree.addNodes(treeNode, {id: (100 + newCount), pId: treeNode.id, name: "new node" + (newCount++)});
+            return false;
+        });
+    };
+
+    function removeHoverDom(treeId, treeNode) {
+        $("#addBtn_" + treeNode.tId).unbind().remove();
+    };
+    layui.use(['form', 'table', 'config', 'crown'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var crown = layui.crown;
+        var $ = layui.jquery;
+
+        $('#role-toolbar').vm({
+            addShow: crown.hasPerm("sys:role:add")
+        });
+        $('#role-table-bar').vm({
+            editShow: crown.hasPerm("sys:role:edit"),
+            permShow: crown.hasPerm("sys:role:perm"),
+            deleteShow: crown.hasPerm("sys:role:delete")
+        });
+        //渲染表格
+        var roleTable = table.render({
+            elem: '#role-table',
+            toolbar: '#role-toolbar',
+            url: config.serverUrl + '/roles',
+            request: config.request,
+            parseData: config.parseData,
+            response: config.response,
+            headers: {Authorization: config.getToken()},
+            page: true,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'id', align: 'center', width: 60, sort: true, title: 'ID'},
+                {field: 'roleName', align: 'center', sort: true, title: '角色名'},
+                {field: 'remark', align: 'center', sort: true, title: '备注'},
+                {field: 'createTime', align: 'center', sort: true, title: '创建时间'},
+                {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
+                {align: 'center', toolbar: '#role-table-bar', title: '操作', width: 200}
+            ]]
+        });
+
+        // 添加
+        table.on('toolbar(role-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            }
+        });
+
+        // 表单提交事件
+        form.on('submit(role-form-submit)', function (data) {
+            layer.load(2);
+            if (data.field.id) {
+                crown.put('/roles/' + data.field.id, {data: data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('修改成功', {icon: 1});
+                    roleTable.reload('role-table');
+                    layer.closeAll('page');
+                });
+            } else {
+                crown.post('/roles', {data:data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('添加成功', {icon: 1});
+                    roleTable.reload('role-table');
+                    layer.closeAll('page');
+                });
+            }
+            return false;
+        });
+
+        // 表单提交事件
+        form.on('submit(tree-form-submit)', function (data) {
+            layer.load(2);
+            var zTree = $.fn.zTree.getZTreeObj("menuTreeData");
+            var checked = zTree.getCheckedNodes();
+            var menuIds = [];
+            for (var i = 0; i < checked.length; i++) {
+                menuIds.push(checked[i].id);
+            }
+            if (menuIds.length == 0) {
+                layer.msg('请选择关联菜单', {icon: 5});
+                layer.closeAll('page');
+                return false;
+            }
+            crown.put('/roles/' + data.field.roleId + '/menus', {data: menuIds}, function () {
+                layer.closeAll('loading');
+                layer.msg('关联成功', {icon: 1});
+                roleTable.reload('role-table');
+                layer.closeAll('page');
+            });
+            return false;
+        });
+
+        // 工具条点击事件
+        table.on('tool(role-table)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') { //修改
+                showEditModel(data);
+            } else if (obj.event === 'del') { //删除
+                doDelete(obj);
+            } else if (obj.event === 'resource') {
+                showMenuTree(data);
+            }
+        });
+
+        //显示菜单树
+        var showMenuTree = function (data) {
+            var menuIds = data.menuIds;
+            layer.open({
+                type: 1,
+                title: '菜单关联',
+                area: '450px',
+                offset: '120px',
+                content: $('#menu-tree').html(),
+                success: function () {
+                    $('#tree-form')[0].reset();
+                    form.val("tree-form", {
+                        "roleId": data.id
+                    });
+                    //树形菜单
+                    crown.get('/menus', {}, function (data) {
+                        var result = data.result;
+                        //定义一数组
+                        var zNodes = [];
+                        for (var i = 0; i < result.length; i++) {
+                            var zNode = {};
+                            zNode.id = result[i].id;
+                            zNode.parentId = result[i].parentId;
+                            zNode.menuName = result[i].menuName;
+                            zNode.isParent = result[i].menuType == 3 ? false : true;
+                            zNodes.push(zNode);
+                        }
+                        var zTree = $.fn.zTree.init($("#menuTreeData"), setting, zNodes);
+                        if (menuIds) {
+                            for (var j = 0; j < menuIds.length; j++) {
+                                var node = zTree.getNodeByParam("id", menuIds[j]);
+                                zTree.checkNode(node, true, false);
+                            }
+                        }
+                        onAsyncSuccess();
+                        layer.closeAll('loading');
+                    });
+                    $('#tree-form .close').click(function () {
+                        layer.closeAll('page');
+                    });
+                }
+            });
+        };
+
+        // 显示编辑弹窗
+        var showEditModel = function (data) {
+            layer.open({
+                type: 1,
+                title: data ? '修改角色' : '添加角色',
+                area: '450px',
+                offset: '120px',
+                content: $('#role-model').html(),
+                success: function () {
+                    $('#role-form')[0].reset();
+                    if (data) {
+                        form.val('role-form', data);
+                    }
+                    $('#role-form .close').click(function () {
+                        layer.closeAll('page');
+                    });
+                }
+            });
+        };
+        // 删除
+        var doDelete = function (obj) {
+            layer.confirm('确定要删除吗？', function (i) {
+                layer.close(i);
+                layer.load(2);
+                crown.delete('/roles/' + obj.data.id, {}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('删除成功', {icon: 1});
+                    obj.del();
+                });
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#role-btn-search').click(function () {
+            roleTable.reload({where: crown.getSearchForm()});
+        });
+    });
+
+</script>

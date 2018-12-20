@@ -1,0 +1,145 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">用户管理</h2>
+        <span class="layui-breadcrumb pull-right">
+          <a href="#!console">首页</a>
+          <a><cite>用户管理</cite></a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <!-- 搜索条件 -->
+        <div class="layui-form toolbar">
+            <form id="searchForm" onsubmit="return false;">
+                账号：<input name="loginName" class="layui-input search-input" type="text" placeholder="输入账号"/>&emsp;
+                用户名：<input name="nickname" class="layui-input search-input" type="text" placeholder="输入用户名"/>&emsp;
+                状态：<select name="status" lay-verify="">
+                <option value="">请选择状态</option>
+                <option value="0">正常</option>
+                <option value="1">禁用</option>
+            </select>
+                <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+            </form>
+        </div>
+        <!-- 表格顶部操作列 -->
+        <script type="text/html" id="user-toolbar">
+            <div class="layui-btn-container">
+                {{# if({{addShow}} == true){ }}
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
+                {{# } }}
+            </div>
+        </script>
+        <table class="layui-table" id="user-table" lay-filter="user-table"></table>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="user-table-bar">
+    {{#  if({{editShow}} == true){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    {{#  if({{resetPwdShow}} == true){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reset">重置密码</a>
+    {{#  } }}
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="user-tpl-status">
+    <input type="checkbox" lay-filter="user-tpl-status" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|禁用" {{d.status==0?'checked':''}}/>
+</script>
+
+<script>
+    layui.use(['form', 'table', 'config', 'crown'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var crown = layui.crown;
+        $('#user-toolbar').vm({
+            addShow: crown.hasPerm("sys:user:add")
+        });
+        $('#user-table-bar').vm({
+            editShow: crown.hasPerm("sys:user:edit"),
+            resetPwdShow: crown.hasPerm("sys:user:resetpwd")
+        });
+        // 渲染表格
+        var userTable = table.render({
+            elem: '#user-table',
+            toolbar: '#user-toolbar',
+            url: config.serverUrl + '/users',
+            request: config.request,
+            parseData: config.parseData,
+            response: config.response,
+            headers: {Authorization: config.getToken()},
+            page: true,
+            cols: [[
+                {field: 'id', width: 60, title: 'ID'},
+                {field: 'loginName', align: 'center', sort: true, title: '账号'},
+                {field: 'nickname', align: 'center', sort: true, title: '用户名'},
+                {field: 'phone', align: 'center', sort: true, title: '手机号'},
+                {field: 'email', align: 'center', sort: true, title: '邮箱'},
+                {field: 'createTime', align: 'center', sort: true, title: '创建时间'},
+                {field: 'status', align: 'center', sort: true, templet: '#user-tpl-status', title: '状态'},
+                {align: 'center', toolbar: '#user-table-bar', title: '操作'}
+            ]]
+        });
+        // 表格顶部操作列
+        table.on('toolbar(user-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            }
+        });
+        // 表格操作列事件
+        table.on('tool(user-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+
+            if (layEvent === 'edit') {
+                // 修改
+                showEditModel(data);
+            } else if (layEvent === 'reset') {
+                layer.confirm('确定重置此用户密码？', function (i) {
+                    layer.close(i);
+                    layer.load(2);
+                    crown.put('/users/' + obj.data.id + '/password', {}, function () {
+                        layer.closeAll('loading');
+                        layer.msg('重置密码成功', {icon: 1});
+                    });
+                });
+            }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            if (data) {
+                crown.get('/users/' + data.id, {async:false}, function (data) {
+                    crown.putTempData('t_user', data.result);
+                });
+            }
+            crown.popupCenter({
+                title: data ? '修改用户' : '添加用户',
+                path: 'components/views/user/form.html',
+                finish: function () {
+                    userTable.reload('user-table', {});
+                }
+            });
+        };
+
+        // 搜索按钮点击事件
+        $('#user-btn-search').click(function () {
+            userTable.reload({where: crown.getSearchForm()});
+        });
+
+        // 修改user状态
+        form.on('switch(user-tpl-status)', function (obj) {
+            layer.load(2);
+            crown.put('/users/' + obj.elem.value + '/status',
+                {data: {status: obj.elem.checked ? 0 : 1}}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('用户状态更新成功', {icon: 1});
+                });
+        });
+    });
+</script>

@@ -1,0 +1,82 @@
+<div id="message-view" class="layui-card-body layui-tab layui-tab-brief" style="padding: 5px 0;margin: 0;">
+    <ul class="layui-tab-title" style="text-align: center;">
+        <li class="layui-this">通知({{notices.length}})</li>
+        <li>私信({{messages.length}})</li>
+        <li>待办({{schedules.length}})</li>
+    </ul>
+    <div class="layui-tab-content" style="padding: 5px 0;">
+        <div class="layui-tab-item message-list layui-show" p-each="notices">
+            <a class="message-list-item" href="javascript:;">
+                <img class="message-item-icon" p-bind="src:{{icon}}">
+                <div class="message-item-right">
+                    <h2 class="message-item-title">{{title}}</h2>
+                    <p class="message-item-text">{{time}}</p>
+                </div>
+            </a>
+        </div>
+        <div class="layui-tab-item" p-each="messages">
+            <a class="message-list-item" href="javascript:;">
+                <img class="message-item-icon" p-bind="src:{{icon}}">
+                <div class="message-item-right">
+                    <h2 class="message-item-title">{{title}}</h2>
+                    <p class="message-item-text">{{content}}</p>
+                    <p class="message-item-text">{{time}}</p>
+                </div>
+            </a>
+        </div>
+        <div class="layui-tab-item" p-each="schedules">
+            <a class="message-list-item" href="javascript:;">
+                <div class="message-item-right">
+                    <span class="layui-badge pull-right" p-if="{{state}}==1">待完成</span>
+                    <span class="layui-badge layui-bg-gray pull-right" p-if="{{state}}==2">已完成</span>
+                    <h2 class="message-item-title">{{title}}</h2>
+                    <p class="message-item-text">{{time}}</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dataList = {
+        notices: [{
+            icon: 'assets/images/message.png',
+            title: '你收到了1个游戏邀请',
+            time: '刚刚'
+        }, {
+            icon: 'assets/images/message.png',
+            title: '你收到了1份王者荣耀皮肤',
+            time: '1天前'
+        }],
+        messages: [{
+            icon: 'assets/images/head.png',
+            title: '神秘的人评论了你',
+            content: '来玩王者农药',
+            time: '1天前'
+        }, {
+            icon: 'assets/images/head.png',
+            title: '鲁班评论了你',
+            content: '有时候身体比头脑管用',
+            time: '1天前'
+        }, {
+            icon: 'assets/images/head.png',
+            title: '孙尚香评论了你',
+            content: '大小姐驾到统统闪开',
+            time: '1天前'
+        }],
+        schedules: [{
+            title: '你收到了1个游戏周报',
+            time: '1周前',
+            state: 2
+        }, {
+            title: '你收到了一个好友申请',
+            time: '刚刚',
+            state: 1
+        }]
+    };
+
+    layui.use('element', function () {
+        var element = layui.element;
+        $('#message-view').vm(dataList);
+    });
+</script>

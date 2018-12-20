@@ -1,0 +1,97 @@
+<!-- user表单弹窗 -->
+<form id="user-form" lay-filter="user-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-block">
+            <input id="loginName" name="loginName" placeholder="请输入账号" type="text" class="layui-input" maxlength="20" lay-verify="required"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-block">
+            <input name="nickname" placeholder="请输入用户名" type="text" class="layui-input" maxlength="20"
+                   lay-verify="required"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机号</label>
+        <div class="layui-input-block">
+            <input name="phone" placeholder="请输入手机号" type="text" class="layui-input" lay-verify="phone"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input name="email" placeholder="请输入邮箱" type="text" class="layui-input" lay-verify="email"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色</label>
+        <div class="layui-input-block">
+            <select name="roleIds" xm-select="roleIds" lay-verify="required">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+        <button class="layui-btn" lay-filter="user-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'crown', 'form', 'formSelects'], function () {
+        var layer = layui.layer;
+        var crown = layui.crown;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var formSelects = layui.formSelects;
+        // 获取所有角色
+        layer.load(2);
+        crown.get('/roles/roles', {}, function (data) {
+            // 渲染多选下拉框
+            var roleSelectData = new Array();
+            for (var i = 0; i < data.result.length; i++) {
+                roleSelectData.push({name: data.result[i].roleName, value: data.result[i].id});
+            }
+            formSelects.data('roleIds', 'local', {arr: roleSelectData});
+            // 回显user数据
+            var user = crown.getTempData('t_user');
+            if (user) {
+                form.val('user-form', user);
+                $("#loginName").attr("readonly", "readonly");
+                var rds = new Array();
+                for (var i = 0; i < user.roleIds.length; i++) {
+                    rds.push(user.roleIds[i]);
+                }
+                formSelects.value('roleIds', rds);
+            }
+            layer.closeAll('loading');
+        });
+
+        // 表单提交事件
+        form.on('submit(user-form-submit)', function (data) {
+            layer.load(2);
+            //定义一数组
+            var roleIds = new Array();
+            if (data.field.roleIds) {
+                roleIds = data.field.roleIds.split(",");
+            }
+            data.field.roleIds = roleIds;
+            if (data.field.id) {
+                crown.put('/users/' + data.field.id, {data: data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('修改成功', {icon: 1});
+                    crown.finishPopupCenter();
+                });
+            } else {
+                crown.post('/users', {data:data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('添加成功', {icon: 1});
+                    crown.finishPopupCenter();
+                });
+            }
+            return false;
+        });
+    });
+</script>

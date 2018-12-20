@@ -1,0 +1,165 @@
+<div class="layui-card">
+    <div class="layui-card-header">
+        <h2 class="header-title">菜单管理</h2>
+        <span class="layui-breadcrumb pull-right">
+            <a href="#!console">首页</a>
+            <a>
+                <cite>菜单管理</cite>
+            </a>
+        </span>
+    </div>
+    <div class="layui-card-body">
+        <script type="text/html" id="menu-toolbar">
+            <div class="layui-btn-container">
+                {{# if({{addShow}} == true){ }}
+                <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+                        class="layui-icon">&#xe654;</i>添加
+                </button>
+                {{# } }}
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="expandAll"><i class="layui-icon">
+                    &#xe6b1;</i>全部展开
+                </button>
+                <button class="layui-btn layui-btn-primary layui-btn-sm" lay-event="foldAll"><i
+                        class="layui-icon">&#xe656;</i>全部折叠
+                </button>
+            </div>
+        </script>
+        <!-- 数据表格 -->
+        <table class="layui-table" id="menu-table" lay-filter="menu-table"></table>
+    </div>
+</div>
+
+<script type="text/html" id="menu-tpl-status">
+    <input type="checkbox" lay-filter="menu-tpl-status" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|禁用" {{d.status==0?'checked':''}}/>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="menu-table-bar">
+    {{#  if({{editShow}} == true){ }}
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    {{#  } }}
+    {{#  if({{deleteShow}} == true){ }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    {{#  } }}
+</script>
+
+<script>
+    layui.use(['form', 'table', 'config', 'crown', 'treetable'], function () {
+        var form = layui.form;
+        var table = layui.table;
+        var config = layui.config;
+        var layer = layui.layer;
+        var crown = layui.crown;
+        var treetable = layui.treetable;
+        var tableId = '#menu-table';
+        $('#menu-toolbar').vm({
+            addShow: crown.hasPerm("sys:menu:add")
+        });
+        $('#menu-table-bar').vm({
+            editShow: crown.hasPerm("sys:menu:edit"),
+            deleteShow: crown.hasPerm("sys:menu:delete")
+        });
+        // 渲染表格
+        var renderTable = function () {
+            treetable.render({
+                elem: tableId,
+                //树形图标显示在第几列
+                treeColIndex: 1,
+                //最上级的父级id
+                treeSpid: 0,
+                //id字段的名称
+                treeIdName: 'id',
+                //pid字段的名称
+                treePidName: 'parentId',
+                //是否默认折叠
+                treeDefaultClose: false,
+                toolbar: '#menu-toolbar',
+                url: config.serverUrl + '/menus',
+                headers: {Authorization: config.getToken()},
+                cols: [[
+                    {field: 'id', align: 'center', sort: true, width: 60, title: 'ID'},
+                    {field: 'menuName', align: 'center', sort: true, title: '菜单名称'},
+                    {
+                        field: 'icon', title: '图标', align: 'center', width: 60, templet: function (d) {
+                            return d.icon ? '<i class="layui-icon ' + d.icon + '"></i>' : '';
+                        }
+                    },
+                    {field: 'path', align: 'center', sort: true, title: '菜单路径'},
+                    {field: 'router', align: 'center', sort: true, title: '路由'},
+                    {
+                        align: 'center', templet: function (d) {
+                            if (d.menuType === 1) {
+                                return '<span class="layui-badge layui-bg-gray">目录</span>';
+                            } else if (d.menuType === 2) {
+                                return '<span class="layui-badge layui-bg-blue">菜单</span>';
+                            } else if (d.menuType === 3) {
+                                return '<span class="layui-badge layui-badge-rim">按钮</span>';
+                            } else {
+                                return '<span class="layui-bg-black">未知</span>';
+                            }
+                        }, title: '类型'
+                    },
+                    {field: 'status', align: 'center', templet: '#menu-tpl-status', title: '状态', width: 100},
+                    {field: 'updateTime', align: 'center', sort: true, title: '修改时间'},
+                    {fixed: 'right', align: 'center', toolbar: '#menu-table-bar', title: '操作'}
+                ]]
+            });
+        };
+        renderTable();
+
+        // 表格顶部操作列
+        table.on('toolbar(menu-table)', function (obj) {
+            if (obj.event === 'add') {
+                showEditModel();
+            } else if (obj.event === 'expandAll') {
+                treetable.expandAll(tableId);
+            } else if (obj.event === 'foldAll') {
+                treetable.foldAll(tableId);
+            }
+        });
+
+        // 工具条点击事件
+        table.on('tool(menu-table)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'edit') {
+                showEditModel(data);
+            } else if (obj.event === 'del') {
+                layer.confirm('确定删除该记录吗？', function () {
+                    crown.delete('/menus/' + data.id, {}, function () {
+                        layer.closeAll('loading');
+                        layer.msg('删除成功', {icon: 1});
+                    }, false);
+                    renderTable();
+                });
+            }
+        });
+
+        //显示表单弹窗
+        var showEditModel = function (data) {
+            if (data) {
+                crown.get('/menus/' + data.id, {async: false}, function (data) {
+                    crown.putTempData('t_menu', data.result);
+                });
+            }
+            crown.popupCenter({
+                title: data ? '修改菜单' : '添加菜单',
+                path: 'components/views/menu/form.html',
+                finish: function () {
+                    renderTable();
+                }
+            });
+        };
+
+        // 修改状态
+        form.on('switch(menu-tpl-status)', function (obj) {
+            layer.load(2);
+            crown.put('/menus/' + obj.elem.value + '/status',
+                {data: {status: obj.elem.checked ? 0 : 1}}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('菜单状态更新成功', {icon: 1});
+                });
+        });
+    });
+</script>

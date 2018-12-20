@@ -1,0 +1,186 @@
+<form id="menu-form" lay-filter="menu-form" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input name="menuName" placeholder="请输入菜单名称" type="text" class="layui-input" maxlength="20"
+                   lay-verify="required"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限别名</label>
+        <div class="layui-input-block">
+            <input name="alias" placeholder="请输入权限别名" type="text" class="layui-input" maxlength="64"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-block">
+            <select name="menuType" lay-verify="required" lay-filter="menuType">
+                <option value="1" selected="selected">目录</option>
+                <option value="2">菜单</option>
+                <option value="3">按钮</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择图标</label>
+        <div class="layui-input-block">
+            <input type="text" id="iconPicker" name="icon" lay-filter="iconPicker" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item" id="pathDiv" style="display: none">
+        <label class="layui-form-label">菜单路径</label>
+        <div class="layui-input-block">
+            <input name="path" placeholder="请输入路径" type="text" class="layui-input" maxlength="64" lay-verify=""/>
+        </div>
+    </div>
+    <div class="layui-form-item" id="routerDiv" style="display: none">
+        <label class="layui-form-label">路由</label>
+        <div class="layui-input-block">
+            <input name="router" placeholder="请输入路由地址" type="text" class="layui-input" maxlength="64" lay-verify=""/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" value="0" title="正常" checked="checked">
+            <input type="radio" name="status" value="1" title="禁用">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级菜单</label>
+        <div class="layui-input-block">
+            <select id="parentId" name="parentId" lay-filter="parentId" lay-verify="required">
+                <option value="">请选择</option>
+                <option value="0">首级菜单</option>
+                <option p-for="parents" p-bind="value:{{id}}">{{name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" id="resourceIdsDiv" style="display: none">
+        <label class="layui-form-label">对应资源</label>
+        <div class="layui-input-block">
+            <select name="resourceIds" xm-select="resourceIds" xm-select-search="" xm-select-max="5">
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item model-form-footer">
+        <button class="layui-btn layui-btn-primary close" type="button">取消</button>
+        <button class="layui-btn" lay-filter="menu-form-submit" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'crown', 'form', 'iconPicker', 'formSelects'], function () {
+        var layer = layui.layer;
+        var crown = layui.crown;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var iconPicker = layui.iconPicker;
+        var formSelects = layui.formSelects;
+        var menu = crown.getTempData('t_menu');
+
+        crown.get('/resources/resources', {async: false}, function (data) {
+            // 渲染多选下拉框
+            var resourceSelectData = new Array();
+            for (var i = 0; i < data.result.length; i++) {
+                resourceSelectData.push({
+                    name: data.result[i].resourceName + ':' + data.result[i].perm,
+                    value: data.result[i].id
+                });
+            }
+            formSelects.data('resourceIds', 'local', {arr: resourceSelectData});
+        });
+
+        // 获取所有菜单
+        crown.get('/menus/combos', {}, function (data) {
+            $('#parentId').vm({parents: data.result});
+            form.render('select');
+            // 回显menu数据
+            if (menu) {
+                if (menu.menuType == 1) {
+                    $("#resourceIdsDiv").hide();
+                    $("#pathDiv").hide();
+                    $("#routerDiv").hide();
+                } else if (menu.menuType == 2) {
+                    $("#pathDiv").show();
+                    $("#routerDiv").show();
+                    $("#resourceIdsDiv").show();
+                } else if (menu.menuType == 3) {
+                    $("#pathDiv").hide();
+                    $("#routerDiv").hide();
+                    $("#resourceIdsDiv").show();
+                }
+                if (menu.resourceIds) {
+                    var rds = new Array();
+                    for (var i = 0; i < menu.resourceIds.length; i++) {
+                        rds.push(menu.resourceIds[i]);
+                    }
+                    formSelects.value('resourceIds', rds);
+                }
+                crown.fromVal('menu-form', menu);
+                iconPicker.checkIcon('iconPicker', menu.icon);
+            } else {
+                iconPicker.checkIcon('iconPicker', 'layui-icon-rate-half');
+            }
+        });
+        // 表单提交事件
+        form.on('select(menuType)', function (data) {
+            if (data.value == 1) {
+                $("#resourceIdsDiv").hide();
+                $("#pathDiv").hide();
+                $("#routerDiv").hide();
+            } else if (data.value == 2) {
+                $("#pathDiv").show();
+                $("#routerDiv").show();
+                $("#resourceIdsDiv").show();
+            } else if (data.value == 3) {
+                $("#pathDiv").hide();
+                $("#routerDiv").hide();
+                $("#resourceIdsDiv").show();
+            }
+        });
+        // 表单提交事件
+        form.on('submit(menu-form-submit)', function (data) {
+            //定义一数组
+            var resourceIds = new Array();
+            if (data.field.resourceIds) {
+                resourceIds = data.field.resourceIds.split(",");
+            }
+            data.field.resourceIds = resourceIds;
+            layer.load(2);
+            if (data.field.id) {
+                crown.put('/menus/' + data.field.id, {data: data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('修改成功', {icon: 1});
+                    crown.finishPopupCenter();
+                });
+            } else {
+                crown.post('/menus', {data: data.field}, function () {
+                    layer.closeAll('loading');
+                    layer.msg('添加成功', {icon: 1});
+                    crown.finishPopupCenter();
+                });
+            }
+            return false;
+        });
+        iconPicker.render({
+            // 选择器，推荐使用input
+            elem: '#iconPicker',
+            // 数据类型：fontClass/unicode，推荐使用fontClass
+            type: 'fontClass',
+            // 是否开启搜索：true/false
+            search: true,
+            // 是否开启分页
+            page: true,
+            // 每页显示数量，默认12
+            limit: 12,
+            // 点击回调
+            click: function (data) {
+                $("#iconPicker").val(data.icon);
+            }
+        });
+        form.render();
+    });
+</script>
