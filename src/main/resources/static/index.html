@@ -7,15 +7,16 @@
     <title>Crown快速开发 - 主页</title>
     <meta name="description" content="Crown以SpringBoot2为基础，打造一个快速开发的Web应用脚手架">
     <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
+    <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
-    <link rel="shortcut icon" href="img/favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-<div id="wrapper">
+<div id="wrapper" v-cloak>
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="nav-close"><i class="fa fa-times-circle"></i>
@@ -49,22 +50,27 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="index.html">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">主页</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="index_v1.html" data-index="0">主页示例一</a>
+                            <a class="J_menuItem" href="index_v1.html">Crown</a>
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span
-                            class="fa arrow"></span></a>
+
+                <li v-for="item in menus">
+                    <a href="#">
+                        <i class="fa fa fa-bar-chart-o"></i>
+                        <span class="nav-label">{{item.menuName}}</span>
+                        <span class="fa arrow"></span>
+                    </a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_builder.html">表单构建器</a>
+                        <li v-for="children in item.childrens">
+                            <a class="J_menuItem" v-bind:href="children.path">{{children.menuName}}</a>
                         </li>
                     </ul>
                 </li>
@@ -259,7 +265,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a2.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
                                 </div>
                                 <div class="media-body">
                                     HCY48之音乐大魔王会员专属皮肤已上线，快来一键换装拥有他，宣告你对华晨宇的爱吧！
@@ -271,7 +277,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a3.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
                                     <div class="m-t-xs">
                                         <i class="fa fa-star text-warning"></i>
@@ -289,7 +295,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
                                 </div>
 
                                 <div class="media-body">
@@ -302,7 +308,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a8.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
                                 </div>
                                 <div class="media-body">
 
@@ -315,7 +321,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a7.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
                                 </div>
                                 <div class="media-body">
                                     这哥们的新视频又来了，创意杠杠滴，帅炸了！
@@ -327,7 +333,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a3.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
 
                                     <div class="m-t-xs">
                                         <i class="fa fa-star text-warning"></i>
@@ -345,7 +351,7 @@
                         <div class="sidebar-message">
                             <a href="#">
                                 <div class="pull-left text-center">
-                                    <img alt="image" class="img-circle message-avatar" src="img/a4.jpg">
+                                    <img alt="image" class="img-circle message-avatar" src="img/a1.jpg">
                                 </div>
                                 <div class="media-body">
                                     我发起了一个投票 【你认为下午大盘会翻红吗？】
@@ -550,8 +556,11 @@
 </div>
 
 <!-- 全局js -->
+<script src="js/vue.js?v=2.5.21"></script>
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="module/crown.js"></script>
+<script src="module/config.js"></script>
 <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="js/plugins/layer/layer.min.js"></script>
@@ -562,7 +571,51 @@
 
 <!-- 第三方插件 -->
 <script src="js/plugins/pace/pace.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#wrapper',
+        data: {
+            user: {},
+            menuList: {},
+            menus: [],
+            main: "index_v1.html"
+        },
+        methods: {
+            getMenuList: function () {
+                crown.get('/account/menus', {async: false}, function (data) {
+                    vm.menus = data.result;
+                });
+            },
+            getUser: function () {
+                /*$.getJSON(baseURL + "sys/user/info", function(r){
+                    vm.user = r.user;
+                });*/
+            },
+            logout: function () {
+                crown.delete('/account/token', {}, function (data) {
+                });
+                /*$.ajax({
+                    type: "POST",
+                    url: baseURL + "sys/logout",
+                    dataType: "json",
+                    success: function(r){
+                        //删除本地token
+                        localStorage.removeItem("token");
+                        //跳转到登录页面
+                        location.href = baseURL + 'login.html';
+                    }
+                });*/
+            }
+        },
+        created: function () {
+            this.$nextTick(function () {
+                this.getMenuList();
+                this.getUser();
+            });
 
+        }
+    });
+</script>
 </body>
 
 </html>
