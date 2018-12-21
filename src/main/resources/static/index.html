@@ -42,7 +42,7 @@
                             <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html">安全退出</a>
+                            <li><a href="javascript:(void(0));" @click="logout">安全退出</a>
                             </li>
                         </ul>
                     </div>
@@ -105,7 +105,7 @@
                         </a>
                     </li>
                     <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out"></i>退出</a></li>
+                    <li><a href="javascript:(void(0));" @click="logout"><i class="fa fa-sign-out"></i>退出</a></li>
                 </ul>
             </nav>
         </div>
@@ -114,7 +114,7 @@
             </button>
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
-                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+                    <a href="javascript:(void(0));" class="active J_menuTab" data-id="index_v1.html">首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -123,9 +123,9 @@
                 <button class="dropdown J_tabClose" data-toggle="dropdown">页签操作<span class="caret"></span>
                 </button>
                 <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                    <li><a class="J_tabCloseCurrent" href="javascript:;">关闭当前</a></li>
-                    <li><a class="J_tabCloseOther" href="javascript:;">关闭其他</a></li>
-                    <li><a class="J_tabCloseAll" href="javascript:;">全部关闭</a></li>
+                    <li><a class="J_tabCloseCurrent" href="javascript:(void(0));">关闭当前</a></li>
+                    <li><a class="J_tabCloseOther" href="javascript:(void(0));">关闭其他</a></li>
+                    <li><a class="J_tabCloseAll" href="javascript:(void(0));">全部关闭</a></li>
                 </ul>
             </div>
             <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
@@ -269,7 +269,9 @@
                 });*/
             },
             logout: function () {
-                crown.delete('/account/token', {}, function (data) {
+                crown.delete('/account/token', {}, function () {
+                    config.clear();
+                    location.href = 'login.html'
                 });
                 /*$.ajax({
                     type: "POST",
