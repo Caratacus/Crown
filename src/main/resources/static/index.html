@@ -121,8 +121,8 @@
                 </button>
                 <ul role="menu" class="dropdown-menu dropdown-menu-right">
                     <li><a class="tabCloseCurrent" href="javascript:void();">关闭当前</a></li>
-                    <li class="J_tabCloseOther"><a>关闭其他</a></li>
-                    <li class="J_tabCloseAll"><a>全部关闭</a></li>
+                    <li><a class="J_tabCloseOther" href="javascript:void();">关闭其他</a></li>
+                    <li><a class="J_tabCloseAll" href="javascript:void();">全部关闭</a></li>
                     <li><a class="tabMaxCurrent" href="javascript:void();">全屏显示</a></li>
                 </ul>
             </div>
@@ -303,6 +303,10 @@
     }
     // 刷新按钮
    $('.tabReload').on('click', refreshTab);
+    // 关闭当前
+    $('.tabCloseCurrent').on('click', function () {
+        $('.page-tabs-content').find('.active i').trigger("click");
+    });
 </script>
 </body>
 
