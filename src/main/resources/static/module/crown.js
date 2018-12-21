@@ -52,7 +52,7 @@ var crown = {
             },
             error: function (xhr) {
                 if (xhr.responseJSON.status === 401) {
-                    config.removeAll();
+                    config.clear();
                     layer.msg('登录过期', {icon: 2}, function () {
                         location.href = 'login.html';
                     });
