@@ -4138,8 +4138,12 @@ table.table-mail tr td {
 
 /* BACKGROUNDS */
 
-.gray-bg {
+.gray-login-bg {
     background-color: #abffde;
+}
+
+.gray-bg {
+    background-color: #ffffff;
 }
 
 .white-bg {
@@ -7877,6 +7881,10 @@ body.skin-3 {
 .bs-glyphicons li:hover {
     color: #fff;
     background-color: #1ab394;
+}
+
+[v-cloak]{
+　　display:none
 }
 
 @media (min-width: 768px) {

@@ -58,10 +58,6 @@ var crown = {
                     });
                     return false;
                 }
-                if (xhr.responseJSON.status === 403) {
-                    location.href = '403.html';
-                    return false;
-                }
                 if (xhr.responseJSON.status === 404) {
                     location.href = '404.html';
                     return false;

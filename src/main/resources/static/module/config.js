@@ -11,7 +11,7 @@ var config = {
     },
 
     putToken: function (token) {
-        return window.localStorage.setItem(tokenKey, token);
+        return window.localStorage.setItem(tokenKey, 'Bearer '+token);
     },
 
     clear: function () {
