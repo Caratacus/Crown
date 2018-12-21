@@ -249,13 +249,6 @@ $(function () {
     }
     $('.J_tabCloseOther').on('click', closeOtherTabs);
 
-    //滚动到已激活的选项卡
-    function showActiveTab(){
-        scrollToTab($('.J_menuTab.active'));
-    }
-    $('.J_tabShowActive').on('click', showActiveTab);
-
-
     // 点击选项卡菜单
     function activeTab() {
         if (!$(this).hasClass('active')) {
