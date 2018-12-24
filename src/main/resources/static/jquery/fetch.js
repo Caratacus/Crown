@@ -53,15 +53,15 @@ var request = {
             error: function (xhr) {
                 if (xhr.responseJSON.status === 401) {
                     config.clear();
-                    location.href = 'login.html';
+                    location.href = config.serverUrl + '/login.html';
                     return false;
                 }
                 if (xhr.responseJSON.status === 404) {
-                    location.href = '404.html';
+                    location.href = config.serverUrl + '/views/error/404.html';
                     return false;
                 }
                 if (xhr.responseJSON.status === 500) {
-                    location.href = '500.html';
+                    location.href = config.serverUrl + '/views/error/500.html';
                     return false;
                 }
                 layer.msg(JSON.parse(xhr.responseText).msg, {icon: 5});
