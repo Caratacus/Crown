@@ -50,11 +50,13 @@ public class RequestWrapper extends HttpServletRequestWrapper {
     /**
      * 存储requestBody byte[]
      */
-    private final byte[] body;
+    private byte[] body = null;
 
     public RequestWrapper(HttpServletRequest request) {
         super(request);
-        this.body = RequestUtils.getByteBody(request);
+        if (RequestUtils.isContainBody(request)){
+            this.body = RequestUtils.getByteBody(request);
+        }
     }
 
     @Override

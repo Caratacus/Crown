@@ -52,7 +52,6 @@ public class CrownFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse res,
                          FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
-        System.out.println(req.getRequestURL());
         chain.doFilter(new RequestWrapper(req), res);
     }
 
