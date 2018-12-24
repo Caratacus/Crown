@@ -57,7 +57,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="index_v1.html">Crown</a>
+                            <a class="J_menuItem" href="views/index/index_v1.html">Crown</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="swagger-ui.html">Swagger</a>
@@ -131,7 +131,7 @@
             <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v1.html?v=4.0" frameborder="0"
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="views/index/index_v1.html?v=4.0" frameborder="0"
                     data-id="index_v1.html" seamless></iframe>
         </div>
         <div class="footer">
@@ -232,70 +232,21 @@
 </div>
 
 <!-- 全局js -->
-<script src="js/vue.js?v=2.5.21"></script>
-<script src="js/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap.min.js?v=3.3.6"></script>
-<script src="module/crown.js"></script>
-<script src="module/config.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="js/plugins/layer/layer.min.js"></script>
+<script src="jquery/libs/vue/vue.js?v=2.5.21"></script>
+<script src="jquery/jquery.min.js?v=2.1.4"></script>
+<script src="jquery/bootstrap.min.js?v=3.3.6"></script>
+<script src="jquery/libs/metisMenu/jquery.metisMenu.js"></script>
+<script src="jquery/libs/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="jquery/libs/layer/layer.min.js"></script>
 
 <!-- 自定义js -->
-<script src="js/hplus.js?v=4.1.0"></script>
-<script type="text/javascript" src="js/contabs.js"></script>
+<script type="text/javascript" src="jquery/contabs.js"></script>
 
 <!-- 第三方插件 -->
-<script src="js/plugins/pace/pace.min.js"></script>
+<script src="jquery/libs/pace/pace.min.js"></script>
 <script src="jquery/libs/fullscreen/jquery.fullscreen.js"></script>
-<script>
-    var vm = new Vue({
-        el: '#wrapper',
-        data: {
-            user: {},
-            menuList: {},
-            menus: [],
-            main: "index_v1.html"
-        },
-        methods: {
-            getMenuList: function () {
-                crown.get('/account/menus', {async: false}, function (data) {
-                    vm.menus = data.result;
-                });
-            },
-            getUser: function () {
-                /*$.getJSON(baseURL + "sys/user/info", function(r){
-                    vm.user = r.user;
-                });*/
-            },
-            logout: function () {
-                crown.delete('/account/token', {}, function () {
-                    config.clear();
-                    location.href = 'login.html'
-                });
-                /*$.ajax({
-                    type: "POST",
-                    url: baseURL + "sys/logout",
-                    dataType: "json",
-                    success: function(r){
-                        //删除本地token
-                        localStorage.removeItem("token");
-                        //跳转到登录页面
-                        location.href = baseURL + 'login.html';
-                    }
-                });*/
-            }
-        },
-        created: function () {
-            this.$nextTick(function () {
-                this.getMenuList();
-                this.getUser();
-            });
-
-        }
-    });
-
-</script>
+<script src="jquery/fetch.js"></script>
+<script src="jquery/config.js"></script>
+<script src="jquery/module/index.js"></script>
 </body>
-
 </html>

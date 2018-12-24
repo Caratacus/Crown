@@ -42,37 +42,12 @@
     </div>
 </div>
 <!-- 全局js -->
-<script src="js/vue.js?v=2.5.21"></script>
-<script src="js/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap.min.js?v=3.3.6"></script>
-<script src="module/crown.js"></script>
-<script src="module/config.js"></script>
-<script src="js/plugins/layer/layer.min.js"></script>
-<script type="text/javascript">
-    if (config.getToken()) {
-        location.replace('index.html');
-    }
-    var vm = new Vue({
-        el: '#loginapp',
-        data: {
-            loginName: 'crown',
-            password: 'crown'
-        },
-        beforeCreate: function () {
-            if (self != top) {
-                top.location.href = self.location.href;
-            }
-        },
-        methods: {
-            login: function () {
-                crown.post(config.serverUrl + '/account/token', {data: vm.$data}, function (data) {
-                    config.putUid(data.result.uid);
-                    config.putToken(data.result.token);
-                    location.replace('index.html');
-                });
-            }
-        }
-    });
-</script>
+<script src="jquery/libs/vue/vue.js?v=2.5.21"></script>
+<script src="jquery/jquery.min.js?v=2.1.4"></script>
+<script src="jquery/bootstrap.min.js?v=3.3.6"></script>
+<script src="jquery/libs/layer/layer.min.js"></script>
+<script src="jquery/fetch.js"></script>
+<script src="jquery/config.js"></script>
+<script src="jquery/module/login.js"></script>
 </body>
 </html>
