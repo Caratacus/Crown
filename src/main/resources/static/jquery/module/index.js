@@ -4,7 +4,7 @@ var vm = new Vue({
         user: {},
         menuList: {},
         menus: [],
-        main: "index_v1.html"
+        main: config.serverUrl + "/views/index/crown.html"
     },
     methods: {
         getMenuList: function () {
