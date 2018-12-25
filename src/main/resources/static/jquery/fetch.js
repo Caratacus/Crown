@@ -52,7 +52,7 @@ var request = {
             },
             error: function (xhr) {
                 if (xhr.responseJSON.status === 401) {
-                    config.clear();
+                    storage.clear();
                     location.href = config.serverUrl + '/login.html';
                     return false;
                 }
