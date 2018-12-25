@@ -20,6 +20,15 @@ var config = {
     }
 };
 
+var common = {
+    isFalse: function (value) {
+        if (value == null || value == undefined || value == true) {
+            return true;
+        }
+        return false;
+    }
+};
+
 var storage = {
     getToken: function () {
         return window.localStorage.getItem(tokenKey);
