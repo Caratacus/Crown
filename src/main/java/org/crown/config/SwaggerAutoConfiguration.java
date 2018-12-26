@@ -66,7 +66,7 @@ public class SwaggerAutoConfiguration {
      *
      * @return
      */
-    private static ApiInfo apiInfo() {
+    ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Crown API")
                 .description("Crown Swagger API 文档")
@@ -81,7 +81,7 @@ public class SwaggerAutoConfiguration {
      *
      * @return
      */
-    public static List<Parameter> getParameters() {
+    List<Parameter> getParameters() {
         return Collections.singletonList(new ParameterBuilder()
                 .name("Authorization")
                 .defaultValue("Bearer " + JWTUtils.generate(1))
