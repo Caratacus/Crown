@@ -14,9 +14,6 @@ mybatis-plus:
 server:
   port: 8088
 spring:
-  devtools:
-    restart:
-      enabled: false
   jackson:
     time-zone: GMT+8
     serialization:

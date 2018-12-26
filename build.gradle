@@ -68,7 +68,6 @@ dependencies {
     api("p6spy:p6spy:3.8.0")
     api("com.lmax:disruptor:3.3.11")
     api("org.apache.shiro:shiro-spring:1.4.0")
-    runtime("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
