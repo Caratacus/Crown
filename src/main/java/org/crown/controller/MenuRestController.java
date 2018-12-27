@@ -45,8 +45,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -79,13 +77,16 @@ public class MenuRestController extends SuperController {
     @ApiOperation(value = "查询父级菜单(下拉框)")
     @GetMapping("/combos")
     public ApiResponses<List<ComboDTO>> combos() {
-        List<ComboDTO> combos = menuService.entitys(Wrappers.<Menu>lambdaQuery().select(Menu::getId, Menu::getMenuName).in(Menu::getMenuType, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU), e -> {
-            ComboDTO combo = new ComboDTO();
-            combo.setId(e.getId());
-            combo.setName(e.getMenuName());
-            return combo;
-        });
-        return success(combos);
+        return success(
+                menuService.query().select(Menu::getId, Menu::getMenuName)
+                        .in(Menu::getMenuType, MenuTypeEnum.CATALOG, MenuTypeEnum.MENU)
+                        .entitys(e -> {
+                            ComboDTO combo = new ComboDTO();
+                            combo.setId(e.getId());
+                            combo.setName(e.getMenuName());
+                            return combo;
+                        })
+        );
     }
 
     @Resources

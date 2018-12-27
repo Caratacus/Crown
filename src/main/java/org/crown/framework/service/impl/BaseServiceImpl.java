@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
 import org.crown.framework.mapper.BaseMapper;
-import org.crown.framework.model.convert.Convert;
 import org.crown.framework.service.BaseService;
 import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +65,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  * @author Caratacus
  */
 @Transactional(readOnly = true)
-public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> implements BaseService<T> {
+public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<T> {
 
     @Autowired
     protected M baseMapper;

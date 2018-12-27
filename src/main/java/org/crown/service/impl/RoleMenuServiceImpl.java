@@ -30,8 +30,6 @@ import org.crown.service.IRoleMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
 /**
  * <p>
  * 角色菜单关系表 服务实现类
@@ -45,7 +43,7 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMen
     @Override
     @Transactional
     public void saveRoleMenu(Integer roleId, List<Integer> menuIds) {
-        remove(Wrappers.<RoleMenu>lambdaQuery().eq(RoleMenu::getRoleId, roleId));
+        query().eq(RoleMenu::getRoleId, roleId).remove();
         saveBatch(menuIds.stream().map(menuId -> new RoleMenu(roleId, menuId)).collect(Collectors.toList()));
     }
 }

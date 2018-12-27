@@ -41,7 +41,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -79,12 +78,13 @@ public class ResourceRestController extends SuperController {
                                               @RequestParam(value = "method", required = false) String method,
                                               @RequestParam(value = "authType", required = false) AuthTypeEnum authType
     ) {
-        IPage<Resource> page = resourceService.page(this.<Resource>getPage(),
-                Wrappers.<Resource>lambdaQuery()
+        return success(
+                resourceService.query()
                         .like(StringUtils.isNotEmpty(resourceName), Resource::getResourceName, resourceName)
                         .eq(StringUtils.isNotEmpty(method), Resource::getMethod, method)
-                        .eq(Objects.nonNull(authType), Resource::getAuthType, authType));
-        return success(page);
+                        .eq(Objects.nonNull(authType), Resource::getAuthType, authType)
+                        .page(this.<Resource>getPage())
+        );
     }
 
     @Resources

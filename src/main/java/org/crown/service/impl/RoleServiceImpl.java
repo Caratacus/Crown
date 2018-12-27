@@ -33,7 +33,6 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
@@ -51,14 +50,13 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
 
     @Override
     public IPage<RoleDTO> pageRoleDTO(Page<Role> page, String roleName) {
-        IPage<Role> rolePage = page(page, Wrappers.<Role>lambdaQuery().like(StringUtils.isNotEmpty(roleName), Role::getRoleName, roleName));
+        IPage<Role> rolePage = query().like(StringUtils.isNotEmpty(roleName), Role::getRoleName, roleName).page(page);
         return rolePage.convert(role -> {
             RoleDTO roleDTO = role.convert(RoleDTO.class);
-            roleDTO.setMenuIds(roleMenuService.listObjs(
-                    Wrappers.<RoleMenu>lambdaQuery()
-                            .select(RoleMenu::getMenuId)
-                            .eq(RoleMenu::getRoleId, role.getId()),
-                    TypeUtils::castToInt)
+            roleDTO.setMenuIds(roleMenuService.query()
+                    .select(RoleMenu::getMenuId)
+                    .eq(RoleMenu::getRoleId, role.getId())
+                    .listObjs(TypeUtils::castToInt)
             );
             return roleDTO;
         });

@@ -29,8 +29,6 @@ import org.crown.model.entity.MenuResource;
 import org.crown.service.IMenuResourceService;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
 /**
  * <p>
  * 菜单资源关系表 服务实现类
@@ -43,7 +41,7 @@ public class MenuResourceServiceImpl extends BaseServiceImpl<MenuResourceMapper,
 
     @Override
     public void removeByMenuId(Integer menuId) {
-        remove(Wrappers.<MenuResource>lambdaQuery().eq(MenuResource::getMenuId, menuId));
+        query().eq(MenuResource::getMenuId, menuId).remove();
     }
 
     @Override

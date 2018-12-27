@@ -49,7 +49,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -83,8 +82,14 @@ public class UserRestController extends SuperController {
     public ApiResponses<IPage<UserDTO>> page(@RequestParam(value = "loginName", required = false) String loginName,
                                              @RequestParam(value = "nickname", required = false) String nickname,
                                              @RequestParam(value = "status", required = false) StatusEnum status) {
-        IPage<User> page = userService.page(this.<User>getPage(), Wrappers.<User>lambdaQuery().likeRight(StringUtils.isNotEmpty(loginName), User::getLoginName, loginName).likeRight(StringUtils.isNotEmpty(nickname), User::getNickname, nickname).eq(Objects.nonNull(status), User::getStatus, status));
-        return success(page.convert(e -> e.convert(UserDTO.class)));
+        ;
+        return success(
+                userService.query().likeRight(StringUtils.isNotEmpty(loginName), User::getLoginName, loginName)
+                        .likeRight(StringUtils.isNotEmpty(nickname), User::getNickname, nickname)
+                        .eq(Objects.nonNull(status), User::getStatus, status)
+                        .page(this.<User>getPage())
+                        .convert(e -> e.convert(UserDTO.class))
+        );
     }
 
     @Resources
@@ -128,7 +133,7 @@ public class UserRestController extends SuperController {
     @ApiOperation("创建用户")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
-        int count = userService.count(Wrappers.<User>lambdaQuery().eq(User::getLoginName, userPARM.getLoginName()));
+        int count = userService.query().eq(User::getLoginName, userPARM.getLoginName()).count();
         ApiAssert.isTrue(ErrorCodeEnum.USERNAME_ALREADY_EXISTS, count == 0);
         User user = userPARM.convert(User.class);
         //没设置密码 设置默认密码

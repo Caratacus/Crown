@@ -26,7 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.crown.framework.model.convert.Convert;
+import org.crown.common.mybatisplus.LambdaQueryWrapperChain;
+import org.crown.common.mybatisplus.LambdaUpdateWrapperChain;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -41,7 +42,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  *
  * @author Caratacus
  */
-public interface BaseService<T extends Convert> {
+public interface BaseService<T> {
 
     /**
      * 批量大小
@@ -131,6 +132,17 @@ public interface BaseService<T extends Convert> {
      * @param entity 实体对象
      */
     boolean updateById(T entity);
+
+    /**
+     * <p>
+     * 根据 whereEntity 条件，更新记录
+     * </p>
+     *
+     * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
+     */
+    default boolean update(Wrapper<T> updateWrapper) {
+        return update(null, updateWrapper);
+    }
 
     /**
      * <p>
@@ -252,6 +264,15 @@ public interface BaseService<T extends Convert> {
 
     /**
      * <p>
+     * 根据 Wrapper 条件，查询全部记录
+     * </p>
+     */
+    default <R> List<R> listObjs(Function<? super Object, R> mapper) {
+        return listObjs(Wrappers.emptyWrapper(), mapper);
+    }
+
+    /**
+     * <p>
      * 翻页查询
      * </p>
      *
@@ -259,15 +280,6 @@ public interface BaseService<T extends Convert> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper);
-
-    /**
-     * <p>
-     * 根据 Wrapper 条件，查询全部记录
-     * </p>
-     */
-    default <R> List<R> listObjs(Function<? super Object, R> mapper) {
-        return listObjs(Wrappers.emptyWrapper(), mapper);
-    }
 
     /**
      * <p>
@@ -361,4 +373,14 @@ public interface BaseService<T extends Convert> {
      */
     <K> Map<K, T> list2Map(Wrapper<T> wrapper, SFunction<T, K> column);
 
+    default LambdaQueryWrapperChain<T> query() {
+        return new LambdaQueryWrapperChain<>(this);
+    }
+
+    default LambdaUpdateWrapperChain<T> update() {
+        return new LambdaUpdateWrapperChain<>(this);
+    }
+
 }
+
+
