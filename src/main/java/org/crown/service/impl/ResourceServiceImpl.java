@@ -43,7 +43,6 @@ import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -123,7 +122,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public List<ResourcePermDTO> getPerms(AuthTypeEnum... authTypes) {
-        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).in(ArrayUtils.isNotEmpty(authTypes), Resource::getAuthType, (Object[]) authTypes), e -> e.convert(ResourcePermDTO.class));
+        return query().select(Resource::getMethod, Resource::getMapping).in(ArrayUtils.isNotEmpty(authTypes), Resource::getAuthType, (Object[]) authTypes).entitys(e -> e.convert(ResourcePermDTO.class));
     }
 
     @Override
@@ -133,7 +132,7 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 
     @Override
     public List<ResourcePermDTO> getResourcePerms(String method) {
-        return entitys(Wrappers.<Resource>lambdaQuery().select(Resource::getMethod, Resource::getMapping).eq(Resource::getMethod, method), e -> e.convert(ResourcePermDTO.class));
+        return query().select(Resource::getMethod, Resource::getMapping).eq(Resource::getMethod, method).entitys(e -> e.convert(ResourcePermDTO.class));
     }
 
 }

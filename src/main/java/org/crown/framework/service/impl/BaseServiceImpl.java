@@ -66,7 +66,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  * @author Caratacus
  */
 @Transactional(readOnly = true)
-public class BaseServiceImpl<M extends BaseMapper<T>, T extends Convert> implements BaseService<T> {
+public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<T> {
 
     @Autowired
     protected M baseMapper;

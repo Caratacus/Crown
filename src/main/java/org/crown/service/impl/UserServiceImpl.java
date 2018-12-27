@@ -43,8 +43,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-
 /**
  * <p>
  * 系统用户表 服务实现类
@@ -63,7 +61,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     @Transactional
     public User login(String loginName, String password, String ipAddr) {
-        User user = getOne(Wrappers.<User>lambdaQuery().eq(User::getLoginName, loginName));
+        User user = query().eq(User::getLoginName, loginName).getOne();
         //用户不存在
         ApiAssert.notNull(ErrorCodeEnum.USERNAME_OR_PASSWORD_IS_WRONG, user);
         //用户名密码错误
@@ -126,14 +124,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Transactional
     public void saveUserRoles(Integer uid, List<Integer> roleIds) {
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            userRoleService.remove(Wrappers.<UserRole>lambdaQuery().eq(UserRole::getUid, uid));
+            userRoleService.query().eq(UserRole::getUid, uid).remove();
             userRoleService.saveBatch(roleIds.stream().map(e -> new UserRole(uid, e)).collect(Collectors.toList()));
         }
     }
 
     @Override
     public List<Integer> getRoleIds(Integer uid) {
-        return userRoleService.listObjs(Wrappers.<UserRole>lambdaQuery().select(UserRole::getRoleId).eq(UserRole::getUid, uid), TypeUtils::castToInt);
+        return userRoleService.query().select(UserRole::getRoleId).eq(UserRole::getUid, uid).listObjs(TypeUtils::castToInt);
     }
 
 }

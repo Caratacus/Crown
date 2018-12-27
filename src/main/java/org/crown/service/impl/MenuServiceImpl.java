@@ -46,7 +46,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
 /**
  * <p>
@@ -91,7 +90,8 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     @Transactional
     public void removeMenu(Integer menuId) {
         if (parentIdNotNull(menuId)) {
-            list(Wrappers.<Menu>lambdaQuery().eq(Menu::getParentId, menuId))
+            query().eq(Menu::getParentId, menuId)
+                    .list()
                     .stream()
                     .filter(e -> parentIdNotNull(e.getParentId()))
                     .forEach(e -> removeMenu(e.getId()));
@@ -127,12 +127,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         Menu menu = getById(menuId);
         ApiAssert.notNull(ErrorCodeEnum.MENU_NOT_FOUND, menu);
         MenuDTO menuDTO = menu.convert(MenuDTO.class);
-        List<String> resourceIds = menuResourceService.listObjs(
-                Wrappers.<MenuResource>lambdaQuery()
-                        .select(MenuResource::getResourceId)
-                        .eq(MenuResource::getMenuId, menuId),
-                TypeUtils::castToString
-        );
+        List<String> resourceIds = menuResourceService.query()
+                .select(MenuResource::getResourceId)
+                .eq(MenuResource::getMenuId, menuId)
+                .listObjs(TypeUtils::castToString);
         menuDTO.setResourceIds(resourceIds);
         return menuDTO;
     }
