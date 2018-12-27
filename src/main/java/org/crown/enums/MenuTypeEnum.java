@@ -18,7 +18,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.emuns;
+package org.crown.enums;
 
 import org.crown.common.exception.UnknownEnumException;
 import org.crown.framework.emuns.IEnum;
@@ -29,30 +29,30 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * <p>
- * 权限类型枚举
+ * 菜单类型枚举
  * </p>
  *
  * @author Caratacus
  */
-public enum AuthTypeEnum implements IEnum {
+public enum MenuTypeEnum implements IEnum {
 
     /**
-     * 需要登录
+     * 目录
      */
-    LOGIN(1),
+    CATALOG(1),
     /**
-     * 开放,无需鉴权
+     * 菜单
      */
-    OPEN(2),
+    MENU(2),
     /**
-     * 需要鉴定是否包含权限
+     * 按钮
      */
-    AUTH(3);
+    BUTTON(3);
 
     @EnumValue
     private final int value;
 
-    AuthTypeEnum(final int value) {
+    MenuTypeEnum(final int value) {
         this.value = value;
     }
 
@@ -62,13 +62,14 @@ public enum AuthTypeEnum implements IEnum {
         return this.value;
     }
 
+
     @JsonCreator
-    public static AuthTypeEnum getEnum(int value) {
-        for (AuthTypeEnum menuTypeEnum : AuthTypeEnum.values()) {
+    public static MenuTypeEnum getEnum(int value) {
+        for (MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()) {
             if (menuTypeEnum.getValue() == value) {
                 return menuTypeEnum;
             }
         }
-        throw new UnknownEnumException("Error: Invalid AuthTypeEnum type value: " + value);
+        throw new UnknownEnumException("Error: Invalid MenuTypeEnum type value: " + value);
     }
 }

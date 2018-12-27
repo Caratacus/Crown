@@ -22,7 +22,7 @@ package org.crown.controller;
 
 import java.util.Collections;
 
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.test.ControllerTest;
 import org.crown.model.dto.TokenDTO;

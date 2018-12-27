@@ -28,8 +28,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.crown.common.utils.TypeUtils;
-import org.crown.emuns.MenuTypeEnum;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.MenuTypeEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.utils.ApiAssert;

@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.crown.emuns.MenuTypeEnum;
+import org.crown.enums.MenuTypeEnum;
 import org.crown.framework.mapper.BaseMapper;
 import org.crown.model.dto.MenuTreeDTO;
 import org.crown.model.entity.Menu;

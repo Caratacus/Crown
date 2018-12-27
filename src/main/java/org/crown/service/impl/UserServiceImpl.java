@@ -27,7 +27,7 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.crown.common.utils.JWTUtils;
 import org.crown.common.utils.TypeUtils;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.utils.ApiAssert;

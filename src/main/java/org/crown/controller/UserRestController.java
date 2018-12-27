@@ -25,7 +25,7 @@ import java.util.Objects;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.emuns.ErrorCodeEnum;
 import org.crown.framework.responses.ApiResponses;

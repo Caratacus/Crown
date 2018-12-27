@@ -23,7 +23,7 @@ package org.crown.service;
 import java.util.List;
 import java.util.Set;
 
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.service.BaseService;
 import org.crown.model.dto.MenuDTO;
 import org.crown.model.dto.MenuTreeDTO;

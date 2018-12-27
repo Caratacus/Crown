@@ -26,7 +26,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.crown.emuns.AuthTypeEnum;
+import org.crown.enums.AuthTypeEnum;
 
 /**
  * 权限认证注解

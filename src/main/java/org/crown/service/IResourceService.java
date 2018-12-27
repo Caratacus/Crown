@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.crown.emuns.AuthTypeEnum;
+import org.crown.enums.AuthTypeEnum;
 import org.crown.framework.service.BaseService;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.model.entity.Resource;
