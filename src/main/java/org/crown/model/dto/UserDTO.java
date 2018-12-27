@@ -23,7 +23,7 @@ package org.crown.model.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.model.convert.Convert;
 
 import io.swagger.annotations.ApiModel;

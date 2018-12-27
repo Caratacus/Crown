@@ -22,7 +22,7 @@ package org.crown.service;
 
 import java.util.List;
 
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.service.BaseService;
 import org.crown.model.dto.TokenDTO;
 import org.crown.model.dto.UserDetailsDTO;

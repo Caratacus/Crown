@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.WeakHashMap;
 
 import org.crown.common.utils.TypeUtils;
-import org.crown.framework.emuns.IEnum;
+import org.crown.framework.enums.IEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 

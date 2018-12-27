@@ -25,7 +25,7 @@ import java.util.Set;
 
 import org.crown.common.annotations.Resources;
 import org.crown.common.utils.IpUtils;
-import org.crown.emuns.AuthTypeEnum;
+import org.crown.enums.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.model.dto.MenuTreeDTO;

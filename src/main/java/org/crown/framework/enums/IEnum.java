@@ -18,58 +18,22 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.emuns;
-
-import org.crown.common.exception.UnknownEnumException;
-import org.crown.framework.emuns.IEnum;
-
-import com.baomidou.mybatisplus.annotation.EnumValue;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+package org.crown.framework.enums;
 
 /**
  * <p>
- * 菜单类型枚举
+ * 通用枚举
  * </p>
  *
  * @author Caratacus
  */
-public enum MenuTypeEnum implements IEnum {
+public interface IEnum {
 
     /**
-     * 目录
+     * 获取枚举值
+     *
+     * @return
      */
-    CATALOG(1),
-    /**
-     * 菜单
-     */
-    MENU(2),
-    /**
-     * 按钮
-     */
-    BUTTON(3);
+    int getValue();
 
-    @EnumValue
-    private final int value;
-
-    MenuTypeEnum(final int value) {
-        this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public int getValue() {
-        return this.value;
-    }
-
-
-    @JsonCreator
-    public static MenuTypeEnum getEnum(int value) {
-        for (MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()) {
-            if (menuTypeEnum.getValue() == value) {
-                return menuTypeEnum;
-            }
-        }
-        throw new UnknownEnumException("Error: Invalid MenuTypeEnum type value: " + value);
-    }
 }

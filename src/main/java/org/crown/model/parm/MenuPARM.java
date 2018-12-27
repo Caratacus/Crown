@@ -25,8 +25,8 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.crown.emuns.MenuTypeEnum;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.MenuTypeEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.model.convert.Convert;
 
 import io.swagger.annotations.ApiModelProperty;

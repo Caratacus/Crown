@@ -54,7 +54,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     public RequestWrapper(HttpServletRequest request) {
         super(request);
-        if (RequestUtils.isContainBody(request)){
+        if (RequestUtils.isContainBody(request)) {
             this.body = RequestUtils.getByteBody(request);
         }
     }

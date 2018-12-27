@@ -9,7 +9,7 @@ mybatis-plus:
       db-type: mysql
     banner: false
     super-mapper-class: org.crown.framework.mapper.BaseMapper
-  type-enums-package: org.crown.emuns
+  type-enums-package: org.crown.enums
   type-aliases-package: org.crown.model.entity,org.crown.model.dto
 server:
   port: 8088

@@ -22,8 +22,8 @@ package org.crown.controller;
 
 import java.util.List;
 
-import org.crown.emuns.MenuTypeEnum;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.MenuTypeEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;
 import org.crown.framework.responses.SuccessResponses;
 import org.crown.framework.test.ControllerTest;

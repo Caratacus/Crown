@@ -19,7 +19,7 @@ import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.crown.common.utils.JWTUtils;
 import org.crown.cons.APICons;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.utils.ResponseUtils;
 import org.crown.model.dto.ResourcePermDTO;
 import org.crown.service.IResourceService;
@@ -72,7 +72,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         if (Objects.isNull(token)) {
             List<ResourcePermDTO> openPerms = resourceService.getOpenPerms();
             boolean match = anyMatch(openPerms, method, requestUri);
-            if (!match){
+            if (!match) {
                 httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
             return match;

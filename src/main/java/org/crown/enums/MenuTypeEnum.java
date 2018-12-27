@@ -18,13 +18,58 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.common.emuns;
+package org.crown.enums;
+
+import org.crown.common.exception.UnknownEnumException;
+import org.crown.framework.enums.IEnum;
+
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * HTTP方法枚举
+ * <p>
+ * 菜单类型枚举
+ * </p>
  *
  * @author Caratacus
  */
-public enum HTTPMethod {
-    GET, POST, PUT, DELETE, PATCH, TRACE, HEAD, OPTIONS
+public enum MenuTypeEnum implements IEnum {
+
+    /**
+     * 目录
+     */
+    CATALOG(1),
+    /**
+     * 菜单
+     */
+    MENU(2),
+    /**
+     * 按钮
+     */
+    BUTTON(3);
+
+    @EnumValue
+    private final int value;
+
+    MenuTypeEnum(final int value) {
+        this.value = value;
+    }
+
+    @Override
+    @JsonValue
+    public int getValue() {
+        return this.value;
+    }
+
+
+    @JsonCreator
+    public static MenuTypeEnum getEnum(int value) {
+        for (MenuTypeEnum menuTypeEnum : MenuTypeEnum.values()) {
+            if (menuTypeEnum.getValue() == value) {
+                return menuTypeEnum;
+            }
+        }
+        throw new UnknownEnumException("Error: Invalid MenuTypeEnum type value: " + value);
+    }
 }

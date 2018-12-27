@@ -18,34 +18,13 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package org.crown.emuns;
-
-import org.crown.framework.emuns.IEnum;
-
-import com.baomidou.mybatisplus.annotation.EnumValue;
-import com.fasterxml.jackson.annotation.JsonValue;
+package org.crown.common.enums;
 
 /**
- * <p>
- * 状态枚举
- * </p>
+ * HTTP方法枚举
  *
  * @author Caratacus
  */
-public enum StatusEnum implements IEnum {
-
-    NORMAL(0), DISABLE(1);
-
-    @EnumValue
-    private final int value;
-
-    StatusEnum(final int value) {
-        this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public int getValue() {
-        return this.value;
-    }
+public enum HTTPMethod {
+    GET, POST, PUT, DELETE, PATCH, TRACE, HEAD, OPTIONS
 }

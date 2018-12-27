@@ -22,8 +22,8 @@ package org.crown.model.dto;
 
 import java.util.List;
 
-import org.crown.emuns.MenuTypeEnum;
-import org.crown.emuns.StatusEnum;
+import org.crown.enums.MenuTypeEnum;
+import org.crown.enums.StatusEnum;
 import org.crown.framework.model.BaseModel;
 
 import io.swagger.annotations.ApiModelProperty;

@@ -20,7 +20,7 @@
  */
 package org.crown.framework.exception;
 
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
 
 /**

@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
-import org.crown.emuns.AuthTypeEnum;
+import org.crown.enums.AuthTypeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.mapper.ResourceMapper;
 import org.crown.model.dto.ResourcePermDTO;
