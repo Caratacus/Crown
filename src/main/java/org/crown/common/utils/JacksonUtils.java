@@ -110,7 +110,6 @@ public abstract class JacksonUtils {
      * @return
      */
     private static ObjectMapper doInitObjectMapper(ObjectMapper objectMapper) {
-        objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         //不显示为null的字段
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
@@ -121,11 +120,22 @@ public abstract class JacksonUtils {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         //忽略transient
         objectMapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);
+        return registerModule(objectMapper);
+    }
+
+    /**
+     * 注册模块
+     *
+     * @param objectMapper
+     * @return
+     */
+    private static ObjectMapper registerModule(ObjectMapper objectMapper) {
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         simpleModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         simpleModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        objectMapper.registerModule(new JavaTimeModule());
         objectMapper.registerModule(simpleModule);
         return objectMapper;
     }
@@ -140,7 +150,7 @@ public abstract class JacksonUtils {
         return converter -> {
             if (converter instanceof MappingJackson2HttpMessageConverter) {
                 MappingJackson2HttpMessageConverter httpMessageConverter = (MappingJackson2HttpMessageConverter) converter;
-                initObjectMapper(httpMessageConverter.getObjectMapper());
+                registerModule(httpMessageConverter.getObjectMapper());
             }
         };
     }
