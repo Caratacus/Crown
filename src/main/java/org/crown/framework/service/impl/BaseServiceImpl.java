@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.session.SqlSession;
 import org.crown.framework.mapper.BaseMapper;
-import org.crown.framework.model.convert.Convert;
 import org.crown.framework.service.BaseService;
 import org.mybatis.spring.SqlSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -276,11 +275,6 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     @Override
-    public T getOne(Wrapper<T> queryWrapper) {
-        return SqlHelper.getObject(baseMapper.selectList(queryWrapper));
-    }
-
-    @Override
     public int count(Wrapper<T> queryWrapper) {
         return SqlHelper.retCount(baseMapper.selectCount(queryWrapper));
     }
@@ -301,22 +295,12 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     @Override
-    public <E> IPage<E> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, E> mapper) {
+    public <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper) {
         return page(page, wrapper).convert(mapper);
     }
 
     @Override
-    public <E extends Convert> E entity(Wrapper<T> wrapper, Class<E> cls) {
-        E entity = null;
-        T t = getOne(wrapper);
-        if (Objects.nonNull(t)) {
-            entity = t.convert(cls);
-        }
-        return entity;
-    }
-
-    @Override
-    public <E> List<E> entitys(Wrapper<T> wrapper, Function<? super T, E> mapper) {
+    public <R> List<R> entitys(Wrapper<T> wrapper, Function<? super T, R> mapper) {
         return list(wrapper).stream().map(mapper).collect(Collectors.toList());
     }
 
