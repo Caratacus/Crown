@@ -124,29 +124,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
      * 批量插入
      *
      * @param entityList
-     * @param batchSize
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveBatch(Collection<T> entityList, int batchSize) {
-        //批量对象插入 不存在直接返回true
+    public void saveBatch(Collection<T> entityList) {
         if (CollectionUtils.isEmpty(entityList)) {
-            return true;
+            return;
         }
-        int i = 0;
-        String sqlStatement = sqlStatement(SqlMethod.INSERT_ONE);
-        try (SqlSession batchSqlSession = sqlSessionBatch()) {
-            for (T anEntityList : entityList) {
-                batchSqlSession.insert(sqlStatement, anEntityList);
-                if (i >= 1 && i % batchSize == 0) {
-                    batchSqlSession.flushStatements();
-                }
-                i++;
-            }
-            batchSqlSession.flushStatements();
-        }
-        return true;
+        baseMapper.insertBatchSomeColumn(entityList);
     }
 
     /**

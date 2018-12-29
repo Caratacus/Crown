@@ -76,7 +76,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.0.7.4-SNAPSHOT</version>
+            <version>3.0.7.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

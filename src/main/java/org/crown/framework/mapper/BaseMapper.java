@@ -21,6 +21,7 @@
 package org.crown.framework.mapper;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -46,6 +47,15 @@ public interface BaseMapper<T> {
      * @param entity 实体对象
      */
     int insert(T entity);
+
+    /**
+     * <p>
+     * 批量插入数据
+     * </p>
+     *
+     * @param entityList 实体对象集合
+     */
+    int insertBatchSomeColumn(@Param("list") Collection<T> entityList);
 
     /**
      * <p>

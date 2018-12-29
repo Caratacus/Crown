@@ -20,7 +20,10 @@
  */
 package org.crown.controller;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.crown.enums.StatusEnum;
 import org.crown.framework.SuperRestControllerTest;
@@ -103,6 +106,36 @@ public class UserRestControllerTest extends SuperRestControllerTest implements C
         userPARM.setRoleIds(Collections.singletonList(1));
         isCreated(mockMvc, post("/users", token.getToken(), userPARM));
 
+    }
+
+    @Test
+    public void batchCreate() {
+        User userPARM = new User();
+        userPARM.setLoginName("12121");
+        userPARM.setPassword("2222222a");
+        userPARM.setNickname("222");
+        userPARM.setEmail("11@qq.com");
+        userPARM.setPhone("13617828937");
+        userPARM.setStatus(StatusEnum.DISABLE);
+        userPARM.setCreateUid(1);
+        userPARM.setCreateUid(1);
+        userPARM.setCreateTime(LocalDateTime.now());
+        userPARM.setUpdateTime(LocalDateTime.now());
+        User userPARM1 = new User();
+        userPARM1.setLoginName("12121222");
+        userPARM1.setPassword("2222222a");
+        userPARM1.setNickname("222333");
+        userPARM1.setEmail("11@qq.com");
+        userPARM1.setPhone("13617828937");
+        userPARM1.setStatus(StatusEnum.DISABLE);
+        userPARM1.setCreateUid(1);
+        userPARM1.setCreateUid(1);
+        userPARM1.setCreateTime(LocalDateTime.now());
+        userPARM1.setUpdateTime(LocalDateTime.now());
+        List<User> list = new ArrayList<>(2);
+        list.add(userPARM);
+        list.add(userPARM1);
+        userService.saveBatch(list);
     }
 
 }
