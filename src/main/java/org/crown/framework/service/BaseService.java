@@ -65,19 +65,7 @@ public interface BaseService<T> {
      *
      * @param entityList 实体对象集合
      */
-    default boolean saveBatch(Collection<T> entityList) {
-        return saveBatch(entityList, batchSize);
-    }
-
-    /**
-     * <p>
-     * 插入（批量）
-     * </p>
-     *
-     * @param entityList 实体对象集合
-     * @param batchSize  插入批次数量
-     */
-    boolean saveBatch(Collection<T> entityList, int batchSize);
+    void saveBatch(Collection<T> entityList);
 
     /**
      * <p>

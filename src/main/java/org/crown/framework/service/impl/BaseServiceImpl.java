@@ -120,18 +120,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
         return retBool(baseMapper.insert(entity));
     }
 
-    /**
-     * 批量插入
-     *
-     * @param entityList
-     * @param batchSize
-     * @return
-     */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean saveBatch(Collection<T> entityList, int batchSize) {
+    public void saveBatch(Collection<T> entityList) {
+        if (CollectionUtils.isEmpty(entityList)) {
+            return;
+        }
         baseMapper.insertBatchSomeColumn(entityList);
-        return true;
     }
 
     /**
