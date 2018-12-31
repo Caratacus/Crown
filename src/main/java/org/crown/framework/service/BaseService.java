@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.crown.common.mybatisplus.LambdaQueryWrapperChain;
+import org.crown.common.mybatisplus.LambdaDeleteWrapperChain;
 import org.crown.common.mybatisplus.LambdaUpdateWrapperChain;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -367,6 +368,10 @@ public interface BaseService<T> {
 
     default LambdaUpdateWrapperChain<T> update() {
         return new LambdaUpdateWrapperChain<>(this);
+    }
+
+    default LambdaDeleteWrapperChain<T> delete() {
+        return new LambdaDeleteWrapperChain<>(this);
     }
 
 }

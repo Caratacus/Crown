@@ -124,7 +124,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Transactional
     public void saveUserRoles(Integer uid, List<Integer> roleIds) {
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            userRoleService.query().eq(UserRole::getUid, uid).remove();
+            userRoleService.delete().eq(UserRole::getUid, uid).execute();
             userRoleService.saveBatch(roleIds.stream().map(e -> new UserRole(uid, e)).collect(Collectors.toList()));
         }
     }
