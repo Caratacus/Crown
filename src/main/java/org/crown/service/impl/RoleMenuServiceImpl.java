@@ -43,7 +43,7 @@ public class RoleMenuServiceImpl extends BaseServiceImpl<RoleMenuMapper, RoleMen
     @Override
     @Transactional
     public void saveRoleMenu(Integer roleId, List<Integer> menuIds) {
-        query().eq(RoleMenu::getRoleId, roleId).remove();
+        delete().eq(RoleMenu::getRoleId, roleId).execute();
         saveBatch(menuIds.stream().map(menuId -> new RoleMenu(roleId, menuId)).collect(Collectors.toList()));
     }
 }

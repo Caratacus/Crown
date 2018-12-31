@@ -41,7 +41,7 @@ public class MenuResourceServiceImpl extends BaseServiceImpl<MenuResourceMapper,
 
     @Override
     public void removeByMenuId(Integer menuId) {
-        query().eq(MenuResource::getMenuId, menuId).remove();
+        delete().eq(MenuResource::getMenuId, menuId).execute();
     }
 
     @Override
