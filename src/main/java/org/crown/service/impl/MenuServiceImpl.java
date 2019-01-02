@@ -137,13 +137,13 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
     @Override
     public List<MenuTreeDTO> getUserPermMenus(Integer uid) {
-        List<MenuTreeDTO> menus = baseMapper.getUserPermMenus(uid, Arrays.asList(MenuTypeEnum.CATALOG, MenuTypeEnum.MENU));
+        List<MenuTreeDTO> menus = baseMapper.getUserPermMenus(uid, StatusEnum.NORMAL, Arrays.asList(MenuTypeEnum.CATALOG, MenuTypeEnum.MENU));
         return menus.stream().filter(e -> !parentIdNotNull(e.getParentId())).map(e -> TreeUtils.findChildren(e, menus)).collect(Collectors.toList());
     }
 
     @Override
     public Set<String> getUserPermButtonAliases(Integer uid) {
-        return baseMapper.getUserPermMenus(uid, Collections.singletonList(MenuTypeEnum.BUTTON))
+        return baseMapper.getUserPermMenus(uid, StatusEnum.NORMAL, Collections.singletonList(MenuTypeEnum.BUTTON))
                 .stream()
                 .map(MenuTreeDTO::getAlias)
                 .collect(Collectors.toSet());
