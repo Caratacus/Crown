@@ -8,16 +8,19 @@
             sm.menu_name,
             sm.menu_type,
             sm.router,
-        sm.alias,
-        sm.icon,
-        sm.path
+            sm.alias,
+            sm.icon,
+            sm.path
         FROM
-            sys_menu sm
+        sys_menu sm
         LEFT JOIN sys_role_menu srm ON sm.id = srm.menu_id
         LEFT JOIN sys_user_role sur ON sur.role_id = srm.role_id
         LEFT JOIN sys_user su ON su.uid = sur.uid
         WHERE
             su.uid = #{uid}
+        <if test="statusType != null">
+            and sm.status = #{statusType}
+        </if>
         <if test="menuTypes != null and menuTypes.size() > 0">
             and sm.menu_type in
             <foreach collection="menuTypes" index="index" item="item" open="(" separator="," close=")">
