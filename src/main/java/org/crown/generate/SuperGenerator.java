@@ -145,19 +145,19 @@ public class SuperGenerator {
                 .setTypeConvert(new MySqlTypeConvert() {
                     @Override
                     public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
-                        if (fieldType.toLowerCase().contains("bit")) {
+                        if (fieldType.toLowerCase().equals("bit")) {
                             return DbColumnType.BOOLEAN;
                         }
-                        if (fieldType.toLowerCase().contains("tinyint")) {
+                        if (fieldType.toLowerCase().equals("tinyint")) {
                             return DbColumnType.BOOLEAN;
                         }
-                        if (fieldType.toLowerCase().contains("date")) {
+                        if (fieldType.toLowerCase().equals("date")) {
                             return DbColumnType.LOCAL_DATE;
                         }
-                        if (fieldType.toLowerCase().contains("time")) {
+                        if (fieldType.toLowerCase().equals("time")) {
                             return DbColumnType.LOCAL_TIME;
                         }
-                        if (fieldType.toLowerCase().contains("datetime")) {
+                        if (fieldType.toLowerCase().equals("datetime")) {
                             return DbColumnType.LOCAL_DATE_TIME;
                         }
                         return super.processTypeConvert(globalConfig, fieldType);
