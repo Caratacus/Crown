@@ -75,7 +75,11 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         }
         if (Objects.isNull(token)) {
             List<ResourcePermDTO> openPerms = resourceService.getOpenPerms();
-            return anyMatch(openPerms, method, requestUri);
+            boolean match = anyMatch(openPerms, method, requestUri);
+            if (!match) {
+                httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+            return match;
         }
         if (isLoginRequest(request, response)) {
             if (executeLogin(request, response)) {
