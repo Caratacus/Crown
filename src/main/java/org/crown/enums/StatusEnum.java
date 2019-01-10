@@ -20,7 +20,7 @@
  */
 package org.crown.enums;
 
-import org.crown.framework.emuns.IEnum;
+import org.crown.framework.enums.IEnum;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;

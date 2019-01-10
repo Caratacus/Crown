@@ -24,7 +24,7 @@ import java.util.Objects;
 
 import org.crown.common.spring.ApplicationUtils;
 import org.crown.cons.APICons;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.utils.ApiAssert;
 
 import io.jsonwebtoken.Claims;

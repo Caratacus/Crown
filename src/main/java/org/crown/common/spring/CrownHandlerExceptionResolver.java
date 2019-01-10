@@ -26,7 +26,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.utils.ResponseUtils;
 import org.springframework.beans.ConversionNotSupportedException;

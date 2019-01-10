@@ -31,7 +31,7 @@ import javax.validation.ConstraintViolationException;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.TypeUtils;
 import org.crown.cons.APICons;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.responses.FailedResponse;

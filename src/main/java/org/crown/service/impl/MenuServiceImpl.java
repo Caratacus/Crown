@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 import org.crown.common.utils.TypeUtils;
 import org.crown.enums.MenuTypeEnum;
 import org.crown.enums.StatusEnum;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.service.impl.BaseServiceImpl;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.framework.utils.TreeUtils;

@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.utils.ApiAssert;
 
 import io.jsonwebtoken.Claims;

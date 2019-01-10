@@ -13,7 +13,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.crown.common.utils.JWTUtils;
 import org.crown.common.utils.TypeUtils;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.utils.ApiAssert;
 import org.crown.service.IResourceService;
 import org.crown.service.IUserService;

@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.collections4.MapUtils;
-import org.crown.framework.emuns.ErrorCodeEnum;
+import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.exception.ApiException;
 import org.crown.framework.model.ErrorCode;
 
