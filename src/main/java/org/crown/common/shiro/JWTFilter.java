@@ -40,6 +40,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     private PathMatcher pathMatcher;
     private IResourceService resourceService;
     private UrlPathHelper urlPathHelper;
+    private String contextPath;
 
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) {
@@ -60,6 +61,9 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String token = getToken(httpRequest);
         String method = httpRequest.getMethod();
         String requestUri = urlPathHelper.getOriginatingRequestUri(httpRequest);
+        if (StringUtils.isNotEmpty(contextPath)) {
+            requestUri = requestUri.replaceFirst(contextPath, "");
+        }
         Optional<ResourcePermDTO> optional = resourceService.getResourcePerms(method).stream().filter(match(method, requestUri)).findFirst();
         request.setAttribute(APICons.API_REQURL, requestUri);
         request.setAttribute(APICons.API_METHOD, method);
@@ -182,4 +186,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         this.urlPathHelper = urlPathHelper;
     }
 
+    public void setContextPath(String contextPath) {
+        this.contextPath = contextPath;
+    }
 }

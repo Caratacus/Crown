@@ -15,9 +15,11 @@ import org.crown.common.shiro.JWTFilter;
 import org.crown.common.shiro.JWTRealm;
 import org.crown.service.IResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.util.UrlPathHelper;
 
 /**
@@ -27,6 +29,9 @@ import org.springframework.web.util.UrlPathHelper;
  */
 @Configuration
 public class ShiroAutoConfiguration {
+
+    @Value("${server.servlet.context-path:/}")
+    private String contextPath;
 
     @Bean
     public SecurityManager securityManager(@Autowired JWTRealm realm) {
@@ -48,12 +53,13 @@ public class ShiroAutoConfiguration {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new HashMap<>();
-        JWTFilter value = new JWTFilter();
-        value.setAuthzScheme("Bearer");
-        value.setUrlPathHelper(new UrlPathHelper());
-        value.setResourceService(resourceService);
-        value.setPathMatcher(new AntPathMatcher());
-        filters.put("jwt", value);
+        JWTFilter filter = new JWTFilter();
+        filter.setAuthzScheme("Bearer");
+        filter.setUrlPathHelper(new UrlPathHelper());
+        filter.setResourceService(resourceService);
+        filter.setPathMatcher(new AntPathMatcher());
+        filter.setContextPath(cleanContextPath(contextPath));
+        filters.put("jwt", filter);
         shiroFilter.setFilters(filters);
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/**/**.*", "anon");
@@ -63,5 +69,12 @@ public class ShiroAutoConfiguration {
         filterMap.put("/**", "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
+    }
+
+    private String cleanContextPath(String contextPath) {
+        if (StringUtils.hasText(contextPath) && contextPath.endsWith("/")) {
+            return contextPath.substring(0, contextPath.length() - 1);
+        }
+        return contextPath;
     }
 }

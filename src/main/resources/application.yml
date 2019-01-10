@@ -13,6 +13,8 @@ mybatis-plus:
   type-aliases-package: org.crown.model.entity,org.crown.model.dto
 server:
   port: 8088
+  servlet:
+    context-path: /
 spring:
   jackson:
     time-zone: GMT+8
