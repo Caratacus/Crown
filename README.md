@@ -34,8 +34,6 @@
 
 -----------------------------------------------------------------------------------------------
 
-> **注意：** 页面地址还是layUI版本，V2版本完成后会替换页面效果，**V2版本编写中**
-
 > **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
 
 > **前端页面** [https://gitee.com/cancerGit/CrownAdmin](https://gitee.com/cancerGit/CrownAdmin)
@@ -110,6 +108,11 @@
 ![menu-form.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu-form.png)
 <br>
 ![resource.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/resource.png)
+
+-----------------------------------------------------------------------------------------------
+##### Thanks :yum:
+
+  前端页面来源自 [https://github.com/PanJiaChen/vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
 -----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
