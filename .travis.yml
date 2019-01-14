@@ -19,8 +19,8 @@ before_install:
 - sudo service mysql restart
 - chmod +x gradlew
 before_script:
-- mysql -u root -p521 -e 'CREATE DATABASE crown-v1;'
-- mysql -u root -p521 crown-v1 < src/test/resources/sql/crown.sql
+- mysql -u root -p521 -e 'CREATE DATABASE crown1;'
+- mysql -u root -p521 crown1 < src/test/resources/sql/crown.sql
 script:
 - ./gradlew clean build
 - ./gradlew jacocoTestReport

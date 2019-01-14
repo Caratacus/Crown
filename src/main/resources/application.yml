@@ -31,7 +31,7 @@ spring:
   liquibase:
     enabled: false
   datasource:
-    url: jdbc:p6spy:mysql://127.0.0.1:3306/crown-v1?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/crown1?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: 521
     type: com.zaxxer.hikari.HikariDataSource
