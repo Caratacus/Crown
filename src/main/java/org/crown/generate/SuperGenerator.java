@@ -166,7 +166,7 @@ public class SuperGenerator {
                 .setDriverName("com.mysql.cj.jdbc.Driver")
                 .setUsername("root")
                 .setPassword("521")
-                .setUrl("jdbc:mysql://127.0.0.1:3306/crown-v3?characterEncoding=utf8");
+                .setUrl("jdbc:mysql://127.0.0.1:3306/crown3?characterEncoding=utf8");
     }
 
     /**
