@@ -34,15 +34,7 @@
 
 -----------------------------------------------------------------------------------------------
 
-> **注意：** 页面地址还是layUI版本，V2版本完成后会替换页面效果，**V2版本编写中**
-
 > **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
-
-> **前端页面** [https://gitee.com/cancerGit/CrownAdmin](https://gitee.com/cancerGit/CrownAdmin)
-
-> **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
-
-> **layUI版本** [https://gitee.com/cancerGit/Crown/tree/v1-Layui/](https://gitee.com/cancerGit/Crown/tree/v1-Layui/)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
