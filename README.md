@@ -112,6 +112,12 @@
 ![resource.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/resource.png)
 
 -----------------------------------------------------------------------------------------------
+##### Thanks :yum:
+
+  该分支前端页面来源自 [EasyWeb](https://gitee.com/whvse/EasyWeb). <br/>
+  [https://gitee.com/whvse/EasyWeb](https://gitee.com/whvse/EasyWeb). <br/>
+
+-----------------------------------------------------------------------------------------------
 ##### License :globe_with_meridians:
 
    The Crown is released under of the [Mit License](https://mit-license.org). <br/>
