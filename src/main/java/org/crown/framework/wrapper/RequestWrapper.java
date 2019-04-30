@@ -33,8 +33,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.crown.framework.utils.RequestUtils;
 import org.springframework.web.util.HtmlUtils;
 
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-
 
 /**
  * Request包装类
@@ -65,10 +63,16 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() {
-        if (ObjectUtils.isEmpty(body)) {
-            return null;
-        }
-        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+        return getServletInputStream(body);
+    }
+
+    /**
+     * 获取ServletInputStream
+     *
+     * @param body
+     * @return
+     */
+    private ServletInputStream getServletInputStream(byte[] body) {
         return new ServletInputStream() {
 
             @Override
@@ -89,7 +93,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
             @Override
             public int read() {
-                return bais.read();
+                return new ByteArrayInputStream(body).read();
             }
         };
     }
