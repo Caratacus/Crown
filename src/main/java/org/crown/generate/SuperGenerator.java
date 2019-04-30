@@ -211,7 +211,9 @@ public class SuperGenerator {
      * @return
      */
     protected String getJavaPath() {
-        return getRootPath() + "/src/main/java";
+        String javaPath = getRootPath() + "/src/main/java";
+        System.err.println(" Generator Java Path:【 " + javaPath + " 】");
+        return javaPath;
     }
 
     /**
@@ -220,7 +222,9 @@ public class SuperGenerator {
      * @return
      */
     protected String getResourcePath() {
-        return getRootPath() + "/src/main/resources";
+        String resourcePath = getRootPath() + "/src/main/resources";
+        System.err.println(" Generator Resource Path:【 " + resourcePath + " 】");
+        return resourcePath;
     }
 
     /**

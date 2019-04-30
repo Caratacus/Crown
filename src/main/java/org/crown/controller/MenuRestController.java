@@ -66,14 +66,14 @@ public class MenuRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询所有菜单")
     @GetMapping
     public ApiResponses<List<Menu>> list() {
         return success(menuService.list());
     }
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询父级菜单(下拉框)")
     @GetMapping("/combos")
     public ApiResponses<List<ComboDTO>> combos() {
@@ -89,7 +89,7 @@ public class MenuRestController extends SuperController {
         );
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询单个菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
@@ -99,7 +99,7 @@ public class MenuRestController extends SuperController {
         return success(menuService.getMenuDTODetails(id));
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "添加菜单")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(MenuPARM.Create.class) MenuPARM menuPARM) {
@@ -108,7 +108,7 @@ public class MenuRestController extends SuperController {
         return success(HttpStatus.CREATED);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "修改菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
@@ -121,7 +121,7 @@ public class MenuRestController extends SuperController {
         return success();
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "删除菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")
@@ -132,7 +132,7 @@ public class MenuRestController extends SuperController {
         return success(HttpStatus.NO_CONTENT);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("设置菜单状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜单ID", required = true, paramType = "path")

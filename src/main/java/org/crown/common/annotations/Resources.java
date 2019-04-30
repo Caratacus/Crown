@@ -43,5 +43,5 @@ public @interface Resources {
      *
      * @see AuthTypeEnum
      */
-    AuthTypeEnum auth() default AuthTypeEnum.AUTH;
+    AuthTypeEnum auth() default AuthTypeEnum.OPEN;
 }

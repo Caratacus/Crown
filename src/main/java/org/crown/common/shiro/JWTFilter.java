@@ -64,11 +64,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         if (StringUtils.isNotEmpty(contextPath)) {
             requestUri = requestUri.replaceFirst(contextPath, "");
         }
-        Optional<ResourcePermDTO> optional = resourceService.getResourcePerms(method).stream().filter(match(method, requestUri)).findFirst();
+        Optional<String> optional = resourceService.getResourcePerms(method)
+                .stream()
+                .filter(match(method, requestUri))
+                .map(ResourcePermDTO::getMapping)
+                .min(pathMatcher.getPatternComparator(requestUri));
         request.setAttribute(APICons.API_REQURL, requestUri);
         request.setAttribute(APICons.API_METHOD, method);
         if (optional.isPresent()) {
-            request.setAttribute(APICons.API_MAPPING, optional.get().getMapping());
+            request.setAttribute(APICons.API_MAPPING, optional.get());
         } else {
             httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return false;

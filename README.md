@@ -16,7 +16,7 @@
         <br>
         <br>
         <a href="https://spring.io/projects/spring-boot">
-        <img src="https://img.shields.io/badge/spring--boot-2.1.1.RELEASE-blue.svg" alt="spring-boot"></a>
+        <img src="https://img.shields.io/badge/spring--boot-2.1.4.RELEASE-blue.svg" alt="spring-boot"></a>
 		<a href="https://travis-ci.org/Caratacus/Crown">
 		<img src="https://www.travis-ci.org/Caratacus/Crown.svg?branch=master"></a>
 		<a href="https://app.codacy.com/app/Caratacus/Crown?utm_source=github.com&utm_medium=referral&utm_content=Caratacus/Crown&utm_campaign=Badge_Grade_Dashboard">

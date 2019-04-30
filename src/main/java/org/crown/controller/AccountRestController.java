@@ -73,7 +73,7 @@ public class AccountRestController extends SuperController {
     @Autowired
     private IMenuService menuService;
 
-    @Resources(auth = AuthTypeEnum.OPEN)
+    @Resources
     @ApiOperation("获取Token")
     @PostMapping("/token")
     public ApiResponses<TokenDTO> getToken(@RequestBody @Validated LoginPARM loginPARM) {

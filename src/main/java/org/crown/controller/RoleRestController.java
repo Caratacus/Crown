@@ -25,6 +25,7 @@ import java.util.List;
 import javax.validation.constraints.NotEmpty;
 
 import org.crown.common.annotations.Resources;
+import org.crown.enums.AuthTypeEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.model.dto.RoleDTO;
@@ -71,7 +72,7 @@ public class RoleRestController extends SuperController {
     @Autowired
     private IRoleMenuService roleMenuService;
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询所有角色(分页)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleName", value = "需要查询的角色名", paramType = "query")
@@ -81,14 +82,14 @@ public class RoleRestController extends SuperController {
         return success(roleService.pageRoleDTO(this.<Role>getPage(), roleName));
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询所有角色")
     @GetMapping("/roles")
     public ApiResponses<List<Role>> list() {
         return success(roleService.list());
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "查询单个角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
@@ -99,7 +100,7 @@ public class RoleRestController extends SuperController {
         return success(role);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "添加角色")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(RolePARM.Create.class) RolePARM rolePARM) {
@@ -107,7 +108,7 @@ public class RoleRestController extends SuperController {
         return success(HttpStatus.CREATED);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "修改角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
@@ -120,7 +121,7 @@ public class RoleRestController extends SuperController {
         return success();
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "删除角色")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")
@@ -131,7 +132,7 @@ public class RoleRestController extends SuperController {
         return success(HttpStatus.NO_CONTENT);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation(value = "修改角色菜单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "角色ID", required = true, paramType = "path")

@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.crown.common.annotations.Resources;
+import org.crown.enums.AuthTypeEnum;
 import org.crown.enums.StatusEnum;
 import org.crown.framework.controller.SuperController;
 import org.crown.framework.enums.ErrorCodeEnum;
@@ -71,7 +72,7 @@ public class UserRestController extends SuperController {
     @Autowired
     private IUserService userService;
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("查询所有用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "loginName", value = "需要检查的账号", paramType = "query"),
@@ -92,7 +93,7 @@ public class UserRestController extends SuperController {
         );
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("查询单个用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
@@ -107,7 +108,7 @@ public class UserRestController extends SuperController {
         return success(userDTO);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("重置用户密码")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
@@ -118,7 +119,7 @@ public class UserRestController extends SuperController {
         return success();
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("设置用户状态")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
@@ -129,7 +130,7 @@ public class UserRestController extends SuperController {
         return success();
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("创建用户")
     @PostMapping
     public ApiResponses<Void> create(@RequestBody @Validated(UserPARM.Create.class) UserPARM userPARM) {
@@ -147,7 +148,7 @@ public class UserRestController extends SuperController {
         return success(HttpStatus.CREATED);
     }
 
-    @Resources
+    @Resources(auth = AuthTypeEnum.AUTH)
     @ApiOperation("修改用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户ID", required = true, paramType = "path")
