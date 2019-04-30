@@ -23,7 +23,6 @@ package org.crown.framework.wrapper;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
-import java.util.Objects;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -32,6 +31,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.crown.framework.utils.RequestUtils;
 import org.springframework.web.util.HtmlUtils;
+
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 
 
 /**
@@ -57,22 +58,22 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public BufferedReader getReader() {
-        ServletInputStream inputStream = getInputStream();
-        return Objects.isNull(inputStream) ? null : new BufferedReader(new InputStreamReader(inputStream));
+        return ObjectUtils.isEmpty(body) ? null : new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
     @Override
     public ServletInputStream getInputStream() {
-        return getServletInputStream(body);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(body);
+        return getServletInputStream(bais);
     }
 
     /**
      * 获取ServletInputStream
      *
-     * @param body
+     * @param bais
      * @return
      */
-    private ServletInputStream getServletInputStream(byte[] body) {
+    private ServletInputStream getServletInputStream(ByteArrayInputStream bais) {
         return new ServletInputStream() {
 
             @Override
@@ -93,7 +94,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
             @Override
             public int read() {
-                return new ByteArrayInputStream(body).read();
+                return bais.read();
             }
         };
     }
