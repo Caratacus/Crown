@@ -36,7 +36,7 @@ import org.springframework.http.HttpStatus;
  * PATCH: 200 OK
  * DELETE: 204 No Content
  * 接口返回(多态)
- *
+ * 
  * @author Caratacus
  */
 public class ApiResponses<T> implements Serializable {
@@ -87,7 +87,7 @@ public class ApiResponses<T> implements Serializable {
                 .error(errorCode.getError())
                 .show(errorCode.isShow())
                 .time(LocalDateTime.now())
-                .status(errorCode.getHttpCode())
+                .status(errorCode.getStatus())
                 .build();
     }
 

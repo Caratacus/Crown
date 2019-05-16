@@ -84,7 +84,7 @@ public enum ErrorCodeEnum {
      * 演示系统，无法该操作
      */
     DEMO_SYSTEM_CANNOT_DO(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "演示系统，无法该操作"),
-    //----------------------------------------------------业务异常----------------------------------------------------
+    // ----------------------------------------------------业务异常----------------------------------------------------
     /**
      * 用户名密码错误
      */
@@ -112,12 +112,12 @@ public enum ErrorCodeEnum {
 
     ;
 
-    private final int httpCode;
+    private final int status;
     private final boolean show;
     private final String msg;
 
-    ErrorCodeEnum(int httpCode, boolean show, String msg) {
-        this.httpCode = httpCode;
+    ErrorCodeEnum(int status, boolean show, String msg) {
+        this.status = status;
         this.msg = msg;
         this.show = show;
     }
@@ -129,7 +129,7 @@ public enum ErrorCodeEnum {
      * @return
      */
     public ErrorCode convert(String msg) {
-        return ErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg).build();
+        return ErrorCode.builder().status(status()).show(show()).error(name()).msg(msg).build();
     }
 
     /**
@@ -138,7 +138,7 @@ public enum ErrorCodeEnum {
      * @return
      */
     public ErrorCode convert() {
-        return ErrorCode.builder().httpCode(httpCode()).show(show()).error(name()).msg(msg()).build();
+        return ErrorCode.builder().status(status()).show(show()).error(name()).msg(msg()).build();
     }
 
     public static ErrorCodeEnum getErrorCode(String errorCode) {
@@ -151,8 +151,8 @@ public enum ErrorCodeEnum {
         throw new UnknownEnumException("Error: Unknown errorCode, or do not support changing errorCode!\n");
     }
 
-    public int httpCode() {
-        return this.httpCode;
+    public int status() {
+        return this.status;
     }
 
     public String msg() {

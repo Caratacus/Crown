@@ -73,7 +73,7 @@ public class ResponseWrapper extends HttpServletResponseWrapper {
     public void setErrorCode(ErrorCode errorCode) {
         if (Objects.nonNull(errorCode)) {
             this.errorcode = errorCode;
-            super.setStatus(this.errorcode.getHttpCode());
+            super.setStatus(this.errorcode.getStatus());
         }
     }
 

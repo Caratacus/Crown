@@ -45,7 +45,7 @@ public class ErrorCode {
     /**
      * http状态码
      */
-    private int httpCode;
+    private int status;
     /**
      * 是否展示
      */
