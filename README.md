@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/Caratacus/Crown/master/Crown.png" width="300">
+    <img src="https://images.gitee.com/uploads/images/2019/0723/193304_c69fcee7_620321.png" width="300">
     <p align="center">
         Based on SpringBoot2, Crown builds a rapidly developed web application scaffolding.
         <br>      
@@ -10,7 +10,7 @@
             </span>
             <span>
                 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=180c0eb468ec425c7208f49f142e4057f3f83a2fdabfe07ccb4606a414cd6413">
-                <img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
+                <img border="0" src="https://images.gitee.com/uploads/images/2019/0723/193303_e324a876_620321.png" alt="Crown官方交流群" title="Crown官方交流群"></a>
             </span>
         </span>
         <br>
@@ -43,6 +43,8 @@
 > **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
 
 > **体验地址** [http://crown.baomidou.com/login.html](http://crown.baomidou.com/login.html)
+
+> **Bootstrap版本（参考若依）** [https://github.com/Caratacus/Crown2](https://github.com/Caratacus/Crown2)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
@@ -99,13 +101,13 @@
 -----------------------------------------------------------------------------------------------
 ##### Show :palm_tree:
 
-![login.jpg](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/login.jpg)
+![login.jpg](https://images.gitee.com/uploads/images/2019/0723/193305_be4178b6_620321.jpeg)
 <br>
-![user.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/user.png)
+![user.png](https://images.gitee.com/uploads/images/2019/0723/193305_afe2bcc6_620321.png)
 <br>
-![role.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/role.png)
+![role.png](https://images.gitee.com/uploads/images/2019/0723/193307_2e680132_620321.png)
 <br>
-![menu.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu.png)
+![menu.png](https://images.gitee.com/uploads/images/2019/0723/193307_fa884a7b_620321.png)
 <br>
 ![menu-form.png](https://raw.githubusercontent.com/Caratacus/Resource/master/crown/menu-form.png)
 <br>
@@ -125,4 +127,4 @@
 -----------------------------------------------------------------------------------------------
 ##### 有事烧钱 :octocat:
 
-<img src="https://raw.githubusercontent.com/Caratacus/Resource/master/pay.jpg" alt="pay.jpg" width="650" hight="150">
+<img src="https://images.gitee.com/uploads/images/2019/0723/193332_7850c2e0_620321.jpeg" alt="pay.jpg" width="650" hight="150">
