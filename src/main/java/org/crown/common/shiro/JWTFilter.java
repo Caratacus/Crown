@@ -46,9 +46,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) {
         //获取请求token
         String token = getToken(WebUtils.toHttp(servletRequest));
-        if (StringUtils.isBlank(token)) {
-            return null;
-        }
         return StringUtils.isBlank(token) ? null : new JWTToken(token);
     }
 

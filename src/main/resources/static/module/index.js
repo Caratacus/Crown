@@ -13,10 +13,14 @@ layui.define(['config', 'crown', 'layer'], function (exports) {
         },
         // 路由注册
         initRouter: function () {
-            index.regRouter(config.getMenus());
-            Q.init({
-                index: 'user'
-            });
+            var menus = config.getMenus();
+            index.regRouter(menus);
+            if (menus && menus[0].childrens) {
+                var firstRouter = menus[0].childrens[0].router;
+                Q.init({
+                    index: firstRouter
+                });
+            }
         },
         // 使用递归循环注册
         regRouter: function (menus) {
