@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.crown.project.system.dept.mapper.DeptMapper">
+
+	<resultMap type="Dept" id="DeptResult">
+		<id     property="deptId"     column="dept_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="deptName"   column="dept_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="deleted"    column="deleted"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<sql id="selectDeptVo">
+        select sys_dept.dept_id, sys_dept.parent_id, sys_dept.ancestors, sys_dept.dept_name, sys_dept.order_num, sys_dept.leader, sys_dept.phone, sys_dept.email, sys_dept.status, sys_dept.deleted, sys_dept.create_by, sys_dept.create_time
+        from sys_dept
+    </sql>
+
+    <select id="selectRoleDeptTree" parameterType="Long" resultType="String">
+		select concat(sys_dept.dept_id, sys_dept.dept_name) as dept_name
+		from sys_dept
+			left join sys_role_dept on sys_dept.dept_id = sys_role_dept.dept_id
+		where sys_dept.deleted = false and sys_role_dept.role_id = #{roleId}
+		order by sys_dept.parent_id, sys_dept.order_num
+	</select>
+
+    <select id="selectDeptList" parameterType="Dept" resultMap="DeptResult">
+        <include refid="selectDeptVo"/>
+        where sys_dept.deleted = false
+        <if test="parentId != null and parentId != 0">
+            AND sys_dept.parent_id = #{parentId}
+        </if>
+        <if test="deptName != null and deptName != ''">
+            AND sys_dept.dept_name like concat('%', #{deptName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND sys_dept.status = #{status}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by sys_dept.parent_id, sys_dept.order_num
+    </select>
+
+    <select id="selectDeptById" parameterType="Long" resultMap="DeptResult">
+		select sys_dept.dept_id, sys_dept.parent_id, sys_dept.ancestors, sys_dept.dept_name, sys_dept.order_num, sys_dept.leader, sys_dept.phone, sys_dept.email, sys_dept.status,
+			(select sd.dept_name from sys_dept sd where sd.dept_id = sys_dept.parent_id) parent_name
+		from sys_dept
+		where sys_dept.dept_id = #{deptId}
+	</select>
+
+    <select id="selectChildrenDeptById" parameterType="Long" resultMap="DeptResult">
+		select * from sys_dept where find_in_set(#{deptId}, ancestors)
+	</select>
+
+    <update id="updateDeptChildren" parameterType="java.util.List">
+        update sys_dept set ancestors =
+        <foreach collection="depts" item="item" index="index"
+                 separator=" " open="case dept_id" close="end">
+            when #{item.deptId} then #{item.ancestors}
+        </foreach>
+        where dept_id in
+        <foreach collection="depts" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.deptId}
+        </foreach>
+    </update>
+
+    <update id="updateDeptStatus" parameterType="Dept">
+        update sys_dept
+        <set>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where dept_id in (${ancestors})
+    </update>
+
+</mapper> 

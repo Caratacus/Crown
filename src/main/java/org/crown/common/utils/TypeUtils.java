@@ -30,7 +30,9 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.TimeZone;
 
-import org.crown.framework.exception.CrownException;
+import javax.servlet.http.HttpServletResponse;
+
+import org.crown.framework.exception.Crown2Exception;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -84,7 +86,7 @@ public abstract class TypeUtils {
             return Byte.parseByte(strVal);
         }
 
-        throw new CrownException("can not cast to byte, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为byte, 值为 : " + value);
     }
 
     public static Byte castToByte(Object value, Byte defaults) {
@@ -109,13 +111,12 @@ public abstract class TypeUtils {
             }
 
             if (strVal.length() != 1) {
-                throw new CrownException("can not cast to char, value : " + value);
+                throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为char, 值为 : " + value);
             }
 
             return strVal.charAt(0);
         }
-
-        throw new CrownException("can not cast to char, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为char, 值为 : " + value);
     }
 
     public static Character castToChar(Object value, Character defaults) {
@@ -143,8 +144,7 @@ public abstract class TypeUtils {
 
             return Short.parseShort(strVal);
         }
-
-        throw new CrownException("can not cast to short, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为short, 值为 : " + value);
     }
 
     public static Short castToShort(Object value, Short defaults) {
@@ -233,7 +233,7 @@ public abstract class TypeUtils {
             return Float.parseFloat(strVal);
         }
 
-        throw new CrownException("can not cast to float, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为float, 值为 : " + value);
     }
 
     public static Float castToFloat(Object value, Float defaults) {
@@ -266,7 +266,7 @@ public abstract class TypeUtils {
             return Double.parseDouble(strVal);
         }
 
-        throw new CrownException("can not cast to double, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为double, 值为 : " + value);
     }
 
     public static Double castToDouble(Object value, Double defaults) {
@@ -317,7 +317,7 @@ public abstract class TypeUtils {
                 try {
                     return dateFormat.parse(strVal);
                 } catch (ParseException e) {
-                    throw new CrownException("can not cast to Date, value : " + strVal);
+                    throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为Date, 值为 : " + value);
                 }
             }
 
@@ -346,7 +346,8 @@ public abstract class TypeUtils {
                     assert oracleTimestampMethod != null;
                     result = oracleTimestampMethod.invoke(value);
                 } catch (Exception e) {
-                    throw new CrownException("can not cast oracle.sql.TIMESTAMP to Date", e);
+                    throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换oracle.sql.TIMESTAMP to Date", e);
+
                 }
                 return (Date) result;
             }
@@ -367,12 +368,12 @@ public abstract class TypeUtils {
                     assert oracleDateMethod != null;
                     result = oracleDateMethod.invoke(value);
                 } catch (Exception e) {
-                    throw new CrownException("can not cast oracle.sql.DATE to Date", e);
+                    throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换oracle.sql.DATE to Date", e);
                 }
                 return (Date) result;
             }
 
-            throw new CrownException("can not cast to Date, value : " + value);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为Date, 值为 : " + value);
         }
 
         return new Date(longValue);
@@ -421,7 +422,7 @@ public abstract class TypeUtils {
 
         if (longValue <= 0) {
             // 忽略 1970-01-01 之前的时间处理？
-            throw new CrownException("can not cast to Date, value : " + value);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为Date, 值为 : " + value);
         }
 
         return new java.sql.Date(longValue);
@@ -469,7 +470,7 @@ public abstract class TypeUtils {
         }
 
         if (longValue <= 0) {
-            throw new CrownException("can not cast to Date, value : " + value);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为Date, 值为 : " + value);
         }
 
         return new java.sql.Timestamp(longValue);
@@ -509,8 +510,7 @@ public abstract class TypeUtils {
             }
 
         }
-
-        throw new CrownException("can not cast to long, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为long, 值为 : " + value);
     }
 
     public static Long castToLong(Object value, Long defaults) {
@@ -551,8 +551,7 @@ public abstract class TypeUtils {
         if (value instanceof Boolean) {
             return (Boolean) value ? 1 : 0;
         }
-
-        throw new CrownException("can not cast to int, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为int, 值为 : " + value);
     }
 
     public static Integer castToInt(Object value, Integer defaults) {
@@ -569,7 +568,7 @@ public abstract class TypeUtils {
         if (value instanceof String) {
             return decodeBase64((String) value);
         }
-        throw new CrownException("can not cast to int, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为int, 值为 : " + value);
     }
 
     /**
@@ -678,8 +677,7 @@ public abstract class TypeUtils {
                 return Boolean.FALSE;
             }
         }
-
-        throw new CrownException("can not cast to boolean, value : " + value);
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为boolean, 值为 : " + value);
     }
 
     public static Boolean castToBoolean(Object value, Boolean defaults) {
@@ -708,10 +706,10 @@ public abstract class TypeUtils {
                 }
             }
         } catch (Exception ex) {
-            throw new CrownException("can not cast to : " + clazz.getName(), ex);
+            throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为 : " + clazz.getName(), ex);
         }
 
-        throw new CrownException("can not cast to : " + clazz.getName());
+        throw new Crown2Exception(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "无法转换为 : " + clazz.getName());
     }
 
     public static <T> T castToEnum(Object value, Class<T> clazz, T defaults) {

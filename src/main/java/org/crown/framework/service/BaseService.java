@@ -26,12 +26,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.crown.common.mybatisplus.LambdaDeleteWrapperChain;
 import org.crown.common.mybatisplus.LambdaQueryWrapperChain;
 import org.crown.common.mybatisplus.LambdaUpdateWrapperChain;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
@@ -44,6 +45,8 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  * @author Caratacus
  */
 public interface BaseService<T> {
+
+    Log logger = LogFactory.getLog(SqlHelper.class);
 
     /**
      * 批量大小
@@ -60,7 +63,7 @@ public interface BaseService<T> {
     boolean save(T entity);
 
     /**
-     * <p>p
+     * <p>
      * 插入（批量）
      * </p>
      *
@@ -120,7 +123,7 @@ public interface BaseService<T> {
      *
      * @param entity 实体对象
      */
-    boolean updateAllColumnById(T entity);
+    boolean alwaysUpdateSomeColumnById(T entity);
 
     /**
      * <p>
@@ -190,7 +193,7 @@ public interface BaseService<T> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     default T getOne(Wrapper<T> queryWrapper) {
-        return SqlHelper.getObject(list(queryWrapper));
+        return SqlHelper.getObject(logger, list(queryWrapper));
     }
 
     /**
@@ -201,7 +204,7 @@ public interface BaseService<T> {
      * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
      */
     default <R> R getObj(Wrapper<T> queryWrapper, Function<? super Object, R> mapper) {
-        return SqlHelper.getObject(listObjs(queryWrapper, mapper));
+        return SqlHelper.getObject(logger, listObjs(queryWrapper, mapper));
     }
 
     /**
@@ -211,6 +214,28 @@ public interface BaseService<T> {
      */
     default int count() {
         return count(Wrappers.emptyWrapper());
+    }
+
+    /**
+     * <p>
+     * 根据 Wrapper 条件，查询记录是否存在
+     * </p>
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    default boolean exist(Wrapper<T> queryWrapper) {
+        return count(queryWrapper) > 0;
+    }
+
+    /**
+     * <p>
+     * 根据 Wrapper 条件，查询记录是否不存在
+     * </p>
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
+     */
+    default boolean nonExist(Wrapper<T> queryWrapper) {
+        return !exist(queryWrapper);
     }
 
     /**
@@ -242,33 +267,12 @@ public interface BaseService<T> {
 
     /**
      * <p>
-     * 翻页查询
-     * </p>
-     *
-     * @param page 翻页对象
-     */
-    default IPage<T> page(IPage<T> page) {
-        return page(page, Wrappers.emptyWrapper());
-    }
-
-    /**
-     * <p>
      * 根据 Wrapper 条件，查询全部记录
      * </p>
      */
     default <R> List<R> listObjs(Function<? super Object, R> mapper) {
         return listObjs(Wrappers.emptyWrapper(), mapper);
     }
-
-    /**
-     * <p>
-     * 翻页查询
-     * </p>
-     *
-     * @param page         翻页对象
-     * @param queryWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.query.QueryWrapper}
-     */
-    IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper);
 
     /**
      * <p>
@@ -282,31 +286,6 @@ public interface BaseService<T> {
 
     /**
      * <p>
-     * 翻页查询自定义对象
-     * </p>
-     *
-     * @param page   翻页对象
-     * @param mapper
-     * @return
-     */
-    default <R> IPage<R> pageEntities(IPage page, Function<? super T, R> mapper) {
-        return pageEntities(page, Wrappers.emptyWrapper(), mapper);
-    }
-
-    /**
-     * <p>
-     * 翻页查询自定义对象
-     * </p>
-     *
-     * @param page    翻页对象
-     * @param wrapper {@link Wrapper}
-     * @param mapper
-     * @return
-     */
-    <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper);
-
-    /**
-     * <p>
      * 根据 Wrapper，查询一条自定义对象记录
      * </p>
      *
@@ -315,7 +294,7 @@ public interface BaseService<T> {
      * @return
      */
     default <R> R entity(Wrapper<T> wrapper, Function<? super T, R> mapper) {
-        return SqlHelper.getObject(entitys(wrapper, mapper));
+        return SqlHelper.getObject(logger, entitys(wrapper, mapper));
     }
 
     /**

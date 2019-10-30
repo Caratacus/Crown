@@ -21,11 +21,15 @@
 package org.crown.framework.utils;
 
 import java.util.Map;
-import java.util.Optional;
 
-import org.crown.common.spring.ApplicationUtils;
-import org.crown.common.utils.JacksonUtils;
+import javax.servlet.http.HttpServletResponse;
+
+import org.crown.common.utils.JsonUtils;
+import org.crown.framework.manager.ThreadExecutors;
+import org.crown.framework.manager.factory.TimerTasks;
 import org.crown.framework.model.Log;
+import org.crown.framework.spring.ApplicationUtils;
+import org.crown.project.monitor.exceLog.domain.ExceLog;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,37 +44,52 @@ public abstract class LogUtils {
     /**
      * 获取日志对象
      *
+     * @param status
      * @param beiginTime
      * @param parameterMap
      * @param requestBody
      * @param url
-     * @param mapping
+     * @param actionMethod
      * @param method
      * @param ip
      * @param object
      * @return
      */
-    public static void printLog(Long beiginTime, String uid, Map<String, String[]> parameterMap, String requestBody, String url, String mapping, String method, String ip, Object object) {
+    public static void printLog(Integer status, Long beiginTime, String uid, String loginName, Map<String, String[]> parameterMap, Object requestBody, String url, String actionMethod, String method, String ip, Object object) {
+        String runTime = (beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms";
         Log logInfo = Log.builder()
                 //查询参数
                 .parameterMap(parameterMap)
                 .uid(uid)
-                //请求体
-                .requestBody(Optional.ofNullable(JacksonUtils.parse(requestBody)).orElse(requestBody))
+                .loginName(loginName)
+                //请求体r
+                .requestBody(requestBody)
                 //请求路径
                 .url(url)
-                //请求mapping
-                .mapping(mapping)
+                //控制器方法
+                .actionMethod(actionMethod)
                 //请求方法
                 .method(method)
-                .runTime((beiginTime != null ? System.currentTimeMillis() - beiginTime : 0) + "ms")
+                .runTime(runTime)
                 .result(object)
                 .ip(ip)
                 .build();
-        log.info(JacksonUtils.toJson(logInfo));
+        String logJson = JsonUtils.toJson(logInfo);
+        if (status >= HttpServletResponse.SC_BAD_REQUEST) {
+            ExceLog exceLog = new ExceLog();
+            exceLog.setOperName(loginName);
+            exceLog.setUrl(url);
+            exceLog.setActionMethod(actionMethod);
+            exceLog.setRunTime(runTime);
+            exceLog.setContent(logJson);
+            ThreadExecutors.execute(TimerTasks.saveExceLog(ip, status, exceLog));
+        }
+
+        log.info(logJson);
     }
 
     public static void doAfterReturning(Object ret) {
         ResponseUtils.writeValAsJson(ApplicationUtils.getRequest(), ret);
     }
+
 }

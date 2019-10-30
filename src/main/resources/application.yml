@@ -1,62 +1,154 @@
-logging:
-  config: classpath:log4j2.xml
-mybatis-plus:
-  mapper-locations: classpath:mapper/*Mapper.xml
-  global-config:
-    db-config:
-      field-strategy: not_empty
-      id-type: auto
-      db-type: mysql
-    banner: false
-    super-mapper-class: org.crown.framework.mapper.BaseMapper
-  type-enums-package: org.crown.enums
-  type-aliases-package: org.crown.model.entity,org.crown.model.dto
+# 开发环境配置
 server:
+  # 服务器的HTTP端口，默认为80
   port: 8088
   servlet:
+    # 应用的访问路径
     context-path: /
+  undertow:
+    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程 不要设置过大，如果过大，启动项目会报错：打开文件数过多
+    io-threads: 16
+    # 阻塞任务线程池, 当执行类似servlet请求阻塞IO操作, undertow会从这个线程池中取得线程 它的值设置取决于系统线程执行任务的阻塞系数，默认值是IO线程数*8
+    worker-threads: 256
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理 每块buffer的空间大小,越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可
+    buffer-size: 1024
+    # 是否分配的直接内存(NIO直接分配的堆外内存)
+    direct-buffers: true
+# 日志配置
+logging:
+  config: classpath:log4j2.xml
+# Spring配置
 spring:
-  jackson:
-    time-zone: GMT+8
-    serialization:
-      WRITE_DATES_AS_TIMESTAMPS: false
-      FAIL_ON_EMPTY_BEANS: false
-    deserialization:
-      FAIL_ON_UNKNOWN_PROPERTIES: false
-    default-property-inclusion: non_null
-    mapper:
-      PROPAGATE_TRANSIENT_MARKER: true
-    parser:
-      ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER: true
-  liquibase:
-    enabled: false
   datasource:
-    url: jdbc:p6spy:mysql://127.0.0.1:3306/crown1?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
-    username: root
-    password: 521
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    hikari:
-      auto-commit: false
-      connection-timeout: 30000
-      idle-timeout: 25000
-      login-timeout: 5
-      max-lifetime: 30000
-      read-only: false
-      validation-timeout: 3000
-      maximum-pool-size: 15
-      minimum-idle: 10
-      data-source-properties:
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-        useLocalSessionState: true
-        rewriteBatchedStatements: true
-        cacheResultSetMetadata: true
-        cacheServerConfiguration: true
-        elideSetAutoCommits: true
-        maintainTimeStats: false
+    dynamic:
+      hikari:  # 全局hikariCP参数，所有值和默认保持一致。(现已支持的参数如下,不清楚含义不要乱设置)
+        connection-timeout: 30000
+        idle-timeout: 25000
+        max-lifetime: 30000
+        validation-timeout: 3000
+        max-pool-size: 15
+        min-idle: 10
+        data-source-properties:
+          cachePrepStmts: true
+          prepStmtCacheSize: 250
+          prepStmtCacheSqlLimit: 2048
+          useServerPrepStmts: true
+          useLocalSessionState: true
+          rewriteBatchedStatements: true
+          cacheResultSetMetadata: true
+          cacheServerConfiguration: true
+          elideSetAutoCommits: true
+          maintainTimeStats: false
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #设置严格模式,默认false不启动. 启动后再为匹配到指定数据源时候回抛出异常,不启动会使用默认数据源.
+      datasource:
+        master:
+          username: root
+          password: 521
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:mysql://127.0.0.1:3306/crown2?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+          hikari:
+            is-read-only: false
+        slave:
+          username: root
+          password: 521
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:mysql://127.0.0.1:3306/crown2?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+          hikari:
+            is-read-only: true
   aop:
     auto: true
     proxy-target-class: true
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: static/i18n/messages
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+mybatis-plus:
+  configuration:
+    cache-enabled: false
+    default-executor-type: reuse
+    jdbc-type-for-null: 'null'
+    lazy-loading-enabled: true
+    local-cache-scope: session
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+      table-prefix: sys_
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_empty
+    banner: false
+    super-mapper-class: org.crown.framework.mapper.BaseMapper
+  type-enums-package: org.crown.common.enums,org.crown.framework.enums
+  type-aliases-package: org.crown.project.*.*.domain
+  type-handlers-package: org.crown.framework.mybatisplus.typehandler
+# 项目相关配置
+crown:
+  email:
+    enabled: false
+    send: 10001@qq.com
+  # 代码生成
+  generator:
+    author: Caratacus
+    package-path: org.crown.project.monitor
+  # 实例演示开关
+  demo:
+    enabled: false
+    # 获取ip地址开关
+  address:
+    enabled: true
+  password:
+    # 密码错误{maxRetryCount}次锁定10分钟
+    maxRetryCount: 5
+  path:
+    file-path: /develop/crown/filepath/
+    resource-handler: /profile/**
+    resource-path: /profile/
+    prefix:
+      avatar: avatar/
+      download: download/
+      upload: upload/
+  xss:
+    enabled: true
+    exclude-fields:
+      - noticeContent
+    exclude-urls:
+      - /system/notice/*
+shiro:
+  index-url: /index
+  login-url: /login
+  unauth-url: /unauth
+  session:
+    db-sync-period: 1
+    expire-time: 30
+    validation-interval: 10
+    max-session: 1
+    kickout-after: false
+  remember-me-cookie:
+    domain:
+    path: /
+    http-only: true
+    max-age: 1

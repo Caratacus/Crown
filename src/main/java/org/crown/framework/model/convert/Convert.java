@@ -22,7 +22,7 @@ package org.crown.framework.model.convert;
 
 import java.io.Serializable;
 
-import org.crown.framework.converter.BeanConverter;
+import org.crown.common.utils.converter.BeanConverter;
 
 /**
  * <p>

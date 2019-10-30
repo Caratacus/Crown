@@ -20,31 +20,21 @@
  */
 package org.crown.framework.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * 成功返回
  *
  * @author Caratacus
  */
+@Setter
 @Getter
-@ToString
-@Builder
-@EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
-@NoArgsConstructor
+@Accessors(chain = true)
 public class SuccessResponses<T> extends ApiResponses<T> {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * http 状态码
-     */
-    private Integer status;
     /**
      * 结果集返回
      */

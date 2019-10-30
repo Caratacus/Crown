@@ -51,9 +51,9 @@ public class Log {
      */
     private String url;
     /**
-     * 请求mapping
+     * 控制器方法
      */
-    private String mapping;
+    private String actionMethod;
     /**
      * 请求方法
      */
@@ -74,5 +74,9 @@ public class Log {
      * UID
      */
     private String uid;
+    /**
+     * 登录用户名
+     */
+    private String loginName;
 
 }

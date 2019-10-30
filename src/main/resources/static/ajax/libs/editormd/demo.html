@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>Document</title>
+    <link href="css/editormd.css" th:href="@{/ajax/libs/editormd/css/editormd.css}" rel="stylesheet"/>
+</head>
+<body>
+<div id="deditor">
+    <textarea style="display:none;">### Hello Editor.md !</textarea>
+</div>
+<!-- 全局js -->
+<script src="http://localhost:8088/js/jquery.min.js"></script>
+<script src="http://localhost:8088/js/bootstrap.min.js"></script>
+<script src="editormd.min.js" th:src="@{/ajax/libs/editormd/editormd.min.js}"></script>
+<script type="text/javascript">
+    var testEditor;
+    $(function () {
+        testEditor = editormd({
+            id:"deditor",//注意：这里是上面DIV的id
+            width:"90%",
+            tex : true,                   // 开启科学公式TeX语言支持，默认关闭
+            height:640,
+            syncScrolling: "single",
+            path:"http://localhost:8088/ajax/libs/editormd/lib/"
+        });});
+</script>
+</body>
+</html>

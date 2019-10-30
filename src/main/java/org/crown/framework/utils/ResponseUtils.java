@@ -21,6 +21,7 @@
 package org.crown.framework.utils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,14 +29,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.crown.common.cons.APICons;
 import org.crown.common.utils.IpUtils;
 import org.crown.common.utils.TypeUtils;
-import org.crown.cons.APICons;
+import org.crown.common.utils.security.ShiroUtils;
 import org.crown.framework.enums.ErrorCodeEnum;
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.responses.ApiResponses;
 import org.crown.framework.responses.FailedResponse;
-import org.crown.framework.wrapper.ResponseWrapper;
+import org.crown.framework.servlet.wrapper.ResponseWrapper;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,6 +45,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.google.common.base.Throwables;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -64,13 +67,29 @@ public abstract class ResponseUtils {
      * @param obj      需要转换JSON的对象
      */
     public static void writeValAsJson(HttpServletRequest request, ResponseWrapper response, Object obj) {
-        LogUtils.printLog((Long) request.getAttribute(APICons.API_BEGIN_TIME),
-                TypeUtils.castToString(request.getAttribute(APICons.API_UID)),
+        String userId = null;
+        String loginName = null;
+        try {
+            userId = TypeUtils.castToString(ShiroUtils.getUserId());
+        } catch (Exception ignored) {
+        }
+        try {
+            loginName = TypeUtils.castToString(ShiroUtils.getLoginName());
+        } catch (Exception ignored) {
+        }
+        int status = HttpServletResponse.SC_OK;
+        if (Objects.nonNull(response)) {
+            ErrorCode errorCode = response.getErrorCode();
+            status = errorCode.getStatus();
+        }
+        LogUtils.printLog(status, (Long) request.getAttribute(APICons.API_BEGIN_TIME),
+                userId,
+                loginName,
                 request.getParameterMap(),
-                RequestUtils.getRequestBody(request),
+                request.getAttribute(APICons.API_REQUEST_BODY),
                 (String) request.getAttribute(APICons.API_REQURL),
-                (String) request.getAttribute(APICons.API_MAPPING),
-                (String) request.getAttribute(APICons.API_METHOD),
+                (String) request.getAttribute(APICons.API_ACTION_METHOD),
+                request.getMethod(),
                 IpUtils.getIpAddr(request),
                 obj);
         if (ObjectUtils.isNotNull(response, obj)) {
@@ -88,37 +107,38 @@ public abstract class ResponseUtils {
         writeValAsJson(request, null, obj);
     }
 
-
     /**
      * 获取异常信息
      *
      * @param exception
      * @return
      */
-    public static FailedResponse.FailedResponseBuilder exceptionMsg(FailedResponse.FailedResponseBuilder failedResponseBuilder, Exception exception) {
+    public static FailedResponse exceptionMsg(FailedResponse failedResponse, Exception exception) {
         if (exception instanceof MethodArgumentNotValidException) {
             StringBuilder builder = new StringBuilder("校验失败:");
             List<ObjectError> allErrors = ((MethodArgumentNotValidException) exception).getBindingResult().getAllErrors();
             allErrors.stream().findFirst().ifPresent(error -> {
                 builder.append(((FieldError) error).getField()).append("字段规则为").append(error.getDefaultMessage());
-                failedResponseBuilder.msg(error.getDefaultMessage());
+                failedResponse.setMsg(error.getDefaultMessage());
             });
-            failedResponseBuilder.exception(builder.toString());
-            return failedResponseBuilder;
+            failedResponse.setException(builder.toString());
+            return failedResponse;
         } else if (exception instanceof MissingServletRequestParameterException) {
             StringBuilder builder = new StringBuilder("参数字段");
             MissingServletRequestParameterException ex = (MissingServletRequestParameterException) exception;
             builder.append(ex.getParameterName());
             builder.append("校验不通过");
-            failedResponseBuilder.exception(builder.toString()).msg(ex.getMessage());
-            return failedResponseBuilder;
+            failedResponse.setException(builder.toString());
+            failedResponse.setMsg(ex.getMessage());
+            return failedResponse;
         } else if (exception instanceof MissingPathVariableException) {
             StringBuilder builder = new StringBuilder("路径字段");
             MissingPathVariableException ex = (MissingPathVariableException) exception;
             builder.append(ex.getVariableName());
             builder.append("校验不通过");
-            failedResponseBuilder.exception(builder.toString()).msg(ex.getMessage());
-            return failedResponseBuilder;
+            failedResponse.setException(builder.toString());
+            failedResponse.setMsg(ex.getMessage());
+            return failedResponse;
         } else if (exception instanceof ConstraintViolationException) {
             StringBuilder builder = new StringBuilder("方法.参数字段");
             ConstraintViolationException ex = (ConstraintViolationException) exception;
@@ -127,13 +147,13 @@ public abstract class ResponseUtils {
                 ConstraintViolation<?> constraintViolation = first.get();
                 builder.append(constraintViolation.getPropertyPath().toString());
                 builder.append("校验不通过");
-                failedResponseBuilder.exception(builder.toString()).msg(constraintViolation.getMessage());
+                failedResponse.setException(builder.toString());
+                failedResponse.setMsg(ex.getMessage());
             }
-            return failedResponseBuilder;
+            return failedResponse;
         }
-
-        failedResponseBuilder.exception(TypeUtils.castToString(exception));
-        return failedResponseBuilder;
+        failedResponse.setException(TypeUtils.castToString(exception));
+        return failedResponse;
     }
 
     /**
@@ -145,6 +165,13 @@ public abstract class ResponseUtils {
      */
     public static void sendFail(HttpServletRequest request, HttpServletResponse response, ErrorCode code,
                                 Exception exception) {
+        if (Objects.nonNull(exception)) {
+            if (code.getStatus() < HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+                log.info("Info: doResolveInfo {}", exception.getMessage());
+            } else {
+                log.warn("Warn: doResolveException {}", Throwables.getStackTraceAsString(exception));
+            }
+        }
         ResponseUtils.writeValAsJson(request, getWrapper(response, code), ApiResponses.failure(code, exception));
     }
 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>登录Crown系统</title>
+    <meta name="description" content="Crown后台管理框架">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.min.css" th:href="@{/css/login.min.css}" rel="stylesheet"/>
+    <link href="../static/crown/css/crown-ui.css" th:href="@{/crown/css/crown-ui.css?v=3.4.0}" rel="stylesheet"/>
+    <!--滑块验证-->
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+          th:href="@{https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="https://cdn.bootcss.com/font-awesome/5.7.2/css/all.min.css"
+          th:href="@{https://cdn.bootcss.com/font-awesome/5.7.2/css/all.min.css}" rel="stylesheet"/>
+    <link href="../static/ajax/libs/slidercaptcha/slidercaptcha.css"
+          th:href="@{/ajax/libs/slidercaptcha/slidercaptcha.css}" rel="stylesheet"/>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">
+        label.error {
+            position:inherit;
+        }
+        .slidercaptcha {
+            margin:0 auto;
+            border-radius:4px;
+            box-shadow:0 0 10px rgba(0,0,0,0.125);
+            margin-top:40px;
+        }
+        .slidercaptcha .card-body {
+            padding:1rem;
+        }
+        .slidercaptcha canvas:first-child {
+            border-radius:4px;
+            border:1px solid #e6e8eb;
+        }
+        .slidercaptcha.card .card-header {
+            background-image:none;
+            background-color:rgba(0,0,0,0.03);
+        }
+        .refreshIcon {
+            top:-38px;
+        }
+    </style>
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+</head>
+<body class="signin">
+<div class="middle-box text-center loginscreen  animated fadeInDown" id="loginapp">
+    <div>
+        <div>
+            <h1 class="logo-name">2.0</h1>
+        </div>
+        <h3>欢迎使用 Crown</h3>
+        <form id="signupForm" class="m-t" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="用户名" name="username" required="" value="crown"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="密码" name="password" required="" value="crown"/>
+            </div>
+
+            <div class="slidercaptcha card row m-t">
+                <div class="card-header">
+                    <span>请完成安全验证</span>
+                </div>
+                <div class="card-body">
+                    <div id="captchaSp"></div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="signup-footer">
+        <p>
+            <span><a href="https://github.com/Caratacus/Crown" target="_blank">Github</a></span>
+            <span><a href="https://gitee.com/cancerGit/Crown" target="_blank">Gitee</a></span>
+        </p>
+        <p><a href="javascript:;" target="_blank">© 2019 Crown版权所有</a></p>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js" th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/ajax/libs/slidercaptcha/longbow.slidercaptcha.js" th:src="@{/ajax/libs/slidercaptcha/longbow.slidercaptcha.js}"></script>
+
+<script src="../static/crown/js/crown-ui.js" th:src="@{/crown/js/crown-ui.js?v=3.4.0}"></script>
+<script src="../static/crown/login.js" th:src="@{/crown/login.js}"></script>
+</body>
+</html>

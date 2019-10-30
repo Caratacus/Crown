@@ -42,8 +42,8 @@ import org.springframework.util.ReflectionUtils;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
@@ -51,11 +51,9 @@ import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.core.toolkit.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.core.toolkit.support.SerializedLambda;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
-
 
 /**
  * <p>
@@ -64,7 +62,7 @@ import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
  *
  * @author Caratacus
  */
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<T> {
 
     @Autowired
@@ -83,7 +81,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     protected Class<T> currentModelClass() {
-        return ReflectionKit.getSuperClassGenericType(getClass(), 1);
+        return (Class<T>) ReflectionKit.getSuperClassGenericType(getClass(), 1);
     }
 
     /**
@@ -123,20 +121,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveBatch(Collection<T> entityList) {
+        //批量对象插入 不存在直接返回true
         if (CollectionUtils.isEmpty(entityList)) {
             return;
         }
-        baseMapper.insertBatchSomeColumn(entityList);
+        entityList.forEach(this::save);
     }
 
-    /**
-     * <p>
-     * TableId 注解存在更新记录，否插入一条记录
-     * </p>
-     *
-     * @param entity 实体对象
-     * @return boolean
-     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean saveOrUpdate(T entity) {
@@ -198,13 +189,13 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean removeById(Serializable id) {
-        return SqlHelper.delBool(baseMapper.deleteById(id));
+        return SqlHelper.retBool(baseMapper.deleteById(id));
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean remove(Wrapper<T> queryWrapper) {
-        return SqlHelper.delBool(baseMapper.delete(queryWrapper));
+        return SqlHelper.retBool(baseMapper.delete(queryWrapper));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -215,8 +206,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean updateAllColumnById(T entity) {
-        return retBool(baseMapper.updateAllColumnById(entity));
+    public boolean alwaysUpdateSomeColumnById(T entity) {
+        return retBool(baseMapper.alwaysUpdateSomeColumnById(entity));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -265,18 +256,8 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
     }
 
     @Override
-    public IPage<T> page(IPage<T> page, Wrapper<T> queryWrapper) {
-        return baseMapper.selectPage(page, queryWrapper);
-    }
-
-    @Override
     public <R> List<R> listObjs(Wrapper<T> queryWrapper, Function<? super Object, R> mapper) {
         return baseMapper.selectObjs(queryWrapper).stream().filter(Objects::nonNull).map(mapper).collect(Collectors.toList());
-    }
-
-    @Override
-    public <R> IPage<R> pageEntities(IPage page, Wrapper<T> wrapper, Function<? super T, R> mapper) {
-        return page(page, wrapper).convert(mapper);
     }
 
     @Override

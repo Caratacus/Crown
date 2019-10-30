@@ -30,7 +30,6 @@ import org.crown.framework.service.BaseService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -44,7 +43,7 @@ import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrappe
 public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaQueryWrapperChain<T>, LambdaQueryWrapper<T>>
         implements Query<LambdaQueryWrapperChain<T>, T, SFunction<T, ?>> {
 
-    private BaseService<T> baseService;
+    private final BaseService<T> baseService;
 
     public LambdaQueryWrapperChain(BaseService<T> baseService) {
         super();
@@ -92,16 +91,16 @@ public class LambdaQueryWrapperChain<T> extends AbstractChainWrapper<T, SFunctio
         return baseService.count(getWrapper());
     }
 
-    public IPage<T> page(IPage<T> page) {
-        return baseService.page(page, getWrapper());
+    public boolean exist() {
+        return baseService.exist(getWrapper());
+    }
+
+    public boolean nonExist() {
+        return baseService.nonExist(getWrapper());
     }
 
     public <R> R getObj(Function<? super Object, R> mapper) {
         return baseService.getObj((Wrapper<T>) getWrapper(), mapper);
-    }
-
-    public <R> IPage<R> pageEntities(IPage page, Function<? super T, R> mapper) {
-        return baseService.pageEntities(page, getWrapper(), mapper);
     }
 
     public <R> R entity(Function<? super T, R> mapper) {

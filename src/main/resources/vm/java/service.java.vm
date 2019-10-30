@@ -1,0 +1,13 @@
+package ${packageName}.service;
+
+import org.crown.framework.service.BaseService;
+import ${packageName}.domain.${ClassName};
+
+/**
+ * ${functionName} 服务层
+ *
+ * @author ${author}
+ */
+public interface I${ClassName}Service extends BaseService<${ClassName}> {
+
+}

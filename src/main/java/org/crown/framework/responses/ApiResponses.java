@@ -21,13 +21,17 @@
 package org.crown.framework.responses;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.crown.framework.model.ErrorCode;
 import org.crown.framework.utils.ResponseUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.ServerHttpResponse;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * GET: 200 OK
@@ -39,9 +43,21 @@ import org.springframework.http.HttpStatus;
  *
  * @author Caratacus
  */
+@Setter
+@Getter
+@Accessors(chain = true)
 public class ApiResponses<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * http 状态码
+     */
+    private Integer status;
+    /**
+     * 描述
+     */
+    private String msg = "操作成功";
 
     /**
      * 不需要返回结果
@@ -50,7 +66,9 @@ public class ApiResponses<T> implements Serializable {
      */
     public static ApiResponses<Void> success(HttpServletResponse response, HttpStatus status) {
         response.setStatus(status.value());
-        return SuccessResponses.<Void>builder().status(status.value()).build();
+        SuccessResponses<Void> responses = new SuccessResponses<>();
+        responses.setStatus(status.value());
+        return responses;
 
     }
 
@@ -72,8 +90,24 @@ public class ApiResponses<T> implements Serializable {
      */
     public static <T> ApiResponses<T> success(HttpServletResponse response, HttpStatus status, T object) {
         response.setStatus(status.value());
-        return SuccessResponses.<T>builder().status(status.value()).result(object).build();
+        SuccessResponses<T> responses = new SuccessResponses<>();
+        responses.setStatus(status.value());
+        responses.setResult(object);
+        return responses;
+    }
 
+    /**
+     * 成功返回
+     *
+     * @param status
+     * @param object
+     */
+    public static <T> ApiResponses<T> success(ServerHttpResponse response, HttpStatus status, T object) {
+        response.setStatusCode(status);
+        SuccessResponses<T> responses = new SuccessResponses<>();
+        responses.setStatus(status.value());
+        responses.setResult(object);
+        return responses;
     }
 
     /**
@@ -83,12 +117,24 @@ public class ApiResponses<T> implements Serializable {
      * @param exception
      */
     public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
-        return ResponseUtils.exceptionMsg(FailedResponse.builder().msg(errorCode.getMsg()), exception)
-                .error(errorCode.getError())
-                .show(errorCode.isShow())
-                .time(LocalDateTime.now())
-                .status(errorCode.getHttpCode())
-                .build();
+        FailedResponse failedResponse = new FailedResponse();
+        failedResponse.setError(errorCode.getError())
+                .setStatus(errorCode.getStatus())
+                .setMsg(errorCode.getMsg());
+        ResponseUtils.exceptionMsg(failedResponse, exception);
+        return failedResponse;
+    }
+
+    /**
+     * 失败返回
+     *
+     * @param errorCode
+     */
+    public static <T> ApiResponses<T> failure(ErrorCode errorCode) {
+        FailedResponse failedResponse = new FailedResponse();
+        return failedResponse.setError(errorCode.getError())
+                .setStatus(errorCode.getStatus())
+                .setMsg(errorCode.getMsg());
     }
 
 }

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('异常日志详情')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="form-group">
+        <div class="form-control-static">
+            <pre id="content"></pre>
+        </div>
+    </div>
+    <th:block th:include="include :: footer"/>
+    <th:block th:include="include :: jsonview-js"/>
+    <script th:inline="javascript">
+        $(function () {
+            var json = [[${exceLog.content}]];
+            $("#content").JSONView(json);
+        });
+    </script>
+</div>
+</body>
+</html>

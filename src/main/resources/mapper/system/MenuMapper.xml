@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.crown.project.system.menu.mapper.MenuMapper">
+
+    <resultMap type="Menu" id="MenuResult">
+        <id property="menuId" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="parentName" column="parent_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="url" column="url"/>
+        <result property="target" column="target"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="visible" column="visible"/>
+        <result property="perms" column="perms"/>
+        <result property="icon" column="icon"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectMenusByUserId" parameterType="Long" resultMap="MenuResult">
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+			 LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+		where sys_user_role.user_id = #{userId} and sys_menu.menu_type in ('M', 'C') and sys_menu.visible = 0  AND sys_role.status = 0
+		order by sys_menu.parent_id, sys_menu.order_num
+	</select>
+
+    <select id="selectMenuAllByUserId" parameterType="Long" resultMap="MenuResult">
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+			 LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+		where sys_user_role.user_id = #{userId}
+		order by sys_menu.parent_id, sys_menu.order_num
+	</select>
+
+    <select id="selectMenuListByUserId" parameterType="Menu" resultMap="MenuResult">
+        select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target,
+        sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+        from sys_menu
+        left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+        left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+        LEFT JOIN sys_role on sys_user_role.role_id = sys_role.role_id
+        where sys_user_role.user_id = #{params.userId}
+        <if test="menuName != null and menuName != ''">
+            AND sys_menu.menu_name like concat('%', #{menuName}, '%')
+        </if>
+        <if test="visible != null and visible != ''">
+            AND sys_menu.visible = #{visible}
+        </if>
+        order by sys_menu.parent_id, sys_menu.order_num
+    </select>
+
+    <select id="selectMenuNormalAll" resultMap="MenuResult">
+		select distinct sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.url, sys_menu.visible, ifnull(sys_menu.perms,'') as perms, sys_menu.target, sys_menu.menu_type, sys_menu.icon, sys_menu.order_num, sys_menu.create_time
+		from sys_menu
+		where sys_menu.menu_type in ('M', 'C') and sys_menu.visible = 0
+		order by sys_menu.parent_id, sys_menu.order_num
+	</select>
+
+    <select id="selectPermsByUserId" parameterType="Long" resultType="String">
+		select distinct sys_menu.perms
+		from sys_menu
+			 left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+			 left join sys_user_role on sys_role_menu.role_id = sys_user_role.role_id
+		where sys_user_role.user_id = #{userId}
+	</select>
+
+    <select id="selectMenuTree" parameterType="Long" resultType="String">
+		select concat(sys_menu.menu_id, ifnull(sys_menu.perms,'')) as perms
+		from sys_menu
+			left join sys_role_menu on sys_menu.menu_id = sys_role_menu.menu_id
+		where sys_role_menu.role_id = #{roleId}
+		order by sys_menu.parent_id, sys_menu.order_num
+	</select>
+
+    <select id="selectMenuById" parameterType="Long" resultMap="MenuResult">
+		SELECT sys_menu.menu_id, sys_menu.parent_id, sys_menu.menu_name, sys_menu.order_num, sys_menu.url, sys_menu.target, sys_menu.menu_type, sys_menu.visible, sys_menu.perms, sys_menu.icon, sys_menu.remark,
+			(SELECT sm.menu_name FROM sys_menu sm WHERE sm.menu_id = sys_menu.parent_id) parent_name
+		FROM sys_menu
+		where sys_menu.menu_id = #{menuId}
+	</select>
+
+</mapper>

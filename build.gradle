@@ -1,17 +1,11 @@
-description = "Crown"
-
-configurations.all {
-    //每隔100天检查远程依赖是否存在更新
-    resolutionStrategy.cacheChangingModulesFor 2400, 'hours'
-    // cache dynamic versions for 24*60 minutes
-    resolutionStrategy.cacheDynamicVersionsFor 24 * 60 * 60, 'seconds'
-}
+description = "Crown2"
 
 configurations {
     compile.exclude group: "ch.qos.logback"
     compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
     compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     compile.exclude group: "org.apache.tomcat", module: "tomcat-jdbc"
+    compile.exclude group: "com.zaxxer", module: "HikariCP-java7"
 }
 
 buildscript {
@@ -24,7 +18,7 @@ buildscript {
 }
 
 group = "org.crown"
-version = "1.0"
+version = "2.0"
 
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
@@ -38,42 +32,61 @@ tasks.withType(JavaCompile) {
 
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-    maven { url "https://jitpack.io" }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     jcenter()
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
-    api("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
-    api("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
-    api("com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}")
-    api("mysql:mysql-connector-java:8.0.13")
-    api("org.apache.commons:commons-lang3:3.8.1")
-    api("io.springfox:springfox-swagger-ui:${swaggerVersion}")
-    api("io.springfox:springfox-swagger2:${swaggerVersion}")
-    api("io.jsonwebtoken:jjwt:0.9.1")
-    api("org.apache.commons:commons-collections4:4.2")
-    api("commons-io:commons-io:2.5")
-    api("commons-codec:commons-codec:1.11")
-    api("org.hibernate:hibernate-validator:6.0.13.Final")
-    api("org.liquibase:liquibase-core:${liquibaseVersion}")
-    api("org.modelmapper:modelmapper:2.3.1")
-    api("com.vip.vjtools:vjkit:1.0.7")
-    api("p6spy:p6spy:3.8.0")
-    api("com.lmax:disruptor:3.3.11")
-    api("org.apache.shiro:shiro-spring:1.4.0")
-    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
-    compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
-    testCompile("org.apache.velocity:velocity-engine-core:2.0")
-    testCompile("org.projectlombok:lombok:${lombokVersion}")
-    testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    implementation "org.springframework:spring-context-support:5.1.9.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}"
+    implementation "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}"
+    implementation "com.baomidou:dynamic-datasource-spring-boot-starter:2.5.6"
+    implementation "org.apache.shiro:shiro-spring:${shiroVersion}"
+    implementation "org.apache.shiro:shiro-ehcache:${shiroVersion}"
+    implementation "io.springfox:springfox-swagger-ui:2.7.0"
+    implementation("io.springfox:springfox-swagger2:${swaggerVersion}"){
+        exclude group: "io.swagger", module: "swagger-annotations"
+        exclude group: "io.swagger", module: "swagger-models"
+    }
+    implementation "io.swagger:swagger-annotations:1.5.23"
+    implementation "io.swagger:swagger-models:1.5.23"
+    implementation "mysql:mysql-connector-java:8.0.17"
+    implementation "com.github.pagehelper:pagehelper:5.1.10"
+    implementation "p6spy:p6spy:3.8.5"
+    implementation "com.lmax:disruptor:3.4.2"
+    implementation "org.apache.commons:commons-lang3:3.9"
+    implementation "commons-io:commons-io:2.5"
+    implementation "commons-fileupload:commons-fileupload:1.4"
+    implementation "com.github.theborakompanioni:thymeleaf-extras-shiro:2.0.0"
+    implementation "org.quartz-scheduler:quartz:2.3.1"
+    implementation "com.alibaba:fastjson:1.2.60"
+    //解析客户端操作系统、浏览器等
+    implementation "eu.bitwalker:UserAgentUtils:1.21"
+    implementation "org.apache.velocity:velocity:1.7"
+    implementation "com.github.oshi:oshi-core:4.0.0"
+    implementation "net.java.dev.jna:jna:5.4.0"
+    implementation "net.java.dev.jna:jna-platform:5.4.0"
+    implementation "org.jsoup:jsoup:1.12.1"
+    implementation "org.apache.poi:poi-ooxml:4.1.0"
+    implementation "org.modelmapper:modelmapper:2.3.5"
+    implementation "com.squareup.okhttp3:okhttp:3.12.4"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.4"
+    implementation "com.sun.mail:javax.mail:1.6.2"
+    implementation "cn.hutool:hutool-extra:4.6.4"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testCompile "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 tasks.matching { it instanceof Test }.all {
@@ -81,7 +94,7 @@ tasks.matching { it instanceof Test }.all {
 }
 
 bootJar {
-    baseName = "crown"
+    baseName = "crown2"
     version = ""
 }
 
@@ -94,36 +107,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/common/cons/Regex.class',
-                    '**/common/modelmapper/jsr310/*.class',
-                    '**/common/modelmapper/jdk8/FromOptionalConverter.class',
-                    '**/common/modelmapper/jdk8/ToOptionalConverter.class',
-                    '**/common/spring/BasicErrorController.class',
-                    '**/common/undertow/UndertowServerFactoryCustomizer.class',
-                    '**/common/spring/validator/ValidatorCollectionImpl.class',
-                    '**/common/spring/CrownHandlerExceptionResolver.class',
-                    '**/common/spring/.class',
-                    '**/common/spring/ApplicationUtils.class',
-                    '**/common/utils/Maps.class',
-                    '**/common/utils/TypeUtils.class',
-                    '**/common/shiro/*.class',
-                    '**/common/utils/*.class',
-                    '**/common/exception/*.class',
-                    '**/common/spring/IEnumConverterFactory.class',
-                    '**/framework/converter/BeanConverter.class',
-                    '**/framework/emuns/ErrorCodeEnum.class',
-                    '**/framework/exception/*.class',
-                    '**/framework/responses/FailedResponse.class',
-                    '**/framework/utils/ApiAssert.class',
-                    '**/framework/utils/AntiSQLFilter.class',
-                    '**/framework/utils/RequestUtils.class',
-                    '**/framework/utils/ResponseUtils.class',
-                    '**/framework/service/*.class',
-                    '**/framework/responses/FailedResponse.class',
-                    '**/generate/MysqlGenerator.class',
-                    '**/framework/model/ErrorCode.class',
-                    '**/framework/wrapper/*.class',
-                    '**/framework/filter/CrownFilter.class'
+                    '**/common/cons/Regex.class'
             ])
         })
     }

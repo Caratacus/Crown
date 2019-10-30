@@ -39,7 +39,7 @@ import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrappe
 public class LambdaDeleteWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaDeleteWrapperChain<T>, LambdaQueryWrapper<T>>
         implements Query<LambdaDeleteWrapperChain<T>, T, SFunction<T, ?>> {
 
-    private BaseService<T> baseService;
+    private final BaseService<T> baseService;
 
     public LambdaDeleteWrapperChain(BaseService<T> baseService) {
         super();

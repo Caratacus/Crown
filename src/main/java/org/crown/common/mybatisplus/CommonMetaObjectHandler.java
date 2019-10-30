@@ -20,10 +20,10 @@
  */
 package org.crown.common.mybatisplus;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.apache.ibatis.reflection.MetaObject;
-import org.crown.common.utils.ApiUtils;
+import org.crown.common.utils.security.ShiroUtils;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 
@@ -43,39 +43,43 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
      */
     private final String updateTime = "updateTime";
     /**
-     * 创建者ID
+     * 创建者
      */
-    private final String createUid = "createUid";
-
+    private final String createBy = "createBy";
     /**
-     * 修改者ID
+     * 修改者
      */
-    private final String updateUid = "updateUid";
+    private final String updateBy = "createBy";
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    private final String deleted = "deleted";
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        setInsertFieldValByName(createTime, LocalDateTime.now(), metaObject);
-        setInsertFieldValByName(createUid, currentUid(), metaObject);
-        setInsertFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-        setInsertFieldValByName(updateUid, currentUid(), metaObject);
+        setInsertFieldValByName(deleted, false, metaObject);
+        setInsertFieldValByName(createTime, new Date(), metaObject);
+        setInsertFieldValByName(createBy, currentLoginName(), metaObject);
+        setInsertFieldValByName(updateTime, new Date(), metaObject);
+        setInsertFieldValByName(updateBy, currentLoginName(), metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setUpdateFieldValByName(updateTime, LocalDateTime.now(), metaObject);
-        setUpdateFieldValByName(updateUid, currentUid(), metaObject);
+        setUpdateFieldValByName(updateTime, new Date(), metaObject);
+        setUpdateFieldValByName(updateBy, currentLoginName(), metaObject);
     }
 
-    /**
-     * 获取当前用户ID
+    /*  *
+     * 获取当前用户名
      */
-    private Integer currentUid() {
-        Integer uid = null;
+    private String currentLoginName() {
+        String loginName = "";
         try {
-            uid = ApiUtils.currentUid();
+            loginName = ShiroUtils.getLoginName();
         } catch (Exception ignored) {
         }
-        return uid;
+        return loginName;
     }
 
 }

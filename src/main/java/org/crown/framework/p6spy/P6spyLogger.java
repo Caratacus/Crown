@@ -20,7 +20,8 @@
  */
 package org.crown.framework.p6spy;
 
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import org.crown.common.utils.StringUtils;
+
 import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.appender.FormattedLogger;
 

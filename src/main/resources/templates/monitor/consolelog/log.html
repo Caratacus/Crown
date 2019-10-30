@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <th:block th:include="include :: header('控制台日志')" />
+</head>
+<body class="gray-bg">
+<div id="log-container" style="width: 100%; height: 100%; overflow-y: scroll; background: #0f1521; color: #aaaaaa; padding: 10px;">
+    <div></div>
+</div>
+<div id="small-chat">
+    <span class="badge badge-warning pull-right"></span>
+    <a id="close" class="open-small-chat" onclick="closeSocket()" style="display:none;">
+        <i class="fa fa-eye"></i>
+    </a>
+    <a id="open" class="open-small-chat" onclick="openSocket()" style="display:none;">
+        <i class="fa fa-eye-slash"></i>
+    </a>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: sockjs-js" />
+<th:block th:include="include :: stomp-js" />
+<script th:inline="javascript">
+    var stompClient = null;
+    $(document).ready(function () {
+        openSocket();
+    });
+    function openSocket() {
+        $("#close").show();
+        $("#open").hide();
+        if(stompClient==null){
+            var socket = new SockJS('/websocket');
+            stompClient = Stomp.over(socket);
+            stompClient.debug=null;
+            stompClient.connect({}, function() {
+                stompClient.subscribe('/topic/consolelog', function(event) {
+                    var content = JSON.parse(event.body);
+                    var level = content.level;
+                    var levelStyle = '<span>' + level + '</span>';
+                    if (level == 'INFO') {
+                        levelStyle = '<span style="color: rgb(54,165,141);">' + level + '</span>';
+                    }
+                    if (level == 'WARN') {
+                        levelStyle = ' <span style="color: rgb(247,197,124);">' + level + '</span>';
+                    }
+                    if (level == 'ERROR') {
+                        levelStyle = '<span style="color: rgb(206,71,58);">' + level + '</span>';
+                    }
+                    $("#log-container div")
+                        .append('&nbsp;&nbsp;&nbsp;')
+                        .append(levelStyle)
+                        .append('&nbsp;&nbsp;&nbsp;')
+                        .append(content.timestamp)
+                        .append('&nbsp;&nbsp;-&nbsp;&nbsp;')
+                        .append('<span style="color: rgb(57,111,140);">' + content.fileName + ':' + content.lineNumber + '</span>')
+                        .append('&nbsp;&nbsp;-&nbsp;&nbsp;')
+                        .append('<span style="color: rgb(210,213,219);">' + content.body + '</span>')
+                        .append('<br/>');
+                    $("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
+                });
+            });
+        }
+    }
+    function closeSocket() {
+        $("#close").hide();
+        $("#open").show();
+        if (stompClient != null) {
+            stompClient.disconnect();
+            stompClient=null;
+        }
+    }
+</script>
+</body>
+</html>

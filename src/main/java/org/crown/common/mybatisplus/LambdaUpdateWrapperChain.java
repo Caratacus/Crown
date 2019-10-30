@@ -22,7 +22,6 @@ package org.crown.common.mybatisplus;
 
 import org.crown.framework.service.BaseService;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.Update;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
@@ -33,14 +32,14 @@ import com.baomidou.mybatisplus.extension.service.additional.AbstractChainWrappe
  *
  * @author Caratacus
  */
-public class LambdaUpdateWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaUpdateWrapperChain<T>, LambdaUpdateWrapper<T>> implements Update<LambdaUpdateWrapperChain<T>, SFunction<T, ?>> {
+public class LambdaUpdateWrapperChain<T> extends AbstractChainWrapper<T, SFunction<T, ?>, LambdaUpdateWrapperChain<T>, LambdaUpdateWrapper2<T>> implements Update<LambdaUpdateWrapperChain<T>, SFunction<T, ?>> {
 
-    private BaseService<T> baseService;
+    private final BaseService<T> baseService;
 
     public LambdaUpdateWrapperChain(BaseService<T> baseService) {
         super();
         this.baseService = baseService;
-        super.wrapperChildren = new LambdaUpdateWrapper<>();
+        super.wrapperChildren = new LambdaUpdateWrapper2<>();
     }
 
     @Override

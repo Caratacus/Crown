@@ -1,0 +1,15 @@
+package ${packageName}.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.crown.framework.mapper.BaseMapper;
+import ${packageName}.domain.${ClassName};
+
+/**
+ * ${functionName} 数据层
+ *
+ * @author ${author}
+ */
+@Mapper
+public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
+
+}

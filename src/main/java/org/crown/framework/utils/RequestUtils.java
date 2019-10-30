@@ -30,7 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
+import org.crown.common.cons.APICons;
 import org.crown.common.enums.HTTPMethod;
+import org.crown.common.utils.StringUtils;
+import org.crown.common.utils.TypeUtils;
+import org.crown.framework.spring.ApplicationUtils;
 import org.springframework.util.StreamUtils;
 
 import lombok.AccessLevel;
@@ -179,6 +183,47 @@ public abstract class RequestUtils {
      */
     public static boolean isContainBody(HttpServletRequest request) {
         return isPost(request) || isPut(request) || isPatch(request);
+    }
+
+    /**
+     * 是否是Ajax异步请求
+     *
+     * @param request
+     */
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        Boolean isRestResult = TypeUtils.castToBoolean(ApplicationUtils.getRequest().getAttribute(APICons.API_REST_RESULT));
+        if (Objects.nonNull(isRestResult)) {
+            return isRestResult;
+        }
+        String accept = request.getHeader("accept");
+        if (accept != null && accept.contains("application/json")) {
+            return true;
+        }
+
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
+            return true;
+        }
+
+        String uri = request.getRequestURI();
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
+            return true;
+        }
+
+        String ajax = request.getParameter("__ajax");
+        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+    }
+
+    /**
+     * 获取http请求的Domain
+     *
+     * @param request
+     * @return
+     */
+    public static String getDomain(HttpServletRequest request) {
+        StringBuffer url = request.getRequestURL();
+        String contextPath = request.getServletContext().getContextPath();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
     }
 
 }

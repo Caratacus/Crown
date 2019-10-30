@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -35,6 +36,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 @AllArgsConstructor
 public class ErrorCode {
 
@@ -45,11 +47,7 @@ public class ErrorCode {
     /**
      * http状态码
      */
-    private int httpCode;
-    /**
-     * 是否展示
-     */
-    private boolean show;
+    private int status;
     /**
      * 错误消息
      */

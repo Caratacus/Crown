@@ -33,10 +33,9 @@ import com.baomidou.mybatisplus.core.injector.methods.SelectById;
 import com.baomidou.mybatisplus.core.injector.methods.SelectCount;
 import com.baomidou.mybatisplus.core.injector.methods.SelectList;
 import com.baomidou.mybatisplus.core.injector.methods.SelectObjs;
-import com.baomidou.mybatisplus.core.injector.methods.SelectPage;
 import com.baomidou.mybatisplus.core.injector.methods.Update;
 import com.baomidou.mybatisplus.core.injector.methods.UpdateById;
-import com.baomidou.mybatisplus.extension.injector.methods.additional.InsertBatchSomeColumn;
+import com.baomidou.mybatisplus.extension.injector.methods.additional.AlwaysUpdateSomeColumnById;
 
 /**
  * <p>
@@ -48,21 +47,18 @@ import com.baomidou.mybatisplus.extension.injector.methods.additional.InsertBatc
 public class MybatisPlusSqlInjector extends AbstractSqlInjector {
 
     @Override
-    public List<AbstractMethod> getMethodList() {
+    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
         return Stream.of(
                 new Insert(),
-                new InsertBatchSomeColumn(t -> true),
                 new Delete(),
                 new DeleteById(),
                 new Update(),
                 new UpdateById(),
-                new UpdateAllColumnById(),
+                new AlwaysUpdateSomeColumnById(),
                 new SelectById(),
                 new SelectCount(),
                 new SelectObjs(),
-                new SelectList(),
-                new SelectPage()
+                new SelectList()
         ).collect(Collectors.toList());
     }
-
 }

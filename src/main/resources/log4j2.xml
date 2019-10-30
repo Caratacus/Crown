@@ -11,9 +11,8 @@
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
         <Property name="LOG_DATEFORMAT_PATTERN">yyyy-MM-dd HH:mm:ss.SSS</Property>
-        <Property name="CONSOLE_LOG_PATTERN">%clr{${LOG_LEVEL_PATTERN}} %clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${sys:PID}}{magenta} %clr{%F:%L}{cyan} %clr{-}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}
-        </Property>
-        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %F:%L - %m%n"/>
+        <Property name="CONSOLE_LOG_PATTERN">%clr{${LOG_LEVEL_PATTERN}} %clr{%d{${LOG_DATEFORMAT_PATTERN}}}{faint} %clr{${sys:PID}}{magenta} %clr{-}{faint} [%style{%t}{bright,blue}] %clr{%-c{1.}}{cyan} %clr{(%F:%L)}{faint} %clr{-}{faint} %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
+        <Property name="LOG_PATTERN">${LOG_LEVEL_PATTERN} %d{${LOG_DATEFORMAT_PATTERN}} ${sys:PID} -&#45;&#45; [%t] %-c{1.} %F:%L - %m%n${sys:LOG_EXCEPTION_CONVERSION_WORD}</Property>
     </properties>
     <Appenders>
         <!--console-->
@@ -27,7 +26,7 @@
         </Console>
         <RollingRandomAccessFile name="ERROR_LOG"
                                  fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log"
-                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+                                 filePattern="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.%i.gz">
             <PatternLayout
                     pattern="${LOG_PATTERN}"/>
             <Filters>
@@ -42,7 +41,7 @@
         </RollingRandomAccessFile>
         <RollingRandomAccessFile name="INFO_LOG"
                                  fileName="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log"
-                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.gz">
+                                 filePattern="${LOG_HOME}/${INFO_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}.%i.gz">
             <PatternLayout
                     pattern="${LOG_PATTERN}"/>
             <Filters>
@@ -54,15 +53,21 @@
             </Policies>
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
+        <Rewrite name="REWRITE">
+            <AppenderRef ref="INFO_LOG"/>
+            <ConsoleLogPolicy/>
+        </Rewrite>
     </Appenders>
     <Loggers>
         <!--AsyncLogger-->
-        <AsyncLogger name="org.crown" level="info" includeLocation="true"/>
-        <AsyncLogger name="org.crown.framework.p6spy" level="debug" includeLocation="true"/>
+        <AsyncLogger name="org.crown" level="INFO" includeLocation="true"/>
+        <AsyncLogger name="org.crown.framework.p6spy" level="DEBUG" includeLocation="true"/>
+        <AsyncLogger name="com.baomidou.mybatisplus.core.metadata.TableInfoHelper" level="ERROR" includeLocation="true"/>
+        <AsyncLogger name="com.baomidou.dynamic" level="INFO" includeLocation="true"/>
         <!--AsyncRoot-->
         <AsyncRoot level="warn" includeLocation="true">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="INFO_LOG"/>
+            <appender-ref ref="REWRITE"/>
             <appender-ref ref="ERROR_LOG"/>
         </AsyncRoot>
     </Loggers>

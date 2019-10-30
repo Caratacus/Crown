@@ -1,0 +1,38 @@
+package ${packageName}.domain;
+
+#foreach ($column in $columns)
+#if($column.attrType == 'Date' && ($column.javaField != 'createTime' && $column.javaField != 'updateTime'))
+	#break
+#end
+#end
+#foreach ($column in $columns)
+#if($column.attrType == 'BigDecimal')
+	#break
+#end
+#end
+import org.crown.framework.web.domain.BaseEntity;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * ${functionName}表 ${tableName}
+ *
+ * @author ${author}
+ */
+@Setter
+@Getter
+public class ${ClassName} extends BaseEntity {
+
+	private static final long serialVersionUID = 1L;
+
+#foreach ($column in $columns)
+#if($column.javaField != 'createBy' && $column.javaField != 'createTime' && $column.javaField != 'updateBy' && $column.javaField != 'updateTime' && $column.javaField != 'remark')
+	/**
+	 * $column.columnComment
+	 */
+	private $column.javaType $column.javaField;
+#end
+#end
+
+}

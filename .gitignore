@@ -151,7 +151,6 @@ hs_err_pid*
 /.tgitconfig
 
 /release
-rebel.xml
 nohup.out
 /logs
 build

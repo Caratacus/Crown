@@ -30,6 +30,7 @@ import org.xnio.Options;
 import org.xnio.Xnio;
 import org.xnio.XnioWorker;
 
+import io.undertow.Undertow;
 import io.undertow.connector.ByteBufferPool;
 import io.undertow.server.DefaultByteBufferPool;
 import io.undertow.websockets.jsr.WebSocketDeploymentInfo;
@@ -47,7 +48,7 @@ public class UndertowServerFactoryCustomizer implements WebServerFactoryCustomiz
         UndertowDeploymentInfoCustomizer undertowDeploymentInfoCustomizer = deploymentInfo -> {
             WebSocketDeploymentInfo info = (WebSocketDeploymentInfo) deploymentInfo.getServletContextAttributes().get(WebSocketDeploymentInfo.ATTRIBUTE_NAME);
             XnioWorker worker = getXnioWorker();
-            ByteBufferPool buffers = new DefaultByteBufferPool(Boolean.getBoolean("io.undertow.websockets.direct-buffers"), 1024, 100, 12);
+            ByteBufferPool buffers = new DefaultByteBufferPool(true, 1024, 256, 16);
             info.setWorker(worker);
             info.setBuffers(buffers);
         };
@@ -62,7 +63,11 @@ public class UndertowServerFactoryCustomizer implements WebServerFactoryCustomiz
     private XnioWorker getXnioWorker() {
         XnioWorker worker = null;
         try {
-            worker = Xnio.getInstance().createWorker(OptionMap.create(Options.THREAD_DAEMON, true));
+            worker = Xnio.getInstance(Undertow.class.getClassLoader()).createWorker(
+                    OptionMap.builder()
+                            .set(Options.THREAD_DAEMON, true)
+                            .getMap()
+            );
         } catch (IOException ignored) {
         }
         return worker;
