@@ -81,6 +81,7 @@ dependencies {
     implementation "com.sun.mail:javax.mail:1.6.2"
     implementation "cn.hutool:hutool-extra:4.6.4"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    annotationProcessor 'org.apache.logging.log4j:log4j-core:2.11.2'
     compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"

@@ -50,6 +50,7 @@ public class WebSocketAutoConfiguration implements WebSocketMessageBrokerConfigu
 
                     }
                 })
+                .setAllowedOrigins("*")
                 .withSockJS();
     }
 
