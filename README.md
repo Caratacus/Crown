@@ -30,7 +30,7 @@
 
 > **文档中心** [https://caratacus.github.io](https://caratacus.github.io)
 
-> **layUI前后端分离版本** [https://github.com/Caratacus/Crown](https://github.com/Caratacus/Crown/tree/layu)
+> **layUI前后端分离版本** [https://github.com/Caratacus/Crown](https://github.com/Caratacus/Crown/tree/layui)
 
 -----------------------------------------------------------------------------------------------
 ##### Feature :rocket:
