@@ -106,8 +106,8 @@
 					_page_sort: params.sort,
 					_page_order: params.order
             		};
-				if (!curParams.pageNum){
-					curParams.pageNum = 1;
+				if (!curParams._page_num){
+					curParams._page_num = 1;
 				}
 				var currentId = $.common.isEmpty($.table._option.formId) ? $('form').attr('id') : $.table._option.formId;
             	return $.extend(curParams, $.common.formToJSON(currentId));
@@ -260,8 +260,8 @@
                     search.searchValue = params.search;
                     search._page_order = params.order;
 					search._page_sort = params.sort;
-					if (!search.pageNum){
-						search.pageNum = 1;
+					if (!search._page_num){
+						search._page_num = 1;
 					}
     		        return search;
     		    }
