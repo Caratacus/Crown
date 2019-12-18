@@ -25,6 +25,6 @@
         LEFT JOIN sys_role_menu srm ON smr.menu_id = srm.menu_id
         LEFT JOIN sys_user_role sur ON sur.role_id = srm.role_id
         WHERE
-            sur.uid = 1
+            sur.uid = #{uid}
     </select>
 </mapper>
