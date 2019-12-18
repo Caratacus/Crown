@@ -49,7 +49,7 @@ public class CommonMetaObjectHandler implements MetaObjectHandler {
     /**
      * 修改者
      */
-    private final String updateBy = "createBy";
+    private final String updateBy = "updateBy";
     /**
      * 删除标志（0代表存在 2代表删除）
      */
