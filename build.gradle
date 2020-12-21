@@ -10,6 +10,7 @@ configurations {
 
 buildscript {
     repositories {
+        mavenCentral()
         maven { url "https://repo.spring.io/plugins-release" }
     }
     dependencies {
@@ -51,7 +52,7 @@ dependencies {
     implementation "org.apache.shiro:shiro-spring:${shiroVersion}"
     implementation "org.apache.shiro:shiro-ehcache:${shiroVersion}"
     implementation "io.springfox:springfox-swagger-ui:2.7.0"
-    implementation("io.springfox:springfox-swagger2:${swaggerVersion}"){
+    implementation("io.springfox:springfox-swagger2:${swaggerVersion}") {
         exclude group: "io.swagger", module: "swagger-annotations"
         exclude group: "io.swagger", module: "swagger-models"
     }
@@ -106,11 +107,13 @@ jacocoTestReport {
         html.destination = new File("${buildDir}/jacocoHtml")
     }
     afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: [
-                    '**/common/cons/Regex.class'
-            ])
-        })
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            '**/common/cons/Regex.class'
+                    ])
+                })
+        )
     }
 }
 
