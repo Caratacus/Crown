@@ -235,7 +235,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public String importUser(List<User> userList, Boolean isUpdateSupport) {
-        if (CollectionUtils.isNotEmpty(userList)) {
+        if (CollectionUtils.isEmpty(userList)) {
             throw new Crown2Exception(HttpServletResponse.SC_BAD_REQUEST, "导入用户数据不能为空！");
         }
         int successNum = 0;
