@@ -32,7 +32,7 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
     jcenter()
 }
 
@@ -86,9 +86,9 @@ dependencies {
     annotationProcessor 'org.apache.logging.log4j:log4j-core:2.11.2'
     compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    testCompile "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
